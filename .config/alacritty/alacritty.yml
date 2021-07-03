@@ -1,3 +1,8 @@
+window:
+  padding:
+    x: 2
+    y: 2
+
 colors:
   # Default colors
   primary:

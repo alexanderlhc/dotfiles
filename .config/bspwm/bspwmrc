@@ -1,11 +1,14 @@
 #! /bin/sh
 
+# autolaunch
 pgrep -x sxhkd > /dev/null || sxhkd &
-pgrep -x nm-applet > /dev/null || nm-applet
+pgrep -x nm-applet > /dev/null || nm-applet &
+pgrep -x picom > /dev/null || picom &
 setxkbmap dk
 ~/.config/bspwm/gnome-keyring
+~/.config/polybar/launch.sh &
 
-bspc monitor -d I II III IV V VI VII VIII IX X
+bspc monitor -d 1 2 3 4 5 6 7 8 9 10
 
 bspc config border_width         2
 bspc config window_gap          12

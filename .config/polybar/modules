@@ -1,0 +1,129 @@
+[module/bspwm]
+type = internal/bspwm
+
+format         = <label-state>
+pin-workspaces = false
+enable-scroll  = true
+
+label-focused-foreground  = ${colors.shade0}
+label-occupied-foreground = ${colors.shade8}
+label-urgent-foreground   = ${colors.shade9}
+
+label-focused  = %icon%
+label-occupied = %icon%
+label-urgent   = %icon%
+label-empty    = %icon%
+
+label-separator = " "
+
+ws-icon-0 = 1;I
+ws-icon-1 = 2;II
+ws-icon-2 = 3;III
+ws-icon-3 = 4;IV
+ws-icon-4 = 5;V
+ws-icon-5 = 6;VI
+ws-icon-6 = 7;VII
+ws-icon-7 = 8;VIII
+ws-icon-8 = 9;IX
+ws-icon-9 = 10;X
+
+[module/xbacklight]
+type = internal/xbacklight
+
+format = <label> <bar>
+label = BL
+
+bar-width = 10
+bar-indicator = |
+bar-indicator-foreground = ${colors.foreground}
+bar-indicator-font = 2
+bar-fill = ─
+bar-fill-font = 2
+bar-fill-foreground = #9f78e1
+bar-empty = ─
+bar-empty-font = 2
+bar-empty-foreground = ${colors.shade0}
+
+[module/backlight-acpi]
+inherit = module/xbacklight
+type = internal/backlight
+card = intel_backlight
+
+[module/date]
+type = internal/date
+interval = 5
+
+date =
+date-alt = " %d %B"
+
+time = %H:%M
+time-alt = %H:%M:%S
+
+format-prefix-foreground = ${colors.foreground}
+format-underline = ${colors.shade13}
+
+label = %date% %time%
+
+[module/pulseaudio]
+type = internal/pulseaudio
+module-margin = 0
+format-volume = <ramp-volume> <label-volume>
+format-muted =  <label-muted> Muted
+ramp-volume-0 = "V"
+label-muted = "M"
+ramp-volume-foreground = ${colors.shade5}
+label-muted-foreground = ${colors.shade9}
+
+[module/battery]
+type = internal/battery
+
+battery = BAT0
+full-at = 98
+
+format-charging = <animation-charging> <label-charging>
+label-charging = +%percentage%%
+
+format-discharging = <ramp-capacity> <label-discharging>
+label-discharging = %percentage%%
+
+format-full = <ramp-capacity> <label-full>
+label-full = " Full "
+
+
+ramp-capacity-foreground = ${colors.shade11}
+ramp-capacity-0-foreground = ${colors.shade9}
+ramp-capacity-1-foreground = ${colors.shade2}
+ramp-capacity-2-foreground = ${colors.shade11}
+
+ramp-capacity-font = 4
+
+ramp-capacity-0 = " B "
+ramp-capacity-1 = " B "
+ramp-capacity-2 = " B "
+ramp-capacity-3 = " B "
+ramp-capacity-4 = " B "
+ramp-capacity-5 = " B "
+ramp-capacity-6 = " B "
+ramp-capacity-7 = " B "
+ramp-capacity-8 = " B "
+ramp-capacity-9 = " B "
+
+
+animation-charging-font = 4
+
+animation-charging-0 = " B    "
+animation-charging-1 = " B.   "
+animation-charging-2 = " B..  "
+animation-charging-3 = " B... "
+
+animation-charging-foreground = ${colors.shade11}
+
+animation-charging-framerate = 500
+
+[module/traytoggler]
+type = custom/text
+content = ""
+click-left = pkill stalonetray || stalonetray &
+
+
+; vim:ft=dosini

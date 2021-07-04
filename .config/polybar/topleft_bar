@@ -1,0 +1,23 @@
+[bar/topleft]
+; must have fonts for each bar
+font-0 = monoid:pixelsize=14;3
+font-1 = RobotoMono Nerd Font:pixelsize=10;2
+;monitor = ${env:MONITOR:HDMI-1}
+width    = 12%
+height   = 27
+offset-x = 0.5%
+offset-y = 0.2%
+wm-restack = bspwm
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+padding-left  = 3
+padding-right = 2
+
+module-margin-left  = 2
+module-margin-right = 2
+
+modules-left  = bspwm
+
+; vim:ft=dosini

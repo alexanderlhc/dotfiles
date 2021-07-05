@@ -9,3 +9,5 @@ autoload -Uz compinit
 compinit
 
 source ~/.config/aliases
+
+eval "$(starship init zsh)"

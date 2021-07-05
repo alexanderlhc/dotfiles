@@ -6,9 +6,21 @@
 super + Return
 	alacritty
 
+# password passmenu
+super + ctrl + p
+	passmenu -fn "monoid"-15
+
+# clipboard greenclip
+super + ctrl + c
+	rofi -modi "clipboard: greenclip print" -show clipboard -run-command {cmd}
+
+# emojis
+super + ctrl + e
+	emojis
+
 # program launcher
 super + r
-	rofi -show run
+	rofi -show drun
 
 # make sxhkd reload its configuration files:
 super + Escape

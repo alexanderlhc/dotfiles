@@ -4,6 +4,8 @@
 pgrep -x sxhkd > /dev/null || sxhkd &
 pgrep -x nm-applet > /dev/null || nm-applet &
 pgrep -x picom > /dev/null || picom &
+pgrep -x greenclip > /dev/null || greenclip daemon &
+
 setxkbmap dk
 ~/.config/bspwm/gnome-keyring
 ~/.config/polybar/launch.sh &

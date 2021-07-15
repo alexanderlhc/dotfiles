@@ -125,5 +125,30 @@ type = custom/text
 content = ""
 click-left = pkill stalonetray || stalonetray &
 
+[module/github-notifications]
+type = custom/script
+format-prefix = " "
+exec = "./scripts/github-notifications"
+click-left = $BROWSER "https://github.com/notifications"
+interval=300
+
+[module/github]
+type = internal/github
+token = ${file:/home/alexander/.local/share/access.token}
+user = AlexanderLHC
+empty-notifications = true
+interval = 60
+label = %notifications%
+format =  <label>
+format-offline = <label-offline>
+label-offline = Offline
+
+[module/docker]
+; TODO: look into assigning colors as env variables in launch script
+; polybar can't access variables in format block. however can ${env:COLOR_SHADE03}
+type = custom/script
+exec = docker ps -q | wc -l
+interval = 1
+label = %{F#399ee6}%{F-} %output%
 
 ; vim:ft=dosini

@@ -19,7 +19,9 @@ padding-right = 3
 module-margin-left = 1
 module-margin-right = 2
 
-modules-right  = pulseaudio battery xbacklight traytoggler
+modules-right  = github docker pulseaudio battery xbacklight traytoggler
+; modules-right  = docker github-notifications pulseaudio battery xbacklight traytoggler
+;modules-right  = docker pulseaudio battery xbacklight traytoggler
 ; todo: power, docker, mail
 
 cursor-click = pointer

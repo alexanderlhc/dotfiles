@@ -6,6 +6,8 @@ pgrep -x nm-applet > /dev/null || nm-applet &
 pgrep -x picom > /dev/null || picom &
 pgrep -x greenclip > /dev/null || greenclip daemon &
 
+hsetroot -cover ~/.local/share/nextcloud/wallpapers/IMG_20200502_151338.jpg
+
 setxkbmap dk
 ~/.config/bspwm/gnome-keyring
 ~/.config/polybar/launch.sh &

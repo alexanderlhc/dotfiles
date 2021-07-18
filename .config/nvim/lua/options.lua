@@ -5,7 +5,6 @@ o.number         = true -- line numbers
 o.ignorecase     = true -- ignore case
 o.smartcase      = true -- ignore case unless contain mixed
 o.lazyredraw     = true -- disable redraw during macro and cmds (speed)
-o.termguicolors  = true -- 24 bit RGB colors!
 --o.list           = true -- prettier end of line, and tab
 o.listchars      = {
   eol = "↲",
@@ -17,3 +16,7 @@ o.expandtab      = true  -- tabs to spaces
 o.autoindent     = true  -- use current line indent
 o.splitright     = true  -- splits go right
 o.mouse          = "nvi" -- mouse in: normal, visual, insert
+
+o.termguicolors  = true -- 24 bit RGB colors!
+vim.cmd('colorscheme ayu')
+vim.g.ayucolor="light"

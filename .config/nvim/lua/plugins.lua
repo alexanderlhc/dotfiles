@@ -10,4 +10,6 @@ return require('packer').startup(function()
 
   use 'justinmk/vim-sneak'
 
+  use 'tpope/vim-commentary'
+
 end)

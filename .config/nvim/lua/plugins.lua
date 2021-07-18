@@ -8,4 +8,6 @@ return require('packer').startup(function()
 
   use 'ayu-theme/ayu-vim'
 
+  use 'justinmk/vim-sneak'
+
 end)

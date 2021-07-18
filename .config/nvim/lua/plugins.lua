@@ -6,6 +6,8 @@ return require('packer').startup(function()
   -- Currently installed (manually):
   -- efm yaml vim php json java html graphql dockerfile css bash typescript lua latex
 
+  use 'glepnir/lspsaga.nvim'
+
   use 'ayu-theme/ayu-vim'
 
   use 'justinmk/vim-sneak'

@@ -8,6 +8,10 @@ local function on_attach(client, bufnr)
   -- Mappings.
   local opts = { noremap=true, silent=true }
 
+  buf_set_keymap('n', 'ca', '<cmd>lua require("lspsaga.codeaction").code_action()<CR>', opts)
+  buf_set_keymap('v', 'ca', '<Cmd>lua require("lspsaga.codeaction").range_code_action()<CR>', opts)
+
+
   -- Declaration / Definition / Signature / Implementation
   buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_set_keymap('n', 'gd', "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>", opts)

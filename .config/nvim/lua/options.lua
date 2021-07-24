@@ -12,6 +12,7 @@ o.listchars      = {
 }
 o.foldmethod     = "expr"
 o.foldexpr       = "nvim_treesitter#foldexpr()"
+o.foldlevelstart = 132
 o.tabstop        = 2     -- tab takes 2 spaces
 o.shiftwidth     = 2     -- spaces used for (auto)indent
 o.expandtab      = true  -- tabs to spaces

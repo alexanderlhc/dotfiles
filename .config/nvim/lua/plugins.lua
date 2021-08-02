@@ -6,7 +6,10 @@ return require('packer').startup(function()
   -- Currently installed (manually):
   -- efm yaml vim php json java html graphql dockerfile css bash typescript lua latex
 
-  use 'hrsh7th/nvim-compe'
+  use {
+    'hrsh7th/nvim-compe',
+    requires = {{ 'hrsh7th/vim-vsnip', 'hrsh7th/vim-vsnip-integ', 'rafamadriz/friendly-snippets' }}
+  }
 
   use 'glepnir/lspsaga.nvim'
 

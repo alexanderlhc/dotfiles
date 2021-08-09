@@ -19,7 +19,8 @@ o.expandtab      = true  -- tabs to spaces
 o.autoindent     = true  -- use current line indent
 o.splitright     = true  -- splits go right
 o.mouse          = "nvi" -- mouse in: normal, visual, insert
+o.syntax         = "on"
 
 o.termguicolors  = true -- 24 bit RGB colors!
-vim.cmd('colorscheme ayu')
-vim.g.ayucolor="light"
+vim.g.nvcode_termcolors=256
+vim.cmd('colorscheme aurora')

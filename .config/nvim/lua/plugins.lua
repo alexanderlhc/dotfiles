@@ -23,11 +23,26 @@ return require('packer').startup(function()
     requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
   }
 
-  use 'ayu-theme/ayu-vim'
+  use {
+    'lewis6991/spellsitter.nvim',
+    requires = {{ 'nvim-telescope/telescope.nvim' }}
+  }
+
+  use {
+    'christianchiarulli/nvcode-color-schemes.vim',
+    requires = {{ 'nvim-treesitter/nvim-treesitter' }}
+  }
+
+  use {
+    'kyazdani42/nvim-tree.lua',
+    requires = {{ 'kyazdani42/nvim-web-devicons' }}
+  }
 
   use 'justinmk/vim-sneak'
 
   use 'tpope/vim-commentary'
+
+  use 'tpope/vim-surround'
 
   use 'tpope/vim-fugitive'
 

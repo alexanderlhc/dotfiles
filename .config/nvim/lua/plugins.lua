@@ -33,6 +33,8 @@ return require('packer').startup(function()
     requires = {{ 'nvim-treesitter/nvim-treesitter' }}
   }
 
+  use { 'rakr/vim-one' }
+
   use {
     'kyazdani42/nvim-tree.lua',
     requires = {{ 'kyazdani42/nvim-web-devicons' }}
@@ -45,5 +47,7 @@ return require('packer').startup(function()
   use 'tpope/vim-surround'
 
   use 'tpope/vim-fugitive'
+
+  use 'airblade/vim-gitgutter'
 
 end)

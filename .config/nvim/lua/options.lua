@@ -23,4 +23,5 @@ o.syntax         = "on"
 
 o.termguicolors  = true -- 24 bit RGB colors!
 vim.g.nvcode_termcolors=256
-vim.cmd('colorscheme aurora')
+o.background     = "light"
+vim.cmd('colorscheme one')

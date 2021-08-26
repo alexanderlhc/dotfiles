@@ -40,7 +40,7 @@ return require('packer').startup(function()
     requires = {{ 'kyazdani42/nvim-web-devicons' }}
   }
 
-  use 'justinmk/vim-sneak'
+  use 'ggandor/lightspeed.nvim'
 
   use 'tpope/vim-commentary'
 

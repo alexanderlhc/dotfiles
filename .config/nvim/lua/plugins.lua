@@ -34,6 +34,7 @@ return require('packer').startup(function()
   }
 
   use { 'rakr/vim-one' }
+  use "Pocco81/Catppuccino.nvim"
 
   use {
     'kyazdani42/nvim-tree.lua',

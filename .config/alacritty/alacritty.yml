@@ -3,6 +3,10 @@ window:
     x: 2
     y: 2
 
+font:
+  normal:
+    family: Source Code Pro
+
 env:
   TERM: xterm-256color
 

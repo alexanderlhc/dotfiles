@@ -6,3 +6,4 @@ export READER='zathura'
 export TERMINAL='alacritty'
 export BROWSER='firefox'
 export COLORTERM='truecolor'
+export _JAVA_AWT_WM_NONREPARENTING=1

@@ -1,42 +1,39 @@
-require('lsp.diagnostics')
+local lspconfig = require('lspconfig')
+local lspinstall = require('lspinstall')
 local on_attach = require('lsp.on_attach')
-local lua = require('lsp.lua')
+require('lsp.completion')
 
-
--- config that activates keymaps and enables snippet support
 local function make_config()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities.textDocument.completion.completionItem.snippetSupport = true
+  capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+  -- capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
   return {
-    -- enable snippet support
     capabilities = capabilities,
-    -- map buffer local keybindings when the language server attaches
     on_attach = on_attach,
+    root_dir = vim.loop.cwd,
   }
 end
 
--- run through installed servers and initialize (lsp-install)
 local function setup_servers()
-  require'lspinstall'.setup()
+  lspinstall.setup()
+  local servers = lspinstall.installed_servers()
 
-  -- get all installed servers
-  local servers = require'lspinstall'.installed_servers()
-
-  for _, server in pairs(servers) do
-    local config = make_config()
-    -- language specific config
-    if server == "lua" then
-      config.settings = lua
+  for _, lang in pairs(servers) do
+    if lang == "lua" then
+      -- require("lsp.languages.lua").setup(on_attach)
+    elseif lang == "typescript" then
+       require("lsp.languages.typescript").setup(on_attach)
+    elseif lang == "json" then
+      -- require("lsp.languages.json").setup(on_attach)
+    else
+      local config = make_config()
+      lspconfig[lang].setup(config)
     end
-
-    require'lspconfig'[server].setup(config)
   end
+
+  require("lsp.null-ls").setup()
+  require("lspconfig")["null-ls"].setup({ capabilities = capabilities, on_attach = on_attach })
 end
+
 
 setup_servers()
-
--- Automatically reload after `:LspInstall <server>`
-require'lspinstall'.post_install_hook = function ()
-  setup_servers()
-  vim.cmd("bufdo e")
-end

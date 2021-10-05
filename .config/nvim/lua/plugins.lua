@@ -6,12 +6,37 @@ return require('packer').startup(function()
   -- Currently installed (manually):
   -- efm yaml vim php json java html graphql dockerfile css bash typescript lua latex
 
+  -- use {
+  --   'hrsh7th/nvim-compe',
+  --   requires = {{ 'hrsh7th/vim-vsnip', 'hrsh7th/vim-vsnip-integ', 'rafamadriz/friendly-snippets' }}
+  -- }
+
+  use 'hrsh7th/cmp-nvim-lsp' -- hmm
+  use 'hrsh7th/nvim-cmp'
+  use 'rafamadriz/friendly-snippets'
+  use 'hrsh7th/cmp-vsnip'
+  use 'hrsh7th/vim-vsnip'
+  use 'xuhdev/vim-latex-live-preview'
+
+  -- git
   use {
-    'hrsh7th/nvim-compe',
-    requires = {{ 'hrsh7th/vim-vsnip', 'hrsh7th/vim-vsnip-integ', 'rafamadriz/friendly-snippets' }}
+    "lewis6991/gitsigns.nvim",
+    wants = "plenary.nvim",
+    config = [[require("plugins.gitsigns")]],
   }
 
   use 'glepnir/lspsaga.nvim'
+
+  -- TypeScript
+  use({ "jose-elias-alvarez/null-ls.nvim",
+    config = function()
+        require("null-ls").config({})
+        require("lspconfig")["null-ls"].setup({})
+    end,
+    requires = {"nvim-lua/plenary.nvim", "neovim/nvim-lspconfig"}
+  })
+  use 'jose-elias-alvarez/nvim-lsp-ts-utils'
+
 
   use {
     'nvim-treesitter/nvim-treesitter',
@@ -28,20 +53,21 @@ return require('packer').startup(function()
     requires = {{ 'nvim-telescope/telescope.nvim' }}
   }
 
-  use {
-    'christianchiarulli/nvcode-color-schemes.vim',
-    requires = {{ 'nvim-treesitter/nvim-treesitter' }}
-  }
+  --use {
+  --  'christianchiarulli/nvcode-color-schemes.vim',
+  --  requires = {{ 'nvim-treesitter/nvim-treesitter' }}
+  --}
 
-  use { 'rakr/vim-one' }
-  use "Pocco81/Catppuccino.nvim"
+  use "projekt0n/github-nvim-theme"
+  --use { 'rakr/vim-one' }
+  --use "Pocco81/Catppuccino.nvim"
 
   use {
     'kyazdani42/nvim-tree.lua',
     requires = {{ 'kyazdani42/nvim-web-devicons' }}
   }
 
-  use 'ggandor/lightspeed.nvim'
+  use 'justinmk/vim-sneak'
 
   use 'tpope/vim-commentary'
 
@@ -49,6 +75,6 @@ return require('packer').startup(function()
 
   use 'tpope/vim-fugitive'
 
-  use 'airblade/vim-gitgutter'
+  -- use 'airblade/vim-gitgutter'
 
 end)

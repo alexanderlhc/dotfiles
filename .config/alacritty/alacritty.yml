@@ -10,67 +10,36 @@ font:
 env:
   TERM: xterm-256color
 
-# Catppuccino Light Melya
+# github Alacritty Colors
 colors:
   # Default colors
   primary:
-    background: '0xfbfbfb'
-    foreground: '0x0e171c'
-
-  # Colors the cursor will use if `custom_cursor_colors` is true
-  cursor:
-    text: '0x0e171c'
-    cursor: '0xfbfbfb'
+    background: '0xffffff'
+    foreground: '0x586069'
 
   # Normal colors
   normal:
-    black:   '0x393b44'
-    red:     '0xb0304e'
-    green:   '0x76ab49'
-    yellow:  '0xffce1f'
-    blue:    '0x157c8e'
-    magenta: '0xa414cc'
-    cyan:    '0x63cdcf'
-    white:   '0xdfdfe0'
+    black:   '0x697179'
+    red:     '0xd03d3d'
+    green:   '0x14ce14'
+    yellow:  '0x949800'
+    blue:    '0x0451a5'
+    magenta: '0xbc05bc'
+    cyan:    '0x0598bc'
+    white:   '0x586069'
 
   # Bright colors
   bright:
-    black:   '0x7f8c98'
-    red:     '0xd84652'
-    green:   '0x58cd8b'
-    yellow:  '0xffe37e'
-    blue:    '0x84cee4'
-    magenta: '0xb8a1e3'
-    cyan:    '0x59f0ff'
-    white:   '0x0e171c'
+    black:   '0x666666'
+    red:     '0xcd3131'
+    green:   '0x14ce14'
+    yellow:  '0xb5ba00'
+    blue:    '0x0451a5'
+    magenta: '0xbc05bc'
+    cyan:    '0x0598bc'
+    white:   '0x586069'
 
   indexed_colors:
-    - { index: 16, color: '0xffce1f' }
-    - { index: 17, color: '0xd84652' }
-# colors:
-#   # Default colors
-#   primary:
-#     background: '0xfafafa'
-#     foreground: '0x575f66'
+    - { index: 16, color: '0xd18616' }
+    - { index: 17, color: '0xcd3131' }
 
-#   # Normal colors
-#   normal:
-#     black:   '0xa0a6ac'
-#     red:     '0xf07171'
-#     green:   '0x86b300'
-#     yellow:  '0xf2ae49'
-#     blue:    '0x399ee6'
-#     magenta: '0xa37acc'
-#     cyan:    '0x4cbf99'
-#     white:   '0xeff0f1'
-
-#   # Bright colors
-#   bright:
-#     black:   '0xcdd0d3'
-#     red:     '0xf07178'
-#     green:   '0xbae67e'
-#     yellow:  '0xffcc66'
-#     blue:    '0x5ccfe6'
-#     magenta: '0xd4bfff'
-#     cyan:    '0x95e6cb'
-#     white:   '0xffffff'

@@ -23,6 +23,8 @@ o.syntax         = "on"
 
 o.termguicolors  = true -- 24 bit RGB colors!
 vim.g.nvcode_termcolors=256
-require('github-theme').setup()
+require('github-theme').setup({
+  theme_style="light"
+})
 -- o.background     = "light"
 -- vim.cmd('colorscheme one')

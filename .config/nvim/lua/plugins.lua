@@ -1,10 +1,16 @@
 return require('packer').startup(function()
   use 'wbthomason/packer.nvim'
 
+  -- LSP
   use {
     'neovim/nvim-lspconfig',
     'williamboman/nvim-lsp-installer',
+    'hrsh7th/nvim-cmp', -- Autocompletion plugin
+    'hrsh7th/cmp-nvim-lsp', -- LSP source for nvim-cmp
+    'saadparwaiz1/cmp_luasnip', -- Snippets source for nvim-cmp
+    'L3MON4D3/LuaSnip' -- Snippets plugin
   }
+  use { 'ms-jpq/coq_nvim' }
 
   -- Currently installed (manually):
   -- efm yaml vim php json java html graphql dockerfile css bash typescript lua latex
@@ -13,12 +19,12 @@ return require('packer').startup(function()
   --   'hrsh7th/nvim-compe',
   --   requires = {{ 'hrsh7th/vim-vsnip', 'hrsh7th/vim-vsnip-integ', 'rafamadriz/friendly-snippets' }}
   -- }
+  -- use 'hrsh7th/cmp-nvim-lsp' -- hmm
+  -- use 'hrsh7th/nvim-cmp'
+  -- use 'rafamadriz/friendly-snippets'
+  -- use 'hrsh7th/cmp-vsnip'
+  -- use 'hrsh7th/vim-vsnip'
 
-  use 'hrsh7th/cmp-nvim-lsp' -- hmm
-  use 'hrsh7th/nvim-cmp'
-  use 'rafamadriz/friendly-snippets'
-  use 'hrsh7th/cmp-vsnip'
-  use 'hrsh7th/vim-vsnip'
   use 'xuhdev/vim-latex-live-preview'
 
   -- git
@@ -31,14 +37,14 @@ return require('packer').startup(function()
   use 'glepnir/lspsaga.nvim'
 
   -- TypeScript
-  use({ "jose-elias-alvarez/null-ls.nvim",
-    config = function()
-        require("null-ls").config({})
-        require("lspconfig")["null-ls"].setup({})
-    end,
-    requires = {"nvim-lua/plenary.nvim", "neovim/nvim-lspconfig"}
-  })
-  use 'jose-elias-alvarez/nvim-lsp-ts-utils'
+  -- use({ "jose-elias-alvarez/null-ls.nvim",
+  --   config = function()
+  --       require("null-ls").config({})
+  --       require("lspconfig")["null-ls"].setup({})
+  --   end,
+  --   requires = {"nvim-lua/plenary.nvim", "neovim/nvim-lspconfig"}
+  -- })
+  -- use 'jose-elias-alvarez/nvim-lsp-ts-utils'
 
 
   use {

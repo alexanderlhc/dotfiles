@@ -1,50 +1,41 @@
-local lspconfig = require('lspconfig')
+local lsp = require "lspconfig"
 local lsp_installer = require("nvim-lsp-installer")
-local on_attach = require('lsp.on_attach')
-require('lsp.completion')
+local coq = require "coq"
+require "lsp.completion"
 
-local function make_config()
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-  -- capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
-  return {
-    capabilities = capabilities,
-    on_attach = on_attach,
-    root_dir = vim.loop.cwd,
-  }
-end
+local servers = {
+  "bashlhs",
+  "cssls",
+  "diagnosticls",
+  "dockerls",
+  "graphql",
+  "html",
+  "jsonls",
+  "texlab",
+  "sumneko_lua",
+  "pyright",
+  "rust_analyzer",
+  "sqlls",
+  "tsserver",
+  "yamlls"
+}
 
 lsp_installer.on_server_ready(function(server)
-    local opts = {}
+  require "lsp.diagnostics".setup()
 
-    -- (optional) Customize the options passed to the server
-    -- if server.name == "tsserver" then
-    --     opts.root_dir = function() ... end
-    -- end
+	local default_opts = {
+		on_attach = require "lsp.on_attach",
+		capabilities = require "lsp.capabilities".setup(),
+	}
 
-    server:setup(opts)
-    vim.cmd [[ do User LspAttachBuffers ]]
+	-- Now we'll create a server_opts table where we'll specify our custom LSP server configuration
+	local server_opts = { }
+
+	-- We check to see if any custom server_opts exist for the LSP server, if so, load them, if not, use our default_opts
+	server:setup(
+    coq.lsp_ensure_capabilities(server_opts[server.name] and server_opts[server.name]() or default_opts)
+    -- server_opts[server.name] and server_opts[server.name]() or default_opts
+  )
+	vim.cmd([[ do User LspAttachBuffers ]])
 end)
 
--- local function setup_servers()
---   local servers = require'nvim-lsp-installer.servers'
-
---   for _, lang in pairs(servers) do
---     if lang == "lua" then
---       -- require("lsp.languages.lua").setup(on_attach)
---     elseif lang == "typescript" then
---        require("lsp.languages.typescript").setup(on_attach)
---     elseif lang == "json" then
---       -- require("lsp.languages.json").setup(on_attach)
---     else
---       local config = make_config()
---       lspconfig[lang].setup(config)
---     end
---   end
-
---   require("lsp.null-ls").setup()
---   require("lspconfig")["null-ls"].setup({ capabilities = capabilities, on_attach = on_attach })
--- end
-
-
--- setup_servers()

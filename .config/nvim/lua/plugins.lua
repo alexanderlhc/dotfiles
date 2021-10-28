@@ -12,6 +12,8 @@ return require('packer').startup(function()
   }
   use { 'ms-jpq/coq_nvim' }
 
+  -- use { 'antoinemadec/FixCursorHold.nvim' }
+
   -- Currently installed (manually):
   -- efm yaml vim php json java html graphql dockerfile css bash typescript lua latex
 
@@ -34,7 +36,7 @@ return require('packer').startup(function()
     config = [[require("plugins.gitsigns")]],
   }
 
-  use 'glepnir/lspsaga.nvim'
+  -- use 'glepnir/lspsaga.nvim'
 
   -- TypeScript
   -- use({ "jose-elias-alvarez/null-ls.nvim",

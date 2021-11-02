@@ -36,6 +36,10 @@ return require('packer').startup(function()
     config = [[require("plugins.gitsigns")]],
   }
 
+  use { 'sindrets/diffview.nvim' }
+
+  use { 'windwp/nvim-autopairs' }
+
   -- use 'glepnir/lspsaga.nvim'
 
   -- TypeScript
@@ -63,6 +67,8 @@ return require('packer').startup(function()
     'lewis6991/spellsitter.nvim',
     requires = {{ 'nvim-telescope/telescope.nvim' }}
   }
+
+  use { 'norcalli/nvim-colorizer.lua' }
 
   --use {
   --  'christianchiarulli/nvcode-color-schemes.vim',

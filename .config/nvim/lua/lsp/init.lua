@@ -8,14 +8,15 @@ local servers = {
   "cssls",
   "diagnosticls",
   "dockerls",
+  "eslint",
   "graphql",
   "html",
   "jsonls",
-  "texlab",
-  "sumneko_lua",
   "pyright",
   "rust_analyzer",
   "sqlls",
+  "sumneko_lua",
+  "texlab",
   "tsserver",
   "yamlls"
 }
@@ -39,3 +40,32 @@ lsp_installer.on_server_ready(function(server)
 	vim.cmd([[ do User LspAttachBuffers ]])
 end)
 
+-- null-ls (formatter/linter)
+-- https://github.com/jose-elias-alvarez/null-ls.nvim/wiki/Avoiding-LSP-formatting-conflicts
+
+local nls = require "null-ls"
+
+local b = require "null-ls".builtins
+
+local sources = {
+   -- JS html css stuff   
+   b.formatting.prettierd.with {      
+     filetypes = { "html", "json", "markdown", "css", "javascript", "javascriptreact", "typescript" },
+   },
+   
+   -- Lua   
+   b.formatting.stylua,
+   b.diagnostics.luacheck.with { extra_args = { "--global vim" } },
+   
+   -- Shell   
+   b.formatting.shfmt,
+   b.diagnostics.shellcheck.with { diagnostics_format = "#{m} [#{c}]" }
+}
+
+nls.config {
+  debug = true,
+  sources = sources
+}
+require("lspconfig")["null-ls"].setup {
+  on_attach = require "lsp.on_attach"
+}

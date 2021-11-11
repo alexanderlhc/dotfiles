@@ -1,9 +1,9 @@
 [bar/topleft]
 ; must have fonts for each bar
-font-0 = monoid:pixelsize=14;3
+font-0 = monoid:pixelsize=10;3
 font-1 = RobotoMono Nerd Font:pixelsize=10;2
 ;monitor = ${env:MONITOR:HDMI-1}
-width    = 12%
+width    = 9%
 height   = 27
 offset-x = 0.5%
 offset-y = 0.2%

@@ -1,7 +1,7 @@
 local lsp = require "lspconfig"
 local lsp_installer = require("nvim-lsp-installer")
-local coq = require "coq"
 require "lsp.completion"
+local on_attach = require "lsp.on_attach"
 
 local servers = {
   "bashlhs",
@@ -37,7 +37,7 @@ lsp_installer.on_server_ready(function(server)
   require "lsp.diagnostics".setup()
 
 	local default_opts = {
-		on_attach = require "lsp.on_attach",
+		on_attach = on_attach,
 		capabilities = require "lsp.capabilities".setup(),
 	}
 
@@ -71,15 +71,22 @@ local sources = {
 
    -- Shell
    b.formatting.shfmt,
-   b.diagnostics.shellcheck.with { diagnostics_format = "#{m} [#{c}]" }
+   b.diagnostics.shellcheck.with { diagnostics_format = "#{m} [#{c}]" },
+   b.diagnostics.shellcheck,
+
+   -- Gitsignsb
+   b.code_actions.gitsigns,
+
+   -- markdown
+   b.diagnostics.markdownlint,
+
 }
 
 nls.config {
-  debug = true,
+  -- debug = true,
   sources = sources
 }
 
-local nls_on_attach = require "lsp.on_attach"
 require("lspconfig")["null-ls"].setup {
-  on_attach = nls_on_attach
+  on_attach = on_attach
 }

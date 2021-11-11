@@ -22,7 +22,7 @@ Print
 
 # emojis
 super + ctrl + e
-	emojis
+	sh /home/alexander/.local/bin/emojis
 
 # program launcher
 super + r

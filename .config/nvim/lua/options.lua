@@ -1,6 +1,5 @@
 local o = vim.opt
 
-
 o.number         = true -- line numbers
 o.ignorecase     = true -- ignore case
 o.smartcase      = true -- ignore case unless contain mixed

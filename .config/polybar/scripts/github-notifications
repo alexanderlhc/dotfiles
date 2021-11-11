@@ -3,8 +3,10 @@
 endpoint="https://api.github.com/notifications"
 user="AlexanderLHC"
 header="Accept: application/vnd.github.v3+json"
-key="***REMOVED***"
+key=$(cat ~/.local/share/access.token)
 
 notifications=$(curl -sf -u $user:$key -H $header $endpoint | jq length)
 
-echo $notifications
+echo "$key" 
+
+echo "$notifications"

@@ -1,11 +1,26 @@
 return function(client, bufnr)
+
+  -- Format on save
+  if client.name == 'tsserver' then
+    client.resolved_capabilities.document_formatting = false
+    client.resolved_capabilities.document_range_formatting = false
+  else
+    if client.resolved_capabilities.document_formatting then
+      vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
+    end
+  end
+
+
+  ------- Keymaps
+
 	local function buf_set_keymap(...)
 		vim.api.nvim_buf_set_keymap(bufnr, ...)
 	end
+
 	local function buf_set_option(...)
 		vim.api.nvim_buf_set_option(bufnr, ...)
   end
-  
+
   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 
   -- vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")

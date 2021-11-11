@@ -39,3 +39,6 @@ lsp_installer.on_server_ready(function(server)
 	vim.cmd([[ do User LspAttachBuffers ]])
 end)
 
+require("null-ls").config {}
+require("lspconfig")["null-ls"].setup {}
+require("lsp.languages.tsserver")

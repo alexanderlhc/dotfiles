@@ -90,3 +90,26 @@ nls.config {
 require("lspconfig")["null-ls"].setup {
   on_attach = on_attach
 }
+
+
+----
+require("grammar-guard").init()
+
+require("lspconfig").grammar_guard.setup({
+	settings = {
+		ltex = {
+			enabled = { "latex", "tex", "bib", "markdown" },
+			language = "da",
+			diagnosticSeverity = "information",
+			setenceCacheSize = 2000,
+			additionalRules = {
+				enablePickyRules = true,
+				motherTongue = "da",
+			},
+			trace = { server = "verbose" },
+			dictionary = {},
+			disabledRules = {},
+			hiddenFalsePositives = {},
+		},
+	},
+})

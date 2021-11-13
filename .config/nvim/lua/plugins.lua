@@ -27,7 +27,7 @@ return require('packer').startup(function()
   -- use 'hrsh7th/cmp-vsnip'
   -- use 'hrsh7th/vim-vsnip'
 
-  use 'xuhdev/vim-latex-live-preview'
+  -- use 'xuhdev/vim-latex-live-preview'
 
   -- git
   use {
@@ -51,6 +51,12 @@ return require('packer').startup(function()
     requires = {"nvim-lua/plenary.nvim", "neovim/nvim-lspconfig"}
   })
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
+
+  -- Latex - Markdown - Language
+  use {
+    "brymer-meneses/grammar-guard.nvim",
+    requires = "neovim/nvim-lspconfig"
+  }
 
 
   use {

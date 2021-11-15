@@ -10,24 +10,6 @@ return require('packer').startup(function()
     'saadparwaiz1/cmp_luasnip', -- Snippets source for nvim-cmp
     'L3MON4D3/LuaSnip' -- Snippets plugin
   }
-  use { 'ms-jpq/coq_nvim' }
-
-  -- use { 'antoinemadec/FixCursorHold.nvim' }
-
-  -- Currently installed (manually):
-  -- efm yaml vim php json java html graphql dockerfile css bash typescript lua latex
-
-  -- use {
-  --   'hrsh7th/nvim-compe',
-  --   requires = {{ 'hrsh7th/vim-vsnip', 'hrsh7th/vim-vsnip-integ', 'rafamadriz/friendly-snippets' }}
-  -- }
-  -- use 'hrsh7th/cmp-nvim-lsp' -- hmm
-  -- use 'hrsh7th/nvim-cmp'
-  -- use 'rafamadriz/friendly-snippets'
-  -- use 'hrsh7th/cmp-vsnip'
-  -- use 'hrsh7th/vim-vsnip'
-
-  -- use 'xuhdev/vim-latex-live-preview'
 
   -- git
   use {
@@ -35,10 +17,7 @@ return require('packer').startup(function()
     wants = "plenary.nvim",
     config = [[require("plugins.gitsigns")]],
   }
-
   use { 'sindrets/diffview.nvim' }
-
-  use { 'windwp/nvim-autopairs' }
 
   -- use 'glepnir/lspsaga.nvim'
 
@@ -58,6 +37,10 @@ return require('packer').startup(function()
     requires = "neovim/nvim-lspconfig"
   }
 
+  -- Theme/Style
+  use { 'norcalli/nvim-colorizer.lua' }
+  use "projekt0n/github-nvim-theme"
+
 
   use {
     'nvim-treesitter/nvim-treesitter',
@@ -74,23 +57,14 @@ return require('packer').startup(function()
     requires = {{ 'nvim-telescope/telescope.nvim' }}
   }
 
-  use { 'norcalli/nvim-colorizer.lua' }
-
-  --use {
-  --  'christianchiarulli/nvcode-color-schemes.vim',
-  --  requires = {{ 'nvim-treesitter/nvim-treesitter' }}
-  --}
-
-  use "projekt0n/github-nvim-theme"
-  --use { 'rakr/vim-one' }
-  --use "Pocco81/Catppuccino.nvim"
-
   use {
     'kyazdani42/nvim-tree.lua',
     requires = {{ 'kyazdani42/nvim-web-devicons' }}
   }
 
   use 'justinmk/vim-sneak'
+
+  use { 'windwp/nvim-autopairs' }
 
   use 'tpope/vim-commentary'
 

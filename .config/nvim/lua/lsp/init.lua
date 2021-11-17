@@ -1,6 +1,5 @@
 local lsp = require "lspconfig"
 local lsp_installer = require("nvim-lsp-installer")
-require "lsp.completion"
 local on_attach = require "lsp.on_attach"
 
 local servers = {

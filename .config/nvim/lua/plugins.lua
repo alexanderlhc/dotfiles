@@ -7,10 +7,12 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 return require('packer').startup{function()
-  use { 'sindrets/diffview.nvim' }
 
   -- Theme/Style
-  use { 'norcalli/nvim-colorizer.lua' }
+  use { 
+    'norcalli/nvim-colorizer.lua',
+    config = [[ require('plugin-configs/colorizer') ]]
+  }
   use "projekt0n/github-nvim-theme"
 
   -- Fuzzy Find
@@ -26,20 +28,27 @@ return require('packer').startup{function()
 
   use {
     'lewis6991/spellsitter.nvim',
-    requires = {{ 'nvim-telescope/telescope.nvim' }}
+    requires = {{ 'nvim-telescope/telescope.nvim' }},
+    config = [[ require('plugin-configs.treesitter') ]]
   }
 
   -- File Browser
   use {
     'kyazdani42/nvim-tree.lua',
-    requires = {{ 'kyazdani42/nvim-web-devicons' }}
+    requires = {{ 'kyazdani42/nvim-web-devicons' }},
+    config = [[ require('plugin-configs.nvimtree') ]]
   }
 
   -- Improve location specific jumps
   use 'justinmk/vim-sneak'
 
   -- "<[(`' Automatically create as pairs
-  use { 'windwp/nvim-autopairs' }
+  use { 
+    'windwp/nvim-autopairs',
+    config = function ()
+      require('nvim-autopairs').setup{}
+    end
+  }
 
   -- Comments how it's supposed to be
   use 'tpope/vim-commentary'
@@ -49,6 +58,12 @@ return require('packer').startup{function()
 
   -- Git git dit dat git
   use 'tpope/vim-fugitive'
+  use {
+    'sindrets/diffview.nvim',
+    config = function ()
+      require'plugin-configs.diffview'
+    end
+  }
 
   ------- LSP and Languages
 

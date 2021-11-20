@@ -138,6 +138,7 @@ _G.packer_plugins = {
     url = "https://github.com/hrsh7th/nvim-cmp"
   },
   ["nvim-colorizer.lua"] = {
+    config = { " require('plugin-configs/colorizer') " },
     loaded = true,
     path = "/home/alexander/.local/share/nvim/site/pack/packer/start/nvim-colorizer.lua",
     url = "https://github.com/norcalli/nvim-colorizer.lua"
@@ -158,6 +159,7 @@ _G.packer_plugins = {
     url = "https://github.com/neovim/nvim-lspconfig"
   },
   ["nvim-tree.lua"] = {
+    config = { " require('plugin-configs.nvimtree') " },
     loaded = true,
     path = "/home/alexander/.local/share/nvim/site/pack/packer/start/nvim-tree.lua",
     url = "https://github.com/kyazdani42/nvim-tree.lua"
@@ -183,6 +185,7 @@ _G.packer_plugins = {
     url = "https://github.com/nvim-lua/popup.nvim"
   },
   ["spellsitter.nvim"] = {
+    config = { " require('plugin-configs.treesitter') " },
     loaded = true,
     path = "/home/alexander/.local/share/nvim/site/pack/packer/start/spellsitter.nvim",
     url = "https://github.com/lewis6991/spellsitter.nvim"
@@ -216,10 +219,6 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: null-ls.nvim
-time([[Config for null-ls.nvim]], true)
-try_loadstring("\27LJ\1\2f\0\0\2\0\5\0\0144\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\0014\0\0\0%\1\3\0>\0\2\0027\0\1\0007\0\4\0002\1\0\0>\0\2\1G\0\1\0\nsetup\14lspconfig\vconfig\fnull-ls\frequire\0", "config", "null-ls.nvim")
-time([[Config for null-ls.nvim]], false)
 -- Config for: LuaSnip
 time([[Config for LuaSnip]], true)
  require('plugin-configs/snippets') 
@@ -228,10 +227,26 @@ time([[Config for LuaSnip]], false)
 time([[Config for nvim-cmp]], true)
  require('plugin-configs/completion')
 time([[Config for nvim-cmp]], false)
+-- Config for: nvim-colorizer.lua
+time([[Config for nvim-colorizer.lua]], true)
+ require('plugin-configs/colorizer') 
+time([[Config for nvim-colorizer.lua]], false)
+-- Config for: nvim-tree.lua
+time([[Config for nvim-tree.lua]], true)
+ require('plugin-configs.nvimtree') 
+time([[Config for nvim-tree.lua]], false)
 -- Config for: telescope.nvim
 time([[Config for telescope.nvim]], true)
  require('plugin-configs/telescope') 
 time([[Config for telescope.nvim]], false)
+-- Config for: null-ls.nvim
+time([[Config for null-ls.nvim]], true)
+try_loadstring("\27LJ\1\2f\0\0\2\0\5\0\0144\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\0014\0\0\0%\1\3\0>\0\2\0027\0\1\0007\0\4\0002\1\0\0>\0\2\1G\0\1\0\nsetup\14lspconfig\vconfig\fnull-ls\frequire\0", "config", "null-ls.nvim")
+time([[Config for null-ls.nvim]], false)
+-- Config for: spellsitter.nvim
+time([[Config for spellsitter.nvim]], true)
+ require('plugin-configs.treesitter') 
+time([[Config for spellsitter.nvim]], false)
 if should_profile then save_profiles() end
 
 end)

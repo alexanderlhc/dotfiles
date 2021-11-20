@@ -21,6 +21,7 @@ o.mouse          = "nvi" -- mouse in: normal, visual, insert
 o.syntax         = "on"
 o.shell          = "/bin/bash"
 o.completeopt    = "menuone,noinsert,noselect"
+o.lazyredraw     = true  -- macros and regex shouldnt slowdown
 
 o.termguicolors  = true -- 24 bit RGB colors!
 vim.g.nvcode_termcolors=256

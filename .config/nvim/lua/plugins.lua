@@ -1,47 +1,45 @@
-return require('packer').startup(function()
-  use 'wbthomason/packer.nvim'
+local execute = vim.api.nvim_command
+local fn = vim.fn
+local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+if fn.empty(fn.glob(install_path)) > 0 then
+  fn.system({'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path})
+  execute 'packadd packer.nvim'
+end
+
+return require('packer').startup{function()
+  -- use 'wbthomason/packer.nvim'
 
   -- LSP
   use {
     'neovim/nvim-lspconfig',
     'williamboman/nvim-lsp-installer',
-    'hrsh7th/nvim-cmp', -- Autocompletion plugin
-    'hrsh7th/cmp-nvim-lsp', -- LSP source for nvim-cmp
-    'hrsh7th/cmp-vsnip',
-    'hrsh7th/vim-vsnip',
-    'onsails/lspkind-nvim'
-    -- 'saadparwaiz1/cmp_luasnip', -- Snippets source for nvim-cmp
-    -- 'L3MON4D3/LuaSnip' -- Snippets plugin
   }
-  -- use { 'ms-jpq/coq_nvim' }
-
-  -- use { 'antoinemadec/FixCursorHold.nvim' }
-
-  -- Currently installed (manually):
-  -- efm yaml vim php json java html graphql dockerfile css bash typescript lua latex
-
-  -- use {
-  --   'hrsh7th/nvim-compe',
-  --   requires = {{ 'hrsh7th/vim-vsnip', 'hrsh7th/vim-vsnip-integ', 'rafamadriz/friendly-snippets' }}
-  -- }
-  -- use 'hrsh7th/cmp-nvim-lsp' -- hmm
-  -- use 'hrsh7th/nvim-cmp'
-  -- use 'rafamadriz/friendly-snippets'
-  -- use 'hrsh7th/cmp-vsnip'
-  -- use 'hrsh7th/vim-vsnip'
-
-  use 'xuhdev/vim-latex-live-preview'
+  -- Completion
+  use {
+    'hrsh7th/nvim-cmp', -- Autocompletion plugin
+    requires = {
+      'hrsh7th/cmp-nvim-lsp', -- LSP source for nvim-cmp
+      'saadparwaiz1/cmp_luasnip', -- Snippets source for nvim-cmp
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-path',
+      'hrsh7th/cmp-cmdline'
+    },
+    config = [[ require('plugin-configs/completion')]]
+  }
+  -- Snippets
+  use {
+    'L3MON4D3/LuaSnip', -- Snippets plugin
+    requires = {"rafamadriz/friendly-snippets"},
+    config = [[ require('plugin-configs/snippets') ]]
+  }
 
   -- git
-  use {
-    "lewis6991/gitsigns.nvim",
-    wants = "plenary.nvim",
-    config = [[require("plugins.gitsigns")]],
-  }
-
+  -- use {
+  --   "lewis6991/gitsigns.nvim",
+  --   wants = "plenary.nvim",
+  --   config = [[require("plugins.gitsigns")]],
+  -- }
   use { 'sindrets/diffview.nvim' }
-
-  use { 'windwp/nvim-autopairs' }
 
   -- use 'glepnir/lspsaga.nvim'
 
@@ -55,6 +53,16 @@ return require('packer').startup(function()
   })
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
 
+  -- Latex - Markdown - Language
+  use {
+    "brymer-meneses/grammar-guard.nvim",
+    requires = "neovim/nvim-lspconfig"
+  }
+
+  -- Theme/Style
+  use { 'norcalli/nvim-colorizer.lua' }
+  use "projekt0n/github-nvim-theme"
+
 
   use {
     'nvim-treesitter/nvim-treesitter',
@@ -63,7 +71,8 @@ return require('packer').startup(function()
 
   use {
     'nvim-telescope/telescope.nvim',
-    requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
+    requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}},
+    config = [[ require('plugin-configs/telescope') ]]
   }
 
   use {
@@ -71,23 +80,14 @@ return require('packer').startup(function()
     requires = {{ 'nvim-telescope/telescope.nvim' }}
   }
 
-  use { 'norcalli/nvim-colorizer.lua' }
-
-  --use {
-  --  'christianchiarulli/nvcode-color-schemes.vim',
-  --  requires = {{ 'nvim-treesitter/nvim-treesitter' }}
-  --}
-
-  use "projekt0n/github-nvim-theme"
-  --use { 'rakr/vim-one' }
-  --use "Pocco81/Catppuccino.nvim"
-
   use {
     'kyazdani42/nvim-tree.lua',
     requires = {{ 'kyazdani42/nvim-web-devicons' }}
   }
 
   use 'justinmk/vim-sneak'
+
+  use { 'windwp/nvim-autopairs' }
 
   use 'tpope/vim-commentary'
 
@@ -97,4 +97,7 @@ return require('packer').startup(function()
 
   -- use 'airblade/vim-gitgutter'
 
-end)
+end, config = {
+  compile_path = vim.fn.stdpath('config')..'/plugin/packer_compiled.lua'
+  }
+}

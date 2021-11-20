@@ -20,6 +20,7 @@ o.splitright     = true  -- splits go right
 o.mouse          = "nvi" -- mouse in: normal, visual, insert
 o.syntax         = "on"
 o.shell          = "/bin/bash"
+o.completeopt    = "menuone,noinsert,noselect"
 
 o.termguicolors  = true -- 24 bit RGB colors!
 vim.g.nvcode_termcolors=256

@@ -27,5 +27,3 @@ vim.g.nvcode_termcolors=256
 require('github-theme').setup({
   theme_style="light"
 })
--- o.background     = "light"
--- vim.cmd('colorscheme one')

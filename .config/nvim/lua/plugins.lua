@@ -56,8 +56,20 @@ return require('packer').startup{function()
   -- Surroundings modification vastly improved
   use 'tpope/vim-surround'
 
-  -- Git git dit dat git
+  ---- Git git dit dat git
+  -- git w/o leaving nvim
   use 'tpope/vim-fugitive'
+  -- git decorations
+  use {
+    'lewis6991/gitsigns.nvim',
+    requires = {
+      'nvim-lua/plenary.nvim'
+    },
+    config = function ()
+      require('gitsigns').setup()
+    end
+  }
+
   use {
     'sindrets/diffview.nvim',
     config = function ()

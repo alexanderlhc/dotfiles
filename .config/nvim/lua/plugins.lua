@@ -96,7 +96,8 @@ return require('packer').startup{function()
   -- Parser almost too good
   use {
     'nvim-treesitter/nvim-treesitter',
-    run = ':TSUpdate'
+    run = ':TSUpdate',
+    config = [[ require('plugin-configs/treesitter') ]]
   }
 
   -- TypeScript

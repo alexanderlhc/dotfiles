@@ -167,6 +167,7 @@ _G.packer_plugins = {
     url = "https://github.com/kyazdani42/nvim-tree.lua"
   },
   ["nvim-treesitter"] = {
+    config = { " require('plugin-configs/treesitter') " },
     loaded = true,
     path = "/home/alexander/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
     url = "https://github.com/nvim-treesitter/nvim-treesitter"
@@ -241,6 +242,10 @@ time([[Config for diffview.nvim]], false)
 time([[Config for spellsitter.nvim]], true)
  require('plugin-configs.treesitter') 
 time([[Config for spellsitter.nvim]], false)
+-- Config for: nvim-treesitter
+time([[Config for nvim-treesitter]], true)
+ require('plugin-configs/treesitter') 
+time([[Config for nvim-treesitter]], false)
 -- Config for: null-ls.nvim
 time([[Config for null-ls.nvim]], true)
 try_loadstring("\27LJ\1\2f\0\0\2\0\5\0\0144\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\0014\0\0\0%\1\3\0>\0\2\0027\0\1\0007\0\4\0002\1\0\0>\0\2\1G\0\1\0\nsetup\14lspconfig\vconfig\fnull-ls\frequire\0", "config", "null-ls.nvim")

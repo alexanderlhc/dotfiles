@@ -1,5 +1,6 @@
 # dotfiles
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias dotgit='lazygit --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 alias v='nvim'
 alias bat='bat --theme=GitHub'

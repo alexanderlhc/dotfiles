@@ -56,6 +56,9 @@ return require('packer').startup{function()
   -- Surroundings modification vastly improved
   use 'tpope/vim-surround'
 
+  -- ActivityWatcher
+  use 'ActivityWatch/aw-watcher-vim'
+
   ---- Git git dit dat git
   -- git w/o leaving nvim
   use 'tpope/vim-fugitive'

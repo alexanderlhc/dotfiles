@@ -9,7 +9,7 @@ end
 return require('packer').startup{function()
 
   -- Theme/Style
-  use { 
+  use {
     'norcalli/nvim-colorizer.lua',
     config = [[ require('plugin-configs/colorizer') ]]
   }

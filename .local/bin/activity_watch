@@ -1,0 +1,28 @@
+#!/bin/bash
+
+SHOULD_START="$1"
+
+start ()
+{
+  cd /opt/activitywatch || exit
+
+  ./aw-server/aw-server &
+  ./aw-watcher-afk/aw-watcher-afk &
+  ./aw-watcher-window/aw-watcher-window &                 # you can add --exclude-title here to exclude window title tracking for this session only
+
+  notify-send "ActivityWatch started"   # Optional, sends a notification when ActivityWatch is started
+}
+
+stop ()
+{
+  pkill aw-
+  notify-send "ActivityWatch killed"
+}
+
+echo "$SHOULD_START"
+
+if [[ -n $SHOULD_START && $SHOULD_START == 'start' ]]; then
+  start
+else
+  stop
+fi

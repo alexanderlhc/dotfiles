@@ -1,3 +1,5 @@
+require('telescope').load_extension('fzf')
+
 local opts = { noremap=true, silent=true }
 
 vim.api.nvim_set_keymap('n', '<leader>ff', "<cmd>lua require('telescope.builtin').find_files()<cr>", opts)

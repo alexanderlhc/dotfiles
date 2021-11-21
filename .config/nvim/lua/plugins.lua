@@ -43,7 +43,7 @@ return require('packer').startup{function()
   use 'justinmk/vim-sneak'
 
   -- "<[(`' Automatically create as pairs
-  use { 
+  use {
     'windwp/nvim-autopairs',
     config = function ()
       require('nvim-autopairs').setup{}

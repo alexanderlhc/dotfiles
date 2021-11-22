@@ -10,6 +10,8 @@ autoload -Uz compinit
 compinit
 
 source ~/.config/aliases
+path+=('/home/alexander/.local/bin')
+export PATH
 
 # managed through aur
 source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh

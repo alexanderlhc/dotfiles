@@ -51,8 +51,13 @@ return require('packer').startup{function()
   }
 
   -- Comments how it's supposed to be
-  use 'tpope/vim-commentary'
- 
+  use {
+    'numToStr/Comment.nvim',
+    config = [[ require('plugin-configs.comment') ]],
+    requires = {{ 'JoosepAlviste/nvim-ts-context-commentstring' }}
+  }
+
+
   -- Surroundings modification vastly improved
   use 'tpope/vim-surround'
 

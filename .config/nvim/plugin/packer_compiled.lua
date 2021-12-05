@@ -57,7 +57,7 @@ end
 time([[Luarocks path setup]], false)
 time([[try_loadstring definition]], true)
 local function try_loadstring(s, component, name)
-  local success, result = pcall(loadstring(s))
+  local success, result = pcall(loadstring(s), name, _G.packer_plugins[name])
   if not success then
     vim.schedule(function()
       vim.api.nvim_notify('packer.nvim: Error running ' .. component .. ' for ' .. name .. ': ' .. result, vim.log.levels.ERROR, {})
@@ -69,6 +69,12 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  ["Comment.nvim"] = {
+    config = { " require('plugin-configs.comment') " },
+    loaded = true,
+    path = "/home/alexander/.local/share/nvim/site/pack/packer/start/Comment.nvim",
+    url = "https://github.com/numToStr/Comment.nvim"
+  },
   LuaSnip = {
     config = { " require('plugin-configs/snippets') " },
     loaded = true,
@@ -183,6 +189,11 @@ _G.packer_plugins = {
     path = "/home/alexander/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
     url = "https://github.com/nvim-treesitter/nvim-treesitter"
   },
+  ["nvim-ts-context-commentstring"] = {
+    loaded = true,
+    path = "/home/alexander/.local/share/nvim/site/pack/packer/start/nvim-ts-context-commentstring",
+    url = "https://github.com/JoosepAlviste/nvim-ts-context-commentstring"
+  },
   ["nvim-web-devicons"] = {
     loaded = true,
     path = "/home/alexander/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
@@ -215,11 +226,6 @@ _G.packer_plugins = {
     path = "/home/alexander/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
   },
-  ["vim-commentary"] = {
-    loaded = true,
-    path = "/home/alexander/.local/share/nvim/site/pack/packer/start/vim-commentary",
-    url = "https://github.com/tpope/vim-commentary"
-  },
   ["vim-fugitive"] = {
     loaded = true,
     path = "/home/alexander/.local/share/nvim/site/pack/packer/start/vim-fugitive",
@@ -238,10 +244,10 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: nvim-treesitter
-time([[Config for nvim-treesitter]], true)
- require('plugin-configs/treesitter') 
-time([[Config for nvim-treesitter]], false)
+-- Config for: telescope.nvim
+time([[Config for telescope.nvim]], true)
+ require('plugin-configs/telescope') 
+time([[Config for telescope.nvim]], false)
 -- Config for: nvim-cmp
 time([[Config for nvim-cmp]], true)
  require('plugin-configs/completion')
@@ -258,30 +264,34 @@ time([[Config for diffview.nvim]], false)
 time([[Config for spellsitter.nvim]], true)
  require('plugin-configs.treesitter') 
 time([[Config for spellsitter.nvim]], false)
--- Config for: gitsigns.nvim
-time([[Config for gitsigns.nvim]], true)
-try_loadstring("\27LJ\1\0026\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\rgitsigns\frequire\0", "config", "gitsigns.nvim")
-time([[Config for gitsigns.nvim]], false)
 -- Config for: null-ls.nvim
 time([[Config for null-ls.nvim]], true)
 try_loadstring("\27LJ\1\2f\0\0\2\0\5\0\0144\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\0014\0\0\0%\1\3\0>\0\2\0027\0\1\0007\0\4\0002\1\0\0>\0\2\1G\0\1\0\nsetup\14lspconfig\vconfig\fnull-ls\frequire\0", "config", "null-ls.nvim")
 time([[Config for null-ls.nvim]], false)
--- Config for: telescope.nvim
-time([[Config for telescope.nvim]], true)
- require('plugin-configs/telescope') 
-time([[Config for telescope.nvim]], false)
--- Config for: LuaSnip
-time([[Config for LuaSnip]], true)
- require('plugin-configs/snippets') 
-time([[Config for LuaSnip]], false)
--- Config for: nvim-autopairs
-time([[Config for nvim-autopairs]], true)
-try_loadstring("\27LJ\1\2@\0\0\2\0\3\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\1G\0\1\0\nsetup\19nvim-autopairs\frequire\0", "config", "nvim-autopairs")
-time([[Config for nvim-autopairs]], false)
+-- Config for: gitsigns.nvim
+time([[Config for gitsigns.nvim]], true)
+try_loadstring("\27LJ\1\0026\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\rgitsigns\frequire\0", "config", "gitsigns.nvim")
+time([[Config for gitsigns.nvim]], false)
 -- Config for: nvim-tree.lua
 time([[Config for nvim-tree.lua]], true)
  require('plugin-configs.nvimtree') 
 time([[Config for nvim-tree.lua]], false)
+-- Config for: LuaSnip
+time([[Config for LuaSnip]], true)
+ require('plugin-configs/snippets') 
+time([[Config for LuaSnip]], false)
+-- Config for: Comment.nvim
+time([[Config for Comment.nvim]], true)
+ require('plugin-configs.comment') 
+time([[Config for Comment.nvim]], false)
+-- Config for: nvim-autopairs
+time([[Config for nvim-autopairs]], true)
+try_loadstring("\27LJ\1\2@\0\0\2\0\3\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\1G\0\1\0\nsetup\19nvim-autopairs\frequire\0", "config", "nvim-autopairs")
+time([[Config for nvim-autopairs]], false)
+-- Config for: nvim-treesitter
+time([[Config for nvim-treesitter]], true)
+ require('plugin-configs/treesitter') 
+time([[Config for nvim-treesitter]], false)
 if should_profile then save_profiles() end
 
 end)

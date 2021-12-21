@@ -62,7 +62,7 @@ return require('packer').startup{function()
   use 'tpope/vim-surround'
 
   -- ActivityWatcher
-  use 'ActivityWatch/aw-watcher-vim'
+  -- use 'ActivityWatch/aw-watcher-vim'
 
   ---- Git git dit dat git
   -- git w/o leaving nvim
@@ -122,12 +122,10 @@ return require('packer').startup{function()
 
   -- TypeScript
   use({ "jose-elias-alvarez/null-ls.nvim",
-    config = function()
-        require("null-ls").config({})
-        require("lspconfig")["null-ls"].setup({})
-    end,
+    config = [[ require('lsp/null-ls') ]],
     requires = {"nvim-lua/plenary.nvim", "neovim/nvim-lspconfig"}
   })
+
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
 
   -- Latex - Markdown - Text

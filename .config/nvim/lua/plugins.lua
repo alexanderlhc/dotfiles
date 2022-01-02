@@ -113,6 +113,12 @@ return require('packer').startup{function()
     config = [[ require('plugin-configs/snippets') ]]
   }
 
+  -- Documentation
+  use {
+    'kkoomen/vim-doge',
+    run = ':call doge#install()'
+  }
+
   -- Parser almost too good
   use {
     'nvim-treesitter/nvim-treesitter',

@@ -9,8 +9,9 @@ alias ls='exa --group-directories-first'
 
 # Git
 alias g='git'
-alias gst='git status'
+alias gs='git status'
 alias gc='git commit'
+alias gcm='git commit -m'
 alias ga='git add'
 alias gpl='git pull'
 alias gplm='git pull origin master'

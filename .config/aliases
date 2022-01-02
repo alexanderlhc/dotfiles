@@ -3,5 +3,22 @@ alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias dotgit='lazygit --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 alias v='nvim'
+alias vim-no-config='vim -u NONE'
 alias bat='bat --theme=GitHub'
-alias ls='exa'
+alias ls='exa --group-directories-first'
+
+# Git
+alias g='git'
+alias gst='git status'
+alias gc='git commit'
+alias ga='git add'
+alias gpl='git pull'
+alias gplm='git pull origin master'
+alias gpu='git push'
+alias gpum='git push origin master'
+alias gch='git checkout'
+alias gnb='git checkout -b'
+alias gre='git restore'
+alias glg="git log --graph --abbrev-commit --decorate --format=format:'%C(bold green)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold yellow)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all"
+alias gt='git ls-tree -r master --name-only'
+alias gm='git merge'

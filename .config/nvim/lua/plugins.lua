@@ -124,7 +124,7 @@ return require('packer').startup{function()
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
     config = [[ require('plugin-configs/treesitter') ]],
-    requires = { "nvim-treesitter/nvim-treesitter-refactor" }
+    requires = { "nvim-treesitter/nvim-treesitter-refactor", "romgrk/nvim-treesitter-context" }
   }
 
   -- TypeScript

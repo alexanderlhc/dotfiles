@@ -20,5 +20,10 @@ require('nvim-treesitter.configs').setup {
         smart_rename = "grr",
       },
     },
+  },
+
+  -- module: ts-autotag
+  autotag = {
+    enable = true,
   }
 }

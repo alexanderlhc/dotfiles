@@ -113,6 +113,9 @@ return require('packer').startup{function()
     config = [[ require('plugin-configs/snippets') ]]
   }
 
+  -- Test
+  use { 'ruanyl/coverage.vim' }
+
   -- Documentation
   use {
     'kkoomen/vim-doge',

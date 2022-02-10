@@ -111,8 +111,13 @@ return require('packer').startup{function()
 
   -- Documentation
   use {
-    'kkoomen/vim-doge',
-    run = ':call doge#install()'
+    "danymat/neogen",
+    config = function()
+        require('neogen').setup {
+            enabled = true
+        }
+    end,
+    requires = "nvim-treesitter/nvim-treesitter"
   }
 
   -- Parser almost too good

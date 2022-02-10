@@ -78,13 +78,6 @@ return require('packer').startup{function()
     end
   }
 
-  use {
-    'sindrets/diffview.nvim',
-    config = function ()
-      require'plugin-configs.diffview'
-    end
-  }
-
   ------- LSP and Languages
 
   -- LSP

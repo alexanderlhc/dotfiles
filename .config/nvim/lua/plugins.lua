@@ -78,6 +78,19 @@ return require('packer').startup{function()
     end
   }
 
+  -- Octo GH Reviews
+  use {
+    'pwntester/octo.nvim',
+    requires = {
+      'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope.nvim',
+      'kyazdani42/nvim-web-devicons',
+    },
+    config = function ()
+      require"octo".setup()
+    end
+  }
+
   ------- LSP and Languages
 
   -- LSP

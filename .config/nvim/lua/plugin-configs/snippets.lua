@@ -1,5 +1,5 @@
-require"luasnip"
--- local s = ls.snippet
+local ls = require"luasnip"
+local s = ls.snippet
 -- local sn = ls.snippet_node
 -- local isn = ls.indent_snippet_node
 -- local t = ls.text_node
@@ -8,5 +8,6 @@ require"luasnip"
 -- local c = ls.choice_node
 -- local d = ls.dynamic_node
 -- local events = require("luasnip.util.events")
-
+--
+require("luasnip.loaders.from_vscode").load()
 require("luasnip.loaders.from_vscode").lazy_load() -- friendly-snippets

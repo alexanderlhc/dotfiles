@@ -13,7 +13,7 @@ require('nvim-treesitter.configs').setup {
   refactor = {
     enable = true,
     clear_on_cursor_move = true,
-    highlight_current_scope = { enable = true },
+    -- highlight_current_scope = { enable = true },
     smart_rename = {
       enable = true,
       keymaps = {

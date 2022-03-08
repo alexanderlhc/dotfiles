@@ -14,6 +14,7 @@ return require('packer').startup{function()
     config = [[ require('plugin-configs/colorizer') ]]
   }
   use "projekt0n/github-nvim-theme"
+  use "RRethy/nvim-base16"
 
   -- Fuzzy Find
   use {

@@ -9,9 +9,10 @@ o.listchars      = {
   eol = "↲",
   tab = "» ",
 }
+o.foldlevel      = 20
 o.foldmethod     = "expr"
 o.foldexpr       = "nvim_treesitter#foldexpr()"
-o.foldlevelstart = 132
+-- o.foldlevelstart = 132
 o.tabstop        = 2     -- tab takes 2 spaces
 o.shiftwidth     = 2     -- spaces used for (auto)indent
 o.expandtab      = true  -- tabs to spaces
@@ -25,6 +26,10 @@ o.lazyredraw     = true  -- macros and regex shouldnt slowdown
 
 o.termguicolors  = true -- 24 bit RGB colors!
 vim.g.nvcode_termcolors=256
-require('github-theme').setup({
-  theme_style="light"
-})
+-- require('github-theme').setup({
+--   theme_style="light"
+-- })
+--colorscheme zenbones
+-- vim.cmd("colorscheme zenbones")
+vim.cmd('colorscheme base16-atelier-cave-light')
+o.background = "light"

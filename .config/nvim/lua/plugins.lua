@@ -16,6 +16,11 @@ return require('packer').startup{function()
   use "projekt0n/github-nvim-theme"
   use "RRethy/nvim-base16"
 
+  use { 'nvim-lualine/lualine.nvim',
+    requires = {'kyazdani42/nvim-web-devicons', opt = true},
+    config = [[ require('plugin-configs/lualine')]]
+  }
+
   -- Fuzzy Find
   use {
     'nvim-telescope/telescope.nvim',

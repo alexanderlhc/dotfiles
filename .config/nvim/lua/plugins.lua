@@ -40,6 +40,17 @@ return require('packer').startup{function()
     config = [[ require('plugin-configs.nvimtree') ]]
   }
 
+  -- Yank/Copy clipboard manager
+  use {
+    "AckslD/nvim-neoclip.lua",
+    requires = {
+      {'tami5/sqlite.lua', module = 'sqlite'},
+      {'nvim-telescope/telescope.nvim'},
+    },
+    config = [[ require('plugin-configs.neoclip') ]]
+  }
+
+
   -- Improve location specific jumps
   use 'justinmk/vim-sneak'
 

@@ -79,8 +79,11 @@ return require('packer').startup{function()
   -- Surroundings modification vastly improved
   use 'tpope/vim-surround'
 
-  -- ActivityWatcher
-  -- use 'ActivityWatch/aw-watcher-vim'
+  -- KeyMap
+  use {
+    "folke/which-key.nvim",
+    config = [[ require('plugin-configs.which-key')]]
+  }
 
   ---- Git git dit dat git
   -- git w/o leaving nvim

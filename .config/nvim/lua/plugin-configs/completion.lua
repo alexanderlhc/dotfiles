@@ -66,4 +66,3 @@ cmp.setup({
       ['S-<Tab>'] = cmp.mapping(shift_tab_complete, { 'i', 's' })
     },
 })
-

@@ -79,8 +79,11 @@ return require('packer').startup{function()
   -- Surroundings modification vastly improved
   use 'tpope/vim-surround'
 
-  -- ActivityWatcher
-  -- use 'ActivityWatch/aw-watcher-vim'
+  -- KeyMap
+  use {
+    "folke/which-key.nvim",
+    config = [[ require('plugin-configs.which-key')]]
+  }
 
   ---- Git git dit dat git
   -- git w/o leaving nvim
@@ -117,24 +120,11 @@ return require('packer').startup{function()
     'williamboman/nvim-lsp-installer',
   }
 
-  -- Completion
-  use {
-    'hrsh7th/nvim-cmp', -- Autocompletion plugin
-    requires = {
-      'hrsh7th/cmp-nvim-lsp', -- LSP source for nvim-cmp
-      'saadparwaiz1/cmp_luasnip', -- Snippets source for nvim-cmp
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
-      'hrsh7th/cmp-cmdline'
-    },
-    config = [[ require('plugin-configs/completion')]]
-  }
-
   -- Snippets
   use {
     'L3MON4D3/LuaSnip', -- Snippets plugin
-    requires = {"rafamadriz/friendly-snippets"},
-    config = [[ require('plugin-configs/snippets') ]]
+    -- requires = {"rafamadriz/friendly-snippets"},
+    config = [[ require('plugin-configs/luasnip') ]]
   }
 
   -- Test
@@ -171,12 +161,6 @@ return require('packer').startup{function()
   })
 
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
-
-  -- Latex - Markdown - Text
-  use {
-    "brymer-meneses/grammar-guard.nvim",
-    requires = "neovim/nvim-lspconfig"
-  }
 
 end, config = {
   compile_path = vim.fn.stdpath('config')..'/plugin/packer_compiled.lua'

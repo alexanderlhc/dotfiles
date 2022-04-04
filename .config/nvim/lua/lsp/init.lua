@@ -49,25 +49,3 @@ lsp_installer.on_server_ready(function(server)
   )
 	vim.cmd([[ do User LspAttachBuffers ]])
 end)
-
-----
-require("grammar-guard").init()
-
-require("lspconfig").grammar_guard.setup({
-	settings = {
-		ltex = {
-			enabled = { "latex", "tex", "bib", "markdown" },
-			language = "da",
-			diagnosticSeverity = "information",
-			setenceCacheSize = 2000,
-			additionalRules = {
-				enablePickyRules = true,
-				motherTongue = "da",
-			},
-			trace = { server = "verbose" },
-			dictionary = {},
-			disabledRules = {},
-			hiddenFalsePositives = {},
-		},
-	},
-})

@@ -47,3 +47,4 @@ vim.keymap.set("i", "<c-l>", function()
   end
 end)
 
+require("luasnip.loaders.from_lua").load({paths = "~/.config/nvim/lua/snippets/"})

@@ -114,10 +114,28 @@ return require('packer').startup{function()
 
   ------- LSP and Languages
 
+  use { 'github/copilot.vim' }
+
   -- LSP
   use {
     'neovim/nvim-lspconfig',
     'williamboman/nvim-lsp-installer',
+  }
+
+  use "onsails/lspkind-nvim" -- TODO
+  -- hrsh7th/nvim-cmp
+  use {
+    'hrsh7th/nvim-cmp',
+    requires = {
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-path',
+      'hrsh7th/cmp-copilot',
+      'hrsh7th/cmp-nvim-lua',
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-nvim-lsp-document-symbol',
+      'saadparwaiz1/cmp_luasnip'
+    },
+    config = [[ require('plugin-configs.cmp') ]]
   }
 
   -- Snippets

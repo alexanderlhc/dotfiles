@@ -1,5 +1,5 @@
 require('nvim-treesitter.configs').setup {
-  ensure_installed = "maintained",
+  ensure_installed = "all",
   ignore_install = { "ocaml", "ocaml_interface", "ocamllex" },
   highlight = {enable = true},
   indent = {enable = true},
@@ -27,8 +27,4 @@ require('nvim-treesitter.configs').setup {
     enable = true,
   },
 
-  -- module: commentstring for ts(x)
-  context_commentstring = {
-    enable = true
-  }
 }

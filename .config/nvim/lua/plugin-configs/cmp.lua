@@ -8,8 +8,6 @@ cmp.setup({
     end,
   },
   mapping = {
-    -- ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-    -- ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
     ["<C-b>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ['<C-e>'] = cmp.mapping({
@@ -40,13 +38,14 @@ cmp.setup({
       { "i", "c" }
     ),
   },
-  sources = cmp.config.sources({
+  sources = {
     { name = 'nvim_lsp' },
+    { name = "nvim_lua" },
     { name = 'luasnip' },
-    -- { name = 'copilot'},
-  }, {
-      { name = 'buffer' },
-    }),
+    { name = 'copilot'},
+    { name = 'path'},
+    { name = 'buffer' },
+  },
   formatting = {
     format = lspkind.cmp_format {
       with_text = true,
@@ -58,11 +57,11 @@ cmp.setup({
         luasnip = "[snip]",
         gh_issues = "[issues]",
         tn = "[TabNine]",
+        copilot = "[Copilot]",
       },
     },
   },
   experimental = {
-    -- I like the new menu better! Nice work hrsh7th
     native_menu = false,
     ghost_text = true,
   },

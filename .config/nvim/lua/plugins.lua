@@ -174,7 +174,7 @@ return require('packer').startup{function()
 
   -- TypeScript
   use({ "jose-elias-alvarez/null-ls.nvim",
-    config = [[ require('lsp/null-ls') ]],
+    -- config = [[ require('lsp/null-ls') ]],
     requires = {"nvim-lua/plenary.nvim", "neovim/nvim-lspconfig"}
   })
 

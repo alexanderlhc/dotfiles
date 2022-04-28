@@ -56,7 +56,6 @@ return require('packer').startup{function()
     config = [[ require('plugin-configs.neoclip') ]]
   }
 
-
   -- Improve location specific jumps
   use 'justinmk/vim-sneak'
 
@@ -170,6 +169,12 @@ return require('packer').startup{function()
       "windwp/nvim-ts-autotag",
       "JoosepAlviste/nvim-ts-context-commentstring"
     }
+  }
+
+   -- diagnostics to upper right
+  use {
+    'Mofiqul/trld.nvim',
+    config = [[ require('plugin-configs/trld') ]]
   }
 
   -- TypeScript

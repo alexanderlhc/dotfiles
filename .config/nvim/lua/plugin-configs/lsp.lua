@@ -41,6 +41,8 @@ for _, lsp in ipairs(servers) do
 
 end
 
+--------------
+-- LUA
 -- source: https://github.com/nvim-lua/kickstart.nvim/blob/d4cf318b5bc1bb29c7d21dcbdbc5eb622bd91705/init.lua#L240
 local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, 'lua/?.lua')
@@ -64,3 +66,13 @@ lspconfig.sumneko_lua.setup {
     },
   },
 }
+
+--------------
+-- Null-LS
+require("null-ls").setup({
+    sources = {
+        require("null-ls").builtins.formatting.stylua,
+        require("null-ls").builtins.diagnostics.eslint,
+        require("null-ls").builtins.completion.spell,
+    },
+})

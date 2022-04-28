@@ -1,4 +1,5 @@
 require('options')
+require('functions')
 require('keymaps')
 require('plugins')
 require('plugin-configs.lsp')

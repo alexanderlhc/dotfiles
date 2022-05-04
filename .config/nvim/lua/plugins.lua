@@ -171,11 +171,11 @@ return require('packer').startup{function()
     }
   }
 
-   -- diagnostics to upper right
-  use {
-    'Mofiqul/trld.nvim',
-    config = [[ require('plugin-configs/trld') ]]
-  }
+  -- diagnostics to upper right
+  -- use {
+  --   'Mofiqul/trld.nvim',
+  --   config = [[ require('plugin-configs/trld') ]]
+  -- }
 
   -- TypeScript
   use({ "jose-elias-alvarez/null-ls.nvim",

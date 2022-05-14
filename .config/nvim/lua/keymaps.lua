@@ -9,11 +9,10 @@ end
 vim.g.mapleader = " "
 map('n', '<Leader>w', ':w<CR>',  { noremap = true, silent = true })
 
-map('n', '<C-p>', '"+p', { noremap = true, silent = true })
-map('v', '<C-p>', '"+p', { noremap = true, silent = true })
-map('n', '<C-P>', '"+P', { noremap = true, silent = true })
-map('v', '<C-P>', '"+P', { noremap = true, silent = true })
-map('n', '<C-y>', '"+y', { noremap = true, silent = true })
-map('v', '<C-y>', '"+y', { noremap = true, silent = true })
-map('n', '<C-Y>', '"+y$', { noremap = true, silent = true })
+map('n', '<Leader>p', '"+p', { noremap = true, silent = true })
+map('v', '<Leader>p', '"+p', { noremap = true, silent = true })
+map('n', '<Leader>P', '"+P', { noremap = true, silent = true })
+map('v', '<Leader>P', '"+P', { noremap = true, silent = true })
+map('n', '<Leader>Y', '"+y', { noremap = true, silent = true })
+map('v', '<Leader>Y', '"+y', { noremap = true, silent = true })
 map('n', '<Leader>yh', ':Telescope neoclip unnamed<CR>', { noremap = true, silent = true })

@@ -17,6 +17,11 @@ return require('packer').startup{function()
   use "RRethy/nvim-base16"
   use "sainnhe/everforest"
 
+  -- Scroll Smooth
+  use { 'karb94/neoscroll.nvim',
+    config = [[ require('plugin-configs/neoscroll')]]
+  }
+
   use { 'nvim-lualine/lualine.nvim',
     requires = {'kyazdani42/nvim-web-devicons', opt = true},
     config = [[ require('plugin-configs/lualine')]]

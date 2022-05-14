@@ -41,7 +41,7 @@ return require('packer').startup{function()
   use {
     'lewis6991/spellsitter.nvim',
     requires = {{ 'nvim-telescope/telescope.nvim' }},
-    config = [[ require('plugin-configs.treesitter') ]]
+    config = [[ require('plugin-configs.spellsitter') ]]
   }
 
   -- File Browser

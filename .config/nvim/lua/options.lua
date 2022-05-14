@@ -23,7 +23,7 @@ o.syntax         = "on"
 o.shell          = "/bin/bash"
 o.completeopt    = "menuone,noinsert,noselect"
 o.lazyredraw     = true  -- macros and regex shouldnt slowdown
-o.spell = true
+ o.spell = true
 o.spelllang = { 'en' }
 vim.cmd('set noshowmode')
 

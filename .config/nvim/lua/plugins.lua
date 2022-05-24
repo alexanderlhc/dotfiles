@@ -16,6 +16,7 @@ return require('packer').startup{function()
   use "projekt0n/github-nvim-theme"
   use "RRethy/nvim-base16"
   use "sainnhe/everforest"
+  use 'folke/tokyonight.nvim'
 
   -- Scroll Smooth
   use { 'karb94/neoscroll.nvim',

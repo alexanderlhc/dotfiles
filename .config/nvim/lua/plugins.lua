@@ -128,18 +128,19 @@ return require('packer').startup{function()
   }
 
   use "onsails/lspkind-nvim" -- TODO
-  -- hrsh7th/nvim-cmp
+
   use {
     'hrsh7th/nvim-cmp',
     requires = {
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
-      'f3fora/cmp-spell',
+      -- 'f3fora/cmp-spell',
+      -- 'zbirenbaum/copilot-cmp',
       'hrsh7th/cmp-copilot',
       'hrsh7th/cmp-nvim-lua',
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-nvim-lsp-document-symbol',
-      'saadparwaiz1/cmp_luasnip'
+      'hrsh7th/cmp-buffer',
+      'saadparwaiz1/cmp_luasnip',
+      'hrsh7th/cmp-path'
     },
     config = [[ require('plugin-configs.cmp') ]]
   }

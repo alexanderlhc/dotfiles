@@ -111,11 +111,6 @@ _G.packer_plugins = {
     path = "/home/alexander/.local/share/nvim/site/pack/packer/start/cmp-path",
     url = "https://github.com/hrsh7th/cmp-path"
   },
-  ["cmp-spell"] = {
-    loaded = true,
-    path = "/home/alexander/.local/share/nvim/site/pack/packer/start/cmp-spell",
-    url = "https://github.com/f3fora/cmp-spell"
-  },
   cmp_luasnip = {
     loaded = true,
     path = "/home/alexander/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
@@ -125,11 +120,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/alexander/.local/share/nvim/site/pack/packer/start/copilot.vim",
     url = "https://github.com/github/copilot.vim"
-  },
-  ["coverage.vim"] = {
-    loaded = true,
-    path = "/home/alexander/.local/share/nvim/site/pack/packer/start/coverage.vim",
-    url = "https://github.com/ruanyl/coverage.vim"
   },
   everforest = {
     loaded = true,

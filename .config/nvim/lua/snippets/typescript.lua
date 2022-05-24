@@ -2,10 +2,8 @@ local ls = require'luasnip'
 local s = ls.s
 local i = ls.insert_node
 local f = ls.function_node
-local d = ls.dynamic_node
 local t = ls.text_node
 local fmt = require'luasnip.extras.fmt'.fmt
-local rep = require'luasnip.extras'.rep
 
 local same = function(index)
   return f(function(arg)
@@ -14,6 +12,21 @@ local same = function(index)
 end
 
 local jestSnippets = {
+  s("describe", {
+    t("describe(\""), i(1, "what to describe"),
+    t({"\", () => {", "  "}),
+    i(2, "case"),
+    t({"", "})" })
+  }),
+  s("it", {
+    t("it(\""), i(1, "what is tested"),
+    t({"\", () => {", "  "}),
+    i(2, "case"),
+    t({"", "});" })
+  }),
+-- describe("As observer", () => {
+--   it("I get notified when subscribing", () => {
+
   -- s("describe", {
   --   t("describe(\""),
   --   i(1, "What to describe"),
@@ -27,6 +40,7 @@ local jestSnippets = {
 };
 
 local typescriptSnippets = {
+  -- Console Logs
   s("cl", fmt([[console.log({})]], { i(0) })),
   s("clg", fmt([[console.log('{}', {})]], { i(1), same(1) })),
 }

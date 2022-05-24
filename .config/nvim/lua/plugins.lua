@@ -16,6 +16,7 @@ return require('packer').startup{function()
   use "projekt0n/github-nvim-theme"
   use "RRethy/nvim-base16"
   use "sainnhe/everforest"
+  use 'folke/tokyonight.nvim'
 
   -- Scroll Smooth
   use { 'karb94/neoscroll.nvim',
@@ -127,18 +128,19 @@ return require('packer').startup{function()
   }
 
   use "onsails/lspkind-nvim" -- TODO
-  -- hrsh7th/nvim-cmp
+
   use {
     'hrsh7th/nvim-cmp',
     requires = {
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
-      'f3fora/cmp-spell',
+      -- 'f3fora/cmp-spell',
+      -- 'zbirenbaum/copilot-cmp',
       'hrsh7th/cmp-copilot',
       'hrsh7th/cmp-nvim-lua',
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-nvim-lsp-document-symbol',
-      'saadparwaiz1/cmp_luasnip'
+      'hrsh7th/cmp-buffer',
+      'saadparwaiz1/cmp_luasnip',
+      'hrsh7th/cmp-path'
     },
     config = [[ require('plugin-configs.cmp') ]]
   }
@@ -151,7 +153,7 @@ return require('packer').startup{function()
   }
 
   -- Test
-  use { 'ruanyl/coverage.vim' }
+  -- use { 'ruanyl/coverage.vim' }
 
   -- Documentation
   use {
@@ -164,12 +166,24 @@ return require('packer').startup{function()
     requires = "nvim-treesitter/nvim-treesitter"
   }
 
+  -- Debugger
+  -- use {
+  --   'mfussenegger/nvim-dap',
+  --   config = [[require('plugin-configs/dap')]]
+  -- }
+  --
+  -- use {
+  --   "rcarriga/nvim-dap-ui",
+  --   config = [[require('plugin-configs/dapui')]],
+  --   requires = { "mfussenegger/nvim-dap" },
+  -- }
+
   -- Parser almost too good
   use {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
     config = [[ require('plugin-configs/treesitter') ]],
-    requires = { 
+    requires = {
       "nvim-treesitter/nvim-treesitter-refactor",
       "romgrk/nvim-treesitter-context",
       "windwp/nvim-ts-autotag",

@@ -23,7 +23,7 @@ o.syntax         = "on"
 o.shell          = "/bin/bash"
 o.completeopt    = "menuone,noinsert,noselect"
 o.lazyredraw     = true  -- macros and regex shouldnt slowdown
- o.spell = true
+-- o.spell = false
 o.spelllang = { 'en' }
 vim.cmd('set noshowmode')
 
@@ -34,5 +34,6 @@ vim.g.nvcode_termcolors=256
 -- })
 --colorscheme zenbones
 -- vim.cmd("colorscheme zenbones")
-vim.cmd('colorscheme everforest')
-o.background = "light"
+vim.g.tokyonight_style = "storm"
+vim.cmd('colorscheme tokyonight')
+o.background = "dark"

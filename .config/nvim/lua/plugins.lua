@@ -153,7 +153,7 @@ return require('packer').startup{function()
   }
 
   -- Test
-  use { 'ruanyl/coverage.vim' }
+  -- use { 'ruanyl/coverage.vim' }
 
   -- Documentation
   use {
@@ -166,12 +166,24 @@ return require('packer').startup{function()
     requires = "nvim-treesitter/nvim-treesitter"
   }
 
+  -- Debugger
+  -- use {
+  --   'mfussenegger/nvim-dap',
+  --   config = [[require('plugin-configs/dap')]]
+  -- }
+  --
+  -- use {
+  --   "rcarriga/nvim-dap-ui",
+  --   config = [[require('plugin-configs/dapui')]],
+  --   requires = { "mfussenegger/nvim-dap" },
+  -- }
+
   -- Parser almost too good
   use {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
     config = [[ require('plugin-configs/treesitter') ]],
-    requires = { 
+    requires = {
       "nvim-treesitter/nvim-treesitter-refactor",
       "romgrk/nvim-treesitter-context",
       "windwp/nvim-ts-autotag",

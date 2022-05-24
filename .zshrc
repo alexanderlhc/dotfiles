@@ -11,6 +11,7 @@ compinit
 
 source ~/.config/aliases
 path+=('/home/alexander/.local/bin')
+path+=('/var/lib/snapd/snap/bin')
 export PATH
 
 # managed through aur

@@ -15,14 +15,15 @@ cmp.setup({
       c = cmp.mapping.close(),
     }),
     -- TabCompletion
-    ["<Tab>"] = function(fallback)
+    -- ["<Tab>"] = function(fallback)
+    ["<C-j>"] = function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       else
         fallback()
       end
     end,
-    ["<S-Tab>"] = function(fallback)
+    ["<C-k>"] = function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
       else

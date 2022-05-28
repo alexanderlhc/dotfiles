@@ -92,7 +92,10 @@ return require('packer').startup{function()
 
   ---- Git git dit dat git
   -- git w/o leaving nvim
-  use 'tpope/vim-fugitive'
+  use {
+    'tpope/vim-fugitive',
+    config = [[ require('plugin-configs.fugitive') ]]
+  }
   -- git decorations
   use {
     'lewis6991/gitsigns.nvim',

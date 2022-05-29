@@ -1,6 +1,9 @@
 local ls = require "luasnip"
 local types = require "luasnip.util.types"
 
+-- Edit Snippets from current filetype
+vim.cmd [[command! LuaSnipEdit :lua require("luasnip.loaders.from_lua").edit_snippet_files()]]
+
 ls.config.set_config {  -- This tells LuaSnip to remember to keep around the last snippet.
   -- You can jump back into it even if you move outside of the selection
   history = true,
@@ -47,4 +50,5 @@ vim.keymap.set("i", "<c-l>", function()
   end
 end)
 
-require("luasnip.loaders.from_lua").load({paths = "~/.config/nvim/lua/snippets/"})
+local snippets_directory = vim.fn.stdpath("config") .. "/lua/snippets/"
+require("luasnip.loaders.from_lua").load({paths = snippets_directory})

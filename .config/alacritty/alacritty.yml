@@ -5,7 +5,8 @@ window:
 
 font:
   normal:
-    family: Source Code Pro
+    #family: Source Code Pro
+    family: ComicCodeLigatures Nerd Font
 
 env:
   TERM: xterm-256color

@@ -94,6 +94,7 @@ return require('packer').startup{function()
   -- git w/o leaving nvim
   use {
     'tpope/vim-fugitive',
+    requires = { 'tpope/vim-rhubarb' },
     config = [[ require('plugin-configs.fugitive') ]]
   }
   -- git decorations

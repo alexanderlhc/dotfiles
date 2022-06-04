@@ -171,10 +171,18 @@ return require('packer').startup{function()
   }
 
   -- Debugger
-  -- use {
-  --   'mfussenegger/nvim-dap',
-  --   config = [[require('plugin-configs/dap')]]
-  -- }
+  use {
+    'mfussenegger/nvim-dap',
+    config = [[require('plugin-configs/dap')]],
+    requires = {
+      "nvim-telescope/telescope-dap.nvim",
+      "David-Kunz/jester"
+    }
+  }
+  use {
+     'Pocco81/dap-buddy.nvim',
+      branch = 'dev'
+  }
   --
   -- use {
   --   "rcarriga/nvim-dap-ui",

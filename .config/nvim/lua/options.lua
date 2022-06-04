@@ -35,5 +35,5 @@ vim.g.nvcode_termcolors=256
 --colorscheme zenbones
 -- vim.cmd("colorscheme zenbones")
 vim.g.tokyonight_style = "storm"
-vim.cmd('colorscheme tokyonight')
+vim.cmd('silent! colorscheme tokyonight')
 o.background = "dark"

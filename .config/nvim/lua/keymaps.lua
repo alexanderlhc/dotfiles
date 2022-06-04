@@ -12,3 +12,7 @@ map('n', '<Leader>Y', '"+y', { noremap = true, silent = true })
 map('v', '<Leader>Y', '"+y', { noremap = true, silent = true })
 map('n', '<Leader>yh', ':Telescope neoclip unnamed<CR>', { noremap = true, silent = true })
 map('n', '<Leader>zz', ':let &scrolloff=999-&scrolloff<CR>', { noremap = true, silent = true })
+
+-- DAP
+map('n', "<Leader>db", ':lua require("dap").toggle_breakpoint()<CR>', { noremap = true, silent = true })
+map('n', '<Leader>dt', ':lua require("telescope").extensions.dap.commands{}<CR>', { noremap = true, silent = true })

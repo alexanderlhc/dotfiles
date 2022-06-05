@@ -217,6 +217,11 @@ return require('packer').startup{function()
 
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
 
+  -- git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+  if packer_bootstrap then
+    require('packer').sync()
+  end
+
 end, config = {
   compile_path = vim.fn.stdpath('config')..'/plugin/packer_compiled.lua'
   }

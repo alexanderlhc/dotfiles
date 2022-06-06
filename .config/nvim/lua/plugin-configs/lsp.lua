@@ -24,7 +24,7 @@ local on_attach = function(_, bufnr)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
   vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
   vim.keymap.set('n', '<leader>so', require('telescope.builtin').lsp_document_symbols, opts)
-  vim.api.nvim_create_user_command("Format", vim.lsp.buf.formatting, {})
+  vim.api.nvim_create_user_command("Format", vim.lsp.buf.format, {})
 end
 
 -- nvim-cmp supports additional completion capabilities
@@ -41,6 +41,17 @@ for _, lsp in ipairs(servers) do
   }
 
 end
+
+--------------
+-- TypeScript
+lspconfig.tsserver.setup {
+  on_attach = function(client, bufnr)
+    client.server_capabilities.documentFormattingProvider = false
+    client.server_capabilities.documentRangeFormattingProvider = false
+    on_attach(client, bufnr)
+  end,
+  capabilities = capabilities,
+}
 
 --------------
 -- LUA
@@ -71,9 +82,11 @@ lspconfig.sumneko_lua.setup {
 --------------
 -- Null-LS
 require("null-ls").setup({
-    sources = {
-        require("null-ls").builtins.formatting.stylua,
-        require("null-ls").builtins.diagnostics.eslint,
-        require("null-ls").builtins.completion.spell,
-    },
+  sources = {
+    require("null-ls").builtins.formatting.stylua,
+    require("null-ls").builtins.formatting.prettierd,
+    require("null-ls").builtins.diagnostics.eslint.with({
+      extra_args = { "--config", "/home/alexander/eslintz/eslint.js" }
+    })
+  },
 })

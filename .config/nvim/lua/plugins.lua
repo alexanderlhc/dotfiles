@@ -176,6 +176,7 @@ return require('packer').startup{function()
     config = [[require('plugin-configs/dap')]],
     requires = {
       "nvim-telescope/telescope-dap.nvim",
+      "rcarriga/nvim-dap-ui",
       "David-Kunz/jester"
     }
   }

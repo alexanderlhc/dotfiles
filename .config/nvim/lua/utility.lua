@@ -1,3 +1,4 @@
+-- TODO: migrate https://neovim.io/doc/user/lua.html#vim.keymap.set()
 local function map(mode, lhs, rhs, opts)
   local options = {noremap = true, silent = true}
   if opts then

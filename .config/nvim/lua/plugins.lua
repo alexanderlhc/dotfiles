@@ -177,12 +177,24 @@ return require('packer').startup{function()
     requires = {
       "nvim-telescope/telescope-dap.nvim",
       "rcarriga/nvim-dap-ui",
-      "David-Kunz/jester"
+      -- "David-Kunz/jester"
     }
   }
+
   use {
      'Pocco81/dap-buddy.nvim',
       branch = 'dev'
+  }
+
+  use {
+    "nvim-neotest/neotest",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "antoinemadec/FixCursorHold.nvim",
+      'haydenmeade/neotest-jest' -- jest adapter
+    },
+    config = [[ require('plugin-configs.neotest') ]]
   }
   --
   -- use {

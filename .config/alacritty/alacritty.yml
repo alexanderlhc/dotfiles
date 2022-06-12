@@ -44,3 +44,6 @@ colors:
     - { index: 16, color: '0xd18616' }
     - { index: 17, color: '0xcd3131' }
 
+key_bindings:
+  - { key: K,    mods: Alt,   mode: ~Alt,        action: ScrollPageUp   }
+  - { key: J,    mods: Alt,   mode: ~Alt,        action: ScrollPageDown   }

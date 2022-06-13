@@ -87,7 +87,7 @@ require("null-ls").setup({
     require("null-ls").builtins.formatting.stylua,
     require("null-ls").builtins.formatting.prettierd,
     require("null-ls").builtins.diagnostics.eslint.with({
-      extra_args = { "--config", "/home/alexander/eslintz/eslint.js" }
+      -- extra_args = { "--config", "/home/alexander/eslintz/eslint.js" }
     })
   },
 })

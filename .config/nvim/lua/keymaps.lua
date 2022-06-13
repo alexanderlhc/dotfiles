@@ -25,5 +25,8 @@ map("n", "<Leader>b", ":lua require'dap'.toggle_breakpoint()<CR>", {desc = "DAP:
 map("n", "<Leader>B", ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", {desc = "DAP: Breakpoint condition"})
 map("n", "<Leader>lp", ":lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>", {desc = "DAP: Log point message"})
 map("n", "<Leader>dr", ":lua require'dap'.repl.open()<CR>", {desc = "DAP: Launch REPL"})
-map("n", "<Leader>dt", ":lua require'jester'.debug()<CR>", {desc = "DAP: Jest test under cursor"})
+
+map("n", "<Leader>dth", ":lua require'neotest'.run.run()<CR>", {desc = "DAP: Test nearest"})
+map("n", "<Leader>dto", ":lua require'neotest'.output.open({ enter = true })<CR>", {desc = "DAP: Test output"})
+map("n", "<Leader>dts", ":lua require'neotest'.summary.toggle()<CR>", {desc = "DAP: Test summary toggle"})
 map('n', '<Leader>dT', ':lua require("telescope").extensions.dap.commands{}<CR>', { desc = "DAP: Telescope filter", noremap = true, silent = true })

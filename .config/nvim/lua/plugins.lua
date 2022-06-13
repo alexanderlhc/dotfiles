@@ -126,9 +126,20 @@ return require('packer').startup{function()
   use { 'github/copilot.vim' }
 
   -- LSP
+
+  use 'neovim/nvim-lspconfig'
+
   use {
-    'neovim/nvim-lspconfig',
-    'williamboman/nvim-lsp-installer',
+    {
+      'williamboman/nvim-lsp-installer',
+      config = function ()
+        require('nvim-lsp-installer').setup{}
+      end
+    },
+    {
+      'neovim/nvim-lspconfig',
+      after = { 'nvim-lsp-installer' },
+    }
   }
 
   use "onsails/lspkind-nvim" -- TODO

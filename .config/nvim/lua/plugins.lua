@@ -126,9 +126,20 @@ return require('packer').startup{function()
   use { 'github/copilot.vim' }
 
   -- LSP
+
+  use 'neovim/nvim-lspconfig'
+
   use {
-    'neovim/nvim-lspconfig',
-    'williamboman/nvim-lsp-installer',
+    {
+      'williamboman/nvim-lsp-installer',
+      config = function ()
+        require('nvim-lsp-installer').setup{}
+      end
+    },
+    {
+      'neovim/nvim-lspconfig',
+      after = { 'nvim-lsp-installer' },
+    }
   }
 
   use "onsails/lspkind-nvim" -- TODO
@@ -181,6 +192,8 @@ return require('packer').startup{function()
     }
   }
 
+  use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
+
   use {
      'Pocco81/dap-buddy.nvim',
       branch = 'dev'
@@ -192,10 +205,11 @@ return require('packer').startup{function()
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
       "antoinemadec/FixCursorHold.nvim",
-      'haydenmeade/neotest-jest' -- jest adapter
+      -- 'haydenmeade/neotest-jest' -- jest adapter
     },
     config = [[ require('plugin-configs.neotest') ]]
   }
+  use { '/home/alexander/Code/neotest-jest' }
   --
   -- use {
   --   "rcarriga/nvim-dap-ui",

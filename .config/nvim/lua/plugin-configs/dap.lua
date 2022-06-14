@@ -1,5 +1,7 @@
 local dap = require("dap")
-require("jester").setup({})
+-- require("jester").setup({})
+
+require("dapui").setup({})
 
 -- yarn nodemon --exec 'node --inspect=0.0.0.0:9229 --require ts-node/register src/server.ts'
 

@@ -36,4 +36,4 @@ vim.g.nvcode_termcolors=256
 -- vim.cmd("colorscheme zenbones")
 vim.g.tokyonight_style = "storm"
 vim.cmd('silent! colorscheme tokyonight')
-o.background = "dark"
+o.background = "light"

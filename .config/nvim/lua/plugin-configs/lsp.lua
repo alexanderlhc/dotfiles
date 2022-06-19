@@ -1,10 +1,10 @@
 require("nvim-lsp-installer").setup({
-    automatic_installation = true
+  automatic_installation = true
 })
 
 local lspconfig = require 'lspconfig'
 
-local opts = { noremap=true, silent=true }
+local opts = { noremap = true, silent = true }
 vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
 vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
 vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
@@ -37,7 +37,7 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- Enable the following language servers
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver' }
+local servers = { 'pyright', 'tsserver', 'jsonls', 'yamlls' }
 for _, lsp in ipairs(servers) do
 
   lspconfig[lsp].setup {
@@ -81,6 +81,25 @@ lspconfig.sumneko_lua.setup {
         library = vim.api.nvim_get_runtime_file('', true),
       },
     },
+  },
+}
+
+--------------
+-- JSON
+lspconfig.jsonls.setup {
+  settings = {
+    json = {
+      schemas = require('schemastore').json.schemas(),
+      validate = { enabled = true }
+    },
+  },
+}
+
+--------------
+-- yaml
+lspconfig.yamlls.setup {
+  settings = {
+    yaml = { },
   },
 }
 

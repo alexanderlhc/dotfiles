@@ -126,7 +126,6 @@ return require('packer').startup { function()
   use { 'github/copilot.vim' }
 
   -- LSP
-
   use {
     {
       'williamboman/nvim-lsp-installer',
@@ -134,7 +133,8 @@ return require('packer').startup { function()
         require('nvim-lsp-installer').setup {}
       end
     },
-    'neovim/nvim-lspconfig'
+    'neovim/nvim-lspconfig',
+    'b0o/schemastore.nvim'
   }
 
 

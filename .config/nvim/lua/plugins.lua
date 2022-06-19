@@ -254,6 +254,7 @@ return require('packer').startup { function()
   end
 
 end, config = {
-  compile_path = vim.fn.stdpath('config') .. '/plugin/packer_compiled.lua'
+  compile_path = vim.fn.stdpath('config') .. '/plugin/packer_compiled.lua',
+  autoremove = true
 }
 }

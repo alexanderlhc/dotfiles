@@ -195,17 +195,6 @@ return require('packer').startup { function()
     branch = 'dev'
   }
 
-  use {
-    "nvim-neotest/neotest",
-    requires = {
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
-      "antoinemadec/FixCursorHold.nvim",
-      -- 'haydenmeade/neotest-jest' -- jest adapter
-    },
-    config = [[ require('plugin-configs.neotest') ]]
-  }
-  use { '/home/alexander/Code/neotest-jest' }
   --
   -- use {
   --   "rcarriga/nvim-dap-ui",

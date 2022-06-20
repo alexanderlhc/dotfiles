@@ -234,6 +234,16 @@ return require('packer').startup { function()
     end,
   }
 
+  -- Refactor
+  use {
+    "ThePrimeagen/refactoring.nvim",
+    config = [[ require('plugin-configs/refactoring') ]],
+    requires = {
+        {"nvim-lua/plenary.nvim"},
+        {"nvim-treesitter/nvim-treesitter"}
+    }
+  }
+
   -- diagnostics to upper right
   -- use {
   --   'Mofiqul/trld.nvim',
@@ -252,6 +262,9 @@ return require('packer').startup { function()
   if packer_bootstrap then
     require('packer').sync()
   end
+
+  -- bucket of ideas
+  -- improved fold https://github.com/kevinhwang91/nvim-ufo
 
 end, config = {
   compile_path = vim.fn.stdpath('config') .. '/plugin/packer_compiled.lua',

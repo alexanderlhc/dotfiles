@@ -138,7 +138,11 @@ return require('packer').startup { function()
   }
 
 
-  use "onsails/lspkind-nvim" -- TODO
+  use 'onsails/lspkind-nvim' -- TODO
+  use {
+    'mhartington/formatter.nvim',
+    -- config = [[ require('plugin-configs.formatter') ]]
+  }
 
   use {
     'hrsh7th/nvim-cmp',

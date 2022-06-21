@@ -30,7 +30,7 @@ super + r
 
 # make sxhkd reload its configuration files:
 super + Escape
-	pkill -USR1 -x sxhkd
+	pkill -USR1 -x sxhkd && notify-send "sxhkd restarted"
 
 #
 # bspwm hotkeys
@@ -73,8 +73,15 @@ super + ctrl + {m,x,y,z}
 #
 
 # focus the node in the given direction
-super + {_,shift + }{h,j,k,l}
-	bspc node -{f,s} {west,south,north,east}
+# super + {shift + }{h,j,k,l}
+super + {h,j,k,l}
+	bspc node -f {west,south,north,east}
+
+# move focus in direction and allow to pass monitor boundary
+super + shift + {h,j,k,l}
+	dir={west,south,north,east}; \
+	bspc node -s "$dir.local" --follow \
+	    || bspc node -m "$dir" --follow
 
 # focus the node for the given path jump
 super + {p,b,comma,period}

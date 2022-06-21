@@ -1,12 +1,12 @@
 -- Packer Automatic Installation
 local fn = vim.fn
-local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
-  fn.system({'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path})
+  fn.system({ 'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path })
   vim.api.nvim_command 'packadd packer.nvim'
 end
 
-return require('packer').startup{function()
+return require('packer').startup { function()
 
   -- Theme/Style
   use {
@@ -24,7 +24,7 @@ return require('packer').startup{function()
   }
 
   use { 'nvim-lualine/lualine.nvim',
-    requires = {'kyazdani42/nvim-web-devicons', opt = true},
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true },
     config = [[ require('plugin-configs/lualine')]]
   }
 
@@ -32,23 +32,23 @@ return require('packer').startup{function()
   use {
     'nvim-telescope/telescope.nvim',
     requires = {
-      {'nvim-lua/popup.nvim'},
-      {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
-      {'nvim-lua/plenary.nvim'}
+      { 'nvim-lua/popup.nvim' },
+      { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
+      { 'nvim-lua/plenary.nvim' }
     },
     config = [[ require('plugin-configs/telescope') ]]
   }
 
   use {
     'lewis6991/spellsitter.nvim',
-    requires = {{ 'nvim-telescope/telescope.nvim' }},
+    requires = { { 'nvim-telescope/telescope.nvim' } },
     config = [[ require('plugin-configs.spellsitter') ]]
   }
 
   -- File Browser
   use {
     'kyazdani42/nvim-tree.lua',
-    requires = {{ 'kyazdani42/nvim-web-devicons' }},
+    requires = { { 'kyazdani42/nvim-web-devicons' } },
     config = [[ require('plugin-configs.nvimtree') ]]
   }
 
@@ -56,8 +56,8 @@ return require('packer').startup{function()
   use {
     "AckslD/nvim-neoclip.lua",
     requires = {
-      {'tami5/sqlite.lua', module = 'sqlite'},
-      {'nvim-telescope/telescope.nvim'},
+      { 'tami5/sqlite.lua', module = 'sqlite' },
+      { 'nvim-telescope/telescope.nvim' },
     },
     config = [[ require('plugin-configs.neoclip') ]]
   }
@@ -68,8 +68,8 @@ return require('packer').startup{function()
   -- "<[(`' Automatically create as pairs
   use {
     'windwp/nvim-autopairs',
-    config = function ()
-      require('nvim-autopairs').setup{}
+    config = function()
+      require('nvim-autopairs').setup {}
     end
   }
 
@@ -77,7 +77,7 @@ return require('packer').startup{function()
   use {
     'numToStr/Comment.nvim',
     config = [[ require('plugin-configs.comment') ]],
-    requires = {{ 'JoosepAlviste/nvim-ts-context-commentstring' }}
+    requires = { { 'JoosepAlviste/nvim-ts-context-commentstring' } }
   }
 
 
@@ -103,7 +103,7 @@ return require('packer').startup{function()
     requires = {
       'nvim-lua/plenary.nvim'
     },
-    config = function ()
+    config = function()
       require('gitsigns').setup()
     end
   }
@@ -116,8 +116,8 @@ return require('packer').startup{function()
       'nvim-telescope/telescope.nvim',
       'kyazdani42/nvim-web-devicons',
     },
-    config = function ()
-      require"octo".setup()
+    config = function()
+      require "octo".setup()
     end
   }
 
@@ -126,21 +126,17 @@ return require('packer').startup{function()
   use { 'github/copilot.vim' }
 
   -- LSP
-
-  use 'neovim/nvim-lspconfig'
-
   use {
     {
       'williamboman/nvim-lsp-installer',
-      config = function ()
-        require('nvim-lsp-installer').setup{}
+      config = function()
+        require('nvim-lsp-installer').setup {}
       end
     },
-    {
-      'neovim/nvim-lspconfig',
-      after = { 'nvim-lsp-installer' },
-    }
+    'neovim/nvim-lspconfig',
+    'b0o/schemastore.nvim'
   }
+
 
   use "onsails/lspkind-nvim" -- TODO
 
@@ -174,9 +170,9 @@ return require('packer').startup{function()
   use {
     "danymat/neogen",
     config = function()
-        require('neogen').setup {
-            enabled = true
-        }
+      require('neogen').setup {
+        enabled = true
+      }
     end,
     requires = "nvim-treesitter/nvim-treesitter"
   }
@@ -192,11 +188,11 @@ return require('packer').startup{function()
     }
   }
 
-  use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
+  use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
 
   use {
-     'Pocco81/dap-buddy.nvim',
-      branch = 'dev'
+    'Pocco81/dap-buddy.nvim',
+    branch = 'dev'
   }
 
   use {
@@ -230,6 +226,14 @@ return require('packer').startup{function()
     }
   }
 
+  -- Rename with visualisation
+  use {
+    "smjonas/inc-rename.nvim",
+    config = function()
+      require("inc_rename").setup()
+    end,
+  }
+
   -- diagnostics to upper right
   -- use {
   --   'Mofiqul/trld.nvim',
@@ -239,7 +243,7 @@ return require('packer').startup{function()
   -- TypeScript
   use({ "jose-elias-alvarez/null-ls.nvim",
     -- config = [[ require('lsp/null-ls') ]],
-    requires = {"nvim-lua/plenary.nvim", "neovim/nvim-lspconfig"}
+    requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" }
   })
 
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
@@ -250,6 +254,7 @@ return require('packer').startup{function()
   end
 
 end, config = {
-  compile_path = vim.fn.stdpath('config')..'/plugin/packer_compiled.lua'
-  }
+  compile_path = vim.fn.stdpath('config') .. '/plugin/packer_compiled.lua',
+  autoremove = true
+}
 }

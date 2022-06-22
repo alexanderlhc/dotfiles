@@ -138,7 +138,11 @@ return require('packer').startup { function()
   }
 
 
-  use "onsails/lspkind-nvim" -- TODO
+  use 'onsails/lspkind-nvim' -- TODO
+  use {
+    'mhartington/formatter.nvim',
+    -- config = [[ require('plugin-configs.formatter') ]]
+  }
 
   use {
     'hrsh7th/nvim-cmp',
@@ -195,17 +199,6 @@ return require('packer').startup { function()
     branch = 'dev'
   }
 
-  use {
-    "nvim-neotest/neotest",
-    requires = {
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
-      "antoinemadec/FixCursorHold.nvim",
-      -- 'haydenmeade/neotest-jest' -- jest adapter
-    },
-    config = [[ require('plugin-configs.neotest') ]]
-  }
-  use { '/home/alexander/Code/neotest-jest' }
   --
   -- use {
   --   "rcarriga/nvim-dap-ui",
@@ -234,6 +227,16 @@ return require('packer').startup { function()
     end,
   }
 
+  -- Refactor
+  use {
+    "ThePrimeagen/refactoring.nvim",
+    config = [[ require('plugin-configs/refactoring') ]],
+    requires = {
+        {"nvim-lua/plenary.nvim"},
+        {"nvim-treesitter/nvim-treesitter"}
+    }
+  }
+
   -- diagnostics to upper right
   -- use {
   --   'Mofiqul/trld.nvim',
@@ -252,6 +255,9 @@ return require('packer').startup { function()
   if packer_bootstrap then
     require('packer').sync()
   end
+
+  -- bucket of ideas
+  -- improved fold https://github.com/kevinhwang91/nvim-ufo
 
 end, config = {
   compile_path = vim.fn.stdpath('config') .. '/plugin/packer_compiled.lua',

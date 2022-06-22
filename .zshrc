@@ -15,6 +15,8 @@ path+=('/var/lib/snapd/snap/bin')
 export PATH
 
 # managed through aur
+# fixes delete key
+bindkey "^[[3~" delete-char
 source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 
 eval "$(starship init zsh)"

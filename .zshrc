@@ -21,3 +21,7 @@ source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 
 eval "$(starship init zsh)"
 source /usr/share/nvm/init-nvm.sh
+
+# cht.sh
+#curl https://cheat.sh/:zsh > ~/.zsh.d/_cht
+fpath=(~/.zsh.d/ $fpath)

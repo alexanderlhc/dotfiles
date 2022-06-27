@@ -25,3 +25,6 @@ source /usr/share/nvm/init-nvm.sh
 # cht.sh
 #curl https://cheat.sh/:zsh > ~/.zsh.d/_cht
 fpath=(~/.zsh.d/ $fpath)
+
+### Randomized prompt
+colorscript random

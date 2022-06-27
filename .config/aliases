@@ -25,3 +25,5 @@ alias gt='git ls-tree -r master --name-only'
 alias gm='git merge'
 
 source ~/.config/aliases-secret 2> /dev/null
+
+alias nodesslfix="export NODE_OPTIONS=--openssl-legacy-provider"

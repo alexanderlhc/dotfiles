@@ -140,6 +140,11 @@ return require("packer").startup({
 			"mhartington/formatter.nvim",
 			-- config = [[ require('plugin-configs.formatter') ]]
 		})
+    use 'sbdchd/neoformat'
+		-- use({
+		-- 	"mhartington/formatter.nvim",
+		-- 	-- config = [[ require('plugin-configs.formatter') ]]
+		-- })
 
 		use({
 			"hrsh7th/nvim-cmp",

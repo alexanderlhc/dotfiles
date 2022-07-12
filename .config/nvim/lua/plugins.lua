@@ -131,8 +131,8 @@ return require("packer").startup({
 					require("nvim-lsp-installer").setup({})
 				end,
 			},
+			-- "b0o/schemastore.nvim",
 			"neovim/nvim-lspconfig",
-			"b0o/schemastore.nvim",
 		})
 
 		use("onsails/lspkind-nvim") -- TODO

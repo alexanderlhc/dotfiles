@@ -1,4 +1,5 @@
 require('telescope').load_extension('fzf')
+require('telescope').load_extension('neoclip')
 
 local opts = { noremap=true, silent=true }
 

@@ -62,7 +62,11 @@ return require("packer").startup({
 		})
 
 		-- Improve location specific jumps
-		use("justinmk/vim-sneak")
+		use({
+			"phaazon/hop.nvim",
+			branch = "v2", -- optional but strongly recommended
+			config =  [[ require('plugin-configs.hop')]]
+		})
 
 		-- "<[(`' Automatically create as pairs
 		use({
@@ -80,7 +84,12 @@ return require("packer").startup({
 		})
 
 		-- Surroundings modification vastly improved
-		use("tpope/vim-surround")
+		use({
+			"kylechui/nvim-surround",
+			config = function()
+				require("nvim-surround").setup({})
+			end,
+		})
 
 		-- KeyMap
 		use({
@@ -121,8 +130,6 @@ return require("packer").startup({
 
 		------- LSP and Languages
 
-		--use { 'github/copilot.vim' }
-
 		-- LSP
 		use({
 			{
@@ -136,17 +143,12 @@ return require("packer").startup({
 		})
 
 		use("onsails/lspkind-nvim") -- TODO
-		use({
-			"mhartington/formatter.nvim",
-			-- config = [[ require('plugin-configs.formatter') ]]
-		})
+		use("sbdchd/neoformat")
 
 		use({
 			"hrsh7th/nvim-cmp",
 			requires = {
 				-- 'f3fora/cmp-spell',
-				-- 'zbirenbaum/copilot-cmp',
-				--'hrsh7th/cmp-copilot',
 				"hrsh7th/cmp-nvim-lua",
 				"hrsh7th/cmp-nvim-lsp",
 				"hrsh7th/cmp-nvim-lsp-document-symbol",

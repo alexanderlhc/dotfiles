@@ -130,8 +130,6 @@ return require("packer").startup({
 
 		------- LSP and Languages
 
-		--use { 'github/copilot.vim' }
-
 		-- LSP
 		use({
 			{
@@ -145,19 +143,12 @@ return require("packer").startup({
 		})
 
 		use("onsails/lspkind-nvim") -- TODO
-    use 'sbdchd/neoformat'
 		use("sbdchd/neoformat")
-		-- use({
-		-- 	"mhartington/formatter.nvim",
-		-- 	-- config = [[ require('plugin-configs.formatter') ]]
-		-- })
 
 		use({
 			"hrsh7th/nvim-cmp",
 			requires = {
 				-- 'f3fora/cmp-spell',
-				-- 'zbirenbaum/copilot-cmp',
-				--'hrsh7th/cmp-copilot',
 				"hrsh7th/cmp-nvim-lua",
 				"hrsh7th/cmp-nvim-lsp",
 				"hrsh7th/cmp-nvim-lsp-document-symbol",

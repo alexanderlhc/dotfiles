@@ -145,11 +145,8 @@ return require("packer").startup({
 		})
 
 		use("onsails/lspkind-nvim") -- TODO
-		use({
-			"mhartington/formatter.nvim",
-			-- config = [[ require('plugin-configs.formatter') ]]
-		})
     use 'sbdchd/neoformat'
+		use("sbdchd/neoformat")
 		-- use({
 		-- 	"mhartington/formatter.nvim",
 		-- 	-- config = [[ require('plugin-configs.formatter') ]]

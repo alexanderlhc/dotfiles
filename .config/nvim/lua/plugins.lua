@@ -62,7 +62,11 @@ return require("packer").startup({
 		})
 
 		-- Improve location specific jumps
-		use("justinmk/vim-sneak")
+		use({
+			"phaazon/hop.nvim",
+			branch = "v2", -- optional but strongly recommended
+			config =  [[ require('plugin-configs.hop')]]
+		})
 
 		-- "<[(`' Automatically create as pairs
 		use({

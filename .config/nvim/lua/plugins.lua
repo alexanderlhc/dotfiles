@@ -84,7 +84,12 @@ return require("packer").startup({
 		})
 
 		-- Surroundings modification vastly improved
-		use("tpope/vim-surround")
+		use({
+			"kylechui/nvim-surround",
+			config = function()
+				require("nvim-surround").setup({})
+			end,
+		})
 
 		-- KeyMap
 		use({

@@ -10,8 +10,11 @@ map('n', '<Leader>P', '"+P', { noremap = true, silent = true })
 map('v', '<Leader>P', '"+P', { noremap = true, silent = true })
 map('n', '<Leader>Y', '"+y', { noremap = true, silent = true })
 map('v', '<Leader>Y', '"+y', { noremap = true, silent = true })
-map('n', '<Leader>yh', ':Telescope neoclip unnamed<CR>', { noremap = true, silent = true })
 map('n', '<Leader>zz', ':let &scrolloff=999-&scrolloff<CR>', { noremap = true, silent = true })
+
+-- Telescope
+map('n', '<Leader>ty', ':Telescope neoclip unnamed<CR>', { noremap = true, silent = true })
+map('n', '<Leader>tb', ':Telescope buffers<CR>', { noremap = true, silent = true })
 
 -- DAP
 map("n", "<F1>", ":lua require'dap'.step_into()<CR>", {desc = "DAP: Step into"})

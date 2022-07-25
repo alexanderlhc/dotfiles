@@ -143,6 +143,12 @@ return require("packer").startup({
 		})
 
 		use("onsails/lspkind-nvim") -- TODO
+    use({
+      "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+      config = function()
+        require("lsp_lines").setup()
+      end,
+    })
 		use("sbdchd/neoformat")
 
 		use({

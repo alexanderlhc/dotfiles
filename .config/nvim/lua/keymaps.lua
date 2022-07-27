@@ -16,6 +16,9 @@ map('n', '<Leader>zz', ':let &scrolloff=999-&scrolloff<CR>', { noremap = true, s
 map('n', '<Leader>ty', ':Telescope neoclip unnamed<CR>', { noremap = true, silent = true })
 map('n', '<Leader>tb', ':Telescope buffers<CR>', { noremap = true, silent = true })
 
+-- diagnostics
+map('n', '<Leader>dl', ':lua require("lsp_lines").toggle()<CR>', {desc = "Diagnostics inline toggle"})
+
 -- DAP
 map("n", "<F1>", ":lua require'dap'.step_into()<CR>", {desc = "DAP: Step into"})
 map("n", "<F2>", ":lua require'dap'.step_over()<CR>", {desc = "DAP: Step over"})

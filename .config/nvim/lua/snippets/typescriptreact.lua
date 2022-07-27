@@ -37,7 +37,7 @@ local reactSnippets = {
 {}interface {}Props {{
   {}
 }}
-{}function {}({{{}}}: {}Props) {{
+{}const {} = ({{{}}}: {}Props): ReactElement => {{
   {}
 }}
 ]],
@@ -79,6 +79,10 @@ local reactSnippets = {
 				rep(2),
 				i(5, "return <div></div>"),
 			})
+  ),
+  s(
+    { trig = "playgroundurl", name = "Playground URL for React Testing" },
+    fmt("screen.logTestingPlaygroundURL()", {})
   ),
 }
 

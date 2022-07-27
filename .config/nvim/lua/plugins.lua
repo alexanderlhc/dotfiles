@@ -149,7 +149,11 @@ return require("packer").startup({
         require("lsp_lines").setup()
       end,
     })
-		use("sbdchd/neoformat")
+
+    use({
+      "sbdchd/neoformat",
+      config = [[ require('plugin-configs.neoformat') ]]
+    })
 
 		use({
 			"hrsh7th/nvim-cmp",

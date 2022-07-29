@@ -1,43 +1,43 @@
 local o = vim.opt
 
-o.number         = true -- line numbers
-o.signcolumn     = "yes" -- diagnostics in number column
-o.numberwidth    = 5    -- min width for number column (default: 4)
-o.ignorecase     = true -- ignore case
-o.smartcase      = true -- ignore case unless contain mixed
-o.lazyredraw     = true -- disable redraw during macro and cmds (speed)
+o.number = true -- line numbers
+o.signcolumn = "yes" -- diagnostics in number column
+o.numberwidth = 5 -- min width for number column (default: 4)
+o.ignorecase = true -- ignore case
+o.smartcase = true -- ignore case unless contain mixed
+o.lazyredraw = true -- disable redraw during macro and cmds (speed)
 --o.list           = true -- prettier end of line, and tab
-o.listchars      = {
-  eol = "↲",
-  tab = "» ",
+o.listchars = {
+	eol = "↲",
+	tab = "» ",
 }
-o.foldlevel      = 20
-o.foldmethod     = "expr"
-o.foldexpr       = "nvim_treesitter#foldexpr()"
+o.foldlevel = 20
+o.foldmethod = "expr"
+o.foldexpr = "nvim_treesitter#foldexpr()"
 -- o.foldlevelstart = 132
-o.tabstop        = 2     -- tab takes 2 spaces
-o.shiftwidth     = 2     -- spaces used for (auto)indent
-o.expandtab      = true  -- tabs to spaces
-o.autoindent     = true  -- use current line indent
-o.splitright     = true  -- splits go right
-o.mouse          = "nvi" -- mouse in: normal, visual, insert
-o.syntax         = "on"
-o.shell          = "/bin/bash"
-o.completeopt    = "menuone,noinsert,noselect"
-o.lazyredraw     = true  -- macros and regex shouldnt slowdown
+o.tabstop = 2 -- tab takes 2 spaces
+o.shiftwidth = 2 -- spaces used for (auto)indent
+o.expandtab = true -- tabs to spaces
+o.autoindent = true -- use current line indent
+o.splitright = true -- splits go right
+o.mouse = "nvi" -- mouse in: normal, visual, insert
+o.syntax = "on"
+o.shell = "/bin/bash"
+o.completeopt = "menuone,noinsert,noselect"
+o.lazyredraw = true -- macros and regex shouldnt slowdown
 -- o.spell = false
-o.spelllang = { 'en' }
-vim.cmd('set noshowmode')
+o.spelllang = { "en" }
+vim.cmd("set noshowmode")
 
-o.termguicolors  = true -- 24 bit RGB colors!
-vim.g.nvcode_termcolors=256
+o.termguicolors = true -- 24 bit RGB colors!
+vim.g.nvcode_termcolors = 256
 -- require('github-theme').setup({
 --   theme_style="light"
 -- })
 --colorscheme zenbones
 -- vim.cmd("colorscheme zenbones")
-vim.g.tokyonight_style = "storm"
-vim.cmd('silent! colorscheme tokyonight')
+-- vim.g.tokyonight_style = "storm"
+vim.cmd("silent! colorscheme themer_ayu")
 o.background = "light"
 
-vim.diagnostic.config({ virtual_text = false , float = {source = 'always'}})
+vim.diagnostic.config({ virtual_text = false, float = { source = "always" } })

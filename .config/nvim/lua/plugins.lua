@@ -10,13 +10,12 @@ return require("packer").startup({
 	function()
 		-- Theme/Style
 		use({
-			"norcalli/nvim-colorizer.lua",
+			"norcalli/nvim-colorizer.lua", -- highlights colors
 			config = [[ require('plugin-configs/colorizer') ]],
 		})
+
 		use("projekt0n/github-nvim-theme")
-		use("RRethy/nvim-base16")
-		use("sainnhe/everforest")
-		use("folke/tokyonight.nvim")
+		use("themercorp/themer.lua")
 
 		-- Scroll Smooth
 		use({ "karb94/neoscroll.nvim", config = [[ require('plugin-configs/neoscroll')]] })
@@ -65,7 +64,7 @@ return require("packer").startup({
 		use({
 			"phaazon/hop.nvim",
 			branch = "v2", -- optional but strongly recommended
-			config =  [[ require('plugin-configs.hop')]]
+			config = [[ require('plugin-configs.hop')]],
 		})
 
 		-- "<[(`' Automatically create as pairs
@@ -143,17 +142,17 @@ return require("packer").startup({
 		})
 
 		use("onsails/lspkind-nvim") -- TODO
-    use({
-      "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-      config = function()
-        require("lsp_lines").setup()
-      end,
-    })
+		use({
+			"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+			config = function()
+				require("lsp_lines").setup()
+			end,
+		})
 
-    use({
-      "sbdchd/neoformat",
-      config = [[ require('plugin-configs.neoformat') ]]
-    })
+		use({
+			"sbdchd/neoformat",
+			config = [[ require('plugin-configs.neoformat') ]],
+		})
 
 		use({
 			"hrsh7th/nvim-cmp",
@@ -184,10 +183,10 @@ return require("packer").startup({
 				"nvim-lua/plenary.nvim",
 				"nvim-treesitter/nvim-treesitter",
 				"antoinemadec/FixCursorHold.nvim",
-        -- adapters
-        'haydenmeade/neotest-jest',
+				-- adapters
+				"haydenmeade/neotest-jest",
 			},
-      config = [[ require('plugin-configs/neotest') ]]
+			config = [[ require('plugin-configs/neotest') ]],
 		})
 
 		-- Documentation

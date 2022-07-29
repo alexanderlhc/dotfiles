@@ -14,8 +14,10 @@ return require("packer").startup({
 			config = [[ require('plugin-configs/colorizer') ]],
 		})
 
-		use("projekt0n/github-nvim-theme")
-		use("themercorp/themer.lua")
+		use({
+			"projekt0n/github-nvim-theme",
+			"themercorp/themer.lua",
+		})
 
 		-- Scroll Smooth
 		use({ "karb94/neoscroll.nvim", config = [[ require('plugin-configs/neoscroll')]] })

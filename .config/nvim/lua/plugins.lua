@@ -91,10 +91,10 @@ return require("packer").startup({
 		})
 
 		-- KeyMap
-		use({
-			"folke/which-key.nvim",
-			config = [[ require('plugin-configs.which-key')]],
-		})
+		-- use({
+		-- 	"folke/which-key.nvim",
+		-- 	config = [[ require('plugin-configs.which-key')]],
+		-- })
 
 		---- Git git dit dat git
 		-- git w/o leaving nvim

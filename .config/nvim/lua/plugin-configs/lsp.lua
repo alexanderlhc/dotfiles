@@ -86,14 +86,7 @@ lspconfig.sumneko_lua.setup {
 
 --------------
 -- JSON
-lspconfig.jsonls.setup {
-  settings = {
-    json = {
-      schemas = require('schemastore').json.schemas(),
-      validate = { enabled = true }
-    },
-  },
-}
+lspconfig.jsonls.setup { }
 
 --------------
 -- yaml
@@ -105,12 +98,12 @@ lspconfig.yamlls.setup {
 
 --------------
 -- Null-LS
-require("null-ls").setup({
-  sources = {
-    require("null-ls").builtins.formatting.stylua,
-    require("null-ls").builtins.formatting.prettierd,
-    require("null-ls").builtins.diagnostics.eslint.with({
-      -- extra_args = { "--config", "/home/alexander/eslintz/eslint.js" }
-    })
-  },
-})
+-- require("null-ls").setup({
+--   sources = {
+--     require("null-ls").builtins.formatting.stylua,
+--     require("null-ls").builtins.formatting.prettierd,
+--     require("null-ls").builtins.diagnostics.eslint.with({
+--       -- extra_args = { "--config", "/home/alexander/eslintz/eslint.js" }
+--     })
+--   },
+-- })

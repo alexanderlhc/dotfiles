@@ -39,3 +39,5 @@ vim.g.nvcode_termcolors=256
 vim.g.tokyonight_style = "storm"
 vim.cmd('silent! colorscheme tokyonight')
 o.background = "light"
+
+vim.diagnostic.config({ virtual_text = false , float = {source = 'always'}})

@@ -138,12 +138,22 @@ return require("packer").startup({
 					require("nvim-lsp-installer").setup({})
 				end,
 			},
+			-- "b0o/schemastore.nvim",
 			"neovim/nvim-lspconfig",
-			"b0o/schemastore.nvim",
 		})
 
 		use("onsails/lspkind-nvim") -- TODO
-		use("sbdchd/neoformat")
+    use({
+      "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+      config = function()
+        require("lsp_lines").setup()
+      end,
+    })
+
+    use({
+      "sbdchd/neoformat",
+      config = [[ require('plugin-configs.neoformat') ]]
+    })
 
 		use({
 			"hrsh7th/nvim-cmp",

@@ -9,7 +9,7 @@ vim.api.nvim_set_keymap('n', '<leader>fb', "<cmd>lua require('telescope.builtin'
 vim.api.nvim_set_keymap('n', '<leader>fh', "<cmd>lua require('telescope.builtin').help_tags()<cr>", opts)
 
 vim.api.nvim_set_keymap('n', '<leader>.', "<cmd>lua require('telescope.builtin').lsp_code_actions()<cr>", opts)
-
+vim.api.nvim_set_keymap('n', '<leader>yn', "<cmd>Telescope neoclip<cr>", opts)
 
 local default = {
    defaults = {

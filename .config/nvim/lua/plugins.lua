@@ -143,13 +143,7 @@ return require("packer").startup({
 			"neovim/nvim-lspconfig",
 		})
 
-		use("onsails/lspkind-nvim") -- TODO
-		use({
-			"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-			config = function()
-				require("lsp_lines").setup()
-			end,
-		})
+		use("onsails/lspkind-nvim") -- Pictograms to LSP
 
 		use({
 			"sbdchd/neoformat",

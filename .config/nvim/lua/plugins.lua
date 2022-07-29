@@ -92,6 +92,11 @@ return require("packer").startup({
 			end,
 		})
 
+		use({
+			"sbdchd/neoformat",
+			config = [[ require('plugin-configs.neoformat') ]],
+		})
+
 		-- KeyMap
 		-- use({
 		-- 	"folke/which-key.nvim",
@@ -143,12 +148,10 @@ return require("packer").startup({
 			"neovim/nvim-lspconfig",
 		})
 
-		use("onsails/lspkind-nvim") -- Pictograms to LSP
-
 		use({
-			"sbdchd/neoformat",
-			config = [[ require('plugin-configs.neoformat') ]],
-		})
+			"onsails/lspkind-nvim",
+			config = [[ require('plugin-configs.lspkind') ]],
+		}) -- Pictograms to LSP
 
 		use({
 			"hrsh7th/nvim-cmp",

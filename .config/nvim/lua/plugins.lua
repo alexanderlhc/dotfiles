@@ -138,15 +138,20 @@ return require("packer").startup({
 
 		-- LSP
 		use({
-			{
-				"williamboman/nvim-lsp-installer",
-				config = function()
-					require("nvim-lsp-installer").setup({})
-				end,
-			},
-			-- "b0o/schemastore.nvim",
+			"williamboman/mason.nvim",
+			"williamboman/mason-lspconfig.nvim",
 			"neovim/nvim-lspconfig",
 		})
+		-- use({
+		-- 	{
+		-- 		"williamboman/nvim-lsp-installer",
+		-- 		config = function()
+		-- 			require("nvim-lsp-installer").setup({})
+		-- 		end,
+		-- 	},
+		-- 	-- "b0o/schemastore.nvim",
+		-- 	"neovim/nvim-lspconfig",
+		-- })
 
 		use({
 			"onsails/lspkind-nvim",

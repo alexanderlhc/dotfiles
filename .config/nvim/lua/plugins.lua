@@ -141,6 +141,7 @@ return require("packer").startup({
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
 			"neovim/nvim-lspconfig",
+			"glepnir/lspsaga.nvim",
 		})
 		-- use({
 		-- 	{

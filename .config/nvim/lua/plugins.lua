@@ -158,6 +158,8 @@ return require("packer").startup({
 			config = [[ require('plugin-configs.lspkind') ]],
 		}) -- Pictograms to LSP
 
+		use({ "ray-x/lsp_signature.nvim" })
+
 		use({
 			"hrsh7th/nvim-cmp",
 			requires = {

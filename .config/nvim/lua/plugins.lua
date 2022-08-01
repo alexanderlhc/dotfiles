@@ -98,10 +98,10 @@ return require("packer").startup({
 		})
 
 		-- KeyMap
-		-- use({
-		-- 	"folke/which-key.nvim",
-		-- 	config = [[ require('plugin-configs.which-key')]],
-		-- })
+		use({
+			"folke/which-key.nvim",
+			config = [[ require('plugin-configs.which-key')]],
+		})
 
 		---- Git git dit dat git
 		-- git w/o leaving nvim
@@ -138,20 +138,28 @@ return require("packer").startup({
 
 		-- LSP
 		use({
-			{
-				"williamboman/nvim-lsp-installer",
-				config = function()
-					require("nvim-lsp-installer").setup({})
-				end,
-			},
-			-- "b0o/schemastore.nvim",
+			"williamboman/mason.nvim",
+			"williamboman/mason-lspconfig.nvim",
 			"neovim/nvim-lspconfig",
+			"glepnir/lspsaga.nvim",
 		})
+		-- use({
+		-- 	{
+		-- 		"williamboman/nvim-lsp-installer",
+		-- 		config = function()
+		-- 			require("nvim-lsp-installer").setup({})
+		-- 		end,
+		-- 	},
+		-- 	-- "b0o/schemastore.nvim",
+		-- 	"neovim/nvim-lspconfig",
+		-- })
 
 		use({
 			"onsails/lspkind-nvim",
 			config = [[ require('plugin-configs.lspkind') ]],
 		}) -- Pictograms to LSP
+
+		use({ "ray-x/lsp_signature.nvim" })
 
 		use({
 			"hrsh7th/nvim-cmp",

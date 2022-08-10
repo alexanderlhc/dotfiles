@@ -28,11 +28,16 @@ wk.register({
 	s = { ":lua require'neotest'.summary.toggle()<CR>", "DAP: Test summary toggle" },
 }, { prefix = "dt" })
 
+-- wk.register({
+-- 	p = { '"+p', "paste from clipboard" },
+-- 	P = { '"+P', "paste from clipboard" },
+-- 	Y = { '"+y', "yank to clipboard" },
+-- }, { mode = "nv", noremap = true, silent = true })
+
 wk.register({
-	p = { '"+p', "paste from clipboard" },
-	P = { '"+P', "paste from clipboard" },
 	Y = { '"+y', "yank to clipboard" },
-}, { mode = "nv", noremap = true, silent = true })
+	P = { '"+P', "paste from clipboard" },
+}, { mode = "v", noremap = true, silent = true })
 
 wk.register({
 	t = {
@@ -67,7 +72,7 @@ wk.register({
 	["]e"] = { "<cmd>Lspsaga diagnostic_jump_prev<CR>", "Diagnostic: jump prev" },
 	["[E"] = { diagnostic_goto_previous, "Diagnostic: jump prev error" },
 	["]E"] = { diagnostic_goto_next, "Diagnostic: jump next error" },
-	["<Leader>gh"] = { "<cmd>Lspsaga lsp_finder<CR>", "LSP find cursor definition/reference" },
+	["<Leader>gd"] = { "<cmd>Lspsaga lsp_finder<CR>", "LSP find cursor definition/reference" },
 	K = { "<cmd>Lspsaga hover_doc<CR>", "Documentation hover" },
 	["<Leader>r"] = { "<cmd>Lspsaga rename<CR>", "Rename symbol" },
 	["<leader>ca"] = { "<cmd>Lspsaga code_action<CR>", "LSP: Code Action" },

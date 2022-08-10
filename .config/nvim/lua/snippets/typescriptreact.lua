@@ -1,11 +1,11 @@
-local ls = require'luasnip'
+local ls = require("luasnip")
 local s = ls.s
 local sn = ls.snippet_node
 local i = ls.insert_node
 local f = ls.function_node
 local d = ls.dynamic_node
-local fmt = require'luasnip.extras.fmt'.fmt
-local rep = require'luasnip.extras'.rep
+local fmt = require("luasnip.extras.fmt").fmt
+local rep = require("luasnip.extras").rep
 
 -- Then this function would return `{"prop1", "prop2"}
 ---@param id_node {} Stands for "interface declaration node"
@@ -29,21 +29,20 @@ local function get_prop_names(id_node)
 	return prop_names
 end
 
-
-
 local reactSnippets = {
-  s("comp", fmt(
+	s(
+		"comp",
+		fmt(
 			[[
 {}interface {}Props {{
   {}
-}}
-{}const {} = ({{{}}}: {}Props): ReactElement => {{
+}} {}const {} = ({{{}}}: {}Props): ReactElement => {{
   {}
 }}
 ]],
 			{
 				i(1, "export "),
-       -- Initialize component name to file name
+				-- Initialize component name to file name
 				d(2, function(_, snip)
 					return sn(nil, {
 						i(1, vim.fn.substitute(snip.env.TM_FILENAME, "\\..*$", "", "g")),
@@ -58,9 +57,8 @@ local reactSnippets = {
 					local parser = vim.treesitter.get_parser(0, "tsx")
 					local tstree = parser:parse()
 
-					local node = tstree[1]
-						:root()
-						:named_descendant_for_range(pos_begin[1], pos_begin[2], pos_end[1], pos_end[2])
+					local node =
+						tstree[1]:root():named_descendant_for_range(pos_begin[1], pos_begin[2], pos_end[1], pos_end[2])
 
 					while node ~= nil and node:type() ~= "interface_declaration" do
 						node = node:parent()
@@ -78,12 +76,13 @@ local reactSnippets = {
 				end, { 3 }),
 				rep(2),
 				i(5, "return <div></div>"),
-			})
-  ),
-  s(
-    { trig = "playgroundurl", name = "Playground URL for React Testing" },
-    fmt("screen.logTestingPlaygroundURL()", {})
-  ),
+			}
+		)
+	),
+	s(
+		{ trig = "playgroundurl", name = "Playground URL for React Testing" },
+		fmt("screen.logTestingPlaygroundURL()", {})
+	),
 }
 
 return reactSnippets

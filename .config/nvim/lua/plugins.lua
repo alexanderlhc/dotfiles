@@ -239,6 +239,7 @@ return require("packer").startup({
 			config = [[ require('plugin-configs/treesitter') ]],
 			requires = {
 				"nvim-treesitter/nvim-treesitter-refactor",
+				"p00f/nvim-ts-rainbow",
 				"romgrk/nvim-treesitter-context",
 				"windwp/nvim-ts-autotag",
 				"JoosepAlviste/nvim-ts-context-commentstring",

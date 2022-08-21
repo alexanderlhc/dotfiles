@@ -1,3 +1,24 @@
+[module/workspaces]
+type = internal/bspwm
+enable-tags-click = true
+; format = <label-tags>
+
+; visible
+label-visible="  "
+label-visible-font = 0
+label-visible-foreground = ${colors.shade0}
+label-visible-background = ${colors.color8}
+label-visible-padding = 0
+; focused
+label-focused = "  "
+label-focused-font = 0
+label-focused-foreground = ${colors.color0}
+label-focused-background = ${colors.color8}
+label-focused-padding = 0
+; empty/occupied
+label-empty = ""
+label-occupied = "  "
+
 [module/bspwm]
 type = internal/bspwm
 

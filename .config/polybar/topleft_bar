@@ -18,6 +18,12 @@ padding-right = 2
 module-margin-left  = 2
 module-margin-right = 2
 
-modules-left  = bspwm
+modules-left  = workspaces
+
+[bar/topleft-mon2]
+monitor = ${env:MONITOR:DVI-D-0}
+wm-restack = bspwm
+inherit = bar/topleft
+modules-left  = workspaces
 
 ; vim:ft=dosini

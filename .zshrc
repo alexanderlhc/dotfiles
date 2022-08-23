@@ -28,3 +28,11 @@ fpath=(~/.zsh.d/ $fpath)
 
 ### Randomized prompt
 colorscript random
+
+# https://gist.github.com/kevinoid/189a0168ef4ceae76ed669cd696eaa37
+if [ -t 0 ]; then
+	# Set GPG_TTY so gpg-agent knows where to prompt.  See gpg-agent(1)
+	export GPG_TTY="$(tty)"
+	# Set PINENTRY_USER_DATA so pinentry-auto knows to present a text UI.
+	export PINENTRY_USER_DATA=USE_TTY=1
+fi

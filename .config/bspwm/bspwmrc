@@ -16,8 +16,14 @@ setxkbmap dk
 ~/.config/bspwm/gnome-keyring
 ~/.config/polybar/launch.sh &
 
-bspc monitor eDP-1 -d 1 2 3 4 5 6 7 8 9
-bspc monitor HDMI-1 -d I II III
+if [[ $HOST -eq "potentilla" ]]
+then
+  bspc monitor DVI-I-1 -d 1 2 3 4 5 6 7 8 9
+  bspc monitor DVI-D-0 -d I II III
+else
+  bspc monitor eDP-1 -d 1 2 3 4 5 6 7 8 9
+  bspc monitor HDMI-1 -d I II III
+fi
 
 
 bspc config border_width         2

@@ -29,10 +29,9 @@ wk.register({
 }, { prefix = "dt" })
 
 wk.register({
-	p = { '"+p', "paste from clipboard" },
 	P = { '"+P', "paste from clipboard" },
-	Y = { '"+y', "yank to clipboard" },
-}, { mode = "nv", noremap = true, silent = true })
+	Y = { '"+y|:echo "yanked"<CR>', "yank to clipboard" },
+}, { mode = "v", noremap = true, silent = true })
 
 wk.register({
 	t = {

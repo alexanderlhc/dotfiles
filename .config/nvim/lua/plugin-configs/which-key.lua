@@ -54,6 +54,7 @@ wk.register({
 		yh = { "<cmd>Telescope neoclip unnamed<CR>", "Clipboard history (neoclip)" },
 	},
 	w = { ":w<CR>", "Save File" },
+	s = { "<cmd>SymbolsOutline<cr>", "Toggles Symbols Panel" },
 }, { prefix = "<leader>" })
 
 local diagnostic_goto_previous = function()

@@ -327,6 +327,12 @@ _G.packer_plugins = {
     path = "/home/alexander/.local/share/nvim/site/pack/packer/opt/sqlite.lua",
     url = "https://github.com/tami5/sqlite.lua"
   },
+  ["symbols-outline.nvim"] = {
+    config = { " require('plugin-configs.symbols-outline') " },
+    loaded = true,
+    path = "/home/alexander/.local/share/nvim/site/pack/packer/start/symbols-outline.nvim",
+    url = "https://github.com/simrat39/symbols-outline.nvim"
+  },
   ["telescope-dap.nvim"] = {
     loaded = true,
     path = "/home/alexander/.local/share/nvim/site/pack/packer/start/telescope-dap.nvim",

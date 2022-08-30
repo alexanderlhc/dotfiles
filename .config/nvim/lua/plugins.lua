@@ -160,6 +160,7 @@ return require("packer").startup({
 		}) -- Pictograms to LSP
 
 		use({ "ray-x/lsp_signature.nvim" })
+		use({ "simrat39/symbols-outline.nvim", config = [[ require('plugin-configs.symbols-outline') ]] })
 
 		use({
 			"hrsh7th/nvim-cmp",

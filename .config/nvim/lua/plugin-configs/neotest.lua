@@ -14,7 +14,7 @@ vim.api.nvim_set_hl(0, 'NeotestFailed', { fg= "#c64343" })
 -- vim.api.nvim_set_hl(0, 'NeotestIndent', { fg= "#000000" })
 vim.api.nvim_set_hl(0, 'NeotestPassed', { fg = "#188092" })
 -- vim.api.nvim_set_hl(0, 'NeotestFocused', { fg= "#000000" })
--- vim.api.nvim_set_hl(0, 'NeotestRunning', { fg= "#000000" })
+vim.api.nvim_set_hl(0, 'NeotestRunning', { fg= "#000000" })
 -- vim.api.nvim_set_hl(0, 'NeotestSkipped', { fg= "#000000" })
 -- vim.api.nvim_set_hl(0, 'NeotestNamespace', { fg= "#000000" })
 

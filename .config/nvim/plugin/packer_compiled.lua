@@ -413,70 +413,46 @@ if not vim.g.packer_custom_loader_enabled then
   vim.g.packer_custom_loader_enabled = true
 end
 
--- Config for: vim-fugitive
-time([[Config for vim-fugitive]], true)
- require('plugin-configs.fugitive') 
-time([[Config for vim-fugitive]], false)
--- Config for: hop.nvim
-time([[Config for hop.nvim]], true)
- require('plugin-configs.hop')
-time([[Config for hop.nvim]], false)
--- Config for: LuaSnip
-time([[Config for LuaSnip]], true)
- require('plugin-configs/luasnip') 
-time([[Config for LuaSnip]], false)
--- Config for: neoscroll.nvim
-time([[Config for neoscroll.nvim]], true)
- require('plugin-configs/neoscroll')
-time([[Config for neoscroll.nvim]], false)
--- Config for: nvim-neoclip.lua
-time([[Config for nvim-neoclip.lua]], true)
- require('plugin-configs.neoclip') 
-time([[Config for nvim-neoclip.lua]], false)
--- Config for: which-key.nvim
-time([[Config for which-key.nvim]], true)
- require('plugin-configs.which-key')
-time([[Config for which-key.nvim]], false)
--- Config for: neotest
-time([[Config for neotest]], true)
- require('plugin-configs/neotest') 
-time([[Config for neotest]], false)
--- Config for: spellsitter.nvim
-time([[Config for spellsitter.nvim]], true)
- require('plugin-configs.spellsitter') 
-time([[Config for spellsitter.nvim]], false)
--- Config for: nvim-tree.lua
-time([[Config for nvim-tree.lua]], true)
- require('plugin-configs.nvimtree') 
-time([[Config for nvim-tree.lua]], false)
--- Config for: lspkind-nvim
-time([[Config for lspkind-nvim]], true)
- require('plugin-configs.lspkind') 
-time([[Config for lspkind-nvim]], false)
--- Config for: symbols-outline.nvim
-time([[Config for symbols-outline.nvim]], true)
- require('plugin-configs.symbols-outline') 
-time([[Config for symbols-outline.nvim]], false)
--- Config for: lualine.nvim
-time([[Config for lualine.nvim]], true)
- require('plugin-configs/lualine')
-time([[Config for lualine.nvim]], false)
+-- Config for: refactoring.nvim
+time([[Config for refactoring.nvim]], true)
+ require('plugin-configs/refactoring') 
+time([[Config for refactoring.nvim]], false)
 -- Config for: nvim-cmp
 time([[Config for nvim-cmp]], true)
  require('plugin-configs.cmp') 
 time([[Config for nvim-cmp]], false)
--- Config for: nvim-treesitter
-time([[Config for nvim-treesitter]], true)
- require('plugin-configs/treesitter') 
-time([[Config for nvim-treesitter]], false)
--- Config for: nvim-surround
-time([[Config for nvim-surround]], true)
-try_loadstring("\27LJ\2\n?\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\18nvim-surround\frequire\0", "config", "nvim-surround")
-time([[Config for nvim-surround]], false)
+-- Config for: spellsitter.nvim
+time([[Config for spellsitter.nvim]], true)
+ require('plugin-configs.spellsitter') 
+time([[Config for spellsitter.nvim]], false)
 -- Config for: nvim-colorizer.lua
 time([[Config for nvim-colorizer.lua]], true)
  require('plugin-configs/colorizer') 
 time([[Config for nvim-colorizer.lua]], false)
+-- Config for: nvim-dap
+time([[Config for nvim-dap]], true)
+require('plugin-configs/dap')
+time([[Config for nvim-dap]], false)
+-- Config for: symbols-outline.nvim
+time([[Config for symbols-outline.nvim]], true)
+ require('plugin-configs.symbols-outline') 
+time([[Config for symbols-outline.nvim]], false)
+-- Config for: nvim-autopairs
+time([[Config for nvim-autopairs]], true)
+try_loadstring("\27LJ\2\n@\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\19nvim-autopairs\frequire\0", "config", "nvim-autopairs")
+time([[Config for nvim-autopairs]], false)
+-- Config for: neoformat
+time([[Config for neoformat]], true)
+ require('plugin-configs.neoformat') 
+time([[Config for neoformat]], false)
+-- Config for: which-key.nvim
+time([[Config for which-key.nvim]], true)
+ require('plugin-configs.which-key')
+time([[Config for which-key.nvim]], false)
+-- Config for: Comment.nvim
+time([[Config for Comment.nvim]], true)
+ require('plugin-configs.comment') 
+time([[Config for Comment.nvim]], false)
 -- Config for: gitsigns.nvim
 time([[Config for gitsigns.nvim]], true)
 try_loadstring("\27LJ\2\n6\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\rgitsigns\frequire\0", "config", "gitsigns.nvim")
@@ -485,34 +461,58 @@ time([[Config for gitsigns.nvim]], false)
 time([[Config for neogen]], true)
 try_loadstring("\27LJ\2\nD\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\fenabled\2\nsetup\vneogen\frequire\0", "config", "neogen")
 time([[Config for neogen]], false)
--- Config for: nvim-dap
-time([[Config for nvim-dap]], true)
-require('plugin-configs/dap')
-time([[Config for nvim-dap]], false)
--- Config for: telescope.nvim
-time([[Config for telescope.nvim]], true)
- require('plugin-configs/telescope') 
-time([[Config for telescope.nvim]], false)
--- Config for: nvim-autopairs
-time([[Config for nvim-autopairs]], true)
-try_loadstring("\27LJ\2\n@\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\19nvim-autopairs\frequire\0", "config", "nvim-autopairs")
-time([[Config for nvim-autopairs]], false)
+-- Config for: neoscroll.nvim
+time([[Config for neoscroll.nvim]], true)
+ require('plugin-configs/neoscroll')
+time([[Config for neoscroll.nvim]], false)
+-- Config for: nvim-treesitter
+time([[Config for nvim-treesitter]], true)
+ require('plugin-configs/treesitter') 
+time([[Config for nvim-treesitter]], false)
+-- Config for: nvim-neoclip.lua
+time([[Config for nvim-neoclip.lua]], true)
+ require('plugin-configs.neoclip') 
+time([[Config for nvim-neoclip.lua]], false)
+-- Config for: LuaSnip
+time([[Config for LuaSnip]], true)
+ require('plugin-configs/luasnip') 
+time([[Config for LuaSnip]], false)
+-- Config for: hop.nvim
+time([[Config for hop.nvim]], true)
+ require('plugin-configs.hop')
+time([[Config for hop.nvim]], false)
 -- Config for: inc-rename.nvim
 time([[Config for inc-rename.nvim]], true)
 try_loadstring("\27LJ\2\n8\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\15inc_rename\frequire\0", "config", "inc-rename.nvim")
 time([[Config for inc-rename.nvim]], false)
--- Config for: Comment.nvim
-time([[Config for Comment.nvim]], true)
- require('plugin-configs.comment') 
-time([[Config for Comment.nvim]], false)
--- Config for: neoformat
-time([[Config for neoformat]], true)
- require('plugin-configs.neoformat') 
-time([[Config for neoformat]], false)
--- Config for: refactoring.nvim
-time([[Config for refactoring.nvim]], true)
- require('plugin-configs/refactoring') 
-time([[Config for refactoring.nvim]], false)
+-- Config for: vim-fugitive
+time([[Config for vim-fugitive]], true)
+ require('plugin-configs.fugitive') 
+time([[Config for vim-fugitive]], false)
+-- Config for: neotest
+time([[Config for neotest]], true)
+ require('plugin-configs/neotest') 
+time([[Config for neotest]], false)
+-- Config for: nvim-tree.lua
+time([[Config for nvim-tree.lua]], true)
+ require('plugin-configs.nvimtree') 
+time([[Config for nvim-tree.lua]], false)
+-- Config for: telescope.nvim
+time([[Config for telescope.nvim]], true)
+ require('plugin-configs/telescope') 
+time([[Config for telescope.nvim]], false)
+-- Config for: lualine.nvim
+time([[Config for lualine.nvim]], true)
+ require('plugin-configs/lualine')
+time([[Config for lualine.nvim]], false)
+-- Config for: nvim-surround
+time([[Config for nvim-surround]], true)
+try_loadstring("\27LJ\2\n?\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\18nvim-surround\frequire\0", "config", "nvim-surround")
+time([[Config for nvim-surround]], false)
+-- Config for: lspkind-nvim
+time([[Config for lspkind-nvim]], true)
+ require('plugin-configs.lspkind') 
+time([[Config for lspkind-nvim]], false)
 
 _G._packer.inside_compile = false
 if _G._packer.needs_bufread == true then

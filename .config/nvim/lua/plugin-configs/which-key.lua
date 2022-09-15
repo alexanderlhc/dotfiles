@@ -74,6 +74,7 @@ wk.register({
 	["[E"] = { diagnostic_goto_previous, "Diagnostic: jump prev error" },
 	["]E"] = { diagnostic_goto_next, "Diagnostic: jump next error" },
 	["<Leader>gd"] = { "<cmd>Lspsaga lsp_finder<CR>", "LSP find cursor definition/reference" },
+	["<c-g>"] = { "<cmd>Lspsaga lsp_finder<CR>", "LSP find cursor definition/reference" },
 	K = { "<cmd>Lspsaga hover_doc<CR>", "Documentation hover" },
 	["<Leader>r"] = { "<cmd>Lspsaga rename<CR>", "Rename symbol" },
 	["<leader>ca"] = { "<cmd>Lspsaga code_action<CR>", "LSP: Code Action" },

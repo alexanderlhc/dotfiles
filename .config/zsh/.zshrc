@@ -7,7 +7,7 @@ unsetopt autocd beep
 bindkey -v
 
 autoload -Uz compinit
-compinit
+compinit -d "$XDG_CACHE_HOME"/zsh/zcompdump-"$ZSH_VERSION"
 
 source ~/.config/aliases
 path+=('/home/alexander/.local/bin')

@@ -1,7 +1,7 @@
 [general]
 ui = ttyui
 accounts = disroot.org
-pythonfile = ~/config/offlineimap/offlineimap.py
+pythonfile = ~/.config/offlineimap/offlineimap.py
 
 [Account disroot.org]
 localrepository = disroot.org-local

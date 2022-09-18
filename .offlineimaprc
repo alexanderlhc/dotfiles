@@ -1,0 +1,21 @@
+[general]
+ui = ttyui
+accounts = disroot.org
+pythonfile = ~/.offlineimap.py
+
+[Account disroot.org]
+localrepository = disroot.org-local
+remoterepository = disroot.org-remote
+
+[Repository disroot.org-local]
+type = Maildir
+localfolders = ~/Mail/disroot.org
+restoreatime = no
+
+[Repository disroot.org-remote]
+type = IMAP
+remoteuser = alexanderlhc@disroot.org
+remotepasseval = get_pass("disroot")
+remotehost = disroot.org
+remoteport = 993
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt

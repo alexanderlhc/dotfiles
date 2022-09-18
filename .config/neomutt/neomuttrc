@@ -1,0 +1,36 @@
+source accounts.muttrc
+#---Pager
+## Prefer plain text to html.
+## However, for brain dead clients that bundle attachments inside a
+## multipart/alternative, prefer that alternative.
+alternative_order multipart/mixed multipart/related text/plain
+#
+## Consult mime.types for determining types of these attachments
+mime_lookup application/octet-stream
+#
+## This requires a ~/.mailcap entry with the copiousoutput flag, such as:
+## text/html; lynx -dump -width ${COLUMNS:-80} %s; nametemplate=%s.html; copiousoutput
+auto_view text/html
+#---------
+set rfc2047_parameters = yes                                                    
+set sleep_time = 0    # Pause 0 seconds for informational messages              
+set markers = no    # Disables the `+` displayed at line wraps                  
+set mark_old = no   # Unread mail stay unread until read                        
+set mime_forward = yes    # attachments are forwarded with mail                 
+set wait_key = no   # mutt won't ask "press key to continue"                    
+set fast_reply      # skip to compose when replying                             
+set fcc_attach      # save attachments with the body                            
+set forward_format = "Fwd: %s"  # format of subject when forwarding             
+set forward_quote   # include message in forwards                               
+set reverse_name    # reply as whomever it was to                               
+set include     # include message in replies  
+#--- Style
+set sidebar_visible = yes                                                       
+set sidebar_width = 20                                                          
+set sidebar_short_path = yes                                                    
+set sidebar_next_new_wrap = yes                                                 
+set mail_check_stats                                                            
+set sidebar_format = '%B%?F? [%F]?%* %?N?%N/? %?S?%S?'
+source colors.muttrc
+#--- Keys
+source bindings.muttrc

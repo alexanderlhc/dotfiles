@@ -15,6 +15,11 @@ return require("packer").startup({
 		})
 
 		use({
+			"glepnir/dashboard-nvim",
+			config = [[ require('plugin-configs/dashboard') ]],
+		})
+
+		use({
 			"projekt0n/github-nvim-theme",
 			"themercorp/themer.lua",
 		})

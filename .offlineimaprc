@@ -9,7 +9,7 @@ remoterepository = disroot.org-remote
 
 [Repository disroot.org-local]
 type = Maildir
-localfolders = ~/Mail/disroot.org
+localfolders = ~/.local/share/Mail/disroot.org
 restoreatime = no
 
 [Repository disroot.org-remote]

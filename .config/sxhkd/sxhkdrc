@@ -14,9 +14,6 @@ super + ctrl + p
 super + ctrl + c
 	rofi -modi "clipboard: greenclip print" -show clipboard -run-command {cmd}
 
-super + ctrl + r
-  sh /home/alexander/xdo.sh
-
 Print
 	flameshot gui
 

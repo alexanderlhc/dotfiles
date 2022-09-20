@@ -167,6 +167,29 @@ return require("packer").startup({
 		use({ "ray-x/lsp_signature.nvim" })
 		use({ "simrat39/symbols-outline.nvim", config = [[ require('plugin-configs.symbols-outline') ]] })
 
+		--[[ use({ "github/copilot.vim" }) ]]
+
+		use({
+			"zbirenbaum/copilot.lua",
+			event = { "VimEnter" },
+			config = function()
+				vim.defer_fn(function()
+					require("copilot").setup({
+						copilot_node_command = vim.fn.expand("$HOME")
+							.. "/.local/share/nvm/versions/node/v16.17.0/bin/node",
+					})
+				end, 100)
+			end,
+		})
+
+		use({
+			"zbirenbaum/copilot-cmp",
+			after = { "copilot.lua" },
+			config = function()
+				require("copilot_cmp").setup()
+			end,
+		})
+
 		use({
 			"hrsh7th/nvim-cmp",
 			requires = {

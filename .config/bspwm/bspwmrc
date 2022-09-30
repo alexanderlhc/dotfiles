@@ -1,30 +1,10 @@
 #! /bin/sh
 
-# autolaunch
-pgrep -x sxhkd > /dev/null || sxhkd &
-pgrep -x nm-applet > /dev/null || nm-applet &
-pgrep -x picom > /dev/null || picom &
-pgrep -x greenclip > /dev/null || greenclip daemon &
-pgrep -x nextcloud > /dev/null || nextcloud &
-redshift -l "$(curl -s "https://location.services.mozilla.com/v1/geolocate?key=geoclue" | jq '.location.lat, .location.lng' | tr '\n' ':' | sed 's/:$//')" &
-# pgrep -x aw-qt > /dev/null || activity_watch stop &
-/home/alexander/.screenlayout/raskrask.sh & # Monitor layout
+sh ~/.config/bspwm/autolaunch.sh
+sh ~/.config/bspwm/monitors.sh
 
-hsetroot -cover ~/.local/share/nextcloud/wallpapers/IMG_20200502_151338.jpg
-
-setxkbmap dk
-~/.config/bspwm/gnome-keyring
-~/.config/polybar/launch.sh &
-
-if [[ $HOST -eq "potentilla" ]]
-then
-  bspc monitor DVI-I-1 -d 1 2 3 4 5 6 7 8 9
-  bspc monitor DVI-D-0 -d I II III
-else
-  bspc monitor eDP-1 -d 1 2 3 4 5 6 7 8 9
-  bspc monitor HDMI-1 -d I II III
-fi
-
+#setxkbmap dk
+#~/.config/bspwm/gnome-keyring
 
 bspc config border_width         2
 bspc config window_gap          12
@@ -35,3 +15,5 @@ bspc config gapless_monocle      true
 
 # fixes gray java windows
 wmname LG3D
+
+# vi: ft=bash

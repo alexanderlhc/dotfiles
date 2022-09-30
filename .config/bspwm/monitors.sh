@@ -7,7 +7,7 @@ then
   hsetroot -cover ~/Nextcloud/wallpapers/IMG_20200502_151338.jpg
 else
   notify-send "Work work"
-#   bspc monitor DVI-I-1 -d 1 2 3 4 5 6 7 8 9
-#   bspc monitor DVI-D-0 -d I II III
+  #   bspc monitor DVI-I-1 -d 1 2 3 4 5 6 7 8 9
+  #   bspc monitor DVI-D-0 -d I II III
 fi
 

@@ -1,262 +1,47 @@
 * {
   all: unset;
 }
+
 window {
   font-family: "JetBrainsMono Nerd Font Mono";
-  border-radius: 10px;
-  background-color: #2e3440;
+  background-color: #fefefe;
 }
 
 //------------------------------------------------------------------------------
 
-.slider-vol-side {
-  margin-top: 6px;
-  margin-right: 40px;
-  margin-bottom: 15px;
-}
-.slider-vol-side scale trough highlight {
-  all: unset;
-  background-color: #88c0d0;
-  color: #2e3440;
-  border-radius: 10px;
+.genicon {
+  background-repeat: no-repeat;
+  background-size: 20px;
+  min-height: 20px;
+  min-width: 20px;
 }
 
-.slider-vol-side scale trough {
-  all: unset;
-  background-color: #4c566a;
-  border-radius: 50px;
-  min-height: 5px;
-  min-width: 170px;
-  margin-top: 10px;
-  margin-left: 20px;
+.sidebar {
+  .segment-top {
+    padding-top: 0.5rem;
+  }
 }
 
-.label-vol-side {
-  margin-top: 10px;
+.workspaces {
+  color: black;
+}
+
+.hour,
+.minute,
+.date {
   font-family: "JetBrainsMono Nerd Font Mono";
-  margin-left: 35px;
-  font-size: 25px;
-}
-
-.label-vol-side {
-  color: #88c0d0;
-}
-
-//------------------------------------------------------------------------------
-
-.slider-mic-side {
-  margin-top: 6px;
-  margin-right: 40px;
-  margin-bottom: 15px;
-}
-.slider-mic-side scale trough highlight {
-  all: unset;
-  background-color: #a3be8c;
-  color: #2e3440;
-  border-radius: 10px;
-}
-
-.slider-mic-side scale trough {
-  all: unset;
-  background-color: #4c566a;
-  border-radius: 50px;
-  min-height: 5px;
-  min-width: 170px;
-  margin-top: 10px;
-  margin-left: 20px;
-}
-
-.label-mic-side {
-  margin-top: 10px;
-  font-family: "JetBrainsMono Nerd Font Mono";
-  margin-left: 35px;
-  font-size: 25px;
-}
-
-.label-mic-side {
-  color: #a3be8c;
-}
-
-//------------------------------------------------------------------------------
-
-.square-button {
-  font-family: "JetBrainsMono Nerd Font Mono";
-  margin: 17px;
-  font-size: 25px;
-}
-
-.poweroff {
-  color: #bf616a;
-}
-
-.reboot {
-  color: #ebcb8b;
-}
-
-.logout {
-  color: #b48ead;
-}
-
-.lock {
-  color: #8fbcbb;
-}
-
-//------------------------------------------------------------------------------
-.music-box {
-  margin: 10px;
-  background-color: #2e3440;
-  color: #b48ead;
-}
-
-.music-icon {
-  font-family: "JetBrainsMono Nerd Font Mono";
-  margin: 10px;
-  font-size: 50px;
-}
-.music-info {
-  font-family: "JetBrainsMono Nerd Font Mono";
-  margin: 10px;
-  font-size: 20px;
-}
-
-.music-control-box {
-  margin-left: 175px;
-}
-
-.music-control {
-  font-family: "JetBrainsMono Nerd Font Mono";
-  font-size: 30px;
-  margin: 10px;
-}
-
-.music-album {
-  border-radius: 10px;
-}
-
-//------------------------------------------------------------------------------
-.profile-picture {
-  margin: 10px;
-  margin-right: 0px;
-  margin-top: 25px;
-}
-
-.profile-info {
-  margin-right: 10px;
-  margin-left: 10px;
-  margin-top: 15px;
-  margin-bottom: 25px;
-}
-
-.profile-name {
-  font-family: "JetBrainsMono Nerd Font Mono";
-  font-size: 25px;
-}
-
-.profile-username {
-  font-family: "JetBrainsMono Nerd Font Mono";
-  font-size: 20px;
-  color: #bf616a;
-}
-
-//------------------------------------------------------------------------------
-.hour-text {
-  font-family: "JetBrainsMono Nerd Font Mono";
-  font-size: 50px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  color: #88c0d0;
-}
-
-.minute-text {
-  font-family: "JetBrainsMono Nerd Font Mono";
-  font-size: 50px;
-  margin-bottom: 10px;
-  color: #88c0d0;
-}
-
-//------------------------------------------------------------------------------
-.date-text {
-  font-family: "JetBrainsMono Nerd Font Mono";
-  font-size: 25px;
-  margin-top: 27px;
-  color: #ebcb8b;
-}
-
-// ---- BAR --------------------------------------------------------------------
-
-.bar-box {
-  border-radius: 10px;
-  margin: 5px;
-}
-
-.box-bg {
-  background-color: #434c5e;
-}
-
-.hour {
-  font-family: "JetBrainsMono Nerd Font Mono";
-  font-size: 20px;
-  margin: 0px 5px 5px 5px;
-  color: #88c0d0;
-  //color: #5E81AC;
-}
-.minute {
-  font-family: "JetBrainsMono Nerd Font Mono";
-  font-size: 20px;
-  margin: 5px;
-  color: #88c0d0;
-  //color: #5E81AC;
-}
-
-.bar-mic-icon {
-  font-family: "JetBrainsMono Nerd Font Mono";
-  font-size: 20px;
-  color: #a3be8c;
-}
-
-.bar-updates-icon {
-  font-family: "JetBrainsMono Nerd Font Mono";
-  font-size: 30px;
-  color: #ebcb8b;
-}
-
-.bar-updates-text {
-  font-family: "JetBrainsMono Nerd Font Mono";
-  font-size: 18px;
-  color: #ebcb8b;
+  color: green;
 }
 
 .separator {
   font-family: "JetBrainsMono Nerd Font Mono";
   font-size: 20px;
   color: #434c5e;
+  opacity: 0.2;
 }
 
 .workspaces {
   margin-top: 0px;
-}
-
-.bar-caps-icon {
-  font-family: "JetBrainsMono Nerd Font Mono";
-  font-size: 30px;
-  color: #a3be8c;
-}
-
-.application-menu {
-  margin-top: 10px;
-  margin-bottom: 5px;
-  font-family: "JetBrainsMono Nerd Font Mono";
-  font-size: 25px;
-  color: #a3be8c;
-  transition: 0.5s;
-}
-
-.application-menu:hover {
-  color: #85a966;
-}
-
-.application-menu:active {
-  color: #a3be8c;
 }
 
 .workspace-active {
@@ -302,28 +87,4 @@ window {
   font-size: 20px;
   color: #434c5e;
   transition: 0.2s;
-}
-
-.layout-tiled {
-  font-family: "JetBrainsMono Nerd Font Mono";
-  font-size: 30px;
-  color: #ebcb8b;
-}
-
-.layout-monocle {
-  font-family: "JetBrainsMono Nerd Font Mono";
-  font-size: 30px;
-  color: #a3be8c;
-}
-
-.non-tabbed-window {
-  font-family: "JetBrainsMono Nerd Font Mono";
-  font-size: 30px;
-  color: #a3be8c;
-}
-
-.tabbed-window {
-  font-family: "JetBrainsMono Nerd Font Mono";
-  font-size: 30px;
-  color: #b48ead;
 }

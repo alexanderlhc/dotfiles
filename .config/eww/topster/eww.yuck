@@ -11,16 +11,6 @@
 (defwidget workspaces []
   (literal :content workspaces_listen))
 
-(defwidget workspacez []
-  (box :class "workspaces" :orientation "v" :spacing 5 :space-evenly "false" :halign "center" 
-    (button :onclick "bspc desktop -f 1" :class "wb-0-1-1" "ﰉ")
-    (button :onclick "bspc desktop -f 2" :class "wb-0-2-" "ﰊ")
-    (button :onclick "bspc desktop -f 3" :class "wb-0-3-" "ﰊ")
-    (button :onclick "bspc desktop -f 4" :class "wb-0--" "ﰊ")
-    (button :onclick "bspc desktop -f 5" :class "wb-0--" "ﰊ")
-    (button :onclick "bspc desktop -f 6" :class "wb-0--" "ﰊ")
-    (button :onclick "bspc desktop -f 7" :class "wb-0--" "ﰊ")))
-
 (defwidget layout []
   (literal :content workspaces_layout))
 
@@ -29,7 +19,7 @@
 
 (defwidget menu []
   	(box :orientation "h" :spacing 30 :valign "center" :halign "center" :space-evenly "false" :vexpand "false" :hexpand "false"
-  	  (button :style "background-image: url('/home/alexander/.config/eww/topster/icons/diamond.svg');" :class "genicon" :onclick "rofi -show drun -show-icons & disown")))
+  	  (button :style "background-image: url('/home/alexander/.config/eww/topster/icons/dashboard-round.svg');" :class "genicon" :onclick "rofi -show drun -show-icons & disown")))
 
 (defwidget sidebar []
   (centerbox 
@@ -45,7 +35,8 @@
          :valign "center"
          (box :orientation "v"
           (layout)
-          (label :class "separator" :text "--")))
+          ; (label :class "separator" :text "--")
+          ))
     (box :class "segment-bottom"
          :orientation "v"
          :valign "end"
@@ -70,7 +61,7 @@
 ;    ))
 
 (defwindow bar 
-          	:monitor 0
+          	:monitor 1
             :windowtype "dock"
           	:geometry (geometry :x "0" 
                                 :y "0"

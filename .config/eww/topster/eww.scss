@@ -22,69 +22,50 @@ window {
   }
 }
 
+//------------------------------------------------------------------------------
 .workspaces {
-  color: black;
+  font-family: "JetBrainsMono Nerd Font Mono";
+  font-size: 30px;
+  color: #756565;
+  //margin-top: 0px;
+
+  .active {
+  }
+  .occupied {
+  }
+
+  .inactive {
+    opacity: 0.2;
+  }
+  .empty {
+  }
+
+  .inactive,
+  .empty {
+    font-size: 20px;
+    color: #828282;
+    &:hover {
+      font-size: unset;
+      transition: 0.2s;
+    }
+  }
 }
+
+//------------------------------------------------------------------------------
 
 .hour,
 .minute,
 .date {
-  font-family: "JetBrainsMono Nerd Font Mono";
-  color: green;
+  color: #4f4f4f;
 }
+.date {
+}
+
+//------------------------------------------------------------------------------
 
 .separator {
   font-family: "JetBrainsMono Nerd Font Mono";
   font-size: 20px;
   color: #434c5e;
   opacity: 0.2;
-}
-
-.workspaces {
-  margin-top: 0px;
-}
-
-.workspace-active {
-  font-family: "JetBrainsMono Nerd Font Mono";
-  font-size: 30px;
-  color: #6e8db4;
-}
-
-.workspace-focused {
-  font-family: "JetBrainsMono Nerd Font Mono";
-  font-size: 30px;
-  color: #8ea6c4;
-}
-
-.workspace-focused:hover {
-  font-size: 30px;
-}
-
-.workspace-occupied {
-  font-family: "JetBrainsMono Nerd Font Mono";
-  font-size: 20px;
-  color: #6e8db4;
-  transition: 0.2s;
-}
-
-.workspace-occupied:hover {
-  font-size: 30px;
-}
-
-.workspace-urgent {
-  font-family: "JetBrainsMono Nerd Font Mono";
-  font-size: 30px;
-  color: #6e8db4;
-  transition: 0.2s;
-}
-
-.workspace-urgent:hover {
-  font-size: 30px;
-}
-
-.workspace-empty {
-  font-family: "JetBrainsMono Nerd Font Mono";
-  font-size: 20px;
-  color: #434c5e;
-  transition: 0.2s;
 }

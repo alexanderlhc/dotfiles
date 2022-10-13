@@ -4,7 +4,7 @@
 
 window {
   font-family: "JetBrainsMono Nerd Font Mono";
-  background-color: #fefefe;
+  /*   background-color: #fefefe; */
 }
 
 //------------------------------------------------------------------------------
@@ -17,6 +17,7 @@ window {
 }
 
 .sidebar {
+  background-color: rgba(255, 255, 255, 0.4);
   .segment-top {
     padding-top: 0.5rem;
   }
@@ -58,7 +59,7 @@ window {
 .date {
   color: #4f4f4f;
 }
-.date {
+.datetime {
 }
 
 //------------------------------------------------------------------------------

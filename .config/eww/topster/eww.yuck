@@ -17,6 +17,31 @@
 (defwidget tabbed []
   (literal :content workspaces_tabbed))
 
+(defvar dateVisible false)
+
+(defwidget datetime []
+  (eventbox 
+              :class "datetime"
+              :onhover "eww -c ~/.config/eww/topster/ update dateVisible=true"
+              :onhoverlost "eww -c ~/.config/eww/topster/ update dateVisible=false"
+  (box :space-evenly false
+       :orientation "v"
+      (revealer :reveal {!dateVisible}
+                :duration "100ms"
+                :transition "slidedown"
+          (label :text {time} :class "minute" :limit-width 19)
+      ) 
+      (revealer :reveal {dateVisible}
+                :duration "200ms"
+                :transition "slideup"
+          (box :orientation "v"
+            (label :text {time} :class "minute" :limit-width 19)
+            (label :text {date} :class "date" :limit-width 19))
+       )
+      )
+  )
+)
+
 (defwidget menu []
   	(box :orientation "h" :spacing 30 :valign "center" :halign "center" :space-evenly "false" :vexpand "false" :hexpand "false"
   	  (button :style "background-image: url('/home/alexander/.config/eww/topster/icons/dashboard-round.svg');" :class "genicon" :onclick "rofi -show drun -show-icons & disown")))
@@ -40,28 +65,13 @@
     (box :class "segment-bottom"
          :orientation "v"
          :valign "end"
-        (label :text {time} :class "minute" :limit-width 19)
-        (label :text {date} :class "date" :limit-width 19))
+          (datetime)
+          )
     ))
-
-;(defwidget bar []
-;  (box 
-;    :class "sidebar"
-;    :orientation "v"
-;    (box :orientation "v"
-;         :space-evenly false
-;        (menu)
-;        (layout)
-;        (workspaces)
-;        (label :class "separator" :text "--")
-;        )
-;    (box :orientation "v"
-;        (label :text {time} :class "minute" :limit-width 20)
-;        (label :text {date} :class "date" :limit-width 20))
-;    ))
+  
 
 (defwindow bar 
-          	:monitor 1
+          	:monitor 0
             :windowtype "dock"
           	:geometry (geometry :x "0" 
                                 :y "0"

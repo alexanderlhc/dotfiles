@@ -27,7 +27,7 @@ gib_workspace_yuck() {
       button_class="empty"
       button_name=""
     fi
-    buffered+="(button :class \"$button_class $active_class\"  :onclick \"wmctrl -s $id\" \"$button_name\")"
+    buffered+="(button :class \"workspace $button_class $active_class\"  :onclick \"wmctrl -s $id\" \"$button_name\")"
     if [ $button_class = "occupied" -o $active_class = "active" ]; then
       echo -n "$buffered"
       buffered=""

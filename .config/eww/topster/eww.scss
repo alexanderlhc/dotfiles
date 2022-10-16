@@ -1,10 +1,17 @@
+$color-font-primary: #a1bdce;
+$color-font-secondary: #879fad;
+$color-font-inactive: #6a7c8c;
+
+$font-family: "JetBrainsMono Nerd Font Mono";
+$font-size: 16px;
+
 * {
   all: unset;
 }
 
 window {
-  font-family: "JetBrainsMono Nerd Font Mono";
-  /*   background-color: #fefefe; */
+  font-family: $font-family;
+  font-size: $font-size;
 }
 
 //------------------------------------------------------------------------------
@@ -16,25 +23,37 @@ window {
   min-width: 20px;
 }
 
+.barBlur {
+  background-color: rgba(255, 255, 255, 0.2);
+  /* background-color: red; */
+}
+
 .sidebar {
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0);
   .segment-top {
     padding-top: 0.5rem;
   }
 }
 
+scale trough {
+  all: unset;
+  background-color: #22242b;
+  min-height: 100px;
+  min-width: 20px;
+  margin: 0px 10px 0px 0px;
+}
+
 //------------------------------------------------------------------------------
 .workspaces {
-  font-family: "JetBrainsMono Nerd Font Mono";
-  font-size: 30px;
-  color: #756565;
-  //margin-top: 0px;
+  color: $color-font-secondary;
+  text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff,
+    1px 1px 0 #ffffff;
 
   .active {
+    color: $color-font-primary;
   }
   .occupied {
   }
-
   .inactive {
     opacity: 0.2;
   }
@@ -43,12 +62,13 @@ window {
 
   .inactive,
   .empty {
-    font-size: 20px;
-    color: #828282;
-    &:hover {
-      font-size: unset;
-      transition: 0.2s;
-    }
+    font-size: 0.8em;
+    color: $color-font-inactive;
+  }
+
+  .workspace:hover {
+    transition: 0.2s;
+    color: yellow;
   }
 }
 
@@ -57,16 +77,26 @@ window {
 .hour,
 .minute,
 .date {
-  color: #4f4f4f;
+  color: $color-font-primary;
 }
 .datetime {
 }
 
 //------------------------------------------------------------------------------
 
-.separator {
-  font-family: "JetBrainsMono Nerd Font Mono";
-  font-size: 20px;
-  color: #434c5e;
-  opacity: 0.2;
+.volbar trough highlight {
+  background-image: linear-gradient(
+    to right,
+    #afcee0 30%,
+    #a1bdce 50%,
+    #77a5bf 100% * 50
+  );
+  /* border-radius: 10px; */
 }
+.volume_icon {
+  font-size: 1.3em;
+  color: $color-font-primary;
+  margin: 0px 10px 0px 10px;
+}
+
+//------------------------------------------------------------------------------

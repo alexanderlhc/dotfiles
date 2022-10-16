@@ -18,8 +18,8 @@
     (box :class "segment-middle"
          :valign "center"
          (box :orientation "v"
-          (layout)
-          ; (label :class "separator" :text "--")
+          ;(layout)
+          ;(label :class "separator" :text "--")
           ))
     (box :class "segment-bottom"
          :orientation "v"

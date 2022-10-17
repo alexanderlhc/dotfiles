@@ -1,74 +1,20 @@
-; vars
-(deflisten workspaces_listen "./scripts/workspaces.sh")
-(defpoll workspaces_layout :interval "500ms" "./scripts/bspc_layout.sh")
-(defpoll workspaces_tabbed :interval "500ms" "./scripts/bspc_tabbed.sh")
-(defpoll speaker_volume :interval "1s"  "./scripts/speaker_volume.sh")
-(defpoll hour :interval "1s"  "date '+%H'")
-(defpoll minute :interval "1s"  "date '+%M'")
-(defpoll time :interval "1s"  "date '+%H:%M'")
-(defpoll date :interval "1s"  "date '+%m/%d'")
+(include "widgets/sidebar.yuck")
 
-(defwidget workspaces []
-  (literal :content workspaces_listen))
 
-(defwidget layout []
-  (literal :content workspaces_layout))
+(defwidget barBlurWidget []
+  (box :class "barBlur"))
 
-(defwidget tabbed []
-  (literal :content workspaces_tabbed))
+(defwindow barBlur 
+          	:monitor 0
+            :windowtype "dock"
+          	:geometry (geometry :x "0" 
+                                :y "0"
+                                :width "3%" 
+                                :height "100%"
+                                :anchor "top left")
+          	:reserve (struts :distance "3%" :side "left")
+              (barBlurWidget))
 
-(defvar dateVisible false)
-
-(defwidget datetime []
-  (eventbox 
-              :class "datetime"
-              :onhover "eww -c ~/.config/eww/topster/ update dateVisible=true"
-              :onhoverlost "eww -c ~/.config/eww/topster/ update dateVisible=false"
-  (box :space-evenly false
-       :orientation "v"
-      (revealer :reveal {!dateVisible}
-                :duration "100ms"
-                :transition "slidedown"
-          (label :text {time} :class "minute" :limit-width 19)
-      ) 
-      (revealer :reveal {dateVisible}
-                :duration "200ms"
-                :transition "slideup"
-          (box :orientation "v"
-            (label :text {time} :class "minute" :limit-width 19)
-            (label :text {date} :class "date" :limit-width 19))
-       )
-      )
-  )
-)
-
-(defwidget menu []
-  	(box :orientation "h" :spacing 30 :valign "center" :halign "center" :space-evenly "false" :vexpand "false" :hexpand "false"
-  	  (button :style "background-image: url('/home/alexander/.config/eww/topster/icons/dashboard-round.svg');" :class "genicon" :onclick "rofi -show drun -show-icons & disown")))
-
-(defwidget sidebar []
-  (centerbox 
-      :class "sidebar"
-      :orientation "v"
-    (box :class "segment-top"
-         :valign "start"
-         :space-evenly false
-         :orientation "v"
-         (menu)
-         (workspaces))
-    (box :class "segment-middle"
-         :valign "center"
-         (box :orientation "v"
-          (layout)
-          ; (label :class "separator" :text "--")
-          ))
-    (box :class "segment-bottom"
-         :orientation "v"
-         :valign "end"
-          (datetime)
-          )
-    ))
-  
 
 (defwindow bar 
           	:monitor 0
@@ -80,4 +26,5 @@
                                 :anchor "top left")
           	:reserve (struts :distance "3%" :side "left")
 			     				(sidebar))
+
 ;; vim:ft=yuck

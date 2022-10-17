@@ -1,0 +1,98 @@
+# Configured for: picom-ibhagwan
+
+### Shadow
+shadow = true;
+shadow-exclude = [
+  "class_g = 'firefox' && argb"
+]
+shadow-offset-x = -10;
+shadow-offset-y = 3;
+shadow-opacity = 0.3;
+shadow-radius = 6;
+
+### Borders
+round-borders = 0;
+round-borders-rule = [
+  "3:window_type = 'normal'",
+  "3:window_type = 'unknown'",
+  "3:window_type = 'desktop'",
+  "3:window_type = 'toolbar'",
+  "3:window_type = 'menu'",
+  "3:window_type = 'utility'",
+  "3:window_type = 'splash'",
+  "3:window_type = 'dialog'",
+  "3:window_type = 'dropdown_menu'",
+  "3:window_type = 'popup_menu'",
+  "3:window_type = 'tooltip'",
+  "3:window_type = 'notification'",
+  "3:window_type = 'combo'",
+  "3:window_type = 'dnd'",
+];
+rounded-corners-exclude = [
+  "class_g ?= 'eww-bar'",
+  "class_g ?= 'eww-barBlur'",
+];
+corner-radius = 20.0;
+
+### Fade
+#fade-exclude = [ ]
+#fade-in-step = 0.03;
+#fade-out-step = 0.03;
+#fading = false;
+fading = true;
+fade-in-step = 0.093;
+fade-out-step = 0.093;
+fade-delta = 10;
+fade-exclude = [ ]
+no-fading-openclose = false
+no-fading-destroyed-argb = false 
+
+
+
+### Transparency
+#frame-opacity = 1;
+#inactive-opacity-override = false;
+inactive-opacity = 0.1;
+frame-opacity = 1.0;
+inactive-opacity-override = true;
+active-opacity = 1;
+opacity-rule = [
+	"100:class_g = 'Polybar'",
+	"100:class_g = 'firefox' && focused",
+	"100:class_g = 'csgo_linux64' && focused",
+  # "100:class_g    = 'Alacritty'",
+];
+
+### Blur
+blur: {
+  method = "dual_kawase";
+  strength = 3;
+  background = false;
+  background-frame = false;
+  background-fixed = false;
+  kern = "3x3box";
+}
+blur-background-exclude = [ ];
+
+### Settings
+backend = "glx";
+detect-client-leader = true
+detect-client-opacity = true;
+detect-rounded-corners = true;
+detect-transient = true
+experimental-backends = true;
+log-level = "info";
+mark-ovredir-focused = true;
+mark-wmwin-focused = true;
+refresh-rate = 0
+use-damage = true
+vsync = true
+wintypes:
+{
+  normal = { fade = false; shadow = false; }
+  tooltip = { fade = true; shadow = true; opacity = 0.75; focus = true; full-shadow = false; };
+  dock = { shadow = false; }
+  dnd = { shadow = false; }
+  popup_menu = { opacity = 0.8; }
+  dropdown_menu = { opacity = 0.8; }
+};

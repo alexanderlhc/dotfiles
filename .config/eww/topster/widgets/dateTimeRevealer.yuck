@@ -1,0 +1,29 @@
+(defpoll hour :interval "1s"  "date '+%H'")
+(defpoll minute :interval "1s"  "date '+%M'")
+(defpoll time :interval "1s"  "date '+%H:%M'")
+(defpoll date :interval "1s"  "date '+%m/%d'")
+(defvar dateVisible false)
+
+(defwidget datetime []
+  (eventbox 
+              :class "datetime"
+              :onhover "eww -c ~/.config/eww/topster/ update dateVisible=true"
+              :onhoverlost "eww -c ~/.config/eww/topster/ update dateVisible=false"
+  (box :space-evenly false
+       :orientation "v"
+      (revealer :reveal {!dateVisible}
+                :duration "100ms"
+                :transition "slidedown"
+          (label :text {time} :class "minute" :limit-width 19)
+      ) 
+      (revealer :reveal {dateVisible}
+                :duration "200ms"
+                :transition "slideup"
+          (box :orientation "v"
+            (label :text {time} :class "minute" :limit-width 19)
+            (label :text {date} :class "date" :limit-width 19))
+       )
+      )
+  )
+)
+

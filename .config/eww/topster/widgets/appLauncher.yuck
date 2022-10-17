@@ -1,0 +1,6 @@
+(defwidget appLauncher []
+  	(box :orientation "h" :spacing 30 :valign "center" :halign "center" :space-evenly "false" :vexpand "false" :hexpand "false"
+  	  (button  
+        :onclick "rofi -show drun -show-icons & disown"
+        ""
+        )))

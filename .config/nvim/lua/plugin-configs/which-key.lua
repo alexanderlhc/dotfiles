@@ -64,23 +64,23 @@ local diagnostic_goto_next = function()
 	require("lspsaga.diagnostic").goto_next({ severity = vim.diagnostic.severity.ERROR })
 end
 
-wk.register({
-	name = "LSP",
-
-	-- diagnostics
-	["<leader>el"] = { "<cmd>Lspsaga show_line_diagnostics<CR>", "Diagnostic: show line" },
-	["[e"] = { "<cmd>Lspsaga diagnostic_jump_next<CR>", "Diagnostic: jump next" },
-	["]e"] = { "<cmd>Lspsaga diagnostic_jump_prev<CR>", "Diagnostic: jump prev" },
-	["[E"] = { diagnostic_goto_previous, "Diagnostic: jump prev error" },
-	["]E"] = { diagnostic_goto_next, "Diagnostic: jump next error" },
-	["<Leader>gd"] = { "<cmd>Lspsaga lsp_finder<CR>", "LSP find cursor definition/reference" },
-	["<c-g>"] = { "<cmd>Lspsaga lsp_finder<CR>", "LSP find cursor definition/reference" },
-	K = { "<cmd>Lspsaga hover_doc<CR>", "Documentation hover" },
-	["<Leader>r"] = { "<cmd>Lspsaga rename<CR>", "Rename symbol" },
-	["<leader>ca"] = { "<cmd>Lspsaga code_action<CR>", "LSP: Code Action" },
-})
-
-wk.register({
-	name = "LSP Visual",
-	["<leader>ca"] = { "<cmd><C-U>Lspsaga range_code_action<CR>", "LSP: Code Action Visual" },
-}, { mode = "v" })
+--[[ wk.register({ ]]
+--[[ 	name = "LSP", ]]
+--[[]]
+--[[ 	-- diagnostics ]]
+--[[ 	["<leader>el"] = { "<cmd>Lspsaga show_line_diagnostics<CR>", "Diagnostic: show line" }, ]]
+--[[ 	["[e"] = { "<cmd>Lspsaga diagnostic_jump_next<CR>", "Diagnostic: jump next" }, ]]
+--[[ 	["]e"] = { "<cmd>Lspsaga diagnostic_jump_prev<CR>", "Diagnostic: jump prev" }, ]]
+--[[ 	["[E"] = { diagnostic_goto_previous, "Diagnostic: jump prev error" }, ]]
+--[[ 	["]E"] = { diagnostic_goto_next, "Diagnostic: jump next error" }, ]]
+--[[ 	["<Leader>gd"] = { "<cmd>Lspsaga lsp_finder<CR>", "LSP find cursor definition/reference" }, ]]
+--[[ 	["<c-g>"] = { "<cmd>Lspsaga lsp_finder<CR>", "LSP find cursor definition/reference" }, ]]
+--[[ 	K = { "<cmd>Lspsaga hover_doc<CR>", "Documentation hover" }, ]]
+--[[ 	["<Leader>r"] = { "<cmd>Lspsaga rename<CR>", "Rename symbol" }, ]]
+--[[ 	["<leader>ca"] = { "<cmd>Lspsaga code_action<CR>", "LSP: Code Action" }, ]]
+--[[ }) ]]
+--[[]]
+--[[ wk.register({ ]]
+--[[ 	name = "LSP Visual", ]]
+--[[ 	["<leader>ca"] = { "<cmd><C-U>Lspsaga range_code_action<CR>", "LSP: Code Action Visual" }, ]]
+--[[ }, { mode = "v" }) ]]

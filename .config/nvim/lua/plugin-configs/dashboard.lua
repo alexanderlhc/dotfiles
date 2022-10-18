@@ -2,42 +2,34 @@ local db = require("dashboard")
 
 db.custom_center = {
 	{
-		icon = "  ",
-		desc = "Recently latest session                  ",
-		shortcut = "SPC s l",
-		action = "SessionLoad",
+		icon = " ",
+		desc = "Find File                                ",
+		shortcut = "f",
+		action = "Telescope find_files",
 	},
 	{
-		icon = "  ",
-		desc = "Recently opened files                   ",
-		action = "DashboardFindHistory",
-		shortcut = "SPC f h",
-	},
-	{
-		icon = "  ",
-		desc = "Find  File                              ",
-		action = "Telescope find_files find_command=rg,--hidden,--files",
-		shortcut = "SPC f f",
+		icon = " ",
+		desc = "Update Plugins                          ",
+		action = "PackerSync",
+		shortcut = "u",
 	},
 	{
 		icon = "  ",
 		desc = "File Browser                            ",
-		action = "Telescope file_browser",
-		shortcut = "SPC f b",
+		action = "NvimTreeOpen",
+		shortcut = "b",
 	},
 	{
-		icon = "  ",
-		desc = "Find  word                              ",
+		icon = "  ",
+		desc = "Find Text                               ",
 		action = "Telescope live_grep",
-		shortcut = "SPC f w",
+		shortcut = "t",
 	},
 	{
-		icon = "  ",
-		desc = "Open Personal dotfiles                  ",
-		action = function()
-			require("telescope.builtin").find_files({ search_dirs = { "~/.config/" } })
-		end,
-		shortcut = "SPC f d",
+		icon = "  ",
+		desc = "Recent Files                            ",
+		action = "Telescope oldfiles",
+		shortcut = "r",
 	},
 }
 
@@ -50,3 +42,5 @@ db.custom_header = {
 	[[|__| \__| |_______| \______/      \__/     |__| |__|  |__|]],
 	[[                                                          ]],
 }
+
+db.noautocmd = true

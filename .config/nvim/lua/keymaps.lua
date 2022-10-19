@@ -1,4 +1,4 @@
-local map = require("utility").map
+local map = require("util").map
 
 vim.g.mapleader = " "
 -- map("n", "<Leader>w", ":w<CR>", { noremap = true, silent = true })

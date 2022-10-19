@@ -1,62 +1,73 @@
-local cmp = require("cmp")
-local lspkind = require("lspkind")
+local M = {}
 
-cmp.setup({
-	mapping = {
-		["<C-b>"] = cmp.mapping.scroll_docs(-4),
-		["<C-f>"] = cmp.mapping.scroll_docs(4),
-		["<C-e>"] = cmp.mapping({
-			i = cmp.mapping.abort(),
-			c = cmp.mapping.close(),
-		}),
-		-- TabCompletion
-		-- ["<Tab>"] = function(fallback)
-		["<C-j>"] = function(fallback)
-			if cmp.visible() then
-				cmp.select_next_item()
-			else
-				fallback()
-			end
-		end,
-		["<C-k>"] = function(fallback)
-			if cmp.visible() then
-				cmp.select_prev_item()
-			else
-				fallback()
-			end
-		end,
-		-- Confirm
-		["<C-y>"] = cmp.mapping(
-			cmp.mapping.confirm({
-				behavior = cmp.ConfirmBehavior.Insert,
-				select = true,
+M.module = "cmp"
+M.event = "InsertEnter"
+
+function M.config()
+	--vim.o.completeopt = "menuone,noselect"
+
+	local cmp = require("cmp")
+	--[[ local lspkind = require("lspkind") ]]
+
+	cmp.setup({
+		mapping = {
+			["<C-b>"] = cmp.mapping.scroll_docs(-4),
+			["<C-f>"] = cmp.mapping.scroll_docs(4),
+			["<C-e>"] = cmp.mapping({
+				i = cmp.mapping.abort(),
+				c = cmp.mapping.close(),
 			}),
-			{ "i", "c" }
-		),
-	},
-	snippet = {
-		expand = function(args)
-			require("luasnip").lsp_expand(args.body)
-		end,
-	},
-	sources = {
-		{ name = "copilot" },
-		{ name = "nvim_lsp" },
-		{ name = "nvim_lua" },
-		{ name = "luasnip" },
-		{ name = "spell" },
-		{ name = "copilot" },
-		{ name = "path" },
-		{ name = "buffer" },
-	},
-	formatting = {
-		format = lspkind.cmp_format(),
-	},
-	experimental = {
-		native_menu = false,
-		ghost_text = true,
-	},
-})
+			-- TabCompletion
+			-- ["<Tab>"] = function(fallback)
+			["<C-j>"] = function(fallback)
+				if cmp.visible() then
+					cmp.select_next_item()
+				else
+					fallback()
+				end
+			end,
+			["<C-k>"] = function(fallback)
+				if cmp.visible() then
+					cmp.select_prev_item()
+				else
+					fallback()
+				end
+			end,
+			-- Confirm
+			["<C-y>"] = cmp.mapping(
+				cmp.mapping.confirm({
+					behavior = cmp.ConfirmBehavior.Insert,
+					select = true,
+				}),
+				{ "i", "c" }
+			),
+		},
+		snippet = {
+			expand = function(args)
+				require("luasnip").lsp_expand(args.body)
+			end,
+		},
+		sources = {
+			{ name = "copilot" },
+			{ name = "nvim_lsp" },
+			{ name = "nvim_lua" },
+			{ name = "luasnip" },
+			{ name = "spell" },
+			{ name = "copilot" },
+			{ name = "path" },
+			{ name = "buffer" },
+		},
+		formatting = {
+			--[[ format = lspkind.cmp_format(), ]]
+		},
+		experimental = {
+			native_menu = false,
+			ghost_text = true,
+		},
+	})
+end
+
+return M
 
 -- local lspkind = require "lspkind"
 -- lspkind.init()

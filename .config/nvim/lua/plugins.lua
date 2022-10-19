@@ -1,7 +1,5 @@
 local M = {}
 
-print("hello")
-
 function M.setup()
   -- Indicate first time installation
   local packer_bootstrap = false
@@ -58,8 +56,9 @@ function M.setup()
           'projekt0n/github-nvim-theme' , 
     	    config = function() require("plugins.github-theme").setup() end
     })
+    use({'kyazdani42/nvim-web-devicons'})
 
-    -- Mappings
+    -- Mapping
     use ({ 
           "folke/which-key.nvim", 
           event = "VimEnter",
@@ -70,6 +69,31 @@ function M.setup()
     use ({
       "nvim-telescope/telescope.nvim",
       requires = { {'nvim-lua/plenary.nvim'} }
+    })
+
+    -- Filebrowser
+    use {
+      "kyazdani42/nvim-tree.lua",
+      wants = "nvim-web-devicons",
+      --opt = true,
+      --cmd = { "NvimTreeToggle", "NvimTreeClose" },
+      config = function() require("plugins.nvimtree").setup() end
+    }
+
+    -- LSP
+    use ({ 
+      "neovim/nvim-lspconfig",
+      requires = {
+        "williamboman/mason.nvim",
+        "WhoIsSethDaniel/mason-tool-installer.nvim",
+        "williamboman/mason-lspconfig.nvim",
+        "jose-elias-alvarez/null-ls.nvim",
+        --"jose-elias-alvarez/typescript.nvim",
+        { "b0o/SchemaStore.nvim", module = "schemastore" }
+      },
+      config = function()
+        require("plugins.lsp").setup()
+      end,
     })
 
     -- Bootstrap Neovim

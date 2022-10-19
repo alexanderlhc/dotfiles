@@ -11,8 +11,7 @@ local options_plugin = {
 
 local options_normal = {
   mode = "n", -- Normal mode
-  prefix = " ",
-  --prefix = "<leader>",
+  prefix = "<leader>",
 }
 
 
@@ -29,6 +28,7 @@ local function keys_normal()
       g = { "<cmd>lua require('telescope.builtin').live_grep()<cr>", "Live Grep" },
       c = { "<cmd>lua require('telescope.builtin').commands()<cr>", "Commands" },
       w = { "<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>", "Current Buffer" },
+      t = { "<cmd>NvimTreeToggle<cr>", "File browser" },
     }
 
     keymap = {

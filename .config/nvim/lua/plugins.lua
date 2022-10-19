@@ -88,7 +88,7 @@ function M.setup()
         "WhoIsSethDaniel/mason-tool-installer.nvim",
         "williamboman/mason-lspconfig.nvim",
         "jose-elias-alvarez/null-ls.nvim",
-        --"jose-elias-alvarez/typescript.nvim",
+        "jose-elias-alvarez/typescript.nvim",
         { "b0o/SchemaStore.nvim", module = "schemastore" }
       },
       config = function()

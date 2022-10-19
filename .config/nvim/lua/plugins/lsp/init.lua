@@ -29,7 +29,17 @@ local servers = {
   bashls = {},
 }
 
+local opts = {
+  on_attach = require("plugins.lsp.on_attach").on_attach,
+  capabilities = {},
+  flags = {
+    debounce_text_changes = 150,
+  },
+}
+
+
 function M.setup()
+  require("plugins.lsp.null-ls").setup(opts)
   require("plugins.lsp.installers").setup(servers, opts)
 end
 

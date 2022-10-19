@@ -14,7 +14,6 @@ local options_normal = {
   prefix = "<leader>",
 }
 
-
 local function keys_normal()
     local keymap = nil -- all keys
     local keymap_f = nil -- File search

@@ -1,346 +1,94 @@
-local packer = require("util.packer")
+local M = {}
 
-local config = {
-	--profile = {
-	--	enable = true,
-	--	threshold = 0, -- the amount in ms that a plugins load time must be over for it to be included in the profile
-	--},
-	display = {
-		open_fn = function()
-			return require("packer.util").float({ border = "single" })
-		end,
-	},
-	opt_default = true,
-	auto_reload_compiled = false,
-}
+print("hello")
 
-local function plugins(use, plugin)
-	use({ "wbthomason/packer.nvim" })
-	plugin("projekt0n/github-nvim-theme")
-	--[[ use({ ]]
-	--[[ 	"projekt0n/github-nvim-theme", ]]
-	--[[ 	config = function() ]]
-	--[[ 		require("plugins.github-theme") ]]
-	--[[ 	end, ]]
-	--[[ }) ]]
-	plugin("glepnir/dashboard-nvim")
-	--[[ use({ "kyazdani42/nvim-tree.lua" }) ]]
+function M.setup()
+  -- Indicate first time installation
+  local packer_bootstrap = false
+
+  -- packer.nvim configuration
+  local conf = {
+    profile = {
+      enable = true,
+      threshold = 0, -- the amount in ms that a plugins load time must be over for it to be included in the profile
+    },
+
+    display = {
+      open_fn = function()
+        return require("packer.util").float { border = "rounded" }
+      end,
+    },
+  }
+
+  -- Check if packer.nvim is installed
+  -- Run PackerCompile if there are changes in this file
+  local function packer_init()
+    local fn = vim.fn
+    local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
+    if fn.empty(fn.glob(install_path)) > 0 then
+      packer_bootstrap = fn.system {
+        "git",
+        "clone",
+        "--depth",
+        "1",
+        "https://github.com/wbthomason/packer.nvim",
+        install_path,
+      }
+      vim.cmd [[packadd packer.nvim]]
+    end
+
+    -- Run PackerCompile if there are changes in this file
+    -- vim.cmd "autocmd BufWritePost plugins.lua source <afile> | PackerCompile"
+    local packer_grp = vim.api.nvim_create_augroup("packer_user_config", { clear = true })
+    vim.api.nvim_create_autocmd(
+      { "BufWritePost" },
+      { pattern = "init.lua", command = "source <afile> | PackerCompile", group = packer_grp }
+    )
+  end
+
+  -- Plugins
+  local function plugins(use)
+    use { "wbthomason/packer.nvim" }
+
+    -- Performance
+    use { "lewis6991/impatient.nvim" }
+
+    -- Rice
+    use ({ 
+          'projekt0n/github-nvim-theme' , 
+    	    config = function() require("plugins.github-theme").setup() end
+    })
+
+    -- Mappings
+    use ({ 
+          "folke/which-key.nvim", 
+          event = "VimEnter",
+    	    config = function() require("plugins.whichkey").setup() end
+    })
+
+    -- Tools
+    use ({
+      "nvim-telescope/telescope.nvim",
+      requires = { {'nvim-lua/plenary.nvim'} }
+    })
+
+    -- Bootstrap Neovim
+    if packer_bootstrap then
+      print "Neovim restart is required after installation!"
+      require("packer").sync()
+    end
+  end
+
+  -- Init and start packer
+  packer_init()
+  local packer = require "packer"
+
+  -- Performance
+  pcall(require, "impatient")
+  -- pcall(require, "packer_compiled")
+
+  packer.init(conf)
+  packer.startup(plugins)
 end
 
-return packer.setup(config, plugins)
--- Packer Automatic Installation
---local fn = vim.fn
---local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
---if fn.empty(fn.glob(install_path)) > 0 then
---	fn.system({ "git", "clone", "https://github.com/wbthomason/packer.nvim", install_path })
---	vim.api.nvim_command("packadd packer.nvim")
---end
---
---return require("packer").startup({
---	function()
---		-- Theme/Style
---		use({
---			"norcalli/nvim-colorizer.lua", -- highlights colors
---			config = [[ require('plugin-configs/colorizer') ]],
---		})
---
---		use({
---			"glepnir/dashboard-nvim",
---			config = [[ require('plugin-configs/dashboard') ]],
---		})
---
---		use({
---			"projekt0n/github-nvim-theme",
---			"themercorp/themer.lua",
---		})
---
---		-- Scroll Smooth
---		use({ "karb94/neoscroll.nvim", config = [[ require('plugin-configs/neoscroll')]] })
---
---		use({
---			"nvim-lualine/lualine.nvim",
---			requires = { "kyazdani42/nvim-web-devicons", opt = true },
---			config = [[ require('plugin-configs/lualine')]],
---		})
---
---		-- Fuzzy Find
---		use({
---			"nvim-telescope/telescope.nvim",
---			requires = {
---				{ "nvim-lua/popup.nvim" },
---				{ "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
---				{ "nvim-lua/plenary.nvim" },
---			},
---			config = [[ require('plugin-configs/telescope') ]],
---		})
---
---		--use({
---		--	"lewis6991/spellsitter.nvim",
---		--	requires = { { "nvim-telescope/telescope.nvim" } },
---		--	config = [[ require('plugin-configs.spellsitter') ]],
---		--})
---
---		-- File Browser
---		use({
---			"kyazdani42/nvim-tree.lua",
---			requires = { { "kyazdani42/nvim-web-devicons" } },
---			config = [[ require('plugin-configs.nvimtree') ]],
---		})
---
---		-- Yank/Copy clipboard manager
---		use({
---			"AckslD/nvim-neoclip.lua",
---			requires = {
---				{ "tami5/sqlite.lua", module = "sqlite" },
---				{ "nvim-telescope/telescope.nvim" },
---			},
---			config = [[ require('plugin-configs.neoclip') ]],
---		})
---
---		-- Improve location specific jumps
---		use({
---			"phaazon/hop.nvim",
---			branch = "v2", -- optional but strongly recommended
---			config = [[ require('plugin-configs.hop')]],
---		})
---
---		-- "<[(`' Automatically create as pairs
---		use({
---			"windwp/nvim-autopairs",
---			config = function()
---				require("nvim-autopairs").setup({})
---			end,
---		})
---
---		-- Comments how it's supposed to be
---		use({
---			"numToStr/Comment.nvim",
---			config = [[ require('plugin-configs.comment') ]],
---			requires = { { "JoosepAlviste/nvim-ts-context-commentstring" } },
---		})
---
---		-- Surroundings modification vastly improved
---		use({
---			"kylechui/nvim-surround",
---			config = function()
---				require("nvim-surround").setup({})
---			end,
---		})
---
---		-- TODO: remove config
---		--use({
---		--	"sbdchd/neoformat",
---		--	config = [[ require('plugin-configs.neoformat') ]],
---		--})
---
---		-- KeyMap
---		use({
---			"folke/which-key.nvim",
---			config = [[ require('plugin-configs.which-key')]],
---		})
---
---		---- Git git dit dat git
---		-- git w/o leaving nvim
---		use({
---			"tpope/vim-fugitive",
---			requires = { "tpope/vim-rhubarb" },
---			config = [[ require('plugin-configs.fugitive') ]],
---		})
---		-- git decorations
---		--use({
---		--	"lewis6991/gitsigns.nvim",
---		--	requires = {
---		--		"nvim-lua/plenary.nvim",
---		--	},
---		--	config = function()
---		--		require("gitsigns").setup()
---		--	end,
---		--})
---
---		-- Octo GH Reviews
---		-- use({
---		-- 	"pwntester/octo.nvim",
---		-- 	requires = {
---		-- 		"nvim-lua/plenary.nvim",
---		-- 		"nvim-telescope/telescope.nvim",
---		-- 		"kyazdani42/nvim-web-devicons",
---		-- 	},
---		-- 	config = function()
---		-- 		require("octo").setup()
---		-- 	end,
---		-- })
---
---		------- LSP and Languages
---
---		-- LSP
---
---		use({
---			"neovim/nvim-lspconfig",
---			config = [[ require('plugin-configs/lsp').config() ]],
---		})
---
---		use({
---			"williamboman/mason.nvim",
---			"williamboman/mason-lspconfig.nvim",
---			"glepnir/lspsaga.nvim",
---		})
---
---		-- TypeScript
---		--[[ use("jose-elias-alvarez/nvim-lsp-ts-utils") ]]
---		use({ "jose-elias-alvarez/typescript.nvim", module = "typescript" })
---		use({ "b0o/SchemaStore.nvim", module = "schemastore" })
---		use("jose-elias-alvarez/null-ls.nvim")
---
---		--use({
---		--	"onsails/lspkind-nvim",
---		--	config = [[ require('plugin-configs.lspkind') ]],
---		--}) -- Pictograms to LSP
---
---		--use({ "ray-x/lsp_signature.nvim" })
---		--use({ "simrat39/symbols-outline.nvim", config = [[ require('plugin-configs.symbols-outline') ]] })
---
---		--[[ use({ "github/copilot.vim" }) ]]
---
---		use({
---			"zbirenbaum/copilot.lua",
---			event = { "VimEnter" },
---			config = function()
---				vim.defer_fn(function()
---					require("copilot").setup({
---						copilot_node_command = vim.fn.expand("$HOME")
---							.. "/.local/share/nvm/versions/node/v16.17.0/bin/node",
---					})
---				end, 100)
---			end,
---		})
---
---		use({
---			"zbirenbaum/copilot-cmp",
---			after = { "copilot.lua" },
---			config = function()
---				require("copilot_cmp").setup()
---			end,
---		})
---
---		use({
---			"hrsh7th/nvim-cmp",
---			requires = {
---				-- 'f3fora/cmp-spell',
---				"hrsh7th/cmp-nvim-lua",
---				"hrsh7th/cmp-nvim-lsp",
---				"hrsh7th/cmp-nvim-lsp-document-symbol",
---				"hrsh7th/cmp-buffer",
---				"saadparwaiz1/cmp_luasnip",
---				"hrsh7th/cmp-path",
---			},
---			config = [[ require('plugins.cmp') ]],
---		})
---
---		-- Snippets
---		use({
---			"L3MON4D3/LuaSnip", -- Snippets plugin
---			-- requires = {"rafamadriz/friendly-snippets"},
---			config = [[ require('plugin-configs/luasnip') ]],
---		})
---
---		-- Test
---		-- use { 'ruanyl/coverage.vim' }
---		use({
---			"nvim-neotest/neotest",
---			requires = {
---				"nvim-lua/plenary.nvim",
---				"nvim-treesitter/nvim-treesitter",
---				"antoinemadec/FixCursorHold.nvim",
---				-- adapters
---				"haydenmeade/neotest-jest",
---			},
---			config = [[ require('plugin-configs/neotest') ]],
---		})
---
---		-- Documentation
---		use({
---			"danymat/neogen",
---			config = function()
---				require("neogen").setup({
---					enabled = true,
---				})
---			end,
---			requires = "nvim-treesitter/nvim-treesitter",
---		})
---
---		-- Debugger
---		use({
---			"mfussenegger/nvim-dap",
---			config = [[require('plugin-configs/dap')]],
---			requires = {
---				"nvim-telescope/telescope-dap.nvim",
---				"rcarriga/nvim-dap-ui",
---				-- "David-Kunz/jester"
---			},
---		})
---
---		use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })
---
---		use({
---			"Pocco81/dap-buddy.nvim",
---			branch = "dev",
---		})
---
---		--
---		-- use {
---		--   "rcarriga/nvim-dap-ui",
---		--   config = [[require('plugin-configs/dapui')]],
---		--   requires = { "mfussenegger/nvim-dap" },
---		-- }
---
---		-- Parser almost too good
---		use({
---			"nvim-treesitter/nvim-treesitter",
---			run = ":TSUpdate",
---			config = [[ require('plugin-configs/treesitter') ]],
---			requires = {
---				"nvim-treesitter/nvim-treesitter-refactor",
---				"p00f/nvim-ts-rainbow",
---				"romgrk/nvim-treesitter-context",
---				"windwp/nvim-ts-autotag",
---				"JoosepAlviste/nvim-ts-context-commentstring",
---			},
---		})
---
---		-- Rename with visualisation
---		use({
---			"smjonas/inc-rename.nvim",
---			config = function()
---				require("inc_rename").setup()
---			end,
---		})
---
---		-- Refactor
---		use({
---			"ThePrimeagen/refactoring.nvim",
---			config = [[ require('plugin-configs/refactoring') ]],
---			requires = {
---				{ "nvim-lua/plenary.nvim" },
---				{ "nvim-treesitter/nvim-treesitter" },
---			},
---		})
---
---		-- diagnostics to upper right
---		-- use {
---		--   'Mofiqul/trld.nvim',
---		--   config = [[ require('plugin-configs/trld') ]]
---		-- }
---
---		-- git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
---		if packer_bootstrap then
---			require("packer").sync()
---		end
---
---		-- bucket of ideas
---		-- improved fold https://github.com/kevinhwang91/nvim-ufo
---	end,
---	config = {
---		compile_path = vim.fn.stdpath("config") .. "/plugin/packer_compiled.lua",
---		autoremove = true,
---	},
---})
+return M

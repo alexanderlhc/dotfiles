@@ -18,10 +18,13 @@ function M.setup(client, buffer)
       d = { "<Cmd>lua vim.lsp.buf.definition()<CR>", "Definition" },
       D = { "<Cmd>lua vim.lsp.buf.declaration()<CR>", "Declaration" },
       h = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature Help" },
-      i = { "<cmd>LspInfo<CR>", "Lsp Info" },
       I = { "<cmd>Telescope lsp_implementations<CR>", "Goto Implementation" },
       r = { vim.lsp.buf.rename, "Rename" },
       -- f format 
+    }
+
+    local keymap_language = {
+      i = { "<cmd>LspInfo<CR>", "Lsp Info" },
     }
     
     local keymap = {

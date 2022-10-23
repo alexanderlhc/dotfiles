@@ -1,7 +1,6 @@
+require("config.styles")
 local g = vim.g
 
-vim.opt.number = true -- line numbers
-vim.opt.signcolumn = "yes" -- diagnostics in number column
 vim.opt.numberwidth = 5 -- min width for number column (default: 4)
 vim.opt.ignorecase = true -- ignore case
 vim.opt.smartcase = true -- ignore case unless contain mixed

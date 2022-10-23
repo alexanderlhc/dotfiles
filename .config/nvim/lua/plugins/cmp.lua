@@ -41,6 +41,8 @@ function M.setup()
 			end,
 		},
 		mapping = {
+			["<C-j>"] = cmp.mapping.select_next_item(select_opts),
+			["<C-k>"] = cmp.mapping.select_prev_item(select_opts),
 			["<Up>"] = cmp.mapping.select_prev_item(select_opts),
 			["<Down>"] = cmp.mapping.select_next_item(select_opts),
 

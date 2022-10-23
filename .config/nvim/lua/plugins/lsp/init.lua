@@ -1,47 +1,11 @@
+local servers = require("plugins.lsp.servers")
+local capabilities = require("plugins.lsp.capabilities")
 local M = {}
-
-local servers = {
-	html = {},
-	jsonls = {
-		settings = {
-			json = {
-				schemas = require("schemastore").json.schemas(),
-			},
-		},
-	},
-	sumneko_lua = {},
-	tsserver = {},
-	vimls = {},
-	yamlls = {
-		schemastore = {
-			enable = true,
-		},
-		settings = {
-			yaml = {
-				hover = true,
-				completion = true,
-				validate = true,
-				schemas = require("schemastore").json.schemas(),
-			},
-		},
-	},
-	dockerls = {},
-	bashls = {},
-}
 
 function M.setup()
 	require("mason")
 	require("plugins.lsp.diagnostics").setup()
 	require("plugins.neodev").setup()
-
-	---
-
-	local capabilities = vim.lsp.protocol.make_client_capabilities()
-	capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
-	capabilities.textDocument.foldingRange = {
-		dynamicRegistration = false,
-		lineFoldingOnly = true,
-	}
 
 	local options = {
 		on_attach = require("plugins.lsp.on_attach").on_attach,
@@ -51,7 +15,6 @@ function M.setup()
 		},
 	}
 
-	---
 	for server, opts in pairs(servers) do
 		opts = vim.tbl_deep_extend("force", {}, options, opts or {})
 

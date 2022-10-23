@@ -75,6 +75,15 @@ function M.setup()
 			requires = { { "nvim-lua/plenary.nvim" } },
 		})
 
+		-- Surround
+		use({
+			"kylechui/nvim-surround",
+			event = "BufReadPre",
+			config = function()
+				require("nvim-surround").setup({})
+			end,
+		})
+
 		-- Filebrowser
 		use({
 			"kyazdani42/nvim-tree.lua",

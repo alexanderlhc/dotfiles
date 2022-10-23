@@ -86,6 +86,16 @@ function M.setup()
 			end,
 		})
 
+		-- Treesitter
+		use({
+			"nvim-treesitter/nvim-treesitter",
+			run = ":TSUpdate",
+			config = function()
+				require("plugins.treesitter").setup()
+			end,
+			requires = {},
+		})
+
 		-- LSP
 		use({
 			"neovim/nvim-lspconfig",
@@ -109,7 +119,7 @@ function M.setup()
 		use({
 			"danymat/neogen",
 			config = function()
-				require("neogen").setup({})
+				require("plugins.neogen").setup()
 			end,
 			requires = "nvim-treesitter/nvim-treesitter",
 		})
@@ -132,6 +142,25 @@ function M.setup()
 				{
 					"L3MON4D3/LuaSnip",
 				},
+			},
+		})
+
+		-- Refactoring²
+		use({
+			"ThePrimeagen/refactoring.nvim",
+			module = "refactoring",
+			config = function()
+				require("refactoring").setup({})
+			end,
+			setup = function()
+				-- prompt for a refactor to apply when the remap is triggered
+				vim.keymap.set("v", "<leader>cr", function()
+					require("refactoring").select_refactor()
+				end, { noremap = true, silent = true, expr = false })
+			end,
+			requires = {
+				{ "nvim-lua/plenary.nvim" },
+				{ "nvim-treesitter/nvim-treesitter" },
 			},
 		})
 

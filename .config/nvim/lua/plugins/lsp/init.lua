@@ -24,6 +24,7 @@ function M.setup()
 			require("lspconfig")[server].setup(opts)
 		end
 	end
+
 	require("plugins.lsp.installers").setup(servers, options)
 	require("plugins.lsp.null-ls").setup(options)
 end

@@ -35,9 +35,17 @@ function M.setup()
 	require("plugins.neodev").setup()
 
 	---
+
+	local capabilities = vim.lsp.protocol.make_client_capabilities()
+	capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+	capabilities.textDocument.foldingRange = {
+		dynamicRegistration = false,
+		lineFoldingOnly = true,
+	}
+
 	local options = {
 		on_attach = require("plugins.lsp.on_attach").on_attach,
-		capabilities = require("plugins.lsp.capabilities").capabilities,
+		capabilities = capabilities,
 		flags = {
 			debounce_text_changes = 150,
 		},
@@ -46,6 +54,7 @@ function M.setup()
 	---
 	for server, opts in pairs(servers) do
 		opts = vim.tbl_deep_extend("force", {}, options, opts or {})
+
 		if server == "tsserver" then
 			require("typescript").setup({ server = opts })
 		else

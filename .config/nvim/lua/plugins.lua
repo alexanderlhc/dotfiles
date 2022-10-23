@@ -105,6 +105,15 @@ function M.setup()
 		-- LUA
 		use({ "folke/neodev.nvim" })
 
+		-- Documentation generation
+		use({
+			"danymat/neogen",
+			config = function()
+				require("neogen").setup({})
+			end,
+			requires = "nvim-treesitter/nvim-treesitter",
+		})
+
 		-- Completion
 		use({
 			"hrsh7th/nvim-cmp",
@@ -115,6 +124,14 @@ function M.setup()
 			end,
 			requires = {
 				{ "hrsh7th/cmp-nvim-lsp", module = "cmp_nvim_lsp" },
+				"hrsh7th/cmp-buffer",
+				"hrsh7th/cmp-emoji",
+				"hrsh7th/cmp-path",
+				"saadparwaiz1/cmp_luasnip",
+				"hrsh7th/cmp-nvim-lsp-signature-help",
+				{
+					"L3MON4D3/LuaSnip",
+				},
 			},
 		})
 

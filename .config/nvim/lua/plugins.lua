@@ -145,6 +145,14 @@ function M.setup()
 			},
 		})
 
+		-- Comments
+		use({
+			"numToStr/Comment.nvim",
+			config = function()
+				require("Comment").setup()
+			end,
+		})
+
 		-- Refactoring²
 		use({
 			"ThePrimeagen/refactoring.nvim",

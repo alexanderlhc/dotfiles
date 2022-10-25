@@ -3,6 +3,7 @@ local luasnip = require("luasnip")
 local icons = require("config.icons").cmp
 local mappings = require("plugins.cmp.mappings")
 require("luasnip.loaders.from_vscode").lazy_load()
+local completion = require("null-ls.builtins._meta.completion")
 
 local M = {}
 
@@ -18,16 +19,18 @@ local snippet = {
 }
 
 local sources = {
+	{ name = "nvim_lsp_signature_help" },
+	{ name = "copilot" },
+	{ name = "luasnip", keyword_length = 2 },
 	{ name = "path" },
 	{ name = "nvim_lsp", keyword_length = 3 },
 	{ name = "buffer", keyword_length = 3 },
-	{ name = "luasnip", keyword_length = 2 },
 	{ name = "emoji" },
-	{ name = "nvim_lsp_signature_help" },
 }
 
 local window = {
 	documentation = cmp.config.window.bordered(),
+	completion = cmp.config.window.bordered(),
 }
 
 local formatting = {
@@ -36,6 +39,10 @@ local formatting = {
 		item.menu = icons[entry.source.name]
 		return item
 	end,
+}
+
+local experimental = {
+	ghost_text = true, -- inlay completion hints
 }
 
 function M.setup()
@@ -47,6 +54,7 @@ function M.setup()
 		window = window,
 		formatting = formatting,
 		mapping = mappings,
+		experimental = experimental,
 	})
 end
 

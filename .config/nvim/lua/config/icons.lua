@@ -12,6 +12,7 @@ icons.cmp = {
 	luasnip = "⋗ LS",
 	buffer = "Ω BU",
 	path = "🖫 PA",
+	Copilot = " CP",
 }
 
 return icons

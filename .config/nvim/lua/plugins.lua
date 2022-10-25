@@ -154,6 +154,24 @@ function M.setup()
 			},
 		})
 
+		use({
+			"zbirenbaum/copilot.lua",
+			--event = "InsertEnter",
+			config = function()
+				require("copilot").setup()
+			end,
+		})
+
+		use({
+			"zbirenbaum/copilot-cmp",
+			after = { "copilot.lua" },
+			config = function()
+				require("copilot_cmp").setup({
+					method = "getCompletionsCycling",
+				})
+			end,
+		})
+
 		-- Comments
 		use({
 			"numToStr/Comment.nvim",

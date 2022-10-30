@@ -154,6 +154,14 @@ function M.setup()
 			},
 		})
 
+		-- Autopairs
+		use({
+			"windwp/nvim-autopairs",
+			config = function()
+				require("nvim-autopairs").setup({})
+			end,
+		})
+
 		use({
 			"zbirenbaum/copilot.lua",
 			--event = "InsertEnter",

@@ -1,0 +1,23 @@
+(defpoll dockerReveal 
+  :initial "true"
+  :interval "1s"
+  '(( $(docker ps -q | wc -l) > 0 )) && echo true || echo false')
+(defvar dockerExpandReveal false)
+(defpoll docker_variables :interval "1s" "./scripts/docker.sh")
+
+
+(defwidget docker []
+   (eventbox 
+      :onhover "${eww} update dockerExpandReveal=true"
+      :onhoverlost "${eww} update dockerExpandReveal=false"
+        (revealer :transition "slidedown"
+                  :reveal dockerReveal
+                  :duration "350ms"
+          (box
+            :orientation "v" 
+            :space-evenly "false"
+            (revealer
+              :reveal dockerExpandReveal
+              (label :text " ${docker_variables.containers}"))
+            (label 
+              :text "")))))

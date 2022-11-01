@@ -207,6 +207,23 @@ function M.setup()
 			},
 		})
 
+		-- dap
+		use({
+			"mfussenegger/nvim-dap",
+			requires = {
+				{
+					"rcarriga/nvim-dap-ui",
+					config = function()
+						require("dapui").setup()
+					end,
+				},
+				"theHamsta/nvim-dap-virtual-text",
+			},
+			config = function()
+				require("plugins.dap").setup()
+			end,
+		})
+
 		-- Bootstrap Neovim
 		if packer_bootstrap then
 			print("Neovim restart is required after installation!")

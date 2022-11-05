@@ -100,3 +100,11 @@ scale trough {
 }
 
 //------------------------------------------------------------------------------
+
+.battery {
+  .battery_icon {
+    font-size: 1.7em;
+    color: $color-font-primary;
+    margin: 0px 17px -5px 10px;
+  }
+}

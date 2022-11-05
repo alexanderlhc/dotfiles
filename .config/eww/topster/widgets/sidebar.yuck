@@ -3,6 +3,7 @@
 (include "widgets/appLauncher.yuck")
 (include "widgets/bspwmLayout.yuck")
 (include "widgets/volume.yuck")
+(include "widgets/battery.yuck")
 ;(include "widgets/bspwmTabbed.yuck")
 
 (defwidget sidebar []
@@ -25,6 +26,7 @@
          :orientation "v"
          :space-evenly false
          :valign "end"
+          (battery)
           (volume)
           (datetime))
     ))

@@ -1,0 +1,16 @@
+(defpoll battery-icon			:interval "1s"	"./scripts/battery.sh icon")
+(defpoll battery-cappacity	:interval "1s"	"./scripts/battery.sh percent")
+
+(deflisten has_battery "./scripts/battery.sh hasbattery")
+
+(defwidget battery []
+  (revealer 
+      :reveal has_battery
+	    (box	
+          :class "battery"
+          :orientation "v"	
+	      (label
+            :class "battery_icon"
+	      		:halign "end"		
+	      		:text battery-icon
+	      		:tooltip "Battery: ${battery-cappacity}%"))))

@@ -24,6 +24,9 @@ export NODE_REPL_HISTORY="$XDG_DATA_HOME"/node_repl_history
 export NVM_DIR="$XDG_DATA_HOME"/nvm
 export PASSWORD_STORE_DIR="$XDG_DATA_HOME"/pass
 export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
+export WORKON_HOME="$XDG_DATA_HOME/virtualenvs"
+export TEXMFVAR="$XDG_CACHE_HOME"/texlive/texmf-var
+export PSQL_HISTORY="$XDG_DATA_HOME/psql_history"
 # .zshenv to .config/zsh
 #environment variable in */etc/zsh/zshenv*:
 #export ZDOTDIR="$HOME"/.config/zsh

@@ -154,6 +154,14 @@ function M.setup()
 			},
 		})
 
+		-- Autopairs
+		use({
+			"windwp/nvim-autopairs",
+			config = function()
+				require("nvim-autopairs").setup({})
+			end,
+		})
+
 		use({
 			"zbirenbaum/copilot.lua",
 			--event = "InsertEnter",
@@ -197,6 +205,23 @@ function M.setup()
 				{ "nvim-lua/plenary.nvim" },
 				{ "nvim-treesitter/nvim-treesitter" },
 			},
+		})
+
+		-- dap
+		use({
+			"mfussenegger/nvim-dap",
+			requires = {
+				{
+					"rcarriga/nvim-dap-ui",
+					config = function()
+						require("dapui").setup()
+					end,
+				},
+				"theHamsta/nvim-dap-virtual-text",
+			},
+			config = function()
+				require("plugins.dap").setup()
+			end,
 		})
 
 		-- Bootstrap Neovim

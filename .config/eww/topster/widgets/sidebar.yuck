@@ -4,6 +4,7 @@
 (include "widgets/bspwmLayout.yuck")
 (include "widgets/volume.yuck")
 (include "widgets/battery.yuck")
+(include "widgets/docker.yuck")
 ;(include "widgets/bspwmTabbed.yuck")
 
 (defwidget sidebar []
@@ -27,6 +28,7 @@
          :space-evenly false
          :valign "end"
           (battery)
+          (docker)
           (volume)
           (datetime))
     ))

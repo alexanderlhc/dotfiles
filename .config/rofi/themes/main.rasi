@@ -1,8 +1,8 @@
 * 
 {
-    background-color:        #EDEFF1;
-    border-color:            #EDEFF1;
-    text-color:              #496794;
+    background-color:        rgba(0,0,0,0.2);
+    border-color:            rgba(59, 59, 59, 0.2);
+    text-color:              #ffffff;
     font:                    "FantasqueSansMono Nerd Font 16";
 }
 

@@ -26,9 +26,7 @@ function M.setup(client, buffer)
 		I = { "<cmd>Telescope lsp_implementations<CR>", "Goto Implementation" },
 		r = { vim.lsp.buf.rename, "Rename" },
 		-- f format
-	}
 
-	local keymap_goto_noprefix = {
 		["[d"] = { "<cmd>lua vim.diagnostic.goto_prev()<CR>", "Next Diagnostic" },
 		["]d"] = { "<cmd>lua vim.diagnostic.goto_next()<CR>", "Prev Diagnostic" },
 		["[e"] = { "<cmd>lua vim.diagnostic.goto_prev({severity = vim.diagnostic.severity.ERROR})<CR>", "Next Error" },
@@ -51,7 +49,6 @@ function M.setup(client, buffer)
 	local keymap = {
 		["c"] = keymap_code,
 		["g"] = keymap_goto,
-		keymap_goto_noprefix,
 		keymap_language,
 	}
 

@@ -102,7 +102,9 @@ function M.setup()
 			config = function()
 				require("plugins.treesitter").setup()
 			end,
-			requires = {},
+			requires = {
+				"nvim-treesitter/nvim-treesitter-textobjects",
+			},
 		})
 
 		-- LSP

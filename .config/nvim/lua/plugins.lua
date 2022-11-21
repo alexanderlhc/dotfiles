@@ -120,6 +120,7 @@ function M.setup()
 				require("plugins.lsp").setup()
 			end,
 		})
+
 		-- Languages
 		-- LUA
 		use({ "folke/neodev.nvim" })
@@ -222,6 +223,18 @@ function M.setup()
 			config = function()
 				require("plugins.dap").setup()
 			end,
+		})
+
+		use({
+			"mxsdev/nvim-dap-vscode-js",
+			requires = {
+				"mfussenegger/nvim-dap",
+				{
+					"microsoft/vscode-js-debug",
+					opt = true,
+					run = "npm install --legacy-peer-deps && npm run compile",
+				},
+			},
 		})
 
 		-- Bootstrap Neovim

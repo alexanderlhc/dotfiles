@@ -33,6 +33,10 @@ local function keys_normal()
 	keymap = {
 		["w"] = { "<cmd>update!<CR>", "Save" },
 		["q"] = { "<cmd>quit!<CR>", "Save" },
+		y = { '"+y', "Copy {motion} to clipboard" },
+		Y = { '"+Y', "Copy [count] lines to clipboard" },
+		p = { '"+p', "Paste clipboard behind cursor" },
+		P = { '"+P', "Paste clipboard before cursor" },
 		["f"] = keymap_f,
 	}
 
@@ -48,8 +52,8 @@ local function keys_visual()
 	local keymap = nil -- all keys
 
 	keymap = {
-		["y"] = '"+y',
-		["p"] = '"+p',
+		["y"] = { '"+y', "Copy to clipboard" },
+		["p"] = { '"+p', "Paste from clipboard" },
 	}
 
 	wk.register(keymap, options_visual)

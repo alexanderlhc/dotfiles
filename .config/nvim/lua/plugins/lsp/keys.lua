@@ -24,7 +24,7 @@ function M.setup(client, buffer)
 		D = { "<Cmd>lua vim.lsp.buf.declaration()<CR>", "Declaration" },
 		h = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature Help" },
 		I = { "<cmd>Telescope lsp_implementations<CR>", "Goto Implementation" },
-		r = { vim.lsp.buf.rename, "Rename" },
+		r = { "<cmd>Telescope lsp_references<CR>", "References" },
 		-- f format
 
 		["[d"] = { "<cmd>lua vim.diagnostic.goto_prev()<CR>", "Next Diagnostic" },

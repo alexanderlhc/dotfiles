@@ -37,3 +37,8 @@ if [ -t 0 ]; then
 	# Set PINENTRY_USER_DATA so pinentry-auto knows to present a text UI.
 	export PINENTRY_USER_DATA=USE_TTY=1
 fi
+
+# pnpm
+export PNPM_HOME="/home/alexander/.local/share/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+# pnpm end

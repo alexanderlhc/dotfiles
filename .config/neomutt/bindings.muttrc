@@ -19,6 +19,9 @@ macro index O "<shell-escape>offlineimap <enter>" "run offlineimap to sync all m
 # macro index,pager A ":set confirmappend=no delete=yes\n<save-message>=archive\n<sync-mailbox>:set confirmappend=yes delete=ask-yes\n"
 macro index,pager A  "<save-message>=Archives<enter><enter><sync-mailbox><enter>"  "mark message as Archived"
 
+bind index,pager M noop # unbind M to be used with macros Mv, Ma
+macro index,pager Mv ";<save-message>" "move message to chosen folder"
+
 #bind index,pager M noop # unbind M to be used with macros Mv, Ma
 #macro index,pager Mv ";<save-message>" "move message to chosen folder"
 

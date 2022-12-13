@@ -28,7 +28,7 @@ source /usr/share/nvm/init-nvm.sh
 fpath=(~/.zsh.d/ $fpath)
 
 ### Randomized prompt
-colorscript random
+#colorscript random
 
 # https://gist.github.com/kevinoid/189a0168ef4ceae76ed669cd696eaa37
 if [ -t 0 ]; then

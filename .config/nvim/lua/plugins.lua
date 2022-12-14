@@ -166,9 +166,11 @@ function M.setup()
 
 		use({
 			"zbirenbaum/copilot.lua",
-			--event = "InsertEnter",
+			event = "InsertEnter",
 			config = function()
-				require("copilot").setup()
+				vim.schedule(function()
+					require("copilot").setup()
+				end)
 			end,
 		})
 

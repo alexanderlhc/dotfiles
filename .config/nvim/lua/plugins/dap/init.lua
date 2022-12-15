@@ -38,7 +38,6 @@ function M.setup()
 	local dap, dapui = require("dap"), require("dapui")
 	dap.set_log_level("TRACE")
 
-	print("Dap setup")
 	keymaps()
 	debuggers()
 

@@ -1,72 +1,74 @@
 * 
 {
-    background-color:        rgba(0,0,0,0.2);
-    border-color:            rgba(59, 59, 59, 0.2);
-    text-color:              #ffffff;
-    font:                    "FantasqueSansMono Nerd Font 16";
+    bg: #282828CC;
+    fg: #EBDBB2;
+    selection: rgba(255, 255, 255, 0.4);
+    transparent: #00000000;
+    font: "FantasqueSansMono Nerd Font 20";
 }
 
 window 
 {
-	location:	             northwest;
+	location:	               northwest;
 	x-offset:                20px;
-    y-offset:                80px;
-	height:		             620px;
-	width:		             530px;
+  y-offset:                80px;
+	height:		               620px;
+	width:		               530px;
 	orientation:             horizontal;
-    padding:                 10px;
+  /* padding:                 10px; */
+  border:                  2px;
+  border-radius:           5px;
+  border-color:            @fg;
+  background-color:        @bg;
+}
+
+mainbox,inputbar,listview,message,textbox,prompt,entry{
+    background-color: @transparent;
 }
 
 inputbar 
 {
-    border:                   0 0 1px 0;
+    padding: 15px;
     children:                 [prompt,entry];
 }
 
-prompt
-{
-    padding:                  8px 16px 16px 16px ;
-    border:                   0 1px 0 0;
-    text-color:               #ba5c75;
-    font:                     "FantasqueSansMono Nerd Font 20";
+prompt {
+    padding: 0 16px 0 8px;
+    color: @fg;
 }
 
-entry
-{
-    padding:                  16px;
-    text-color:               #8e6f98;
-    font:                    "FantasqueSansMono Nerd Font 16";
-
+entry {
+  color: @fg;
 }
 
 listview 
 {
-    cycle:                    false;
-    margin:                   0 0 1px 0;
-    scrollbar:                false;
+    border: none;
+    scrollbar: false;
 }
 
-element 
-{
-    border:                   0 0 1px 0;
-    padding:                  16px;
+element, message {
+    padding: 10px;
 }
 
-element selected
-{
-    text-color:               #EDEFF1;
-    background-color:         #d7b38b;
+element selected.normal, element normal.active, element selected.active {
+    background-color: @selection;
+}
+element normal.normal, element alternate.normal, scrollbar {
+    background-color: @transparent;
 }
 
-element-text
-{
-    background-color:         inherit;
-    text-color:               inherit;
+element-icon, element-text {
+    background-color: @transparent;
+    color: @fg;
 }
 
-element-icon
-{
-    size:                     25px ;
-    margin:                   0 12px 0 0;
-	background-color:         inherit;
+element-text {
+  padding: 0 0 0 10px;
+  vertical-align: 0.5;
+}
+
+element-icon {
+    padding: 0 8px 0 0;
+    size: 2.5em;
 }

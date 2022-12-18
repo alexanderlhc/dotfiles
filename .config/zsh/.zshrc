@@ -9,6 +9,8 @@ bindkey -v
 autoload -Uz compinit
 compinit -d "$XDG_CACHE_HOME"/zsh/zcompdump-"$ZSH_VERSION"
 
+source ~/.config/zsh/.zfuncs
+
 source ~/.config/aliases
 path+=('/home/alexander/.local/bin')
 path+=('/var/lib/snapd/snap/bin')
@@ -37,6 +39,17 @@ if [ -t 0 ]; then
 	# Set PINENTRY_USER_DATA so pinentry-auto knows to present a text UI.
 	export PINENTRY_USER_DATA=USE_TTY=1
 fi
+
+# nnn cd to working directory on exit
+# https://github.com/jarun/nnn/wiki/Basic-use-cases#configure-cd-on-quit
+nnn_cd()                                                                                                   
+{
+    if ! [ -z "$NNN_PIPE" ]; then
+        printf "%s\0" "0c${PWD}" > "${NNN_PIPE}" !&
+    fi  
+}
+
+trap nnn_cd EXIT
 
 # pnpm
 export PNPM_HOME="/home/alexander/.local/share/pnpm"

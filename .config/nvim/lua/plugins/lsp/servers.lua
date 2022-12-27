@@ -1,7 +1,12 @@
 local servers = {}
 
 servers.html = {}
-servers.sumneko_lua = {}
+servers.sumneko_lua = {
+	Lua = {
+		workspace = { checkThirdParty = false },
+		telemetry = { enable = false },
+	},
+}
 servers.tsserver = {}
 servers.vimls = {}
 servers.dockerls = {}

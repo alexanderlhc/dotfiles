@@ -73,6 +73,9 @@ function M.setup()
 		use({
 			"nvim-telescope/telescope.nvim",
 			requires = { { "nvim-lua/plenary.nvim" } },
+			config = function()
+				require("plugins.telescope").setup()
+			end,
 		})
 
 		-- Surround

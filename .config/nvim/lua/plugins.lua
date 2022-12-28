@@ -95,6 +95,13 @@ function M.setup()
 			end,
 		})
 
+		-- Git
+		use({
+			"lewis6991/gitsigns.nvim",
+			config = function()
+				require("plugins.gitsigns").setup()
+			end,
+		})
 		-- Treesitter
 		use({
 			"nvim-treesitter/nvim-treesitter",

@@ -31,7 +31,7 @@ function M.setup()
 				},
 				"buffers",
 			},
-			lualine_b = { "branch" },
+			lualine_b = {},
 			lualine_c = {},
 			lualine_x = {},
 			lualine_y = {},

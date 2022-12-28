@@ -102,6 +102,7 @@ function M.setup()
 				require("plugins.gitsigns").setup()
 			end,
 		})
+
 		-- Treesitter
 		use({
 			"nvim-treesitter/nvim-treesitter",

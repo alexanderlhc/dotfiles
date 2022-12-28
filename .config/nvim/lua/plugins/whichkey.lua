@@ -22,12 +22,15 @@ local function keys_normal()
 		name = "Find",
 		f = { "<cmd>lua require('telescope.builtin').find_files()<cr>", "Files" },
 		b = { "<cmd>lua require('telescope.builtin').buffers()<cr>", "Buffers" },
+		o = { "<cmd>lua require('telescope.builtin').oldfiles()<cr>", "Find recent old files" },
 		h = { "<cmd>lua require('telescope.builtin').help_tags()<cr>", "Help" },
 		m = { "<cmd>lua require('telescope.builtin').marks()<cr>", "Marks" },
 		g = { "<cmd>lua require('telescope.builtin').live_grep()<cr>", "Live Grep" },
+		gw = { "<cmd>lua require('telescope.builtin').grep_string()<cr>", "Live Grep Current Word" },
 		c = { "<cmd>lua require('telescope.builtin').commands()<cr>", "Commands" },
-		w = { "<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>", "Current Buffer" },
+		wf = { "<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>", "Current Buffer" },
 		t = { "<cmd>NvimTreeToggle<cr>", "File browser" },
+		d = { "<cmd>lua require('telescope.builtin').diagnostics()<cr>", "Diagnostics" },
 	}
 
 	keymap = {

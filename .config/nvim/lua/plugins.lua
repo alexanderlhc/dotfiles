@@ -72,6 +72,23 @@ function M.setup()
 			end,
 		})
 
+		-- Reduces distractions writing code
+		use({
+			"folke/zen-mode.nvim",
+			config = function()
+				require("zen-mode").setup({})
+			end,
+			wants = { "folke/twilight.nvim" },
+		})
+
+		-- Dim code
+		use({
+			"folke/twilight.nvim",
+			config = function()
+				require("twilight").setup({})
+			end,
+		})
+
 		-- Mapping
 		use({
 			"folke/which-key.nvim",

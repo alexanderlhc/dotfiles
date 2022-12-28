@@ -125,6 +125,7 @@ function M.setup()
 				"jose-elias-alvarez/null-ls.nvim",
 				"jose-elias-alvarez/typescript.nvim",
 				{ "b0o/SchemaStore.nvim", module = "schemastore" },
+				"j-hui/fidget.nvim",
 			},
 			config = function()
 				require("plugins.lsp").setup()

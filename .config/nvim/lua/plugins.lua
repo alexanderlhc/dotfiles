@@ -65,6 +65,12 @@ function M.setup()
 				require("plugins.lualine").setup()
 			end,
 		})
+		use({
+			"lukas-reineke/indent-blankline.nvim",
+			config = function()
+				require("plugins.indent-blankline").setup()
+			end,
+		})
 
 		-- Mapping
 		use({

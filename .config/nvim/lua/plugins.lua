@@ -59,6 +59,12 @@ function M.setup()
 			end,
 		})
 		use({ "kyazdani42/nvim-web-devicons" })
+		use({
+			"nvim-lualine/lualine.nvim",
+			config = function()
+				require("plugins.lualine").setup()
+			end,
+		})
 
 		-- Mapping
 		use({

@@ -25,6 +25,7 @@ function M.setup(client, buffer)
 		h = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature Help" },
 		I = { "<cmd>Telescope lsp_implementations<CR>", "Goto Implementation" },
 		r = { "<cmd>Telescope lsp_references<CR>", "References" },
+		s = { "<cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>", "Document Symbols" },
 		-- f format
 
 		["[d"] = { "<cmd>lua vim.diagnostic.goto_prev()<CR>", "Next Diagnostic" },

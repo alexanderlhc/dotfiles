@@ -29,7 +29,8 @@ function M.setup()
 						newfile = "[New]", -- Text to show for new created file before first writting
 					},
 				},
-				"buffers",
+				"tabs",
+				-- "buffers",
 			},
 			lualine_b = {},
 			lualine_c = {},

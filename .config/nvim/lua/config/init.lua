@@ -18,6 +18,7 @@ vim.keymap.set("", "<Space>", "<Nop>", { noremap = true, silent = true })
 g.mapleader = " "
 
 -- folding
-vim.opt.foldlevel = 1
-vim.opt.foldmethod = "expr" -- TreeSitter folding
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()" -- TreeSitter folding
+-- Handled by ufo
+--vim.opt.foldlevel = 1
+--vim.opt.foldmethod = "expr" -- TreeSitter folding
+--vim.opt.foldexpr = "nvim_treesitter#foldexpr()" -- TreeSitter folding

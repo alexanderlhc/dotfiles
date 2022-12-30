@@ -71,6 +71,13 @@ function M.setup()
 				require("plugins.indent-blankline").setup()
 			end,
 		})
+		use({
+			"kevinhwang91/nvim-ufo",
+			config = function()
+				require("plugins.ufo").setup()
+			end,
+			requires = { "kevinhwang91/promise-async" },
+		})
 
 		-- Lua
 		use({

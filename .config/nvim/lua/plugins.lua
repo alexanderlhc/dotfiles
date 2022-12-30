@@ -59,6 +59,18 @@ function M.setup()
 			end,
 		})
 		use({ "kyazdani42/nvim-web-devicons" })
+		use({
+			"nvim-lualine/lualine.nvim",
+			config = function()
+				require("plugins.lualine").setup()
+			end,
+		})
+		use({
+			"lukas-reineke/indent-blankline.nvim",
+			config = function()
+				require("plugins.indent-blankline").setup()
+			end,
+		})
 
 		-- Lua
 		use({
@@ -93,6 +105,9 @@ function M.setup()
 		use({
 			"nvim-telescope/telescope.nvim",
 			requires = { { "nvim-lua/plenary.nvim" } },
+			config = function()
+				require("plugins.telescope").setup()
+			end,
 		})
 
 		-- Surround
@@ -112,6 +127,14 @@ function M.setup()
 			--cmd = { "NvimTreeToggle", "NvimTreeClose" },
 			config = function()
 				require("plugins.nvimtree").setup()
+			end,
+		})
+
+		-- Git
+		use({
+			"lewis6991/gitsigns.nvim",
+			config = function()
+				require("plugins.gitsigns").setup()
 			end,
 		})
 
@@ -137,6 +160,7 @@ function M.setup()
 				"jose-elias-alvarez/null-ls.nvim",
 				"jose-elias-alvarez/typescript.nvim",
 				{ "b0o/SchemaStore.nvim", module = "schemastore" },
+				"j-hui/fidget.nvim",
 			},
 			config = function()
 				require("plugins.lsp").setup()

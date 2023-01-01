@@ -134,6 +134,7 @@ function M.setup()
 				require("plugins.gitsigns").setup()
 			end,
 		})
+		use({ "TimUntersberger/neogit", requires = "nvim-lua/plenary.nvim" })
 
 		-- Treesitter
 		use({

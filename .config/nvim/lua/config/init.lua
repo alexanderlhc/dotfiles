@@ -21,3 +21,7 @@ g.mapleader = " "
 vim.opt.foldlevel = 1
 vim.opt.foldmethod = "expr" -- TreeSitter folding
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()" -- TreeSitter folding
+
+-- commands
+-- use :bwipeout
+-- vim.api.nvim_create_user_command("BuffClear", ':%bdelete|edit #|normal `"', { desc = "Deletes all but current buffer" })

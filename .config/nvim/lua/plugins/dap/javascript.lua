@@ -1,84 +1,84 @@
+local DEBUGGER_PATH = vim.fn.stdpath("data") .. "/mason/packages/js-debug-adapter"
 local M = {}
 
 function M.setup()
 	local dap = require("dap")
+	local dap_vscode_js = require("dap-vscode-js")
 
-	--dap.adapters.node2 = {
-	--	type = "executable",
-	--	command = "node",
-	--	args = { os.getenv("HOME") .. "/dev/microsoft/vscode-node-debug2/out/src/nodeDebug.js" },
-	--}
-
-	dap.adapters.node2 = {
-		type = "executable",
-		command = "node-debug2-adapter", -- installed via Mason
-		args = {},
-	}
-
-	dap.adapters.node = dap.adapters.node2
+	dap_vscode_js.setup({
+		node_path = "node",
+		debug_adapter_path = DEBUGGER_PATH,
+		adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost" },
+	})
 
 	dap.configurations.javascript = {
 		{
-			name = "Launch",
-			type = "node2",
+			type = "pwa-node",
 			request = "launch",
+			name = "Launch file",
 			program = "${file}",
-			cwd = vim.fn.getcwd(),
-			sourceMaps = true,
-			protocol = "inspector",
-			console = "integratedTerminal",
+			cwd = "${workspaceFolder}",
 		},
 		{
-			-- For this to work you need to make sure the node process is started with the `--inspect` flag.
-			name = "Attach to process",
-			type = "node2",
+			type = "pwa-node",
 			request = "attach",
+			name = "Attach",
 			processId = require("dap.utils").pick_process,
+			cwd = "${workspaceFolder}",
+		},
+		{
+			type = "pwa-node",
+			request = "launch",
+			name = "Debug Jest Tests",
+			-- trace = true, -- include debugger info
+			runtimeExecutable = "node",
+			runtimeArgs = {
+				"./node_modules/jest/bin/jest.js",
+				"--runInBand",
+			},
+			rootPath = "${workspaceFolder}",
+			cwd = "${workspaceFolder}",
+			console = "integratedTerminal",
+			internalConsoleOptions = "neverOpen",
 		},
 	}
 
 	dap.configurations.typescript = {
 		{
-			name = "npm start",
-			type = "node2",
+			type = "pwa-node",
 			request = "launch",
-			runtimeExecutable = "npm",
-			runtimeArgs = { "run-script", "start" },
-			cwd = vim.fn.getcwd(),
+			name = "Launch file",
+			program = "${file}",
+			cwd = "${workspaceFolder}",
+			runtimeArgs = { "-r", "ts-node/register" },
 			sourceMaps = true,
-			protocol = "inspector",
-			console = "integratedTerminal",
-			outFiles = { "${workspaceRoot}/dist/**/*.js" },
-		},
-		{
-			name = "${file}",
-			type = "node2",
-			request = "launch",
-			program = "${workspaceFolder}/${file}",
-			cwd = vim.fn.getcwd(),
-			sourceMaps = true,
-			protocol = "inspector",
-			console = "integratedTerminal",
-			outFiles = { "${workspaceRoot}/dist/**/*.js" },
-		},
-		{
-			name = "jest",
-			type = "node2",
-			request = "launch",
-			cwd = vim.fn.getcwd(),
-			runtimeArgs = {
-				"--inspect-brk",
-				"${workspaceFolder}/node_modules/.bin/jest",
-				"--no-coverage",
-				"--",
-				"${workspaceFolder}/${file}",
+			skipFiles = { "<node_internals>/**", "node_modules/**" },
+			resolveSourceMapLocations = {
+				"${workspaceFolder}/**",
+				"!**/node_modules/**",
 			},
-			sourceMaps = true,
-			protocol = "inspector",
-			skipFiles = { "<node_internals>/**/*.js" },
+		},
+		{
+			type = "pwa-node",
+			request = "attach",
+			name = "Attach",
+			processId = require("dap.utils").pick_process,
+			cwd = "${workspaceFolder}",
+		},
+		{
+			type = "pwa-node",
+			request = "launch",
+			name = "Debug Jest Tests",
+			-- trace = true, -- include debugger info
+			runtimeExecutable = "node",
+			runtimeArgs = {
+				"./node_modules/jest/bin/jest.js",
+				"--runInBand",
+			},
+			rootPath = "${workspaceFolder}",
+			cwd = "${workspaceFolder}",
 			console = "integratedTerminal",
-			port = 9229,
-			outFiles = { "${workspaceRoot}/dist/**/*.js" },
+			internalConsoleOptions = "neverOpen",
 		},
 	}
 end

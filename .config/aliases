@@ -24,6 +24,9 @@ alias glg="git log --graph --abbrev-commit --decorate --format=format:'%C(bold g
 alias gt='git ls-tree -r master --name-only'
 alias gm='git merge'
 
+# Docker
+alias docker-stop-rm='docker rm $(docker stop $1)'
+
 source ~/.config/aliases-secret 2> /dev/null
 
 alias nodesslfix="export NODE_OPTIONS=--openssl-legacy-provider"

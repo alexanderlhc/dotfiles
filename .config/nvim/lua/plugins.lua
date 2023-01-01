@@ -71,6 +71,33 @@ function M.setup()
 				require("plugins.indent-blankline").setup()
 			end,
 		})
+		use({
+			"kevinhwang91/nvim-ufo",
+			config = function()
+				require("plugins.ufo").setup()
+			end,
+			requires = { "kevinhwang91/promise-async" },
+		})
+
+		-- Lua
+		use({
+			"folke/zen-mode.nvim",
+			config = function()
+				require("zen-mode").setup({})
+			end,
+			requires = { "folke/twilight.nvim" },
+		})
+
+		use({
+			"folke/twilight.nvim",
+			config = function()
+				require("twilight").setup({
+					-- your configuration comes here
+					-- or leave it empty to use the default settings
+					-- refer to the configuration section below
+				})
+			end,
+		})
 
 		-- Reduces distractions writing code
 		use({
@@ -164,6 +191,7 @@ function M.setup()
 				require("plugins.lsp").setup()
 			end,
 		})
+
 		-- Languages
 		-- LUA
 		use({ "folke/neodev.nvim" })
@@ -267,6 +295,42 @@ function M.setup()
 			},
 			config = function()
 				require("plugins.dap").setup()
+			end,
+		})
+
+		use({
+			"mxsdev/nvim-dap-vscode-js",
+			requires = {
+				"mfussenegger/nvim-dap",
+				-- {
+				-- 	"microsoft/vscode-js-debug",
+				-- 	opt = true,
+				-- 	run = "npm install --legacy-peer-deps && npm run compile",
+				-- },
+			},
+		})
+
+		use({
+			"nvim-neotest/neotest",
+			requires = {
+				"nvim-lua/plenary.nvim",
+				"nvim-treesitter/nvim-treesitter",
+				"antoinemadec/FixCursorHold.nvim",
+				"haydenmeade/neotest-jest",
+			},
+			config = function()
+				require("neotest").setup({
+					adapters = {
+						require("neotest-jest")({
+							jestCommand = "npm test --",
+							jestConfigFile = "custom.jest.config.ts",
+							env = { CI = true },
+							cwd = function(path)
+								return vim.fn.getcwd()
+							end,
+						}),
+					},
+				})
 			end,
 		})
 

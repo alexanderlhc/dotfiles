@@ -52,6 +52,11 @@ function M.setup(client, buf)
       augroup END
     ]])
 	end
+
+	-- Creates :Format command
+	vim.api.nvim_buf_create_user_command(buf, "Format", function(_)
+		M.format()
+	end, { desc = "Format current buffer with LSP" })
 end
 
 return M

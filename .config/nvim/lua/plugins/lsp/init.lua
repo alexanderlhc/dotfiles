@@ -3,6 +3,7 @@ local capabilities = require("plugins.lsp.capabilities")
 local M = {}
 
 function M.setup()
+	require("fidget").setup() -- Loading Fidget
 	require("mason")
 	require("plugins.lsp.diagnostics").setup()
 	require("plugins.neodev").setup()

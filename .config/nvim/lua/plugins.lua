@@ -59,6 +59,62 @@ function M.setup()
 			end,
 		})
 		use({ "kyazdani42/nvim-web-devicons" })
+		use({
+			"nvim-lualine/lualine.nvim",
+			config = function()
+				require("plugins.lualine").setup()
+			end,
+		})
+		use({
+			"lukas-reineke/indent-blankline.nvim",
+			config = function()
+				require("plugins.indent-blankline").setup()
+			end,
+		})
+		use({
+			"kevinhwang91/nvim-ufo",
+			config = function()
+				require("plugins.ufo").setup()
+			end,
+			requires = { "kevinhwang91/promise-async" },
+		})
+
+		-- Lua
+		use({
+			"folke/zen-mode.nvim",
+			config = function()
+				require("zen-mode").setup({})
+			end,
+			requires = { "folke/twilight.nvim" },
+		})
+
+		use({
+			"folke/twilight.nvim",
+			config = function()
+				require("twilight").setup({
+					-- your configuration comes here
+					-- or leave it empty to use the default settings
+					-- refer to the configuration section below
+				})
+			end,
+		})
+
+		-- Reduces distractions writing code
+		use({
+			"folke/zen-mode.nvim",
+			config = function()
+				require("zen-mode").setup({})
+			end,
+			wants = { "folke/twilight.nvim" },
+		})
+
+		-- Dim code
+		use({
+			"folke/twilight.nvim",
+			config = function()
+				require("twilight").setup({})
+			end,
+		})
 
 		-- Mapping
 		use({
@@ -73,6 +129,9 @@ function M.setup()
 		use({
 			"nvim-telescope/telescope.nvim",
 			requires = { { "nvim-lua/plenary.nvim" } },
+			config = function()
+				require("plugins.telescope").setup()
+			end,
 		})
 
 		-- Surround
@@ -94,6 +153,15 @@ function M.setup()
 				require("plugins.nvimtree").setup()
 			end,
 		})
+
+		-- Git
+		use({
+			"lewis6991/gitsigns.nvim",
+			config = function()
+				require("plugins.gitsigns").setup()
+			end,
+		})
+		use({ "TimUntersberger/neogit", requires = "nvim-lua/plenary.nvim" })
 
 		-- Treesitter
 		use({
@@ -117,11 +185,13 @@ function M.setup()
 				"jose-elias-alvarez/null-ls.nvim",
 				"jose-elias-alvarez/typescript.nvim",
 				{ "b0o/SchemaStore.nvim", module = "schemastore" },
+				"j-hui/fidget.nvim",
 			},
 			config = function()
 				require("plugins.lsp").setup()
 			end,
 		})
+
 		-- Languages
 		-- LUA
 		use({ "folke/neodev.nvim" })
@@ -225,6 +295,42 @@ function M.setup()
 			},
 			config = function()
 				require("plugins.dap").setup()
+			end,
+		})
+
+		use({
+			"mxsdev/nvim-dap-vscode-js",
+			requires = {
+				"mfussenegger/nvim-dap",
+				-- {
+				-- 	"microsoft/vscode-js-debug",
+				-- 	opt = true,
+				-- 	run = "npm install --legacy-peer-deps && npm run compile",
+				-- },
+			},
+		})
+
+		use({
+			"nvim-neotest/neotest",
+			requires = {
+				"nvim-lua/plenary.nvim",
+				"nvim-treesitter/nvim-treesitter",
+				"antoinemadec/FixCursorHold.nvim",
+				"haydenmeade/neotest-jest",
+			},
+			config = function()
+				require("neotest").setup({
+					adapters = {
+						require("neotest-jest")({
+							jestCommand = "npm test --",
+							jestConfigFile = "custom.jest.config.ts",
+							env = { CI = true },
+							cwd = function(path)
+								return vim.fn.getcwd()
+							end,
+						}),
+					},
+				})
 			end,
 		})
 

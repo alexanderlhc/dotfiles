@@ -4,7 +4,12 @@ local M = {}
 
 function M.setup()
 	require("fidget").setup() -- Loading Fidget
-	require("mason")
+	require("mason").setup()
+	require("mason-nvim-dap").setup({
+		automatic_installation = true,
+		automatic_setup = true,
+	})
+	require("plugins.dap").setup()
 	require("plugins.lsp.diagnostics").setup()
 	require("plugins.neodev").setup()
 

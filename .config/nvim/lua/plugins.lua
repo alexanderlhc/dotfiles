@@ -286,9 +286,6 @@ function M.setup()
 				"theHamsta/nvim-dap-virtual-text",
 				"jayp0521/mason-nvim-dap.nvim",
 			},
-			config = function()
-				require("plugins.dap").setup()
-			end,
 		})
 
 		use({

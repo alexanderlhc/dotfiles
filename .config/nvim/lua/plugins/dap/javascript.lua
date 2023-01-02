@@ -1,86 +1,80 @@
-local DEBUGGER_PATH = vim.fn.stdpath("data") .. "/mason/packages/js-debug-adapter"
+-- local DEBUGGER_PATH = vim.fn.stdpath("data") .. "/mason/packages/js-debug-adapter"
+local dap = require("dap")
 local M = {}
 
 function M.setup()
-	local dap = require("dap")
-	local dap_vscode_js = require("dap-vscode-js")
+	-- Adapters: Node and TypeScript
+	-- local node2_path = helpers.get_from_data_path("/mason/packages/node-debug2-adapter/out/src/nodeDebug.js")
+	local node2_path = vim.fn.stdpath("data") .. "/mason/packages/node-debug2-adapter/out/src/nodeDebug.js"
 
-	dap_vscode_js.setup({
-		node_path = "node",
-		debug_adapter_path = DEBUGGER_PATH,
-		adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost" },
-	})
-
-	dap.configurations.javascript = {
-		{
-			type = "pwa-node",
-			request = "launch",
-			name = "Launch file",
-			program = "${file}",
-			cwd = "${workspaceFolder}",
-		},
-		{
-			type = "pwa-node",
-			request = "attach",
-			name = "Attach",
-			processId = require("dap.utils").pick_process,
-			cwd = "${workspaceFolder}",
-		},
-		{
-			type = "pwa-node",
-			request = "launch",
-			name = "Debug Jest Tests",
-			-- trace = true, -- include debugger info
-			runtimeExecutable = "node",
-			runtimeArgs = {
-				"./node_modules/jest/bin/jest.js",
-				"--runInBand",
-			},
-			rootPath = "${workspaceFolder}",
-			cwd = "${workspaceFolder}",
-			console = "integratedTerminal",
-			internalConsoleOptions = "neverOpen",
-		},
+	-- if not helpers.is_empty(node2_path) then
+	dap.adapters.node2 = {
+		type = "executable",
+		command = "node",
+		args = { node2_path },
 	}
+	-- end
+
+	-- Adapters: Chrome
+	-- local chrome_path = helpers.get_from_data_path("/mason/packages/chrome-debug-adapter/out/src/chromeDebug.js")
+	local chrome_path = vim.fn.stdpath("data") .. "/mason/packages/chrome-debug-adapter/out/src/chromeDebug.js"
+
+	-- if not helpers.is_empty(chrome_path) then
+	dap.adapters.chrome = {
+		type = "executable",
+		command = "node",
+		args = { chrome_path },
+	}
+	-- end
 
 	dap.configurations.typescript = {
 		{
-			type = "pwa-node",
-			request = "launch",
-			name = "Launch file",
-			program = "${file}",
-			cwd = "${workspaceFolder}",
-			runtimeArgs = { "-r", "ts-node/register" },
-			sourceMaps = true,
-			skipFiles = { "<node_internals>/**", "node_modules/**" },
-			resolveSourceMapLocations = {
-				"${workspaceFolder}/**",
-				"!**/node_modules/**",
-			},
-		},
-		{
-			type = "pwa-node",
-			request = "attach",
+			type = "node2",
 			name = "Attach",
-			processId = require("dap.utils").pick_process,
-			cwd = "${workspaceFolder}",
+			request = "attach",
+			program = "${file}",
+			cwd = vim.fn.expand("%:p:h"),
+			sourceMaps = true,
+			protocol = "inspector",
 		},
 		{
-			type = "pwa-node",
+			type = "node2",
 			request = "launch",
-			name = "Debug Jest Tests",
-			-- trace = true, -- include debugger info
+			name = "Jest test",
 			runtimeExecutable = "node",
-			runtimeArgs = {
-				"./node_modules/jest/bin/jest.js",
-				"--runInBand",
-			},
+			runtimeArgs = { "--inspect-brk", "${workspaceFolder}/node_modules/.bin/jest" },
+			args = { "${file}", "--runInBand", "--no-cache", "--coverage", "false" },
 			rootPath = "${workspaceFolder}",
 			cwd = "${workspaceFolder}",
 			console = "integratedTerminal",
 			internalConsoleOptions = "neverOpen",
+			sourceMaps = "inline",
+			port = 9229,
+			skipFiles = { "<node_internals>/**", "node_modules/**" },
+			protocol = "inspector",
+		},
+		{
+			type = "chrome",
+			name = "chrome",
+			request = "attach",
+			program = function()
+				return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+			end,
+			cwd = vim.fn.getcwd(),
+			sourceMapPathOverrides = {
+				-- Sourcemap override for nextjs
+				["webpack://_N_E/./*"] = "${webRoot}/*",
+				["webpack:///./*"] = "${webRoot}/*",
+			},
+			protocol = "inspector",
+			port = 9222,
+			webRoot = "${workspaceFolder}",
 		},
 	}
+
+	dap.configurations.javascript = dap.configurations.typescript
+	dap.configurations.typescriptreact = dap.configurations.typescript
+	dap.configurations.javascriptreact = dap.configurations.typescript
 end
 
 return M

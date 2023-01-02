@@ -81,14 +81,6 @@ function M.setup()
 
 		-- Lua
 		use({
-			"folke/zen-mode.nvim",
-			config = function()
-				require("zen-mode").setup({})
-			end,
-			requires = { "folke/twilight.nvim" },
-		})
-
-		use({
 			"folke/twilight.nvim",
 			config = function()
 				require("twilight").setup({

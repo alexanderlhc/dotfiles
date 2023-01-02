@@ -19,6 +19,13 @@ g.mapleader = " "
 
 -- folding
 -- Handled by ufo
+-- vim.opt.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+vim.opt.foldcolumn = "5" -- '0' is not badufo
+vim.opt.foldnestmax = 1 -- must be equal to foldcolumn to avoid showing odd numbers
+vim.opt.foldenable = true
+vim.opt.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+vim.opt.foldlevelstart = 99
+-- vim.opt.signcolumn = "yes"
 
 -- commands
 -- use :bwipeout

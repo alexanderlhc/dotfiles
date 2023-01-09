@@ -52,12 +52,14 @@ function M.setup()
 		use({ "lewis6991/impatient.nvim" })
 
 		-- Rice
-		use({
-			"projekt0n/github-nvim-theme",
-			config = function()
-				require("plugins.github-theme").setup()
-			end,
-		})
+		use({ "catppuccin/nvim", as = "catppuccin" })
+		-- use({
+		-- 	"projekt0n/github-nvim-theme",
+		-- 	config = function()
+		-- 		require("plugins.github-theme").setup()
+		-- 	end,
+		-- })
+
 		use({ "kyazdani42/nvim-web-devicons" })
 		use({
 			"nvim-lualine/lualine.nvim",

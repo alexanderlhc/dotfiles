@@ -18,18 +18,35 @@ vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
 local snippet = {
 	expand = function(args)
+		-- https://www.reddit.com/r/neovim/comments/yiimig/comment/iuizlig/?utm_source=share&utm_medium=web2x&context=3
 		luasnip.lsp_expand(args.body)
 	end,
 }
 
 local sources = {
-	{ name = "nvim_lsp_signature_help" },
+	{ name = "nvim_lsp_signature_help", priority = 5 },
 	{ name = "copilot" },
 	{ name = "luasnip", keyword_length = 2 },
 	{ name = "path" },
 	{ name = "nvim_lsp", keyword_length = 3 },
 	{ name = "buffer", keyword_length = 3 },
 	{ name = "emoji" },
+}
+
+local sorting = {
+	priority_weight = 2,
+	comparators = {
+		cmp.config.compare.offset,
+		cmp.config.compare.exact,
+		cmp.config.compare.score, -- based on :  score = score + ((#sources - (source_index - 1)) * sorting.priority_weight)
+		cmp.config.locality,
+		--cmp.config.scopes,
+		cmp.config.recently_used,
+		--cmp.config.compare.order,
+		--cmp.config.compare.kind,
+		--cmp.config.compare.sort_text,
+		--cmp.config.compare.length,
+	},
 }
 
 local window = {
@@ -54,7 +71,8 @@ function M.setup()
 
 	cmp.setup({
 		snippet = snippet,
-		sources = sources,
+		sources = sources, -- https://www.reddit.com/r/neovim/comments/u3c3kw/how_do_you_sorting_cmp_completions_items/
+		sorting = sorting,
 		window = window,
 		formatting = formatting,
 		mapping = mappings,

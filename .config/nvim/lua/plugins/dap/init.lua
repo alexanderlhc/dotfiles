@@ -36,6 +36,7 @@ end
 
 function M.setup()
 	local dap, dapui = require("dap"), require("dapui")
+	require("nvim-dap-virtual-text").setup()
 	dap.set_log_level("TRACE")
 
 	keymaps()

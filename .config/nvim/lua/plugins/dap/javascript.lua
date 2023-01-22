@@ -75,6 +75,13 @@ function M.setup()
 	dap.configurations.javascript = dap.configurations.typescript
 	dap.configurations.typescriptreact = dap.configurations.typescript
 	dap.configurations.javascriptreact = dap.configurations.typescript
+
+	-- used by neotest
+	local jsdebug_path = vim.fn.stdpath("data") .. "/mason/packages/js-debug-adapter"
+	require("dap-vscode-js").setup({
+		adapters = { "pwa-node" },
+		debugger_path = jsdebug_path,
+	})
 end
 
 return M

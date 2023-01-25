@@ -43,8 +43,13 @@ function M.setup()
 	debuggers()
 
 	-- Automatic Launch Dap UI
-	dap.listeners.after.event_initialized["dapui_config"] = function()
-		dapui.open({})
+	-- dap.listeners.after.event_initialized["dapui_config"] = function()
+	-- 	dapui.open({})
+	-- end
+	-- We need to wait for execution to stop at the first breakpoint before showing the UI to give the source maps time to generate.
+	-- If we don't, the UI will close because the source maps haven't generated in time.
+	dap.listeners.after.event_breakpoint["dapui_config"] = function()
+		dapui.open()
 	end
 	dap.listeners.before.event_terminated["dapui_config"] = function()
 		dapui.close({})

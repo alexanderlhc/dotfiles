@@ -233,7 +233,11 @@ function M.setup()
 			event = "InsertEnter",
 			config = function()
 				vim.schedule(function()
-					require("copilot").setup()
+					require("copilot").setup({
+						filetypes = {
+							["dap-repl"] = false,
+						},
+					})
 				end)
 			end,
 		})
@@ -288,6 +292,7 @@ function M.setup()
 				"theHamsta/nvim-dap-virtual-text",
 				"jayp0521/mason-nvim-dap.nvim",
 				"nvim-telescope/telescope-dap.nvim",
+				"mxsdev/nvim-dap-vscode-js",
 			},
 		})
 

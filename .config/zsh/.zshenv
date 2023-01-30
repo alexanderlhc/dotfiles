@@ -2,6 +2,7 @@ export PATH="$(yarn global bin):$PATH"
 
 export EDITOR='nvim'
 export VISUAL='nvim'
+export PAGER='moar'
 export READER='zathura'
 export TERMINAL='alacritty'
 export BROWSER='firefox'

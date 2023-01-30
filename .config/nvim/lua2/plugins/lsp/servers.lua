@@ -11,6 +11,7 @@ servers.tsserver = {}
 servers.vimls = {}
 servers.dockerls = {}
 servers.bashls = {}
+servers.rust_analyzer = {}
 
 servers.jsonls = {
 	settings = {

@@ -1,38 +1,148 @@
-local servers = require("plugins.lsp.servers")
-local capabilities = require("plugins.lsp.capabilities")
-local M = {}
-
-function M.setup()
-	require("fidget").setup() -- Loading Fidget
-	require("mason").setup()
-	require("mason-nvim-dap").setup({
-		automatic_installation = true,
-		automatic_setup = true,
-	})
-	require("plugins.dap").setup()
-	require("plugins.lsp.diagnostics").setup()
-	require("plugins.neodev").setup()
-
-	local options = {
-		on_attach = require("plugins.lsp.on_attach").on_attach,
-		capabilities = capabilities,
-		flags = {
-			debounce_text_changes = 150,
+require("plugins.lsp.languages.json")
+return {
+	-- lspconfig
+	{
+		"neovim/nvim-lspconfig",
+		event = "BufReadPre",
+		dependencies = {
+			{ "folke/neodev.nvim", opts = { experimental = { pathStrict = true } } },
+			"mason.nvim",
+			"williamboman/mason-lspconfig.nvim",
+			{
+				"hrsh7th/cmp-nvim-lsp",
+				cond = function()
+					return require("utils").has("nvim-cmp")
+				end,
+			},
+			{ "jose-elias-alvarez/typescript.nvim" },
+			{
+				"b0o/SchemaStore.nvim",
+				version = false, -- last release is way too old
+			},
 		},
-	}
+		opts = {
+			diagnostics = {
+				underline = true,
+				update_in_insert = false,
+				virtual_text = { spacing = 4, prefix = "●" },
+				severity_sort = true,
+			},
+			autoformat = true,
+			format = {
+				formatting_options = nil,
+				timeout_ms = nil,
+			},
+			servers = {
+				jsonls = require("plugins.lsp.languages.json"),
+				sumneko_lua = {
+					settings = {
+						Lua = {
+							workspace = {
+								checkThirdParty = false,
+							},
+							completion = {
+								callSnippet = "Replace",
+							},
+						},
+					},
+				},
+			},
+			-- return true if you don't want this server to be setup with lspconfig
+			setup = { -- per server setup
+				tsserver = function(_, opts)
+					require("plugins.lsp.languages.typescript").setup(opts)
+					return true
+				end,
+				--jsonls = function(_, opts)
+				--  require("plugins.lsp.languages.json")
+				--  return false
+				--end
+				-- Specify * to use this function as a fallback for any server
+				-- ["*"] = function(server, opts) end,
+			},
+		},
+		config = function(plugin, opts)
+			require("plugins.lsp.format").autoformat = opts.autoformat
 
-	for server, opts in pairs(servers) do
-		opts = vim.tbl_deep_extend("force", {}, options, opts or {})
+			require("utils").on_attach(function(client, buffer)
+				require("plugins.lsp.format").on_attach(client, buffer)
+				require("plugins.lsp.keymaps").on_attach(client, buffer)
+			end)
 
-		if server == "tsserver" then
-			require("typescript").setup({ server = opts })
-		else
-			require("lspconfig")[server].setup(opts)
-		end
-	end
+			-- diagnostics
+			--for name, icon in pairs(require("lazyvim.config").icons.diagnostics) do
+			--  name = "DiagnosticSign" .. name
+			--  vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
+			--end
+			vim.diagnostic.config(opts.diagnostics)
 
-	require("plugins.lsp.installers").setup(servers, options)
-	require("plugins.lsp.null-ls").setup(options)
-end
+			local servers = opts.servers
+			local capabilities =
+				require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-return M
+			local function setup(server)
+				local server_opts = servers[server] or {}
+				server_opts.capabilities = capabilities
+				if opts.setup[server] then
+					if opts.setup[server](server, server_opts) then
+						return
+					end
+				elseif opts.setup["*"] then
+					if opts.setup["*"](server, server_opts) then
+						return
+					end
+				end
+				require("lspconfig")[server].setup(server_opts)
+			end
+
+			local mlsp = require("mason-lspconfig")
+			local available = mlsp.get_available_servers()
+
+			local ensure_installed = {} ---@type string[]
+			for server, server_opts in pairs(servers) do
+				if server_opts then
+					server_opts = server_opts == true and {} or server_opts
+					-- run manual setup if mason=false or if this is a server that cannot be installed with mason-lspconfig
+					if server_opts.mason == false or not vim.tbl_contains(available, server) then
+						setup(server)
+					else
+						ensure_installed[#ensure_installed + 1] = server
+					end
+				end
+			end
+
+			require("mason-lspconfig").setup({ ensure_installed = ensure_installed })
+			require("mason-lspconfig").setup_handlers({ setup })
+		end,
+	},
+
+	-- formatters
+	{
+		"jose-elias-alvarez/null-ls.nvim",
+		event = "BufReadPre",
+		dependencies = { "mason.nvim" },
+		opts = function()
+			local nls = require("null-ls")
+			return {
+				sources = {
+					nls.builtins.formatting.stylua,
+					nls.builtins.diagnostics.flake8,
+				},
+			}
+		end,
+	},
+
+	{
+		"williamboman/mason.nvim",
+		cmd = "Mason",
+		keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
+		opts = {
+			ensure_installed = {
+				"stylua",
+				"shellcheck",
+				"shfmt",
+				"flake8",
+			},
+		},
+	},
+}

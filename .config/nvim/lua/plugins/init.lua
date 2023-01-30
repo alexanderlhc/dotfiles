@@ -1,0 +1,36 @@
+return {
+	"folke/neodev.nvim",
+	{ "kylechui/nvim-surround", event = "VeryLazy" },
+	-- UX
+	{
+		"catppuccin/nvim",
+		lazy = false,
+		priority = 1000,
+		config = function()
+			require("catppuccin").setup({
+				flavour = "latte", -- latte, frappe, macchiato, mocha
+				background = {
+					light = "latte",
+					dark = "mocha",
+				},
+				--transparent_background = true,
+			})
+			vim.cmd([[colorscheme catppuccin]])
+			vim.cmd([[set background=light]])
+		end,
+	},
+	{
+		"nvim-neo-tree/neo-tree.nvim",
+		keys = {
+			{ "<leader>ft", "<cmd>Neotree toggle<cr>", desc = "NeoTree" },
+		},
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+			"MunifTanjim/nui.nvim",
+		},
+		config = function()
+			require("neo-tree").setup()
+		end,
+	},
+}

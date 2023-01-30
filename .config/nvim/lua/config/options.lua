@@ -1,0 +1,45 @@
+vim.keymap.set("", "<Space>", "<Nop>", { noremap = true, silent = true })
+vim.g.mapleader = " "
+
+local opt = vim.opt
+
+--vim.opt.numberwidth = 5 -- min width for number column (default: 4)
+opt.autoindent = true -- ! -- use current line indent
+--opt.autowrite = true -- Enable auto write
+--opt.clipboard = "unnamedplus" -- Sync with system clipboard
+opt.completeopt = "menu,menuone,noselect"
+opt.expandtab = true -- ! -- tabs to spaces
+opt.expandtab = true -- Use spaces instead of tabs
+opt.formatoptions = "jcroqlnt" -- tcqj
+opt.grepformat = "%f:%l:%c:%m"
+opt.grepprg = "rg --vimgrep"
+opt.ignorecase = true -- ! -- ignore case
+--opt.inccommand = "nosplit" -- preview incremental substitute
+opt.laststatus = 0
+--opt.lazyredraw = true -- ! -- disable redraw during macro and cmds (speed)
+opt.mouse = "a" -- Enable mouse mode
+opt.number = true -- Print line number
+opt.pumblend = 10 -- Popup blend
+opt.pumheight = 10 -- Maximum number of entries in a popup
+opt.relativenumber = true -- Relative line numbers
+opt.scrolloff = 4 -- Lines of context
+opt.shell = "/bin/bash" -- !
+opt.shiftround = true -- Round indent
+opt.shiftwidth = 2 -- ! -- spaces used for (auto)indent
+opt.sidescrolloff = 8 -- Columns of context
+opt.signcolumn = "yes" -- Always show the signcolumn, otherwise it would shift the text each time
+opt.smartcase = true -- ! -- ignore case unless contain mixed
+opt.smartindent = true -- ! -- Insert indents automatically
+opt.spelllang = { "en" }
+opt.splitbelow = true -- Put new windows below current
+opt.splitright = true -- ! -- splits go right
+opt.syntax = "on" -- !
+opt.tabstop = 2 -- ! -- tab takes 2 spaces
+opt.termguicolors = true -- True color support
+opt.timeoutlen = 300
+opt.undofile = true
+opt.undolevels = 10000
+opt.updatetime = 200 -- Save swap file and trigger CursorHold
+opt.wildmode = "longest:full,full" -- Command-line completion mode
+opt.winminwidth = 5 -- Minimum window width
+opt.wrap = false -- Disable line wrap

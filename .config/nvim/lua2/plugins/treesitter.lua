@@ -1,3 +1,6 @@
+local M = {}
+
+-- requires: nvim-treesitter/nvim-treesitter-textobjects
 local textobjects = {
 	select = {
 		enable = true,
@@ -52,40 +55,18 @@ local incremental_selection = {
 	},
 }
 
-return {
-	"nvim-treesitter/nvim-treesitter",
-	version = false, -- last release is way too old and doesn't work on Windows
-	build = ":TSUpdate",
-	event = "BufReadPost",
-	--keys = {
-	--	{ "<c-space>", desc = "Increment selection" },
-	--	{ "<bs>", desc = "Schrink selection", mode = "x" },
-	--},
-	opts = {
-		ensure_installed = {
-			"bash",
-			"help",
-			"html",
-			"javascript",
-			"json",
-			"lua",
-			"markdown",
-			"markdown_inline",
-			"python",
-			"query",
-			"regex",
-			"tsx",
-			"typescript",
-			"vim",
-			"yaml",
-		},
+function M.setup()
+	require("nvim-treesitter.configs").setup({
+		ensure_installed = "all",
+		ignore_install = { "" },
+		sync_install = false,
+
+		-- Modules
 		indent = { enable = true },
 		highlight = { enable = true },
-		context_commentstring = { enable = true, enable_autocmd = false },
 		textobjects = textobjects,
 		incremental_selection = incremental_selection,
-	},
-	dependencies = {
-		"nvim-treesitter/nvim-treesitter-textobjects",
-	},
-}
+	})
+end
+
+return M

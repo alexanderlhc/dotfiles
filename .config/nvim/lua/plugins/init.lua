@@ -1,6 +1,10 @@
 return {
 	"folke/neodev.nvim",
-	{ "kylechui/nvim-surround", event = "VeryLazy" },
+	{
+		"kylechui/nvim-surround",
+		event = "VeryLazy",
+		opts = {}, -- mappings are not applied without
+	},
 	-- UX
 	{
 		"catppuccin/nvim",

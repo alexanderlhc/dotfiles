@@ -16,8 +16,8 @@ return {
 			defaults = {
 				mappings = {
 					i = {
-						--["<C-j>"] = require("telescope.actions").move_selection_next,
-						--["<C-k>"] = require("telescope.actions").move_selection_previous,
+						["<C-j>"] = "move_selection_previous",
+						["<C-k>"] = "move_selection_previous",
 						["<C-h>"] = "which_key",
 					},
 				},

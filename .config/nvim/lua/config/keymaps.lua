@@ -46,8 +46,8 @@ map({ "i", "v", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
 -- quit
 map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit all" })
 map("n", "<leader>w", "<cmd>update!<CR>", { desc = "Quit all" })
-map("n", "<C-y>", '"+y', "Copy {motion} to system clipboard")
-map("n", "<C-p>", '"+p', "Paste system clipboard")
+map("n", "<C-y>", '"+y', { desc = "Copy {motion} to system clipboard" })
+map("n", "<C-p>", '"+p', { desc = "Paste system clipboard" })
 
 --
 -- toggle options

@@ -45,30 +45,27 @@ map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
 map({ "i", "v", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
 -- quit
 map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit all" })
---	["w"] = { "<cmd>update!<CR>", "Save" },
---	["q"] = { "<cmd>quit!<CR>", "Save" },
+map("n", "<leader>w", "<cmd>update!<CR>", { desc = "Quit all" })
+map("n", "<C-y>", '"+y', { desc = "Copy {motion} to system clipboard" })
+map("n", "<C-p>", '"+p', { desc = "Paste system clipboard" })
 
---	y = { '"+y', "Copy {motion} to clipboard" },
---	Y = { '"+Y', "Copy [count] lines to clipboard" },
---	p = { '"+p', "Paste clipboard behind cursor" },
---	P = { '"+P', "Paste clipboard before cursor" },
---	["f"] = keymap_f,
+--
 -- toggle options
---map("n", "<leader>uf", require("lazyvim.plugins.lsp.format").toggle, { desc = "Toggle format on Save" })
+map("n", "<leader>sf", require("plugins.lsp.format").toggle, { desc = "Switch/Toggle format on Save" })
 --map("n", "<leader>us", function() Util.toggle("spell") end, { desc = "Toggle Spelling" })
 --map("n", "<leader>uw", function() Util.toggle("wrap") end, { desc = "Toggle Word Wrap" })
 --map("n", "<leader>ul", function() Util.toggle("relativenumber", true) Util.toggle("number") end, { desc = "Toggle Line Numbers" })
---map("n", "<leader>ud", Util.toggle_diagnostics, { desc = "Toggle Diagnostics" })
+map("n", "<leader>sd", require("utils").toggle_diagnostics, { desc = "Switch/Toggle Diagnostics" })
 --local conceallevel = vim.o.conceallevel > 0 and vim.o.conceallevel or 3
 --map("n", "<leader>uc", function() Util.toggle("conceallevel", false, {0, conceallevel}) end, { desc = "Toggle Conceal" })
 
 -- windows
-map("n", "<leader>ww", "<C-W>p", { desc = "Other window" })
-map("n", "<leader>wd", "<C-W>c", { desc = "Delete window" })
-map("n", "<leader>w-", "<C-W>s", { desc = "Split window below" })
-map("n", "<leader>w|", "<C-W>v", { desc = "Split window right" })
-map("n", "<leader>-", "<C-W>s", { desc = "Split window below" })
-map("n", "<leader>|", "<C-W>v", { desc = "Split window right" })
+--map("n", "<leader>ww", "<C-W>p", { desc = "Other window" })
+--map("n", "<leader>wd", "<C-W>c", { desc = "Delete window" })
+--map("n", "<leader>w-", "<C-W>s", { desc = "Split window below" })
+--map("n", "<leader>w|", "<C-W>v", { desc = "Split window right" })
+--map("n", "<leader>-", "<C-W>s", { desc = "Split window below" })
+--map("n", "<leader>|", "<C-W>v", { desc = "Split window right" })
 
 -- tabs
 map("n", "<leader><tab>l", "<cmd>tablast<cr>", { desc = "Last Tab" })

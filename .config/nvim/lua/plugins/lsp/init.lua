@@ -125,8 +125,19 @@ return {
 			local nls = require("null-ls")
 			return {
 				sources = {
+					-- nls.builtins.diagnostics.flake8,
+					-- nls.code_actions.eslint_d,
+					nls.builtins.code_actions.gitsigns,
+					-- nls.code_actions.refactoring,
+					-- nls.code_actions.shellcheck,
+					-- nls.diagnostics.eslint_d,
+					-- nls.diagnostics.tsc,
+					-- nls.diagnostics.zsh,
+					nls.builtins.formatting.fixjson,
+					nls.builtins.formatting.prettierd,
+					nls.builtins.formatting.shellharden,
+					nls.builtins.formatting.shfmt,
 					nls.builtins.formatting.stylua,
-					nls.builtins.diagnostics.flake8,
 				},
 			}
 		end,

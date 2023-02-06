@@ -1,7 +1,9 @@
 -- resize splits if window got resized
 vim.api.nvim_create_autocmd({ "VimResized" }, {
 	callback = function()
+		local current_tab = nvim_get_current_tabpage()
 		vim.cmd("tabdo wincmd =")
+		nvim_set_current_tabpage(current_tab)
 	end,
 })
 

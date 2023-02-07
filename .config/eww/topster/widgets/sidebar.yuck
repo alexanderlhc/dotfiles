@@ -6,6 +6,7 @@
 (include "widgets/battery.yuck")
 (include "widgets/docker.yuck")
 ;(include "widgets/bspwmTabbed.yuck")
+(include "widgets/powermenu.yuck")
 
 (defwidget sidebar []
   (centerbox 
@@ -30,5 +31,6 @@
           (battery)
           (docker)
           (volume)
+          (powermenu)
           (datetime))
     ))

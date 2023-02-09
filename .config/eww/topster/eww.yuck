@@ -1,21 +1,5 @@
 (include "widgets/sidebar.yuck")
 
-
-(defwidget barBlurWidget []
-  (box :class "barBlur"))
-
-(defwindow barBlur 
-          	:monitor 0
-            :windowtype "dock"
-          	:geometry (geometry :x "0" 
-                                :y "0"
-                                :width "3%" 
-                                :height "100%"
-                                :anchor "top left")
-          	:reserve (struts :distance "3%" :side "left")
-              (barBlurWidget))
-
-
 (defwindow bar 
           	:monitor 0
             :windowtype "dock"

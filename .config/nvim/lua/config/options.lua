@@ -13,7 +13,6 @@ opt.formatoptions = "jcroqlnt" -- tcqj
 opt.grepformat = "%f:%l:%c:%m"
 opt.grepprg = "rg --vimgrep"
 opt.ignorecase = true -- ! -- ignore case
---opt.inccommand = "nosplit" -- preview incremental substitute
 opt.laststatus = 0
 --opt.lazyredraw = true -- ! -- disable redraw during macro and cmds (speed)
 opt.mouse = "a" -- Enable mouse mode

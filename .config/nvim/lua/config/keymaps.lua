@@ -39,7 +39,6 @@ map({ "i", "v", "n", "s" }, "<leader>w", "<cmd>update!<CR>", { desc = "Save" })
 map({ "v", "n" }, "<Leader>y", '"+y<CR>', { desc = "Copy {motion} to system clipboard" })
 map({ "v", "n" }, "<Leader>p", '"+p<CR>', { desc = "Paste system clipboard" })
 
---
 -- toggle options
 map("n", "<leader>sf", require("plugins.lsp.format").toggle, { desc = "Switch/Toggle format on Save" })
 --map("n", "<leader>us", function() Util.toggle("spell") end, { desc = "Toggle Spelling" })
@@ -48,14 +47,6 @@ map("n", "<leader>sf", require("plugins.lsp.format").toggle, { desc = "Switch/To
 map("n", "<leader>sd", require("utils").toggle_diagnostics, { desc = "Switch/Toggle Diagnostics" })
 --local conceallevel = vim.o.conceallevel > 0 and vim.o.conceallevel or 3
 --map("n", "<leader>uc", function() Util.toggle("conceallevel", false, {0, conceallevel}) end, { desc = "Toggle Conceal" })
-
--- windows
---map("n", "<leader>ww", "<C-W>p", { desc = "Other window" })
---map("n", "<leader>wd", "<C-W>c", { desc = "Delete window" })
---map("n", "<leader>w-", "<C-W>s", { desc = "Split window below" })
---map("n", "<leader>w|", "<C-W>v", { desc = "Split window right" })
---map("n", "<leader>-", "<C-W>s", { desc = "Split window below" })
---map("n", "<leader>|", "<C-W>v", { desc = "Split window right" })
 
 -- tabs
 map("n", "<leader><tab>l", "<cmd>tablast<cr>", { desc = "Last Tab" })

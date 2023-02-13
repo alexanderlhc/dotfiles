@@ -8,7 +8,6 @@ opt.autoindent = true -- ! -- use current line indent
 --opt.autowrite = true -- Enable auto write
 --opt.clipboard = "unnamedplus" -- Sync with system clipboard
 opt.completeopt = "menu,menuone,noselect"
-opt.expandtab = true -- ! -- tabs to spaces
 opt.expandtab = true -- Use spaces instead of tabs
 opt.formatoptions = "jcroqlnt" -- tcqj
 opt.grepformat = "%f:%l:%c:%m"

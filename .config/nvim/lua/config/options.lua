@@ -3,10 +3,7 @@ vim.g.mapleader = " "
 
 local opt = vim.opt
 
---vim.opt.numberwidth = 5 -- min width for number column (default: 4)
 opt.autoindent = true -- ! -- use current line indent
---opt.autowrite = true -- Enable auto write
---opt.clipboard = "unnamedplus" -- Sync with system clipboard
 opt.completeopt = "menu,menuone,noselect"
 opt.expandtab = true -- Use spaces instead of tabs
 opt.formatoptions = "jcroqlnt" -- tcqj
@@ -14,8 +11,6 @@ opt.grepformat = "%f:%l:%c:%m"
 opt.grepprg = "rg --vimgrep"
 opt.ignorecase = true -- ! -- ignore case
 opt.inccommand = "nosplit" -- preview incremental substitute
---opt.laststatus = 0
---opt.lazyredraw = true -- ! -- disable redraw during macro and cmds (speed)
 opt.mouse = "a" -- Enable mouse mode
 opt.number = true -- Print line number
 opt.pumblend = 10 -- Popup blend
@@ -25,7 +20,6 @@ opt.scrolloff = 4 -- Lines of context
 opt.shell = "/bin/bash" -- !
 opt.shiftround = true -- Round indent
 opt.shiftwidth = 2 -- ! -- spaces used for (auto)indent
---opt.sidescrolloff = 8 -- Columns of context
 opt.signcolumn = "yes" -- Always show the signcolumn, otherwise it would shift the text each time
 opt.smartcase = true -- ! -- ignore case unless contain mixed
 opt.smartindent = true -- ! -- Insert indents automatically

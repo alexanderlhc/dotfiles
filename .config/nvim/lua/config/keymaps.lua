@@ -26,7 +26,7 @@ map("n", "<leader>qa", "<cmd>qa<cr>", { desc = "Quit all" })
 map("n", "<leader>q!", "<cmd>qa<cr>", { desc = "Quit" })
 map("n", "<leader>qb", "<cmd>bdelete<cr>", { desc = "Quit buffer" })
 map("n", "<leader>n", "<cmd>enew<cr>", { desc = "New File" })
-map({ "i", "v", "n", "s" }, "<leader>w", "<cmd>update!<CR>", { desc = "Save" })
+map({ "v", "n", "s" }, "<leader>w", "<cmd>update!<CR>", { desc = "Save" })
 
 -- yank
 map({ "v", "n" }, "<Leader>y", '"+y<CR>', { desc = "Copy {motion} to system clipboard" })

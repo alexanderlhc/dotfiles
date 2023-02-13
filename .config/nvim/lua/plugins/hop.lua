@@ -12,6 +12,7 @@ return {
 				require("hop").hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true })
 			end,
 			desc = "Hop [f]ind forward",
+			mode = { "v", "n" },
 		},
 		{
 			"F",
@@ -20,6 +21,7 @@ return {
 				require("hop").hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true })
 			end,
 			desc = "Hop [F]ind backward",
+			mode = { "v", "n" },
 		},
 		{
 			"t",
@@ -32,6 +34,7 @@ return {
 				})
 			end,
 			desc = "Hop [t]ill forward",
+			mode = { "v", "n" },
 		},
 		{
 			"T",
@@ -44,6 +47,7 @@ return {
 				})
 			end,
 			desc = "Hop [T]ill backward",
+			mode = { "v", "n" },
 		},
 	},
 }

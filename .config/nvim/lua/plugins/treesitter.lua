@@ -23,6 +23,7 @@ local textobjects = {
 			["]m"] = "@function.outer",
 			["]]"] = { query = "@class.outer", desc = "Next class start" },
 			["]p"] = { query = "@parameter.inner", desc = "Parameter: Next start" },
+			["]c"] = { query = "@comment.outer", desc = "Comment: next" },
 		},
 		goto_next_end = {
 			["]M"] = "@function.outer",
@@ -33,6 +34,7 @@ local textobjects = {
 			["[m"] = "@function.outer",
 			["[["] = "@class.outer",
 			["[p"] = { query = "@parameter.inner", desc = "Parameter: Next start" },
+			["[c"] = { query = "@comment.outer", desc = "Comment: prev" },
 		},
 		goto_previous_end = {
 			["[M"] = "@function.outer",
@@ -85,6 +87,9 @@ return {
 		textobjects = textobjects,
 		incremental_selection = incremental_selection,
 	},
+	config = function(_, opts)
+		require("nvim-treesitter.configs").setup(opts)
+	end,
 	dependencies = {
 		"nvim-treesitter/nvim-treesitter-textobjects",
 	},

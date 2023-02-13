@@ -6,4 +6,4 @@ configuration {
     display-run: 		"";
 }
 
-@theme "~/.config/rofi/themes/main.rasi"
+@theme "~/.config/rofi/themes/catppuccin-latte.rasi"

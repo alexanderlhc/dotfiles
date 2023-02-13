@@ -28,9 +28,9 @@
          :orientation "v"
          :space-evenly false
          :valign "end"
+          (volume)
           (battery)
           (docker)
-          (volume)
           (powermenu)
           (datetime))
     ))

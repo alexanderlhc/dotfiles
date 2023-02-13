@@ -5,14 +5,6 @@ local function map(mode, lhs, rhs, opts)
 	end
 end
 
--- Move Lines
-map("n", "<A-j>", ":m .+1<cr>==", { desc = "Move down" })
-map("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move down" })
-map("i", "<A-j>", "<Esc>:m .+1<cr>==gi", { desc = "Move down" })
-map("n", "<A-k>", ":m .-2<cr>==", { desc = "Move up" })
-map("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move up" })
-map("i", "<A-k>", "<Esc>:m .-2<cr>==gi", { desc = "Move up" })
-
 -- Windows
 map("n", "<C-h>", "<C-w>h", { desc = "Go to left window" })
 map("n", "<C-j>", "<C-w>j", { desc = "Go to lower window" })
@@ -39,12 +31,24 @@ map({ "i", "v", "n", "s" }, "<leader>w", "<cmd>update!<CR>", { desc = "Save" })
 map({ "v", "n" }, "<Leader>y", '"+y<CR>', { desc = "Copy {motion} to system clipboard" })
 map({ "v", "n" }, "<Leader>p", '"+p<CR>', { desc = "Paste system clipboard" })
 
+-- Move Lines
+map("n", "<A-j>", ":m .+1<cr>==", { desc = "Move down" })
+map("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move down" })
+map("i", "<A-j>", "<Esc>:m .+1<cr>==gi", { desc = "Move down" })
+map("n", "<A-k>", ":m .-2<cr>==", { desc = "Move up" })
+map("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move up" })
+map("i", "<A-k>", "<Esc>:m .-2<cr>==gi", { desc = "Move up" })
+
 -- toggle options
-map("n", "<leader>sf", require("plugins.lsp.format").toggle, { desc = "Switch/Toggle format on Save" })
---map("n", "<leader>us", function() Util.toggle("spell") end, { desc = "Toggle Spelling" })
---map("n", "<leader>uw", function() Util.toggle("wrap") end, { desc = "Toggle Word Wrap" })
+map("n", "<leader>tf", require("plugins.lsp.format").toggle, { desc = "Switch/Toggle format on Save" })
+map("n", "<leader>td", require("utils").toggle_diagnostics, { desc = "Switch/Toggle Diagnostics" })
+map("n", "<leader>ts", function()
+	require("utils").toggle("spell")
+end, { desc = "Toggle Spelling" })
+map("n", "<leader>tw", function()
+	require("utils").toggle("wrap")
+end, { desc = "Toggle Word Wrap" })
 --map("n", "<leader>ul", function() Util.toggle("relativenumber", true) Util.toggle("number") end, { desc = "Toggle Line Numbers" })
-map("n", "<leader>sd", require("utils").toggle_diagnostics, { desc = "Switch/Toggle Diagnostics" })
 --local conceallevel = vim.o.conceallevel > 0 and vim.o.conceallevel or 3
 --map("n", "<leader>uc", function() Util.toggle("conceallevel", false, {0, conceallevel}) end, { desc = "Toggle Conceal" })
 

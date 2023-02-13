@@ -66,14 +66,14 @@ function M.toggle(option, silent, values)
 		else
 			vim.opt_local[option] = values[1]
 		end
-		return Util.info("Set " .. option .. " to " .. vim.opt_local[option]:get(), { title = "Option" })
+		return M.info("Set " .. option .. " to " .. vim.opt_local[option]:get(), { title = "Option" })
 	end
 	vim.opt_local[option] = not vim.opt_local[option]:get()
 	if not silent then
 		if vim.opt_local[option]:get() then
-			Util.info("Enabled " .. option, { title = "Option" })
+			M.info("Enabled " .. option, { title = "Option" })
 		else
-			Util.warn("Disabled " .. option, { title = "Option" })
+			M.warn("Disabled " .. option, { title = "Option" })
 		end
 	end
 end

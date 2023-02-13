@@ -47,8 +47,8 @@ map({ "i", "v", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
 map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit all" })
 map("n", "<leader>q", "<cmd>qa<cr>", { desc = "Quit" })
 map("n", "<leader>w", "<cmd>update!<CR>", { desc = "Save" })
-map("n", "<Leader>y", '"+y', { desc = "Copy {motion} to system clipboard" })
-map("n", "<Leader>p", '"+p', { desc = "Paste system clipboard" })
+map({ "v", "n" }, "<Leader>y", '"+y<CR>', { desc = "Copy {motion} to system clipboard" })
+map({ "v", "n" }, "<Leader>p", '"+p<CR>', { desc = "Paste system clipboard" })
 
 --
 -- toggle options

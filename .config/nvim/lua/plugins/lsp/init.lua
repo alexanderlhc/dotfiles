@@ -34,7 +34,7 @@ return {
 			},
 			servers = {
 				jsonls = require("plugins.lsp.languages.json"),
-				sumneko_lua = {
+				lua_ls = {
 					settings = {
 						Lua = {
 							workspace = {
@@ -42,6 +42,9 @@ return {
 							},
 							completion = {
 								callSnippet = "Replace",
+							},
+							diagnostics = {
+								globals = { "vim" },
 							},
 						},
 					},

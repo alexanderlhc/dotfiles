@@ -35,18 +35,17 @@ map("n", "]b", "<cmd>bnext<cr>", { desc = "Next buffer" })
 -- Clear search with <esc>
 map({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and clear hlsearch" })
 
--- better indenting
+-- indent repeatable
 map("v", "<", "<gv")
 map("v", ">", ">gv")
 
--- new file
-map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
--- save file
-map({ "i", "v", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
--- quit
-map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit all" })
-map("n", "<leader>q", "<cmd>qa<cr>", { desc = "Quit" })
-map("n", "<leader>w", "<cmd>update!<CR>", { desc = "Save" })
+-- quit / save / new
+map("n", "<leader>qa", "<cmd>qa<cr>", { desc = "Quit all" })
+map("n", "<leader>q!", "<cmd>qa<cr>", { desc = "Quit" })
+map("n", "<leader>n", "<cmd>enew<cr>", { desc = "New File" })
+map({ "i", "v", "n", "s" }, "<leader>w", "<cmd>update!<CR>", { desc = "Save" })
+
+-- yank
 map({ "v", "n" }, "<Leader>y", '"+y<CR>', { desc = "Copy {motion} to system clipboard" })
 map({ "v", "n" }, "<Leader>p", '"+p<CR>', { desc = "Paste system clipboard" })
 

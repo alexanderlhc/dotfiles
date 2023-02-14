@@ -5,11 +5,32 @@ local function map(mode, lhs, rhs, opts)
 	end
 end
 
--- Move to window using the <ctrl> hjkl keys
+-- Windows
 map("n", "<C-h>", "<C-w>h", { desc = "Go to left window" })
 map("n", "<C-j>", "<C-w>j", { desc = "Go to lower window" })
 map("n", "<C-k>", "<C-w>k", { desc = "Go to upper window" })
 map("n", "<C-l>", "<C-w>l", { desc = "Go to right window" })
+-- Buffers
+map("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
+map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next buffer" })
+
+-- Clear search with <esc>
+map({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and clear hlsearch" })
+
+-- indent repeatable
+map("v", "<", "<gv")
+map("v", ">", ">gv")
+
+-- quit / save / new
+map("n", "<leader>qa", "<cmd>qa<cr>", { desc = "Quit all" })
+map("n", "<leader>q!", "<cmd>qa<cr>", { desc = "Quit" })
+map("n", "<leader>qb", "<cmd>bdelete<cr>", { desc = "Quit buffer" })
+map("n", "<leader>n", "<cmd>enew<cr>", { desc = "New File" })
+map({ "v", "n", "s" }, "<leader>w", "<cmd>update!<CR>", { desc = "Save" })
+
+-- yank
+map({ "v", "n" }, "<Leader>y", '"+y<CR>', { desc = "Copy {motion} to system clipboard" })
+map({ "v", "n" }, "<Leader>p", '"+p<CR>', { desc = "Paste system clipboard" })
 
 -- Move Lines
 map("n", "<A-j>", ":m .+1<cr>==", { desc = "Move down" })
@@ -19,54 +40,18 @@ map("n", "<A-k>", ":m .-2<cr>==", { desc = "Move up" })
 map("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move up" })
 map("i", "<A-k>", "<Esc>:m .-2<cr>==gi", { desc = "Move up" })
 
--- buffers
---if Util.has("bufferline.nvim") then
---  map("n", "<S-h>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
---  map("n", "<S-l>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
---  map("n", "[b", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
---  map("n", "]b", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
---else
-map("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
-map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next buffer" })
-map("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
-map("n", "]b", "<cmd>bnext<cr>", { desc = "Next buffer" })
---end
-
--- Clear search with <esc>
-map({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and clear hlsearch" })
-
--- better indenting
-map("v", "<", "<gv")
-map("v", ">", ">gv")
-
--- new file
-map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
--- save file
-map({ "i", "v", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
--- quit
-map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit all" })
-map("n", "<leader>q", "<cmd>qa<cr>", { desc = "Quit" })
-map("n", "<leader>w", "<cmd>update!<CR>", { desc = "Save" })
-map("n", "<Leader>y", '"+y', { desc = "Copy {motion} to system clipboard" })
-map("n", "<Leader>p", '"+p', { desc = "Paste system clipboard" })
-
---
 -- toggle options
-map("n", "<leader>sf", require("plugins.lsp.format").toggle, { desc = "Switch/Toggle format on Save" })
---map("n", "<leader>us", function() Util.toggle("spell") end, { desc = "Toggle Spelling" })
---map("n", "<leader>uw", function() Util.toggle("wrap") end, { desc = "Toggle Word Wrap" })
+map("n", "<leader>tf", require("plugins.lsp.format").toggle, { desc = "Switch/Toggle format on Save" })
+map("n", "<leader>td", require("utils").toggle_diagnostics, { desc = "Switch/Toggle Diagnostics" })
+map("n", "<leader>ts", function()
+	require("utils").toggle("spell")
+end, { desc = "Toggle Spelling" })
+map("n", "<leader>tw", function()
+	require("utils").toggle("wrap")
+end, { desc = "Toggle Word Wrap" })
 --map("n", "<leader>ul", function() Util.toggle("relativenumber", true) Util.toggle("number") end, { desc = "Toggle Line Numbers" })
-map("n", "<leader>sd", require("utils").toggle_diagnostics, { desc = "Switch/Toggle Diagnostics" })
 --local conceallevel = vim.o.conceallevel > 0 and vim.o.conceallevel or 3
 --map("n", "<leader>uc", function() Util.toggle("conceallevel", false, {0, conceallevel}) end, { desc = "Toggle Conceal" })
-
--- windows
---map("n", "<leader>ww", "<C-W>p", { desc = "Other window" })
---map("n", "<leader>wd", "<C-W>c", { desc = "Delete window" })
---map("n", "<leader>w-", "<C-W>s", { desc = "Split window below" })
---map("n", "<leader>w|", "<C-W>v", { desc = "Split window right" })
---map("n", "<leader>-", "<C-W>s", { desc = "Split window below" })
---map("n", "<leader>|", "<C-W>v", { desc = "Split window right" })
 
 -- tabs
 map("n", "<leader><tab>l", "<cmd>tablast<cr>", { desc = "Last Tab" })

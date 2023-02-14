@@ -1,6 +1,4 @@
-$color-font-primary: #a1bdce;
-$color-font-secondary: #879fad;
-$color-font-inactive: #6a7c8c;
+@import "catppuccin";
 
 $font-family: "JetBrainsMono Nerd Font Mono";
 $font-size: 16px;
@@ -24,7 +22,7 @@ window {
 }
 
 .sidebar {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: $crust-transparent;
   .segment-top {
     padding-top: 0.5rem;
   }
@@ -32,7 +30,7 @@ window {
 
 scale trough {
   all: unset;
-  background-color: #22242b;
+  background-color: $overlay0;
   min-height: 100px;
   min-width: 20px;
   margin: 0px 10px 0px 0px;
@@ -40,31 +38,34 @@ scale trough {
 
 //------------------------------------------------------------------------------
 .workspaces {
-  color: $color-font-secondary;
-  text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff,
-    1px 1px 0 #ffffff;
+  color: $text;
 
   .active {
-    color: $color-font-primary;
+    color: $subtext0;
+    font-size: 1.2em;
   }
   .occupied {
   }
   .inactive {
-    opacity: 0.2;
+    // opacity: 0.2;
   }
   .empty {
   }
 
   .inactive,
   .empty {
-    font-size: 0.8em;
-    color: $color-font-inactive;
   }
 
   .workspace:hover {
     transition: 0.2s;
-    color: yellow;
+    color: $rosewater;
   }
+}
+
+//------------------------------------------------------------------------------
+
+.app_launcher_icon {
+  color: $text;
 }
 
 //------------------------------------------------------------------------------
@@ -72,7 +73,7 @@ scale trough {
 .hour,
 .minute,
 .date {
-  color: $color-font-primary;
+  color: $text;
 }
 .datetime {
 }
@@ -82,15 +83,15 @@ scale trough {
 .volbar trough highlight {
   background-image: linear-gradient(
     to right,
-    #afcee0 30%,
-    #a1bdce 50%,
-    #77a5bf 100% * 50
+    $green-frappe 30%,
+    $green-macchiato 50%,
+    $green-mocha 100% * 50
   );
-  /* border-radius: 10px; */
 }
+
 .volume_icon {
   font-size: 1.3em;
-  color: $color-font-primary;
+  color: $text;
   margin: 0px 10px 0px 10px;
 }
 
@@ -98,7 +99,7 @@ scale trough {
 
 .power_icon {
   font-size: 1.3em;
-  color: $color-font-primary;
+  color: $text;
   margin: 0px 10px 0px 10px;
 }
 
@@ -107,7 +108,7 @@ scale trough {
 .battery {
   .battery_icon {
     font-size: 1.7em;
-    color: $color-font-primary;
+    color: $text;
     margin: 0px 17px -5px 10px;
   }
 }

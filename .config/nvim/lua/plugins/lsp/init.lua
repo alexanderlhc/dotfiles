@@ -49,6 +49,26 @@ return {
 						},
 					},
 				},
+				pyright = {},
+				rust_analyzer = {
+					settings = {
+						["rust-analyzer"] = {
+							cargo = { allFeatures = true },
+							checkOnSave = {
+								command = "clippy",
+								extraArgs = { "--no-deps" },
+							},
+						},
+					},
+				},
+				yamlls = {},
+				cssls = {},
+				dockerls = {},
+				tsserver = {},
+				svelte = {},
+				eslint = {},
+				html = {},
+				bashls = {},
 			},
 			-- return true if you don't want this server to be setup with lspconfig
 			setup = { -- per server setup

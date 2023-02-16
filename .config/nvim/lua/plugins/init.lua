@@ -1,14 +1,5 @@
 return {
 	{
-		"folke/neodev.nvim",
-		opts = {
-			debug = true,
-			experimental = {
-				pathStrict = true,
-			},
-		},
-	},
-	{
 		"kylechui/nvim-surround",
 		event = "VeryLazy",
 		opts = {}, -- mappings are not applied without

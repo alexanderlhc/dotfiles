@@ -1,5 +1,13 @@
 return {
-	"folke/neodev.nvim",
+	{
+		"folke/neodev.nvim",
+		opts = {
+			debug = true,
+			experimental = {
+				pathStrict = true,
+			},
+		},
+	},
 	{
 		"kylechui/nvim-surround",
 		event = "VeryLazy",

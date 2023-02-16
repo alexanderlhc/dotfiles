@@ -3,7 +3,7 @@ return {
 	-- lspconfig
 	{
 		"neovim/nvim-lspconfig",
-		event = "BufReadPre",
+		-- event = "BufReadPre",
 		dependencies = {
 			{ "folke/neodev.nvim", opts = { experimental = { pathStrict = true } } },
 			"mason.nvim",
@@ -34,7 +34,7 @@ return {
 			},
 			servers = {
 				jsonls = require("plugins.lsp.languages.json"),
-				lua_ls = {
+				sumneko_lua = {
 					settings = {
 						Lua = {
 							workspace = {
@@ -49,6 +49,7 @@ return {
 						},
 					},
 				},
+				vimls = {},
 				pyright = {},
 				rust_analyzer = {
 					settings = {

@@ -5,7 +5,11 @@ return {
 		"neovim/nvim-lspconfig",
 		-- event = "BufReadPre",
 		dependencies = {
-			{ "folke/neodev.nvim", opts = { experimental = { pathStrict = true } } },
+			{
+				"folke/neodev.nvim",
+				opts = { experimental = { pathStrict = true } },
+				library = { plugins = { "neotest" }, types = true },
+			},
 			"mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
 			{
@@ -34,7 +38,8 @@ return {
 			},
 			servers = {
 				jsonls = require("plugins.lsp.languages.json"),
-				sumneko_lua = {
+				-- sumneko_lua = {
+				lua_ls = {
 					settings = {
 						Lua = {
 							workspace = {

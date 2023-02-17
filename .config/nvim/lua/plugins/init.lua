@@ -1,5 +1,4 @@
 return {
-	"folke/neodev.nvim",
 	{
 		"kylechui/nvim-surround",
 		event = "VeryLazy",

@@ -3,9 +3,13 @@ return {
 	-- lspconfig
 	{
 		"neovim/nvim-lspconfig",
-		event = "BufReadPre",
+		-- event = "BufReadPre",
 		dependencies = {
-			{ "folke/neodev.nvim", opts = { experimental = { pathStrict = true } } },
+			{
+				"folke/neodev.nvim",
+				opts = { experimental = { pathStrict = true } },
+				library = { plugins = { "neotest" }, types = true },
+			},
 			"mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
 			{
@@ -34,6 +38,7 @@ return {
 			},
 			servers = {
 				jsonls = require("plugins.lsp.languages.json"),
+				-- sumneko_lua = {
 				lua_ls = {
 					settings = {
 						Lua = {
@@ -49,6 +54,27 @@ return {
 						},
 					},
 				},
+				vimls = {},
+				pyright = {},
+				rust_analyzer = {
+					settings = {
+						["rust-analyzer"] = {
+							cargo = { allFeatures = true },
+							checkOnSave = {
+								command = "clippy",
+								extraArgs = { "--no-deps" },
+							},
+						},
+					},
+				},
+				yamlls = {},
+				cssls = {},
+				dockerls = {},
+				tsserver = {},
+				svelte = {},
+				eslint = {},
+				html = {},
+				bashls = {},
 			},
 			-- return true if you don't want this server to be setup with lspconfig
 			setup = { -- per server setup

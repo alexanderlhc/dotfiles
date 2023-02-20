@@ -29,6 +29,10 @@ super + r
 super + Escape
 	pkill -USR1 -x sxhkd && notify-send "sxhkd restarted"
 
+# power
+super + alt + p
+	sh ~/.config/rofi/powermenu/powermenu.sh
+
 #
 # bspwm hotkeys
 #

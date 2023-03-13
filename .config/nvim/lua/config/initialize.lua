@@ -11,4 +11,12 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup("plugins")
+require("lazy").setup("plugins", {
+	performance = {
+		-- fixes error with spell
+		-- download spell files from http://ftp.vim.org/pub/vim/runtime/spell/
+		rtp = {
+			paths = { vim.fn.stdpath("data") .. "/site" },
+		},
+	},
+})

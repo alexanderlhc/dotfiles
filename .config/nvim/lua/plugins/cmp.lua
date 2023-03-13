@@ -10,6 +10,7 @@ return {
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
+			"hrsh7th/cmp-nvim-lsp-signature-help",
 			"saadparwaiz1/cmp_luasnip",
 			{
 				"zbirenbaum/copilot-cmp",
@@ -98,6 +99,7 @@ return {
 					},
 				},
 				sources = cmp.config.sources({
+					{ name = "nvim_lsp_signature_help" },
 					{ name = "nvim_lsp" },
 					{ name = "copilot", group_index = 2 },
 					{ name = "luasnip" },

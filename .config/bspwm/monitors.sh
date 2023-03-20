@@ -10,6 +10,6 @@ elif [ "$HOSTNAME" = lighthouse ]; then
 	bspc monitor DP-3 -d 1 2 3 4 5 6 7 8 9
 elif [ "$HOSTNAME" = fatfrogironscrap ]; then
 	notify-send "fatfrogironscrap"
-	hsetroot -cover ~/Media/wallpaper.jpg
 	bspc monitor eDP -d 1 2 3 4 5 6 7 8 9
+	randomwallpaper
 fi

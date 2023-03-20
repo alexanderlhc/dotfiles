@@ -24,6 +24,13 @@ alias glg="git log --graph --abbrev-commit --decorate --format=format:'%C(bold g
 alias gt='git ls-tree -r master --name-only'
 alias gm='git merge'
 
+# mirrors
+alias rate-update-mirrors='export TMPFILE="$(mktemp)"; \
+    sudo true; \
+    rate-mirrors --save=$TMPFILE arch --max-delay=43200 \
+      && sudo mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist-backup \
+      && sudo mv $TMPFILE /etc/pacman.d/mirrorlist'
+
 # Docker
 alias docker-stop-rm='docker rm $(docker stop $1)'
 

@@ -55,6 +55,7 @@ return {
 					},
 				},
 				vimls = {},
+				dartls = {},
 				pyright = {},
 				rust_analyzer = {
 					settings = {

@@ -81,6 +81,27 @@ return {
 				desc = "Commands",
 			},
 			{
+				"<leader>fs",
+				function()
+					require("telescope.builtin").lsp_document_symbols()
+				end,
+				desc = "Symbols",
+			},
+			{
+				"<leader>fg",
+				function()
+					require("telescope.builtin").live_grep()
+				end,
+				desc = "Live Grep",
+			},
+			{
+				"<leader>fg",
+				function()
+					require("telescope.builtin").live_grep()
+				end,
+				desc = "Live Grep",
+			},
+			{
 				"<leader>fwf",
 				function()
 					require("telescope.builtin").current_buffer_fuzzy_find()

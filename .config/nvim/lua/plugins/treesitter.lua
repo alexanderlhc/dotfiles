@@ -71,6 +71,7 @@ return {
 			"javascript",
 			"json",
 			"lua",
+			"dart",
 			"markdown",
 			"markdown_inline",
 			"python",

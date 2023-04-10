@@ -55,7 +55,6 @@ return {
 					},
 				},
 				vimls = {},
-				dartls = {},
 				pyright = {},
 				rust_analyzer = {
 					settings = {
@@ -146,6 +145,14 @@ return {
 		end,
 	},
 
+	{
+		"akinsho/flutter-tools.nvim",
+		lazy = false,
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"stevearc/dressing.nvim", -- optional for vim.ui.select
+		},
+	},
 	-- formatters
 	{
 		"jose-elias-alvarez/null-ls.nvim",

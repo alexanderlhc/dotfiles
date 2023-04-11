@@ -126,7 +126,6 @@ return {
 	-- snippets
 	{
 		"L3MON4D3/LuaSnip",
-		version = "<CurrentMajor>.*",
 		opts = {
 			delete_check_events = "TextChanged",
 		},

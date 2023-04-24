@@ -21,6 +21,7 @@ export PATH
 bindkey "^[[3~" delete-char
 source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+source /usr/share/zsh/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh
 
 eval "$(starship init zsh)"
 source /usr/share/nvm/init-nvm.sh
@@ -28,6 +29,18 @@ source /usr/share/nvm/init-nvm.sh
 # cht.sh
 #curl https://cheat.sh/:zsh > ~/.zsh.d/_cht
 fpath=(~/.zsh.d/ $fpath)
+
+# direnv
+if [ $(command -v direnv) ]; then
+  eval "$(direnv hook zsh)"
+fi
+load-local-conf() {
+     # check file exists, is regular file and is readable:
+     if [[ -f .aliases && -r .aliases ]]; then
+       source .aliases
+     fi
+}
+autoload -U add-zsh-hook chpwd load-local-conf
 
 ### Randomized prompt
 #colorscript random

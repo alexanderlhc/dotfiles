@@ -145,7 +145,24 @@ return {
 			require("mason-lspconfig").setup_handlers({ setup })
 		end,
 	},
-
+	{
+		"akinsho/flutter-tools.nvim",
+		lazy = false,
+		opts = {
+			dev_log = {
+				enabled = true,
+				open_cmd = "badd __FLUTTER_DEV_LOG__ | b", -- command to use to open the log buffer
+				-- open_cmd = function()
+				-- 	vim.cmd("badd flutter-log")
+				-- 	vim.cmd("b Flutter-log")
+				-- end,
+			},
+		},
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"stevearc/dressing.nvim", -- optional for vim.ui.select
+		},
+	},
 	-- formatters
 	{
 		"jose-elias-alvarez/null-ls.nvim",

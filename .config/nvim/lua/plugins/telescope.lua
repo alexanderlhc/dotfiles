@@ -94,6 +94,13 @@ return {
 				end,
 				desc = "Diagnostics",
 			},
+			{
+				"<leader>fs",
+				function()
+					require("telescope.builtin").lsp_document_symbols()
+				end,
+				desc = "Diagnostics",
+			},
 		},
 	},
 	--keys = {

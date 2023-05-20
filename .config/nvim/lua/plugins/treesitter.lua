@@ -66,12 +66,10 @@ return {
 	opts = {
 		ensure_installed = {
 			"bash",
-			"help",
 			"html",
 			"javascript",
 			"json",
 			"lua",
-			"dart",
 			"markdown",
 			"markdown_inline",
 			"python",

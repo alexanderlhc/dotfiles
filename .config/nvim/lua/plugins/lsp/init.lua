@@ -28,7 +28,8 @@ return {
 			diagnostics = {
 				underline = true,
 				update_in_insert = false,
-				virtual_text = { spacing = 4, prefix = "●" },
+				virtual_text = false,
+				-- virtual_text = { spacing = 4, prefix = "●" },
 				severity_sort = true,
 			},
 			autoformat = true,
@@ -55,7 +56,6 @@ return {
 					},
 				},
 				vimls = {},
-				dartls = {},
 				pyright = {},
 				rust_analyzer = {
 					settings = {
@@ -151,19 +151,10 @@ return {
 			require("mason-lspconfig").setup_handlers({ setup })
 		end,
 	},
+
 	{
 		"akinsho/flutter-tools.nvim",
 		lazy = false,
-		opts = {
-			dev_log = {
-				enabled = true,
-				open_cmd = "badd __FLUTTER_DEV_LOG__ | b", -- command to use to open the log buffer
-				-- open_cmd = function()
-				-- 	vim.cmd("badd flutter-log")
-				-- 	vim.cmd("b Flutter-log")
-				-- end,
-			},
-		},
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"stevearc/dressing.nvim", -- optional for vim.ui.select

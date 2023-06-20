@@ -13,7 +13,15 @@ function M.setup(opts)
 			)
 		end
 	end)
-	require("typescript").setup({ server = opts })
+	require("typescript").setup({
+		server = opts,
+		settings = {
+			documentformatting = false,
+			diagnostics = {
+				enable = false,
+			},
+		},
+	})
 end
 
 return M

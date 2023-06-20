@@ -40,7 +40,7 @@ load-local-conf() {
        source .aliases
      fi
 }
-autoload -U add-zsh-hook chpwd load-local-conf
+autoload -U add-zsh-hook load-local-conf
 
 ### Randomized prompt
 #colorscript random

@@ -32,4 +32,4 @@ export PSQL_HISTORY="$XDG_DATA_HOME/psql_history"
 #environment variable in */etc/zsh/zshenv*:
 #export ZDOTDIR="$HOME"/.config/zsh
 
-export WLR_NO_HARDWARE_CURSORS=1
+# export WLR_NO_HARDWARE_CURSORS=1

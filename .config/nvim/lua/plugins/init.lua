@@ -40,7 +40,15 @@ return {
 		"glepnir/lspsaga.nvim",
 		event = "LspAttach",
 		config = function()
-			require("lspsaga").setup({})
+			require("lspsaga").setup({
+				lightbulb = {
+					enable = true,
+					enable_in_insert = true,
+					sign = true,
+					sign_priority = 40,
+					virtual_text = false,
+				},
+			})
 		end,
 		dependencies = { { "nvim-tree/nvim-web-devicons" } },
 	},

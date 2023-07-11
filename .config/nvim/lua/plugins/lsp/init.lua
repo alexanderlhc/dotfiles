@@ -68,7 +68,13 @@ return {
 						},
 					},
 				},
-				yamlls = {},
+				yamlls = {
+					settings = {
+						yaml = {
+							keyOrdering = false,
+						},
+					},
+				},
 				cssls = {},
 				dockerls = {},
 				tsserver = {},

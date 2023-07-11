@@ -6,6 +6,7 @@ return {
 		{ "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle pin" },
 		{ "<leader>bpd", "<Cmd>BufferLineGroupClose ungrouped<CR>", desc = "Delete non-pinned buffers" },
 		{ "<leader>bg", "<Cmd>BufferLinePick<CR>", desc = "Pick buffer tab" },
+		{ "<leader>bc", "<Cmd>BufferLineCloseLeft<CR><Cmd>BufferLineCloseRight<CR>", desc = "Close other buffers" },
 	},
 	opts = {
 		options = {

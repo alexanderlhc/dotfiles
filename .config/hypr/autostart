@@ -1,0 +1,26 @@
+#!/usr/bin/bash
+
+notify-send "autostarted"
+
+# variables
+config=$HOME/.config/hypr
+scripts=$config/scripts
+
+
+# wallpaper
+$scripts/wallpaper "/home/alexander/Nextcloud/wallpapers/20201022_152313.jpg" &
+
+
+# Execute your favorite apps at launch
+# exec-once = waybar & hyprpaper & firefox
+# exec-once = waybar
+waybar &
+#& hyprpaper
+#exec-once = wl-paste --watch cliphist store
+wl-paste --watch cliphist store &
+
+# setting the right polkit
+# exec-once=/usr/bin/pkttyagent
+# exec-once=/usr/bin/polkit-dumb-agent
+# exec-once=/usr/lib/polkit-kde-authentication-agent-1
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &

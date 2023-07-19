@@ -36,3 +36,11 @@ function cdf() {
     dir="$(find "$base_dir" -type d -maxdepth "$max_depth" -print 2>/dev/null | fzf)"
     cd "$dir"
 }
+
+# ~/.zshrc
+_git_config_complete() {
+  # Complete the command arguments as if it were a Git command
+  compadd $(git config --get-regexp "alias\.config" | awk '{print $2}')
+}
+# Set up completion for the 'config' alias
+compdef _git_config_complete config

@@ -1,5 +1,3 @@
-export PATH="$(yarn global bin):$PATH"
-
 export EDITOR='nvim'
 export VISUAL='nvim'
 export PAGER='moar'
@@ -33,3 +31,4 @@ export PSQL_HISTORY="$XDG_DATA_HOME/psql_history"
 #export ZDOTDIR="$HOME"/.config/zsh
 
 # export WLR_NO_HARDWARE_CURSORS=1
+# export PATH="$(yarn global bin):$PATH"

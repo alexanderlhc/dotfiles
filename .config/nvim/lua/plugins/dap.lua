@@ -94,10 +94,15 @@ return {
 			},
 		},
 		"nvim-telescope/telescope-dap.nvim",
-		"mxsdev/nvim-dap-vscode-js",
+		{
+			"mxsdev/nvim-dap-vscode-js",
+			branch = "start-debugging",
+			config = function()
+				TypeScriptJavaScript()
+			end,
+		},
 	},
 	config = function()
-		TypeScriptJavaScript()
 		require("dapui").setup()
 		require("nvim-dap-virtual-text").setup()
 	end,

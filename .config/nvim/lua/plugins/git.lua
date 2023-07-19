@@ -68,9 +68,37 @@ return {
 			{
 				"<leader>Gb",
 				function()
+					require("gitsigns").blame_line({ full = true })
+				end,
+				desc = "Git line blame toggle",
+			},
+			{
+				"<leader>Gbs",
+				function()
 					require("gitsigns").toggle_current_line_blame()
 				end,
 				desc = "Git line blame toggle",
+			},
+			{
+				"<leader>Gd",
+				function()
+					require("gitsigns").diffthis()
+				end,
+				desc = "Git line blame toggle",
+			},
+			{
+				"]g",
+				function()
+					require("gitsigns").next_hunk()
+				end,
+				desc = "Goto: Git Next hunk",
+			},
+			{
+				"[g",
+				function()
+					require("gitsigns").prev_hunk()
+				end,
+				desc = "Goto: Git Prev hunk",
 			},
 		},
 	},

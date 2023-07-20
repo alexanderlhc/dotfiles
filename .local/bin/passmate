@@ -1,53 +1,72 @@
 #!/bin/env bash
 
-list_passwords() {
-	# prefix=${PASSWORD_STORE_DIR-~/.password-store}
-	prefix=~/.local/share/pass
-	password_files=("$prefix"/**/*.gpg)
-	password_files=("${password_files[@]#"$prefix"/}")
+DEFAULT_PASSWORD_STORE_DIR=~/.password-store
+
+# Prints the usage of the script
+function print_usage {
+	echo "Usage: $(basename "$0") [ -h | -c wayland|xclip | -d | -p store_dir ]"
+	echo "Options:"
+	echo "  -h   Shows help message and exits."
+	echo "  -c   Specifies clipboard tool. 'wayland' or 'xclip'. (Default: wayland)"
+	echo "  -d   Deletes from clipboard after 45 sec. Works only with cliphist on wayland."
+	echo "  -p   Specifies custom password store directory. (Default: ~/.password-store)"
+}
+
+# Lists passwords
+function list_passwords {
+	local prefix="${1:-$DEFAULT_PASSWORD_STORE_DIR}"
+	local password_files=("$prefix"/**/*.gpg)
+	password_files=("${password_files[@]#${prefix}/}")
 	password_files=("${password_files[@]%.gpg}")
-	passwords_list=$(printf '%s\n' "${password_files[@]}" | sed 's/\.gpg$//')
+	local passwords_list=$(printf '%s\n' "${password_files[@]}" | sed 's/\.gpg$//')
 	echo "$passwords_list"
 }
 
-show_passwords() {
-	local passwords_list=$(list_passwords)
+# Shows passwords
+function show_passwords {
+	local passwords_list=$(list_passwords "$1")
 	local selected_entry=$(echo "$passwords_list" | rofi -dmenu -p "Select password:")
 	echo "$selected_entry"
 }
 
-get_password() {
+# Gets password
+function get_password {
 	local password_entry=$1
 	local password=$(pass show "$password_entry" | head -n1)
 	echo "$password"
 }
 
-copy_to_clipboard_wayland() {
+# Copies to clipboard
+function copy_to_clipboard {
 	local password=$1
-	echo -n "$password" | wl-copy -n
-	notify-send "Password copied to clipboard!"
+	local clipboard_tool=$2
+
+	if [ "$clipboard_tool" = "wayland" ]; then
+		echo -n "$password" | wl-copy -n
+		notify-send "Password copied to clipboard using Wayland!"
+	elif [ "$clipboard_tool" = "xclip" ]; then
+		echo -n "$password" | xclip -selection clipboard
+		notify-send "Password copied to clipboard using xclip!"
+	else
+		echo "Invalid clipboard tool. Options: 'wayland' or 'xclip'."
+		exit 1
+	fi
 }
 
-delete_from_cliphist_clipboard() {
+# Deletes from clipboard
+function delete_from_clipboard {
+	local password=$1
 	sleep 45 && cliphist delete-query "$password" | wl-copy -c
 	notify-send "Clipboard cleared!"
 }
 
-# Function to print script usage
-print_usage() {
-	echo "Usage: $(basename "$0") [-h] [-c]"
-	echo "Options:"
-	echo "  -h   Show this help message."
-	echo "  -c   Specify clipboard tool to use. Options: 'wayland' or 'xclip'. (Default: wayland)"
-	echo "  -d   Delete from clipboard after 45 seconds (Default: false). Works for wayland with cliphist only."
-}
-
-# Main function to execute the script
-main() {
-	local clipboard_tool="wayland" # Set default clipboard tool to wayland
+# Main function
+function main {
+	local clipboard_tool="wayland"
 	local delete_passwords=false
+	local password_store_dir=$DEFAULT_PASSWORD_STORE_DIR
 
-	while getopts ":hc:d" opt; do
+	while getopts "hc:dp:" opt; do
 		case "$opt" in
 		h)
 			print_usage
@@ -55,41 +74,25 @@ main() {
 			;;
 		c) clipboard_tool="$OPTARG" ;;
 		d) delete_passwords=true ;;
+		p) password_store_dir="$OPTARG" ;;
 		\?)
-			echo "Invalid option: -$OPTARG"
 			print_usage
 			exit 1
 			;;
 		esac
 	done
 
-	if [ "$clipboard_tool" = "" ]; then
-		echo "Please specify a clipboard tool with -c option (wayland or xclip)."
-		print_usage
+	local selected_password_entry=$(show_passwords "$password_store_dir")
+	if [ "$selected_password_entry" = "" ]; then
+		echo "No password selected, exiting"
 		exit 1
 	fi
 
-	local selected_entry=$(show_passwords)
+	local password=$(get_password "$selected_password_entry")
+	copy_to_clipboard "$password" "$clipboard_tool"
 
-	if [ "$selected_entry" != "" ]; then
-		echo "Selected password: $selected_entry"
-		password=$(get_password "$selected_entry")
-		if [ "$clipboard_tool" = "wayland" ]; then
-			copy_to_clipboard_wayland "$password"
-			echo "Password copied to clipboard using Wayland!"
-			if [ "$delete_passwords" = true ]; then
-				delete_from_cliphist_clipboard "$password"
-			fi
-		elif [ "$clipboard_tool" = "xclip" ]; then
-			copy_to_clipboard_xclip "$password"
-			echo "Password copied to clipboard using xclip!"
-		else
-			echo "Invalid clipboard tool. Options: 'wayland' or 'xclip'."
-			exit 1
-		fi
-	else
-		echo "No password selected. Exiting..."
-		exit 1
+	if "$delete_passwords" && [ "$clipboard_tool" = "wayland" ]; then
+		delete_from_clipboard "$password"
 	fi
 }
 

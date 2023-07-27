@@ -1,19 +1,22 @@
 #!/usr/bin/bash
 
-notify-send "autostarted"
-
 # variables
 config=$HOME/.config/hypr
 scripts=$config/scripts
 
 # wallpaper
-$scripts/wallpaper "/home/alexander/Nextcloud/wallpapers/20201022_152313.jpg" &
+hostname=$(cat /etc/hostname) # gets hostname
+setwallpaper() {
+	"$scripts"/wallpaper $1 &
+}
+if [ "$hostname" = "home" ]; then
+	setwallpaper "/home/alexander/Pictures/wallpaper.jpg"
+elif [ "$hostname" = "lighthouse" ]; then
+	setwallpaper "/home/alexander/Pictures/wallpaper.jpg"
+fi
 
 # Execute your favorite apps at launch
-# exec-once = waybar & hyprpaper & firefox
-# exec-once = waybar
 waybar &
-#& hyprpaper
 #exec-once = wl-paste --watch cliphist store
 wl-paste --watch cliphist store &
 # exec-once = wl-paste --type text --watch cliphist store #Stores only text data

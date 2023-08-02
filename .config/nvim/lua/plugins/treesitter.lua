@@ -88,9 +88,9 @@ return {
 	},
 	config = function(_, opts)
 		require("nvim-treesitter.configs").setup(opts)
-		local opt = vim.opt
-		opt.foldmethod = "expr"
-		opt.foldexpr = "nvim_treesitter#foldexpr()"
+		-- local opt = vim.opt
+		-- opt.foldmethod = "expr"
+		-- opt.foldexpr = "nvim_treesitter#foldexpr()"
 		-- opt.nofoldenable = true -- Disable folding at startup.
 	end,
 	dependencies = {

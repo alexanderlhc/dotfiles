@@ -79,14 +79,14 @@ return {
 		{
 			"]T",
 			function()
-				require("neotest").jump.next({ failed = true })
+				require("neotest").jump.next({ status = "failed" })
 			end,
 			desc = "Jump to next failed test",
 		},
 		{
 			"[T",
 			function()
-				require("neotest").jump.prev({ failed = true })
+				require("neotest").jump.prev({ status = "failed" })
 			end,
 			desc = "Jump to previous failed test",
 		},

@@ -120,7 +120,7 @@ return {
 				function()
 					require("telescope.builtin").lsp_document_symbols()
 				end,
-				desc = "Diagnostics",
+				desc = "Symbols",
 			},
 		},
 	},

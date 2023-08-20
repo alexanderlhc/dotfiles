@@ -13,6 +13,7 @@ return {
 	{
 		"TimUntersberger/neogit",
 		requires = "nvim-lua/plenary.nvim",
+		config = true,
 		keys = {
 			{
 				"<leader>G",

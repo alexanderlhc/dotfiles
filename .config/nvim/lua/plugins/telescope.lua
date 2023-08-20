@@ -39,6 +39,13 @@ return {
 				desc = "Buffers",
 			},
 			{
+				"<leader>fj",
+				function()
+					require("telescope.builtin").jumplist()
+				end,
+				desc = "Buffers",
+			},
+			{
 				"<leader>fo",
 				function()
 					require("telescope.builtin").oldfiles()
@@ -120,7 +127,7 @@ return {
 				function()
 					require("telescope.builtin").lsp_document_symbols()
 				end,
-				desc = "Diagnostics",
+				desc = "Symbols",
 			},
 		},
 	},

@@ -32,7 +32,7 @@ return {
 		{
 			"K",
 			mode = { "n" },
-			"<cmd>Lspsaga hover_doc ++keep<CR>",
+			"<cmd>Lspsaga hover_doc<CR>",
 			desc = "Show hover documentation",
 		},
 		{

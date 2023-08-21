@@ -10,9 +10,9 @@ setwallpaper() {
 	"$scripts"/wallpaper $1 &
 }
 if [ "$hostname" = "home" ]; then
-	setwallpaper "/home/alexander/Pictures/wallpaper.jpg"
+	setwallpaper "/home/alexander/Pictures/wallpaper.png"
 elif [ "$hostname" = "lighthouse" ]; then
-	setwallpaper "/home/alexander/Pictures/wallpaper.jpg"
+	setwallpaper "/home/alexander/Pictures/wallpaper.png"
 fi
 
 # Execute your favorite apps at launch

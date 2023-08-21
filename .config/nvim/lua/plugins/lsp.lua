@@ -5,17 +5,17 @@ local ensure_installed = {
   "cssls",
   "rust_analyzer",
   "bashls",
-  "dockerls",                       -- dockerls
+  "dockerls",                        -- dockerls
   "docker_compose_language_service", -- docker-compose ls
   "jsonls",
-  "intelephense",                   -- php
+  "intelephense",                    -- php
   "lua_ls",
   "marksman",
   "jedi_language_server", -- python
   "r_language_server",
   "sqlls",
   "lemminx", -- xml
-  "yamlls", -- yaml
+  "yamlls",  -- yaml
 }
 
 local function cmp_setup()
@@ -44,9 +44,10 @@ return {
   branch = "v2.x",
   dependencies = {
     -- LSP Support
-    { "neovim/nvim-lspconfig" },           -- Required
-    { "williamboman/mason.nvim" },         -- Optional
+    { "neovim/nvim-lspconfig" },             -- Required
+    { "williamboman/mason.nvim" },           -- Optional
     { "williamboman/mason-lspconfig.nvim" }, -- Optional
+    { "lukas-reineke/lsp-format.nvim" },
 
     -- Autocompletion
     {
@@ -56,8 +57,8 @@ return {
           "zbirenbaum/copilot.lua",
           "zbirenbaum/copilot-cmp",
         },
-      },                      -- Required
-    },                        -- Required
+      },                        -- Required
+    },                          -- Required
     { "hrsh7th/cmp-nvim-lsp" }, -- Required
     { "L3MON4D3/LuaSnip" },
   },
@@ -68,9 +69,16 @@ return {
       local opts = { buffer = bufnr }
       lsp.default_keymaps({ buffer = bufnr })
 
-      vim.keymap.set({ 'n', 'x' }, 'gq', function()
-        vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
-      end, opts)
+      -- Format on save
+      if client.supports_method('textDocument/formatting') then
+        require('lsp-format').on_attach(client)
+
+        vim.keymap.set({ 'n', 'x' }, 'gq', function()
+          vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
+        end, opts)
+
+      end
+
     end)
 
     lsp.ensure_installed(ensure_installed)

@@ -32,3 +32,6 @@ export PSQL_HISTORY="$XDG_DATA_HOME/psql_history"
 
 # export WLR_NO_HARDWARE_CURSORS=1
 # export PATH="$(yarn global bin):$PATH"
+
+# source ./.zshenv-secret
+source /home/alexander/.config/zsh/.zshenv-secret

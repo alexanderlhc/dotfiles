@@ -18,7 +18,7 @@ elif [ "$hostname" = "fatfrogironscrap" ]; then
 fi
 
 # Execute your favorite apps at launch
-waybar &
+pgrep -x "waybar" >/dev/null && pkill -x "waybar"; waybar &
 #exec-once = wl-paste --watch cliphist store
 wl-paste --watch cliphist store &
 # exec-once = wl-paste --type text --watch cliphist store #Stores only text data

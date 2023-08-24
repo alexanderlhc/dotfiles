@@ -30,6 +30,7 @@ local function cmp_setup()
       { name = "copilot" },
       { name = "nvim_lsp" },
       { name = "path" },
+      { name = 'nvim_lua' },
     },
     mapping = {
       ["<CR>"] = cmp.mapping.confirm({
@@ -58,6 +59,7 @@ return {
           "zbirenbaum/copilot.lua",
           "zbirenbaum/copilot-cmp",
           "hrsh7th/cmp-path",
+          "hrsh7th/cmp-nvim-lua"
         },
       },                        -- Required
     },                          -- Required

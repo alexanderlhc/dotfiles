@@ -44,3 +44,18 @@ _git_config_complete() {
 }
 # Set up completion for the 'config' alias
 compdef _git_config_complete config
+
+
+# make sure to only initiate one polkitagent
+# eg: run_polkit_agent "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
+run_polkit_agent() {
+    lockfile="/tmp/polkit-agent.lock"
+    
+    # Check if lock file exists
+    if [ -f "$lockfile" ]; then
+        echo "Polkit agent is already running."
+    else
+        "$1" &
+        touch "$lockfile"
+    fi
+}

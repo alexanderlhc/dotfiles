@@ -13,6 +13,8 @@ if [ "$hostname" = "home" ]; then
 	setwallpaper "/home/alexander/Pictures/wallpaper.png"
 elif [ "$hostname" = "lighthouse" ]; then
 	setwallpaper "/home/alexander/Pictures/wallpaper.png"
+elif [ "$hostname" = "fatfrogironscrap" ]; then
+	setwallpaper "/home/alexander/Nextcloud/wallpapers/midjourney/architecture_sketch_of_running_computer_full2.png"
 fi
 
 # Execute your favorite apps at launch

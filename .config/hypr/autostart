@@ -24,8 +24,4 @@ pgrep -x "wl-paste" >/dev/null && pkill -x "wl-paste"; wl-paste --watch cliphist
 # exec-once = wl-paste --type text --watch cliphist store #Stores only text data
 # exec-once = wl-paste --type image --watch cliphist store #Stores only image data
 
-# setting the right polkit
-# exec-once=/usr/bin/pkttyagent
-# exec-once=/usr/bin/polkit-dumb-agent
-# exec-once=/usr/lib/polkit-kde-authentication-agent-1
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &

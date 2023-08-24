@@ -29,6 +29,7 @@ local function cmp_setup()
     sources = {
       { name = "copilot" },
       { name = "nvim_lsp" },
+      { name = "path" },
     },
     mapping = {
       ["<CR>"] = cmp.mapping.confirm({
@@ -56,6 +57,7 @@ return {
         {
           "zbirenbaum/copilot.lua",
           "zbirenbaum/copilot-cmp",
+          "hrsh7th/cmp-path",
         },
       },                        -- Required
     },                          -- Required
@@ -76,9 +78,7 @@ return {
         vim.keymap.set({ 'n', 'x' }, 'gq', function()
           vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
         end, opts)
-
       end
-
     end)
 
     lsp.ensure_installed(ensure_installed)

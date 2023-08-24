@@ -20,7 +20,7 @@ fi
 # Execute your favorite apps at launch
 pgrep -x "waybar" >/dev/null && pkill -x "waybar"; waybar &
 #exec-once = wl-paste --watch cliphist store
-wl-paste --watch cliphist store &
+pgrep -x "wl-paste" >/dev/null && pkill -x "wl-paste"; wl-paste --watch cliphist store &
 # exec-once = wl-paste --type text --watch cliphist store #Stores only text data
 # exec-once = wl-paste --type image --watch cliphist store #Stores only image data
 

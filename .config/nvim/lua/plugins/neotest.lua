@@ -31,6 +31,13 @@ return {
       desc = "Run test",
     },
     {
+      "<leader>Td",
+      function()
+        require("neotest").run.run({ strategy = "dap" })
+      end,
+      desc = "Run test with dap strategy",
+    },
+    {
       "<leader>Tc",
       function()
         require("neotest").run.stop()

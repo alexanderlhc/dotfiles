@@ -35,3 +35,4 @@ export PSQL_HISTORY="$XDG_DATA_HOME/psql_history"
 
 # source ./.zshenv-secret
 source /home/alexander/.config/zsh/.zshenv-secret
+source /home/alexander/.config/nnn/config

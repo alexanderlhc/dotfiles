@@ -5,10 +5,10 @@ return {
     "nvim-treesitter/nvim-treesitter",
     "antoinemadec/FixCursorHold.nvim",
     "haydenmeade/neotest-jest",
-    {
-      "mxsdev/nvim-dap-vscode-js",
-      build = { run = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out" }
-    } -- dap strategy in neotest-jest
+    -- {
+    --   "mxsdev/nvim-dap-vscode-js",
+    --   build = { run = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out" }
+    -- } -- dap strategy in neotest-jest
   },
   config = function()
     local neotest, neotest_jest = require("neotest"), require("neotest-jest")
@@ -31,13 +31,6 @@ return {
       desc = "Run test",
     },
     {
-      "<leader>Td",
-      function()
-        require("neotest").run.run({ strategy = "dap" })
-      end,
-      desc = "Run test with dap strategy",
-    },
-    {
       "<leader>Tc",
       function()
         require("neotest").run.stop()
@@ -47,8 +40,7 @@ return {
     {
       "<leader>TT",
       function()
-        print("running neotest on file")
-        require("neotest").run.run(vim.fn.expand("%"))
+        require("neotest").run.run({})
       end,
       desc = "Run tests in file",
     },

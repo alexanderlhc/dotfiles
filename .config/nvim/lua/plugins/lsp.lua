@@ -1,9 +1,11 @@
 local ensure_installed = {
   "tsserver",
+  "prettierd",
   "eslint",
   "html",
   "cssls",
   "rust_analyzer",
+  "rustfmt",
   "bashls",
   "dockerls",                        -- dockerls
   "docker_compose_language_service", -- docker-compose ls
@@ -70,17 +72,17 @@ return {
     local lsp = require("lsp-zero").preset({})
 
     lsp.on_attach(function(client, bufnr)
-      local opts = { buffer = bufnr }
+      -- local opts = { buffer = bufnr }
       lsp.default_keymaps({ buffer = bufnr })
 
-      -- Format on save
-      if client.supports_method('textDocument/formatting') then
-        require('lsp-format').on_attach(client)
-
-        vim.keymap.set({ 'n', 'x' }, 'gq', function()
-          vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
-        end, opts)
-      end
+      -- -- Format on save
+      -- if client.supports_method('textDocument/formatting') then
+      --   require('lsp-format').on_attach(client)
+      --
+      --   vim.keymap.set({ 'n', 'x' }, 'gq', function()
+      --     vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
+      --   end, opts)
+      -- end
     end)
 
     lsp.ensure_installed(ensure_installed)

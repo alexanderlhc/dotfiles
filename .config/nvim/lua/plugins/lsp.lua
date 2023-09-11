@@ -73,14 +73,14 @@ return {
       local opts = { buffer = bufnr }
       lsp.default_keymaps({ buffer = bufnr })
 
-      -- Format on save
-      if client.supports_method('textDocument/formatting') then
-        require('lsp-format').on_attach(client)
-
-        vim.keymap.set({ 'n', 'x' }, 'gq', function()
-          vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
-        end, opts)
-      end
+    -- Format on save
+    --   if client.supports_method('textDocument/formatting') then
+    --     require('lsp-format').on_attach(client)
+    --
+    --     vim.keymap.set({ 'n', 'x' }, 'gq', function()
+    --       vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
+    --     end, opts)
+    --   end
     end)
 
     lsp.ensure_installed(ensure_installed)

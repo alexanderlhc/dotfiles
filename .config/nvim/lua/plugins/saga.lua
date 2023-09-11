@@ -1,9 +1,11 @@
 return {
   "glepnir/lspsaga.nvim",
   event = "LspAttach",
-  config = function()
-    require("lspsaga").setup({})
-  end,
+  opts = {
+    lightbulb = {
+      enabled = false
+    }
+  },
   keys = {
     {
       "gd",

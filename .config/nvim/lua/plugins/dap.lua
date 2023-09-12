@@ -137,7 +137,9 @@ return {
         name = "Attach to process",
         type = "node2",
         request = "attach",
-        processId = require("dap.utils").pick_process,
+        processId = require("dap.utils").pick_process({
+          filter = "node"
+        }),
         skipFiles = { "<node_internals>/**", "node_modules/**" },
       },
     }

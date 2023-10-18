@@ -77,7 +77,7 @@ return {
           require("neogit").open({ "commit" })
         end,
         desc = "Neogit commit",
-      }
+      },
     },
   },
   {
@@ -121,4 +121,10 @@ return {
       },
     },
   },
+  {
+    'ruifm/gitlinker.nvim',
+    opts = {
+      mappings = "<leader>Gy"
+    }
+  }
 }

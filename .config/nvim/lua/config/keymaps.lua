@@ -50,6 +50,11 @@ end, { desc = "Toggle Spelling" })
 map("n", "<leader>tw", function()
 	require("utils").toggle("wrap")
 end, { desc = "Toggle Word Wrap" })
+if vim.lsp.inlay_hint then
+	map("n", "<leader>th", function()
+		vim.lsp.inlay_hint(0, nil)
+	end, { desc = "Toggle Inlay Hints" })
+end
 
 -- tabs
 -- map("n", "<leader><tab>l", "<cmd>tablast<cr>", { desc = "Last Tab" })

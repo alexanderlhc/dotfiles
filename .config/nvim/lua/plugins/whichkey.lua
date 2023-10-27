@@ -1,12 +1,17 @@
 return {
 	"folke/which-key.nvim",
-	config = function()
-		vim.o.timeout = true
-		vim.o.timeoutlen = 300
-		require("which-key").setup({
-			-- your configuration comes here
-			-- or leave it empty to use the default settings
-			-- refer to the configuration section below
-		})
+	opts = {
+		plugins = { spelling = true },
+		defaults = {
+			mode = { "n", "v" },
+			["<leader>c"] = { name = "+code" },
+			["]"] = { name = "+next" },
+			["["] = { name = "+prev" },
+		},
+	},
+	config = function(_, opts)
+		local wk = require("which-key")
+		wk.setup(opts)
+		wk.register(opts.defaults)
 	end,
 }

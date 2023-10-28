@@ -91,7 +91,9 @@ local function set_keymaps(bufnr)
 			},
 		})
 	end, { desc = "Source Action", buffer = bufnr, remap = false })
+	map("n", "<leader>cr", "<cmd>lua vim.lsp.buf.rename()<cr>")
 end
+
 return {
 	"VonHeikemen/lsp-zero.nvim",
 	branch = "v3.x",

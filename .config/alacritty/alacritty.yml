@@ -3,7 +3,8 @@ import:
 
 font:
   normal:
-    family: Source Code Pro
+    family: Fira Code
+    # family: Source Code Pro
     # family: ComicCodeLigatures Nerd Font
 
 env:

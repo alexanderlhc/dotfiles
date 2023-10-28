@@ -132,6 +132,16 @@ return {
         port = 9229,
         skipFiles = { "<node_internals>/**", "node_modules/**" },
       },
+      {
+        -- For this to work you need to make sure the node process is started with the `--inspect` flag.
+        name = "Attach to process",
+        type = "node2",
+        request = "attach",
+        processId = require("dap.utils").pick_process({
+          filter = "node"
+        }),
+        skipFiles = { "<node_internals>/**", "node_modules/**" },
+      },
     }
 
     vim.g.dap_virtual_text = true

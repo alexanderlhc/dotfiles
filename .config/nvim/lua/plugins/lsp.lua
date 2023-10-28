@@ -84,6 +84,9 @@ return {
 			-- local opts = { buffer = bufnr }
 			lsp_zero.default_keymaps({ buffer = bufnr })
 
+			-- keymaps
+			-- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/lsp/keymaps.lua
+			-- https://www.lazyvim.org/plugins
 			map("n", "]d", diagnostic_goto(true), { desc = "Next Diagnostic" })
 			map("n", "[d", diagnostic_goto(false), { desc = "Prev Diagnostic" })
 			map("n", "]e", diagnostic_goto(true, "ERROR"), { desc = "Next Error" })

@@ -25,19 +25,21 @@ local function cmp_setup()
 		panel = { enabled = false },
 	})
 	require("copilot_cmp").setup()
+	local cmp_select = { behavior = cmp.SelectBehavior.Select }
 	cmp.setup({
 		sources = {
 			{ name = "copilot" },
-			{ name = "nvim_lsp" },
 			{ name = "path" },
+			{ name = "nvim_lsp" },
 			{ name = "nvim_lua" },
 		},
-		mapping = {
-			["<CR>"] = cmp.mapping.confirm({
-				behavior = cmp.ConfirmBehavior.Replace,
-				select = false,
-			}),
-		},
+		formatting = require("lsp-zero").cmp_format(),
+		mapping = cmp.mapping.preset.insert({
+			["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
+			["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
+			["<C-y>"] = cmp.mapping.confirm({ select = true }),
+			["<C-Space>"] = cmp.mapping.complete(),
+		}),
 	})
 end
 
@@ -49,6 +51,47 @@ local diagnostic_goto = function(next, severity)
 	end
 end
 
+local function set_keymaps(bufnr)
+	local map = require("utils").map
+
+	-- keymaps
+	map("n", "]d", diagnostic_goto(true), { desc = "Next Diagnostic", buffer = bufnr, remap = false })
+	map("n", "[d", diagnostic_goto(false), { desc = "Prev Diagnostic", buffer = bufnr, remap = false })
+	map("n", "]e", diagnostic_goto(true, "ERROR"), { desc = "Next Error", buffer = bufnr, remap = false })
+	map("n", "[e", diagnostic_goto(false, "ERROR"), { desc = "Prev Error", buffer = bufnr, remap = false })
+	map("n", "]w", diagnostic_goto(true, "WARN"), { desc = "Next Warning", buffer = bufnr, remap = false })
+	map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning", buffer = bufnr, remap = false })
+	map("n", "<leader>cl", "<cmd>LspInfo<cr>", { desc = "Lsp Info", buffer = bufnr, remap = false })
+
+	map("n", "gd", function()
+		require("telescope.builtin").lsp_definitions({ reuse_win = true })
+	end, { desc = "Goto Definition", buffer = bufnr, remap = false })
+	map("n", "gr", "<cmd>Telescope lsp_references<cr>", { desc = "References", buffer = bufnr, remap = false })
+	map("n", "gD", vim.lsp.buf.declaration, { desc = "Goto Declaration", buffer = bufnr, remap = false })
+	map("n", "gI", function()
+		require("telescope.builtin").lsp_implementations({ reuse_win = true })
+	end, { desc = "Goto Implementation", buffer = bufnr, remap = false })
+	map("n", "gy", function()
+		require("telescope.builtin").lsp_type_definitions({ reuse_win = true })
+	end, { desc = "Goto T[y]pe Definition", buffer = bufnr, remap = false })
+	map("n", "<leader>cd", function()
+		vim.diagnostic.open_float()
+	end, { desc = "Open floating [D]iagnostic", buffer = bufnr, remap = false })
+	map("n", "K", vim.lsp.buf.hover, { desc = "Hover", buffer = bufnr, remap = false })
+	map("n", "gK", vim.lsp.buf.signature_help, { desc = "Signature Help", buffer = bufnr, remap = false })
+	map("i", "<c-k>", vim.lsp.buf.signature_help, { desc = "Signature Help", buffer = bufnr, remap = false }) -- TODO test
+	map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Action", buffer = bufnr, remap = false })
+	map("n", "<leader>cA", function()
+		vim.lsp.buf.code_action({
+			context = {
+				only = {
+					"source",
+				},
+				diagnostics = {},
+			},
+		})
+	end, { desc = "Source Action", buffer = bufnr, remap = false })
+end
 return {
 	"VonHeikemen/lsp-zero.nvim",
 	branch = "v3.x",
@@ -75,60 +118,11 @@ return {
 		{ "L3MON4D3/LuaSnip" },
 	},
 	config = function()
-		print("lsp lua")
-		-- local lsp = require("lsp-zero").preset({})
 		local lsp_zero = require("lsp-zero")
-		local map = require("utils").map
 
-		lsp_zero.on_attach(function(client, bufnr)
-			-- local opts = { buffer = bufnr }
+		lsp_zero.on_attach(function(_, bufnr)
 			lsp_zero.default_keymaps({ buffer = bufnr })
-
-			-- keymaps
-			-- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/lsp/keymaps.lua
-			-- https://www.lazyvim.org/plugins
-			map("n", "]d", diagnostic_goto(true), { desc = "Next Diagnostic" })
-			map("n", "[d", diagnostic_goto(false), { desc = "Prev Diagnostic" })
-			map("n", "]e", diagnostic_goto(true, "ERROR"), { desc = "Next Error" })
-			map("n", "[e", diagnostic_goto(false, "ERROR"), { desc = "Prev Error" })
-			map("n", "]w", diagnostic_goto(true, "WARN"), { desc = "Next Warning" })
-			map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" })
-			map("n", "<leader>cl", "<cmd>LspInfo<cr>", { desc = "Lsp Info" })
-
-			map("n", "gd", function()
-				require("telescope.builtin").lsp_definitions({ reuse_win = true })
-			end, { desc = "Goto Definition" })
-			map("n", "gr", "<cmd>Telescope lsp_references<cr>", { desc = "References" })
-			map("n", "gD", vim.lsp.buf.declaration, { desc = "Goto Declaration" })
-			map("n", "gI", function()
-				require("telescope.builtin").lsp_implementations({ reuse_win = true })
-			end, { desc = "Goto Implementation" })
-			map("n", "gy", function()
-				require("telescope.builtin").lsp_type_definitions({ reuse_win = true })
-			end, { desc = "Goto T[y]pe Definition" })
-			map("n", "K", vim.lsp.buf.hover, { desc = "Hover" })
-			map("n", "gK", vim.lsp.buf.signature_help, { desc = "Signature Help" })
-			map("i", "<c-k>", vim.lsp.buf.signature_help, { desc = "Signature Help" }) -- TODO test
-			map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Action" })
-			map("n", "<leader>cA", function()
-				vim.lsp.buf.code_action({
-					context = {
-						only = {
-							"source",
-						},
-						diagnostics = {},
-					},
-				})
-			end, { desc = "Source Action" })
-
-			-- Format on save
-			--   if client.supports_method('textDocument/formatting') then
-			--     require('lsp-format').on_attach(client)
-			--
-			--     vim.keymap.set({ 'n', 'x' }, 'gq', function()
-			--       vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
-			--     end, opts)
-			--   end
+			set_keymaps(bufnr)
 		end)
 
 		require("mason").setup({})
@@ -136,16 +130,13 @@ return {
 			ensure_installed = ensure_installed,
 			handlers = {
 				lsp_zero.default_setup,
+				lua_ls = function()
+					local lua_opts = lsp_zero.nvim_lua_ls()
+					require("lspconfig").lua_ls.setup(lua_opts)
+				end,
 			},
 		})
 
-		local lua_opts = lsp_zero.nvim_lua_ls()
-		require("lspconfig").lua_ls.setup(lua_opts)
-
-		-- lsp.ensure_installed(ensure_installed)
-		--
-		-- cmp_setup()
-		--
-		-- lsp.setup()
+		cmp_setup()
 	end,
 }

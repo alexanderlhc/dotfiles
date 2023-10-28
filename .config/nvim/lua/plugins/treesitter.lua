@@ -88,6 +88,7 @@ return {
 	},
 	config = function(_, opts)
 		require("nvim-treesitter.configs").setup(opts)
+		require("treesitter-context").setup()
 		-- local opt = vim.opt
 		-- opt.foldmethod = "expr"
 		-- opt.foldexpr = "nvim_treesitter#foldexpr()"
@@ -95,5 +96,6 @@ return {
 	end,
 	dependencies = {
 		"nvim-treesitter/nvim-treesitter-textobjects",
+		"nvim-treesitter/nvim-treesitter-context",
 	},
 }

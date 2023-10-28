@@ -49,8 +49,8 @@ local incremental_selection = {
 	keymaps = {
 		init_selection = "<c-space>",
 		node_incremental = "<c-space>",
-		scope_incremental = "<c-s>",
-		node_decremental = "<c-d>",
+		scope_incremental = false,
+		node_decremental = "<bs>",
 	},
 }
 

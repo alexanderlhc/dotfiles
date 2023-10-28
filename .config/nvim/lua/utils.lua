@@ -1,5 +1,12 @@
 local M = {}
 
+function M.map(mode, lhs, rhs, opts)
+	local keys = require("lazy.core.handler").handlers.keys
+	if not keys.active[keys.parse({ lhs, mode = mode }).id] then
+		vim.keymap.set(mode, lhs, rhs, opts)
+	end
+end
+
 function M.info(msg)
 	vim.cmd("echohl Directory")
 	M._echo_multiline(msg)

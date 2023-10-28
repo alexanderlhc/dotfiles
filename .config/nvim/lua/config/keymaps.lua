@@ -1,9 +1,4 @@
-local function map(mode, lhs, rhs, opts)
-	local keys = require("lazy.core.handler").handlers.keys
-	if not keys.active[keys.parse({ lhs, mode = mode }).id] then
-		vim.keymap.set(mode, lhs, rhs, opts)
-	end
-end
+local map = require("utils").map
 
 -- Windows
 map("n", "<C-h>", "<C-w>h", { desc = "Go to left window" })
@@ -71,3 +66,19 @@ map("n", "<leader>w-", "<C-W>s", { desc = "Split window below", remap = true })
 map("n", "<leader>w|", "<C-W>v", { desc = "Split window right", remap = true })
 map("n", "<leader>-", "<C-W>s", { desc = "Split window below", remap = true })
 map("n", "<leader>|", "<C-W>v", { desc = "Split window right", remap = true })
+-- Resize window using <ctrl> arrow keys
+map("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase window height" })
+map("n", "<C-Down>", "<cmd>resize -2<cr>", { desc = "Decrease window height" })
+map("n", "<C-Left>", "<cmd>vertical resize -2<cr>", { desc = "Decrease window width" })
+map("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase window width" })
+
+-- Quickfix
+map("n", "<leader>xq", "<cmd>copen<cr>", { desc = "Quickfix List" })
+map("n", "<leader>xl", "<cmd>lopen<cr>", { desc = "Location List" })
+map("n", "[q", vim.cmd.cprev, { desc = "Previous quickfix" })
+map("n", "]q", vim.cmd.cnext, { desc = "Next quickfix" })
+
+-- Add undo break-points
+-- map("i", ",", ",<c-g>u")
+-- map("i", ".", ".<c-g>u")
+-- map("i", ";", ";<c-g>u")

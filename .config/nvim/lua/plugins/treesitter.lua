@@ -85,6 +85,7 @@ return {
 		context_commentstring = { enable = true, enable_autocmd = false },
 		textobjects = textobjects,
 		incremental_selection = incremental_selection,
+		autotag = { enable = true }, -- nvim-ts-autotag
 	},
 	config = function(_, opts)
 		require("nvim-treesitter.configs").setup(opts)
@@ -97,5 +98,6 @@ return {
 	dependencies = {
 		"nvim-treesitter/nvim-treesitter-textobjects",
 		"nvim-treesitter/nvim-treesitter-context",
+		"windwp/nvim-ts-autotag",
 	},
 }

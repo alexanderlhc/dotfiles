@@ -37,6 +37,13 @@ function cdf() {
     cd "$dir"
 }
 
+function cdh() {
+    base_dir=$HOME
+    max_depth=${1:-1}
+    dir="$(find "$base_dir" -type d -maxdepth "$max_depth" -print 2>/dev/null | fzf)"
+    cd "$dir"
+}
+
 # ~/.zshrc
 _git_config_complete() {
   # Complete the command arguments as if it were a Git command

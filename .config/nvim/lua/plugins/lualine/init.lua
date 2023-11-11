@@ -10,7 +10,8 @@ return {
   "nvim-lualine/lualine.nvim",
   event = "VeryLazy",
   opts = function()
-    local macro_component = require("plugins.lualine.components.macro")
+    local mode = require("plugins.lualine.components.mode")
+    local macro = require("plugins.lualine.components.macro")
     local filetype = require("plugins.lualine.components.filetype")
     local filename = require("plugins.lualine.components.filename")
     local gitdiff = require("plugins.lualine.components.gitdiff")
@@ -23,7 +24,7 @@ return {
         disabled_filetypes = { statusline = { "dashboard", "alpha", "lazy" } },
       },
       sections = {
-        lualine_a = { { "mode" }, { macro_component } },
+        lualine_a = { { mode }, { macro } },
         lualine_b = { "branch" },
         lualine_c = { filetype, filename, },
         lualine_x = {},

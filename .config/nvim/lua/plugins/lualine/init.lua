@@ -9,9 +9,6 @@ https://github.com/nvim-lualine/lualine.nvim
 return {
   "nvim-lualine/lualine.nvim",
   event = "VeryLazy",
-  dependencies = {
-    "SmiteshP/nvim-navic",
-  },
   opts = function()
     local macro_component = require("plugins.lualine.components.macro")
     local filetype = require("plugins.lualine.components.filetype")

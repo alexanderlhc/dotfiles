@@ -122,7 +122,7 @@ return {
       "pmizio/typescript-tools.nvim",
       dependencies = { "lsp-zero.nvim", "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
     },
-    { "hinell/lsp-timeout.nvim", } -- Pause LSP when window is inactive
+    { "hinell/lsp-timeout.nvim", }, -- Pause LSP when window is inactive
   },
   config = function()
     local lsp_zero = require("lsp-zero")

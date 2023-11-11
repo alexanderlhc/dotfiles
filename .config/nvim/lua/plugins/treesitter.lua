@@ -12,7 +12,7 @@ local textobjects = {
     },
     selection_modes = {
       ["@parameter.outer"] = "v", -- charwise
-      ["@function.outer"] = "V", -- linewise
+      ["@function.outer"] = "V",  -- linewise
       ["@class.outer"] = "<c-v>", -- blockwise
     },
   },
@@ -69,6 +69,8 @@ return {
       "html",
       "javascript",
       "json",
+      "json5",
+      "jsonc",
       "lua",
       "markdown",
       "markdown_inline",

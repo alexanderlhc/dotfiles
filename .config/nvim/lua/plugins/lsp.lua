@@ -124,6 +124,11 @@ return {
       dependencies = { "lsp-zero.nvim", "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
     },
     { "hinell/lsp-timeout.nvim", }, -- Pause LSP when window is inactive
+    {
+      "b0o/SchemaStore.nvim",
+      lazy = true,
+      version = false, -- last release is way too old
+    }
   },
   config = function()
     local lsp_zero = require("lsp-zero")
@@ -160,6 +165,32 @@ return {
               -- separate_diagnostic_server = true,
               publish_diagnostic_on = "insert_leave",
             },
+          })
+        end,
+        jsonls = function()
+          require("lspconfig").jsonls.setup({
+            settings = {
+              json = {
+                validate = {
+                  enable = true,
+                },
+                schemas = require("schemastore").json.schemas(),
+              }
+            }
+          })
+        end,
+        yamlls = function()
+          require("lspconfig").yamlls.setup({
+            settings = {
+              yaml = {
+                validate = true,
+                schemaStore = {
+                  url = "",
+                  enable = false,
+                },
+                schemas = require("schemastore").yaml.schemas(),
+              }
+            }
           })
         end
       },

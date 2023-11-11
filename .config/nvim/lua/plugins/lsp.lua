@@ -7,8 +7,9 @@ local ensure_installed = {
   "bashls",
   "dockerls",                        -- dockerls
   "docker_compose_language_service", -- docker-compose ls
+  -- "hadolint",                        -- docker linter
   "jsonls",
-  "intelephense",                    -- php
+  "intelephense", -- php
   "lua_ls",
   "marksman",
   "jedi_language_server", -- python

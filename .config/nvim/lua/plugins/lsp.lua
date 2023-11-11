@@ -133,6 +133,16 @@ return {
     end)
 
 
+    lsp_zero.set_server_config({
+      capabilities = {
+        textDocument = {
+          foldingRange = {
+            dynamicRegistration = false,
+            lineFoldingOnly = true
+          }
+        }
+      }
+    })
 
     require("mason").setup({})
     require("mason-lspconfig").setup({

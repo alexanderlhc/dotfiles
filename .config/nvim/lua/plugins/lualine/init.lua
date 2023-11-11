@@ -1,4 +1,3 @@
--- require("plugins.lualine.lualine-macro-component")
 --[[
 https://github.com/nvim-lualine/lualine.nvim
 

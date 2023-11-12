@@ -6,7 +6,11 @@ return {
       'echasnovski/mini.indentscope',
       version = false,
       opts = {}
-    }
+    },
+    {
+      'vidocqh/auto-indent.nvim',
+      opts = {},
+    },
   },
   opts = {
     indent = {

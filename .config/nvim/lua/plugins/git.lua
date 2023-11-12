@@ -121,7 +121,6 @@ return {
         desc = "[G]it: Stage hunk",
         mode = "n"
       },
-
       {
         "<leader>Gr",
         function()
@@ -130,7 +129,6 @@ return {
         desc = "[G]it: Reset hunk",
         mode = "n"
       },
-
       {
         "<leader>Gs",
         function()
@@ -139,7 +137,6 @@ return {
         desc = "[G]it: Stage hunk in visual mode",
         mode = "v"
       },
-
       {
         "<leader>Gr",
         function()
@@ -148,7 +145,6 @@ return {
         desc = "[G]it: Reset hunk in visual mode",
         mode = "v"
       },
-
       {
         "<leader>GS",
         function()
@@ -157,7 +153,6 @@ return {
         desc = "[G]it: Stage buffer",
         mode = "n"
       },
-
       {
         "<leader>Gu",
         function()
@@ -166,7 +161,6 @@ return {
         desc = "[G]it: Undo stage hunk",
         mode = "n"
       },
-
       {
         "<leader>GR",
         function()
@@ -175,7 +169,6 @@ return {
         desc = "[G]it: Reset buffer",
         mode = "n"
       },
-
       {
         "<leader>Gp",
         function()

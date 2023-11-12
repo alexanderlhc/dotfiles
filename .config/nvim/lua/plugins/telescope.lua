@@ -11,17 +11,7 @@ return {
           require("telescope").load_extension("fzf")
         end,
       },
-    },
-    opts = {
-      defaults = {
-        mappings = {
-          i = {
-            ["<C-j>"] = "move_selection_previous",
-            ["<C-k>"] = "move_selection_previous",
-            ["<C-h>"] = "which_key",
-          },
-        },
-      },
+      { "folke/trouble.nvim" },
     },
     keys = {
       {
@@ -154,6 +144,24 @@ return {
       },
     },
     config = function()
+      require("telescope").setup({
+        defaults = {
+          mappings = {
+            i = {
+              ["<C-j>"] = "move_selection_previous",
+              ["<C-k>"] = "move_selection_previous",
+              ["<C-h>"] = "which_key",
+              ["<c-t>"] = require("trouble.providers.telescope").open_with_trouble,
+              ["<c-s>"] = require("trouble.providers.telescope").open_selected_with_trouble,
+            },
+            n = {
+              ["<C-h>"] = "which_key",
+              ["<c-t>"] = require("trouble.providers.telescope").open_with_trouble,
+              ["<c-s>"] = require("trouble.providers.telescope").open_selected_with_trouble,
+            },
+          },
+        },
+      })
       require("telescope").load_extension("noice")
     end,
   }

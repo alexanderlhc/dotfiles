@@ -40,15 +40,15 @@ map("i", "<A-k>", "<Esc>:m .-2<cr>==gi", { desc = "Move up" })
 -- map("n", "<leader>tf", require("plugins.lsp.format").toggle, { desc = "Switch/Toggle format on Save" })
 map("n", "<leader>td", require("utils").toggle_diagnostics, { desc = "Switch/Toggle Diagnostics" })
 map("n", "<leader>ts", function()
-	require("utils").toggle("spell")
+  require("utils").toggle("spell")
 end, { desc = "Toggle Spelling" })
 map("n", "<leader>tw", function()
-	require("utils").toggle("wrap")
+  require("utils").toggle("wrap")
 end, { desc = "Toggle Word Wrap" })
 if vim.lsp.inlay_hint then
-	map("n", "<leader>th", function()
-		vim.lsp.inlay_hint(0, nil)
-	end, { desc = "Toggle Inlay Hints" })
+  map("n", "<leader>th", function()
+    vim.lsp.inlay_hint(0, nil)
+  end, { desc = "Toggle Inlay Hints" })
 end
 
 -- tabs
@@ -71,12 +71,6 @@ map("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase window height" })
 map("n", "<C-Down>", "<cmd>resize -2<cr>", { desc = "Decrease window height" })
 map("n", "<C-Left>", "<cmd>vertical resize -2<cr>", { desc = "Decrease window width" })
 map("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase window width" })
-
--- Quickfix
-map("n", "<leader>xq", "<cmd>copen<cr>", { desc = "Quickfix List" })
-map("n", "<leader>xl", "<cmd>lopen<cr>", { desc = "Location List" })
-map("n", "[q", vim.cmd.cprev, { desc = "Previous quickfix" })
-map("n", "]q", vim.cmd.cnext, { desc = "Next quickfix" })
 
 -- Add undo break-points
 -- map("i", ",", ",<c-g>u")

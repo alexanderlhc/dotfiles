@@ -125,6 +125,12 @@ return {
     'ruifm/gitlinker.nvim',
     opts = {
       mappings = "<leader>Gy"
+    },
+    keys = {
+      {
+        "<leader>Gy",
+        desc = "Git linker to URL",
+      }
     }
   }
 }

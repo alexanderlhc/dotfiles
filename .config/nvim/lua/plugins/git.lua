@@ -23,13 +23,6 @@ return {
         desc = "Neogit Open",
       },
       {
-        "<leader>Gs",
-        function()
-          require("neogit").open_split()
-        end,
-        desc = "Neogit Open Split",
-      },
-      {
         "<leader>Gv",
         function()
           require("neogit").open_vsplit()
@@ -104,22 +97,93 @@ return {
         function()
           require("gitsigns").diffthis()
         end,
-        desc = "Git line blame toggle",
+        desc = "Git diff this",
       },
       {
         "]g",
         function()
           require("gitsigns").next_hunk()
         end,
-        desc = "Goto: Git Next hunk",
+        desc = "[G]it: Next hunk",
       },
       {
         "[g",
         function()
           require("gitsigns").prev_hunk()
         end,
-        desc = "Goto: Git Prev hunk",
+        desc = "[G]it: Prev hunk",
       },
+      {
+        "<leader>Gs",
+        function()
+          require("gitsigns").stage_hunk()
+        end,
+        desc = "[G]it: Stage hunk",
+        mode = "n"
+      },
+
+      {
+        "<leader>Gr",
+        function()
+          require("gitsigns").reset_hunk()
+        end,
+        desc = "[G]it: Reset hunk",
+        mode = "n"
+      },
+
+      {
+        "<leader>Gs",
+        function()
+          require("gitsigns").stage_hunk { vim.fn.line('.'), vim.fn.line('v') }
+        end,
+        desc = "[G]it: Stage hunk in visual mode",
+        mode = "v"
+      },
+
+      {
+        "<leader>Gr",
+        function()
+          require("gitsigns").reset_hunk { vim.fn.line('.'), vim.fn.line('v') }
+        end,
+        desc = "[G]it: Reset hunk in visual mode",
+        mode = "v"
+      },
+
+      {
+        "<leader>GS",
+        function()
+          require("gitsigns").stage_buffer()
+        end,
+        desc = "[G]it: Stage buffer",
+        mode = "n"
+      },
+
+      {
+        "<leader>Gu",
+        function()
+          require("gitsigns").undo_stage_hunk()
+        end,
+        desc = "[G]it: Undo stage hunk",
+        mode = "n"
+      },
+
+      {
+        "<leader>GR",
+        function()
+          require("gitsigns").reset_buffer()
+        end,
+        desc = "[G]it: Reset buffer",
+        mode = "n"
+      },
+
+      {
+        "<leader>Gp",
+        function()
+          require("gitsigns").preview_hunk()
+        end,
+        desc = "[G]it: Preview hunk",
+        mode = "n"
+      }
     },
   },
   {

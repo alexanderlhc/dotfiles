@@ -3,7 +3,7 @@ local ensure_installed = {
   "eslint",
   "html",
   "cssls",
-  "rust_analyzer",
+  -- "rust_analyzer", -- installed through rustacean plugin
   "bashls",
   "dockerls",                        -- dockerls
   "docker_compose_language_service", -- docker-compose ls

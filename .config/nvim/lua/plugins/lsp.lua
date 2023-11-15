@@ -128,6 +128,11 @@ return {
       "b0o/SchemaStore.nvim",
       lazy = true,
       version = false, -- last release is way too old
+    },
+    {
+      'mrcjkb/rustaceanvim',
+      version = '^3', -- Recommended
+      ft = { 'rust' },
     }
   },
   config = function()
@@ -192,7 +197,10 @@ return {
               }
             }
           })
-        end
+        end,
+        ["rust_analyzer"] = function()
+        end,
+
       }
     })
 

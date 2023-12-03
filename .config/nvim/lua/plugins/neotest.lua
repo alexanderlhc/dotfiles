@@ -5,13 +5,14 @@ return {
     "nvim-treesitter/nvim-treesitter",
     "antoinemadec/FixCursorHold.nvim",
     "haydenmeade/neotest-jest",
+    "rouge8/neotest-rust"
     -- {
     --   "mxsdev/nvim-dap-vscode-js",
     --   build = { run = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out" }
     -- } -- dap strategy in neotest-jest
   },
   config = function()
-    local neotest, neotest_jest = require("neotest"), require("neotest-jest")
+    local neotest, neotest_jest, neotest_rust = require("neotest"), require("neotest-jest"), require("neotest-rust")
 
     neotest.setup({
       enable_keybindings = true,
@@ -19,6 +20,7 @@ return {
         neotest_jest({
           jestCommand = "yarn test"
         }),
+        neotest_rust
       },
     })
   end,

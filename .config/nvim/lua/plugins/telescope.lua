@@ -162,7 +162,6 @@ return {
           },
         },
       })
-      require("telescope").load_extension("noice")
-    end,
+    end
   }
 }

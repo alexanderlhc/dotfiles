@@ -132,16 +132,17 @@ return {
         port = 9229,
         skipFiles = { "<node_internals>/**", "node_modules/**" },
       },
-      {
-        -- For this to work you need to make sure the node process is started with the `--inspect` flag.
-        name = "Attach to process",
-        type = "node2",
-        request = "attach",
-        processId = require("dap.utils").pick_process({
-          filter = "node"
-        }),
-        skipFiles = { "<node_internals>/**", "node_modules/**" },
-      },
+      -- this is triggered automatically with rustacean debug it later
+      -- {
+      --   -- For this to work you need to make sure the node process is started with the `--inspect` flag.
+      --   name = "Attach to process",
+      --   type = "node2",
+      --   request = "attach",
+      --   processId = require("dap.utils").pick_process({
+      --     filter = "node"
+      --   }),
+      --   skipFiles = { "<node_internals>/**", "node_modules/**" },
+      -- },
     }
 
     vim.g.dap_virtual_text = true
@@ -186,15 +187,19 @@ return {
       },
     })
 
+    print("this is it 0");
     dap.listeners.after.event_initialized["dapui_config"] = function()
+      print("THIS IS IT 1");
       dapui.open(0)
     end
 
     dap.listeners.before.event_terminated["dapui_config"] = function()
+      print("THIS IS IT 2");
       dapui.close()
     end
 
     dap.listeners.before.event_exited["dapui_config"] = function()
+      print("THIS IS IT 3");
       dapui.close()
     end
   end

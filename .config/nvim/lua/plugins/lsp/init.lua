@@ -70,6 +70,9 @@ return {
               capabilities = require('cmp_nvim_lsp').default_capabilities(),
             })
           end,
+          ['rust_analyzer'] = function()
+            -- replaced with rustaceanvim
+          end,
         },
       }
       on_attach(function(client, buffer)

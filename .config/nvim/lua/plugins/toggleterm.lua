@@ -3,11 +3,10 @@ local map = require("utils").map
 return {
 	"akinsho/toggleterm.nvim",
 	version = "*",
-	opts = { --[[ things you want to change go here]]
-		open_mapping = [[<c-t>]],
-	},
-	config = function(opts)
-		require("toggleterm").setup(opts)
+	config = function()
+		require("toggleterm").setup({
+			open_mapping = [[<c-t>]],
+		})
 
 		-- lazygit
 		local Terminal = require("toggleterm.terminal").Terminal

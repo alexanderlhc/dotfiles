@@ -7,7 +7,7 @@ scripts=$config/scripts
 # wallpaper
 hostname=$(cat /etc/hostname) # gets hostname
 setwallpaper() {
-	"$scripts"/wallpaper $1 &
+	"$scripts"/wallpaper "$1" &
 }
 if [ "$hostname" = "home" ]; then
 	setwallpaper "/home/alexander/Pictures/wallpaper.png"
@@ -15,13 +15,21 @@ elif [ "$hostname" = "lighthouse" ]; then
 	setwallpaper "/home/alexander/Pictures/wallpaper.png"
 elif [ "$hostname" = "fatfrogironscrap" ]; then
 	setwallpaper "/home/alexander/Nextcloud/wallpapers/midjourney/architecture_sketch_of_running_computer_full2.png"
+else
+	setwallpaper "/home/alexander/Downloads/20231115_131833.jpg"
 fi
 
 # Execute your favorite apps at launch
-pgrep -x "waybar" >/dev/null && pkill -x "waybar"; waybar &
+pgrep -x "waybar" >/dev/null && pkill -x "waybar"
+waybar &
 #exec-once = wl-paste --watch cliphist store
-pgrep -x "wl-paste" >/dev/null && pkill -x "wl-paste"; wl-paste --watch cliphist store &
+pgrep -x "wl-paste" >/dev/null && pkill -x "wl-paste"
+wl-paste --watch cliphist store &
 # exec-once = wl-paste --type text --watch cliphist store #Stores only text data
 # exec-once = wl-paste --type image --watch cliphist store #Stores only image data
+
+# nm-applet
+pgrep -x "nm-applet" >/dev/null && pkill -x "nm-applet"
+nm-applet &
 
 run_polkit_agent "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"

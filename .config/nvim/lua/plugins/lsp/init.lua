@@ -26,6 +26,8 @@ return {
           "zbirenbaum/copilot-cmp",
           "hrsh7th/cmp-path",
           "hrsh7th/cmp-nvim-lua",
+          "L3MON4D3/LuaSnip",
+          "saadparwaiz1/cmp_luasnip"
         },
         config = function()
           local cmp = require("cmp")
@@ -36,6 +38,7 @@ return {
               { name = "copilot" },
               { name = "path" },
               { name = "nvim_lsp" },
+              { name = 'luasnip' },
               { name = "nvim_lua" },
             },
             mapping = cmp.mapping.preset.insert({
@@ -44,7 +47,22 @@ return {
               ["<C-y>"] = cmp.mapping.confirm({ select = true }),
               ["<C-Space>"] = cmp.mapping.complete(),
             }),
+            snippet = {
+              expand = function(args)
+                require("luasnip").lsp_expand(args.body)
+              end,
+            },
           })
+        end,
+      },
+      {
+        "L3MON4D3/LuaSnip",
+        version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+        build = "make install_jsregexp",
+        event = "InsertEnter",
+        config = function()
+          local snip_path = vim.fn.stdpath("config") .. "/lua/snippets"
+          require("luasnip.loaders.from_lua").load({ paths = snip_path })
         end,
       },
       {

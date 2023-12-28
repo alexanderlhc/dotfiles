@@ -7,6 +7,14 @@
 -- 	end,
 -- })
 
+-- don't insert the current comment leader automatically for auto-wrapping comments using 'textwidth', hitting <Enter> in insert mode, or hitting 'o' or 'O' in normal mode.
+vim.api.nvim_create_autocmd("FileType", {
+	desc = "remove formatoptions",
+	callback = function()
+		vim.opt.formatoptions:remove({ "c", "r", "o" })
+	end,
+})
+
 -- spell
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = { "gitcommit", "markdown" },

@@ -6,7 +6,6 @@ local opt = vim.opt
 opt.autoindent = true -- ! -- use current line indent
 opt.completeopt = "menu,menuone,noselect"
 opt.expandtab = true -- Use spaces instead of tabs
-opt.formatoptions = "jcroqlnt" -- tcqj
 opt.grepformat = "%f:%l:%c:%m"
 opt.grepprg = "rg --vimgrep"
 opt.ignorecase = true -- ! -- ignore case

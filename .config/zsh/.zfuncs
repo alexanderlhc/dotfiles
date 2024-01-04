@@ -44,6 +44,10 @@ function cdh() {
     cd "$dir"
 }
 
+function cdh3() {
+    cdh 3
+}
+
 # ~/.zshrc
 _git_config_complete() {
   # Complete the command arguments as if it were a Git command

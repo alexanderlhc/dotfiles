@@ -33,6 +33,7 @@ alias rate-update-mirrors='export TMPFILE="$(mktemp)"; \
 
 # Docker
 alias docker-stop-rm='docker rm $(docker stop $1)'
+alias docker-stop-all='docker stop $(docker ps -q)'
 
 source ~/.config/aliases-secret 2> /dev/null
 

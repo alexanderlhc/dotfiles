@@ -1,0 +1,36 @@
+#!/bin/env bash
+
+screenshot_path="$HOME/Pictures/Screenshots"
+screenshot_filename="satty-$(date '+%Y%m%d-%H%M%S').png"
+full_path="$screenshot_path/$screenshot_filename"
+
+# Create the screenshot directory if it does not exist
+mkdir -p "$screenshot_path"
+
+# Check for the mode passed as the first argument
+mode="$1"
+
+# Define the default geometry capture method
+screenshot_command="slurp -o -r -c '#ff0000ff'"
+
+# Depending on the mode, modify the geometry capture method
+case "$mode" in
+    window)
+        screenshot_command="hyprshot -m window -r"
+        ;;
+    output)
+        screenshot_command="hyprshot -m output -r"
+        ;;
+    region)
+        screenshot_command="hyprshot -m region -r"
+        ;;
+    *)
+        echo "Usage: $0 [window|output|region]"
+        exit 1
+esac
+
+# Take a screenshot with the selected method or region
+$screenshot_command | satty --filename - --output-filename "$full_path"
+
+# Send a notification
+notify-send "Screenshot captured"

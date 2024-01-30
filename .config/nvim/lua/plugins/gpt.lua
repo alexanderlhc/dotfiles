@@ -26,7 +26,7 @@ return {
   keys = {
     {
       "<leader>cbn",
-      "<Cmd>GpChatNew<CR>",
+      "<Cmd>GpChatNew vsplit<CR>",
       desc = "New Chat"
     },
     {

@@ -84,6 +84,16 @@ return {
       {
         "lvimuser/lsp-inlayhints.nvim",
         opts = {},
+        keys = {
+          {
+            "<leader>ti",
+
+            function()
+              require('lsp-inlayhints').toggle()
+            end,
+            desc = "Toggle InlayHints"
+          },
+        }
       },
     },
     config = function()
@@ -114,7 +124,6 @@ return {
             -- replaced with rustaceanvim
           end,
           ["tsserver"] = function()
-            local lspconfig = require("lspconfig")
             lspconfig.tsserver.setup({
               settings = {
                 typescript = {

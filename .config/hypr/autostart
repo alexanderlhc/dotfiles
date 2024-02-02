@@ -15,6 +15,8 @@ elif [ "$hostname" = "lighthouse" ]; then
 	setwallpaper "/home/alexander/Pictures/wallpaper.png"
 elif [ "$hostname" = "fatfrogironscrap" ]; then
 	setwallpaper "/home/alexander/Nextcloud/wallpapers/midjourney/architecture_sketch_of_running_computer_full2.png"
+elif [ "$hostname" = "veronica" ]; then
+	setwallpaper "/home/alexander/Billeder/wallpaper.jpg"
 else
 	setwallpaper "/home/alexander/Downloads/20231115_131833.jpg"
 fi

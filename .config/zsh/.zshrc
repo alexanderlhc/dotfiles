@@ -22,9 +22,9 @@ bindkey "^[[3~" delete-char
 # fuzzy find dir 3 levels up
 zle -N cdh-widget cdh3
 bindkey '^g' cdh-widget
-source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+# source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 # source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
-source /usr/share/zsh/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh
+# source /usr/share/zsh/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh
 
 eval "$(starship init zsh)"
 source /usr/share/nvm/init-nvm.sh

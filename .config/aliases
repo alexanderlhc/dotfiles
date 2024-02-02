@@ -6,6 +6,7 @@ alias v='nvim'
 alias vim-no-config='vim -u NONE'
 alias bat='bat --theme=GitHub'
 alias ls='exa --group-directories-first'
+alias lsa='exa --group-directories-first --all'
 
 # Git
 alias g='git'
@@ -49,3 +50,5 @@ alias svn="svn --config-dir $XDG_CONFIG_HOME/subversion"
 alias randomwallpaper='hsetroot -cover "$(ls ~/Nextcloud/wallpapers/*.{jpg,png} | shuf -n1)"'
 alias nodeprojectversion="jq .version package.json  | tr -d '\"'"
 alias kssh="kitty +kitten ssh"
+
+alias tmux_fzf='tmux attach -t $(tmux ls | fzf | cut -d: -f1)'

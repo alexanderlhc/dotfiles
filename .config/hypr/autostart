@@ -30,6 +30,9 @@ wl-paste --watch cliphist store &
 # exec-once = wl-paste --type text --watch cliphist store #Stores only text data
 # exec-once = wl-paste --type image --watch cliphist store #Stores only image data
 
+pgrep -x "swaync" >/dev/null && pkill -x "swaync"
+swaync &
+
 # nm-applet
 pgrep -x "nm-applet" >/dev/null && pkill -x "nm-applet"
 nm-applet &

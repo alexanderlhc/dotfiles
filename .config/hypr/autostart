@@ -22,8 +22,12 @@ else
 fi
 
 # Execute your favorite apps at launch
-pgrep -x "waybar" >/dev/null && pkill -x "waybar"
-waybar &
+#pgrep -x "waybar" >/dev/null && pkill -x "waybar"
+#waybar &
+
+pgrep -x "ags" >/dev/null && pkill -x "ags"
+ags &
+
 #exec-once = wl-paste --watch cliphist store
 pgrep -x "wl-paste" >/dev/null && pkill -x "wl-paste"
 wl-paste --watch cliphist store &

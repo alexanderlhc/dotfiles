@@ -2,7 +2,7 @@ import Hyprland from "resource:///com/github/Aylur/ags/service/hyprland.js";
 
 const hyprland = await Service.import('hyprland')
 
-const dispatch = ws => hyprland.messageAsync(`dispatch workspace ${ws}`);
+const dispatch = (ws: string | number) => hyprland.messageAsync(`dispatch workspace ${ws}`);
 
 const Workspaces = () => Widget.EventBox({
   onScrollUp: () => dispatch('+1'),

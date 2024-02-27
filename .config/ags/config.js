@@ -1,8 +1,30 @@
 const entry = App.configDir + '/ts/main.ts'
 const outdir = '/tmp/ags/js'
-const scss = `${App.configDir}/ts/style.scss`
+const scss = `${App.configDir}/style/style.scss`
 const css = `/tmp/my-style.css`
-Utils.exec(`sassc ${scss} ${css}`)
+
+const liveReload = true
+
+const reloadCss = () => {
+  // compile, reset, apply
+  Utils.exec(`sassc ${scss} ${css}`)
+  App.resetCss()
+  App.applyCss(css)
+}
+
+if (liveReload) {
+  Utils.monitorFile(
+    // directory that contains the scss files
+    `${App.configDir}/style`,
+
+    // reload function
+    reloadCss,
+  )
+} else {
+  Utils.exec(`sassc ${scss} ${css}`)
+}
+
+// Utils.exec(`sassc ${scss} ${css}`)
 
 try {
   await Utils.execAsync([

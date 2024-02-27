@@ -1,5 +1,6 @@
 import { Clock } from 'ts/widgets/clock';
 import { Date } from 'ts/widgets/date';
+import { Power } from 'ts/widgets/power';
 import { SysTray } from 'ts/widgets/systray';
 import { Volume } from 'ts/widgets/volume';
 
@@ -12,6 +13,7 @@ const Right = () => {
       Volume(),
       Date(),
       Clock(),
+      Power(),
     ]
   })
 }

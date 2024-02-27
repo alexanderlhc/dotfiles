@@ -21,7 +21,7 @@ button {
   }
 
   &.active {
-    background-color: yellow;
+    background-color: darken($background_pane, 40%);
   }
 
 }

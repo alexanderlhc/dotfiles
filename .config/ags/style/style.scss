@@ -1,0 +1,27 @@
+* {
+  all: unset;
+  // font-family: "CaskaydiaCove Nerd Font";
+}
+
+@import './catppuccin_latte.scss';
+
+window.bar {
+  // background-color: red;
+  background-color: $background_pane;
+  color: $text;
+}
+
+button {
+  background-color: transparent;
+
+  &:hover,
+  &:active,
+  &.occupied {
+    background-color: darken($background_pane, 10%);
+  }
+
+  &.active {
+    background-color: darken($background_pane, 40%);
+  }
+
+}

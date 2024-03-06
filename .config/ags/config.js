@@ -3,7 +3,7 @@ const outdir = '/tmp/ags/js'
 const scss = `${App.configDir}/style/style.scss`
 const css = `/tmp/my-style.css`
 
-const liveReload = true
+const liveReload = false
 
 const reloadCss = () => {
   // compile, reset, apply

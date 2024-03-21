@@ -1,6 +1,7 @@
 const systemtray = await Service.import('systemtray');
 
 const SysTray = () => Widget.Box({
+  className: 'systray',
   children: systemtray.bind('items').as(items =>
     items.map(item => Widget.Button({
       child: Widget.Icon({ icon: item.bind('icon') }),

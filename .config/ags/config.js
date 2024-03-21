@@ -3,14 +3,15 @@ const outdir = "/tmp/ags/js";
 const scss = `${App.configDir}/style/style.scss`;
 const css = `/tmp/my-style.css`;
 
-const liveReload = false;
+const liveReload = true
 
 const reloadCss = () => {
   // compile, reset, apply
-  Utils.exec(`sassc ${scss} ${css}`);
-  App.resetCss();
-  App.applyCss(css);
-};
+  Utils.exec(`sassc ${scss} ${css}`)
+  App.resetCss()
+  App.applyCss(css)
+}
+reloadCss()
 
 if (liveReload) {
   Utils.monitorFile(`${App.configDir}/style`, reloadCss);

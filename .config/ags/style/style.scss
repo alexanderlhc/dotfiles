@@ -1,6 +1,11 @@
+@import './catppuccin_latte.scss';
+
+//*:not(.systray) {
 * {
   all: unset;
   // font-family: "CaskaydiaCove Nerd Font";
+  // font-family: "Monaspace";
+  // background: green;
 }
 
 @import "./catppuccin_latte.scss";

@@ -3,7 +3,7 @@
   // font-family: "CaskaydiaCove Nerd Font";
 }
 
-@import './catppuccin_latte.scss';
+@import "./catppuccin_latte.scss";
 
 window.bar {
   // background-color: red;
@@ -23,5 +23,10 @@ button {
   &.active {
     background-color: darken($background_pane, 40%);
   }
+}
 
+.battery {
+  color: $text;
+  background-color: $background_pane;
+  border: 1px solid $overlay0;
 }

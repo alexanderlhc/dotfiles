@@ -1,5 +1,5 @@
 import { Center } from "./center.js";
-import { Left } from "./left.js";
+import { Left as LeftBar } from "./left.js";
 import { Right } from "./right.js";
 
 const Topbar = ({ monitor = 0 }) =>
@@ -10,17 +10,18 @@ const Topbar = ({ monitor = 0 }) =>
     anchor: ["top", "left", "right"],
     exclusivity: "exclusive",
     layer: "top",
-    child: Widget.Box({
-      children: [
-        HeightControlled(37.5),
-        Widget.CenterBox({
-          start_widget: Left(),
-          center_widget: Center(),
-          end_widget: Right(),
-        }),
-      ],
+    child: Widget.CenterBox({
+      start_widget: Left(),
+      center_widget: Center(),
+      end_widget: Right(),
     }),
   });
+
+const Left = () => {
+  return Widget.Box({
+    children: [HeightControlled(37.5), LeftBar()],
+  });
+};
 
 /** Creates a block to control the height of the bar */
 const HeightControlled = (/** @type {number} */ height) =>

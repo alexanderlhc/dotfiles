@@ -21,7 +21,7 @@ menu {
     min-height: 20px;
     min-width: 40px;
     padding: 4px 8px;
-    color: #ffffff;
+    color: nth($sub_headlines_labels, 1);
     font: initial;
     text-shadow: none;
     border-radius: 6px;

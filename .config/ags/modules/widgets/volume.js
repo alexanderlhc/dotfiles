@@ -1,7 +1,8 @@
 import { Icon } from "resource:///com/github/Aylur/ags/widgets/icon.js";
+const { query } = await Service.import("applications");
 const audio = await Service.import("audio");
 
-const toShowSlider = Variable(true);
+const toShowSlider = Variable(false);
 
 const Volume = () =>
   Widget.Box({
@@ -11,13 +12,15 @@ const Volume = () =>
 
 const VolumeIcon = () =>
   Widget.Button({
+    on_secondary_click: () => {
+      const pavucontrol = query("pavucontrol")[0];
+      if (pavucontrol) pavucontrol.launch();
+    },
+    on_clicked: () => (toShowSlider.value = !toShowSlider.value),
     child: Widget.Icon().hook(audio.speaker, setIcon),
-  }).on("clicked", () => {
-    console.log("clicked", toShowSlider.value);
-    toShowSlider.value = !toShowSlider.value;
   });
 
-const VolumeSlider = (/** @type {boolean} */ toShow) =>
+const VolumeSlider = () =>
   Widget.Box({
     visible: toShowSlider.bind(),
     class_name: "volume-slider",

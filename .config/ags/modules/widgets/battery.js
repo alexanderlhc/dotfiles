@@ -11,11 +11,6 @@ const Battery = () => {
     visible: battery.bind("available"),
     children: [
       Widget.Icon({ icon }),
-      Widget.LevelBar({
-        widthRequest: 140,
-        vpack: "center",
-        value,
-      }),
       Widget.Label({ label: value.as((v) => `${Math.floor(v * 100)}%`) }),
     ],
   });

@@ -1,22 +1,3 @@
-// const systemtray = await Service.import("systemtray");
-//
-// const Tray = () =>
-//   Widget.Box({
-//     className: "tray",
-//     children: systemtray.bind("items").as((items) =>
-//       items.map((item) =>
-//         Widget.Button({
-//           child: Widget.Icon({ icon: item.bind("icon") }),
-//           on_primary_click: (_, event) => item.activate(event),
-//           on_secondary_click: (_, event) => item.openMenu(event),
-//           tooltip_markup: item.bind("tooltip_markup"),
-//         }),
-//       ),
-//     ),
-//   });
-//
-// export { Tray };
-
 import SystemTray, {
   TrayItem,
 } from "resource:///com/github/Aylur/ags/service/systemtray.js";
@@ -32,7 +13,7 @@ import Gdk from "gi://Gdk?version=3.0";
  */
 const SysTrayItem = (item) =>
   Widget.Button({
-    class_name: "systray-item",
+    class_name: "tray-item",
     child: Widget.Icon({
       hpack: "center",
       icon: item.bind("icon"),
@@ -56,7 +37,7 @@ const SysTrayItem = (item) =>
 
 const Tray = () =>
   Widget.Box({
-    class_name: "systray-container",
+    class_name: "tray-container",
     spacing: 8,
     attribute: {
       items: new Map(),

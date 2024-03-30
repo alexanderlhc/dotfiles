@@ -1,37 +1,11 @@
 @import "./catppuccin_latte.scss";
-
-//*:not(.systray) {
+@import "./common.scss";
 * {
   all: unset;
-  // font-family: "CaskaydiaCove Nerd Font";
-  // font-family: "Monaspace";
-  // background: green;
+  font-family: "Monaspace";
 }
 
-window.bar {
-  // background-color: red;
-  background-color: $background_pane;
-  color: $text;
-}
-
-button {
-  background-color: transparent;
-
-  &:hover,
-  &:active,
-  &.occupied {
-    background-color: darken($background_pane, 10%);
-  }
-
-  &.active {
-    background-color: darken($background_pane, 40%);
-  }
-}
-
-.battery {
-  color: $text;
-  background-color: $background_pane;
-  border: 1px solid $overlay0;
-}
-
-@import "./tray.scss";
+@import "./module.battery.scss";
+@import "./module.topbar.scss";
+@import "./module.tray.scss";
+@import "./module.workspaces.scss";

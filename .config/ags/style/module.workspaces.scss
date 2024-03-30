@@ -1,0 +1,13 @@
+.workspaces button {
+  background-color: transparent;
+
+  &:hover,
+  &:active,
+  &.occupied {
+    background-color: darken($background_pane, 10%);
+  }
+
+  &.active {
+    background-color: darken($background_pane, 40%);
+  }
+}

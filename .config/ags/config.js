@@ -1,37 +1,32 @@
 #!/usr/bin/ags -c
 
 import { Topbar } from "./modules/bar/topbar/topbar.js";
-// import { idle } from "resource:///com/github/Aylur/ags/utils.js";
+
+import { exec, monitorFile } from "resource:///com/github/Aylur/ags/utils.js";
+import Gio from "gi://Gio";
 
 const scss = `${App.configDir}/style/style.scss`;
 const css = `/tmp/my-style.css`;
-
 const liveReload = true;
 
-const reloadCss = () => {
-  // compile, reset, apply
-  Utils.exec(`sassc ${scss} ${css}`);
+const applyScss = () => {
+  // Compile scss
+  exec(`sassc ${scss} ${css}`);
+  console.log("scss compiled");
+
+  // Apply compiled css
   App.resetCss();
-  App.applyCss(css);
+  App.applyCss(`${css}`);
+  console.log("Compiled css applied");
 };
-reloadCss();
 
-if (liveReload) {
-  Utils.monitorFile(`${App.configDir}/style`, reloadCss);
-} else {
-  Utils.exec(`sassc ${scss} ${css}`);
-}
+monitorFile(`${App.configDir}/style`, (_, eventType) => {
+  if (eventType === Gio.FileMonitorEvent.CHANGES_DONE_HINT && liveReload) {
+    applyScss();
+  }
+});
 
-// /**
-//  * @param {import('types/@girs/gtk-3.0/gtk-3.0').Gtk.Window[]} windows
-//  */
-// const addWindows = (windows) => {
-//   windows.forEach((w) => App.addWindow(w));
-// };
-//
-// idle(() => {
-//   addWindows([Topbar({ monitor: 0 })]);
-// });
+applyScss();
 
 App.config({
   style: css,

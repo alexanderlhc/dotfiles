@@ -6,7 +6,7 @@ const Topbar = ({ monitor = 0 }) =>
   Widget.Window({
     monitor,
     name: `bar${monitor}`,
-    class_name: "bar",
+    class_name: "topbar",
     anchor: ["top", "left", "right"],
     exclusivity: "exclusive",
     layer: "top",

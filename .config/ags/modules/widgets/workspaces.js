@@ -7,6 +7,7 @@ const dispatch = (/** @type {string | number} */ ws) =>
 
 const Workspaces = () =>
   Widget.EventBox({
+    class_name: "workspaces",
     onScrollUp: () => dispatch("+1"),
     onScrollDown: () => dispatch("-1"),
     child: Widget.Box({

@@ -1,4 +1,4 @@
-@import './catppuccin_latte.scss';
+@import "./catppuccin_latte.scss";
 
 //*:not(.systray) {
 * {
@@ -7,8 +7,6 @@
   // font-family: "Monaspace";
   // background: green;
 }
-
-@import "./catppuccin_latte.scss";
 
 window.bar {
   // background-color: red;
@@ -35,3 +33,5 @@ button {
   background-color: $background_pane;
   border: 1px solid $overlay0;
 }
+
+@import "./tray.scss";

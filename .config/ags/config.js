@@ -1,17 +1,20 @@
-const entry = App.configDir + "/ts/main.ts";
-const outdir = "/tmp/ags/js";
+#!/usr/bin/ags -c
+
+import { Topbar } from "./modules/bar/topbar/topbar.js";
+// import { idle } from "resource:///com/github/Aylur/ags/utils.js";
+
 const scss = `${App.configDir}/style/style.scss`;
 const css = `/tmp/my-style.css`;
 
-const liveReload = true
+const liveReload = true;
 
 const reloadCss = () => {
   // compile, reset, apply
-  Utils.exec(`sassc ${scss} ${css}`)
-  App.resetCss()
-  App.applyCss(css)
-}
-reloadCss()
+  Utils.exec(`sassc ${scss} ${css}`);
+  App.resetCss();
+  App.applyCss(css);
+};
+reloadCss();
 
 if (liveReload) {
   Utils.monitorFile(`${App.configDir}/style`, reloadCss);
@@ -19,27 +22,18 @@ if (liveReload) {
   Utils.exec(`sassc ${scss} ${css}`);
 }
 
-// Utils.exec(`sassc ${scss} ${css}`)
+// /**
+//  * @param {import('types/@girs/gtk-3.0/gtk-3.0').Gtk.Window[]} windows
+//  */
+// const addWindows = (windows) => {
+//   windows.forEach((w) => App.addWindow(w));
+// };
+//
+// idle(() => {
+//   addWindows([Topbar({ monitor: 0 })]);
+// });
 
-try {
-  await Utils.execAsync([
-    "bun",
-    "build",
-    entry,
-    "--outdir",
-    outdir,
-    "--external",
-    "resource://*",
-    "--external",
-    "gi://*",
-  ]);
-} catch (error) {
-  console.error(error);
-}
-
-const main = await import(`file://${outdir}/main.js`);
-
-export default {
+App.config({
   style: css,
-  windows: [main.default],
-};
+  windows: [Topbar({ monitor: 0 })],
+});

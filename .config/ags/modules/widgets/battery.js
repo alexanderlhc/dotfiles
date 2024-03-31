@@ -1,19 +1,29 @@
 const battery = await Service.import("battery");
 
 const Battery = () => {
-  const value = battery.bind("percent").as((p) => (p > 0 ? p / 100 : 0));
-  const icon = battery
-    .bind("percent")
-    .as((p) => `battery-level-${Math.floor(p / 10) * 10}-symbolic`);
-
   return Widget.Box({
     class_name: "battery",
     visible: battery.bind("available"),
-    children: [
-      Widget.Icon({ icon }),
-      Widget.Label({ label: value.as((v) => `${Math.floor(v * 100)}%`) }),
-    ],
+    children: [BatteryIcon()],
   });
+};
+
+const BatteryIcon = () =>
+  Widget.Icon({
+    icon: "alarm-symbolic", // default, other is set at bind,
+    tooltip_text: "Battery",
+  }).hook(battery, (self) => {
+    const { percent, charging } = battery;
+    self.tooltip_text = `Battery: ${percent}% ${charging ? "(charging)" : ""}`;
+    self.icon = batteryIconName(percent, charging);
+  });
+
+const batteryIconName = (
+  /** @type {number} */ percent,
+  /** @type {boolean} */ charging,
+) => {
+  const icon_level = Math.floor(percent / 10) * 10;
+  return `battery-level-${icon_level}-${charging ? "charging-" : ""}symbolic`;
 };
 
 export { Battery };

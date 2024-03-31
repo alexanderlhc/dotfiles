@@ -15,18 +15,19 @@ screenshot_command="slurp -o -r -c '#ff0000ff'"
 
 # Depending on the mode, modify the geometry capture method
 case "$mode" in
-    window)
-        screenshot_command="hyprshot -m window -r"
-        ;;
-    output)
-        screenshot_command="hyprshot -m output -r"
-        ;;
-    region)
-        screenshot_command="hyprshot -m region -r"
-        ;;
-    *)
-        echo "Usage: $0 [window|output|region]"
-        exit 1
+window)
+	screenshot_command="hyprshot -m window -r"
+	;;
+output)
+	screenshot_command="hyprshot -m output -r"
+	;;
+region)
+	screenshot_command="hyprshot -m region -r"
+	;;
+*)
+	echo "Usage: $0 [window|output|region]"
+	exit 1
+	;;
 esac
 
 # Take a screenshot with the selected method or region

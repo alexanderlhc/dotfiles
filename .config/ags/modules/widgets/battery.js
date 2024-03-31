@@ -23,6 +23,7 @@ const batteryIconName = (
   /** @type {boolean} */ charging,
 ) => {
   const icon_level = Math.floor(percent / 10) * 10;
+  if (isNaN(percent) || icon_level < 0) return "battery-missing-symbolic";
   return `battery-level-${icon_level}-${charging ? "charging-" : ""}symbolic`;
 };
 

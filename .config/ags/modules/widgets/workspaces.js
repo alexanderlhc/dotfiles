@@ -21,8 +21,12 @@ const Workspaces = () =>
     }).hook(Hyprland, (box) => {
       box.children.forEach((btn, i) => {
         const ws = Hyprland.getWorkspace(i + 1);
-        btn.toggleClassName("occupied", (ws?.windows ?? 0) > 0);
-        btn.toggleClassName("active", Hyprland.active.workspace.id === i + 1);
+        const isOccupied = (ws?.windows ?? 0) > 0;
+        const isActive = Hyprland.active.workspace.id === i + 1;
+        const isInUse = isOccupied || isActive;
+        btn.visible = isInUse;
+        btn.toggleClassName("occupied", isOccupied);
+        btn.toggleClassName("active", isActive)
       });
     }),
   });

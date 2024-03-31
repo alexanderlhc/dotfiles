@@ -6,7 +6,7 @@ return {
     priority = 1000,
     opts = {
       flavor = "latte", -- latte, frappe, macchiato, mocha
-      background = { -- :h background
+      background = {    -- :h background
         light = "latte",
         dark = "mocha",
       },
@@ -44,6 +44,11 @@ return {
       config = true,
       -- Uncomment next line if you want to follow only stable versions
       -- version = "*"
+    },
+    {
+      "m4xshen/hardtime.nvim",
+      dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+      opts = {}
     },
   },
 }

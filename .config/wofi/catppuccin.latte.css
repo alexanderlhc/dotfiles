@@ -129,9 +129,9 @@ window {
   color: @red;
 }
 
-#input * {
-  outline: 4px solid @red !important;
-}
+/* #input * { */
+/*   outline: 4px solid @red !important; */
+/* } */
 
 /* Text */
 #text {
@@ -159,6 +159,6 @@ window {
   color: @mauve;
 }
 
-#entry:drop(active) {
-  background-color: @lavender !important;
-}
+/* #entry:drop(active) { */
+/*   background-color: @lavender !important; */
+/* } */

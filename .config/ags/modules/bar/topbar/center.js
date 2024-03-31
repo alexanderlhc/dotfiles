@@ -7,8 +7,8 @@ const Center = () =>
     spacing: 8,
     children: [
       // Notification()
-      Date(),
       Clock(),
+      Date(),
     ],
   });
 

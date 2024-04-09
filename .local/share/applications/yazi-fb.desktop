@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Yazi File Browser
+Comment=Launch Yazi CLI File Browser
+Exec=foot -- yazi
+Icon=system-file-manager
+Terminal=false
+Type=Application
+Categories=Utility;FileTools;FileManager;
+Keywords=File;Manager;CLI;Browser;

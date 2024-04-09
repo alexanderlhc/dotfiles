@@ -1,0 +1,3 @@
+#!/bin/env bash
+
+handlr set inode/directory yazi-fb.desktop

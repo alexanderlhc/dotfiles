@@ -14,8 +14,14 @@ windows:
   - tmux:
       root: ~/.config/tmux
       panes: nvim
+  - tmuxinator:
+      root: ~/.config/tmuxinator
+      panes: nvim
   - hypr:
       root: ~/.config/hypr
+      panes: nvim
+  - ags:
+      root: ~/.config/ags
       panes: nvim
   - zsh:
       root: ~/.config/zsh

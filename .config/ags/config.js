@@ -4,6 +4,8 @@ import { Topbar } from "./modules/bar/topbar/topbar.js";
 
 import { exec, monitorFile } from "resource:///com/github/Aylur/ags/utils.js";
 import Gio from "gi://Gio";
+import Gdk from "gi://Gdk";
+import Gtk from 'gi://Gtk?version=3.0';
 
 const scss = `${App.configDir}/style/style.scss`;
 const css = `/tmp/my-style.css`;
@@ -28,7 +30,24 @@ monitorFile(`${App.configDir}/style`, (_, eventType) => {
 
 applyScss();
 
+const monitorCount = Gdk.Display.get_default()?.get_n_monitors() || 1;
+
+/**
+ * @param {Function} makeWindow 
+ * @returns {Gtk.Window[]} 
+ */
+const addToAllMonitors = (makeWindow) => {
+  const windows = [];
+  for (let i = 0; i < monitorCount; i++) {
+    windows.push(makeWindow({ monitor: i }))
+  }
+  return windows;
+}
+
 App.config({
   style: css,
-  windows: [Topbar({ monitor: 0 })],
+  windows: [
+    ...addToAllMonitors(Topbar)
+    // Topbar({ monitor: 0 })
+  ],
 });

@@ -12,6 +12,15 @@ return {
         end,
       },
       { "folke/trouble.nvim" },
+      {
+        "AckslD/nvim-neoclip.lua",
+        requires = {
+          { 'nvim-telescope/telescope.nvim' },
+        },
+        config = function()
+          require('neoclip').setup()
+        end,
+      }
     },
     keys = {
       {
@@ -71,11 +80,18 @@ return {
         desc = "Live Grep Current Word",
       },
       {
-        "<leader>fc",
+        "<leader>fC",
         function()
           require("telescope.builtin").commands()
         end,
         desc = "Commands",
+      },
+      {
+        "<leader>fc",
+        function()
+          require("telescope").extensions.neoclip.default()
+        end,
+        desc = "Neoclip Cliboard History",
       },
       {
         "<leader>fs",

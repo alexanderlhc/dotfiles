@@ -2,6 +2,7 @@
 # MONITORS
 #
 # https://wiki.hyprland.org/Configuring/Monitors/
+# https://wiki.hyprland.org/Configuring/Workspace-Rules/
 ############
 
 monitor=,preferred,auto,1

@@ -163,6 +163,12 @@ return {
       -- idea for how to delete buffers https://www.reddit.com/r/neovim/comments/qspemc/close_buffers_with_telescope/
       require("telescope").setup({
         defaults = {
+          path_display = {
+            -- "shorten",
+            filename_first = {
+              reverse_directions = true,
+            }
+          },
           mappings = {
             i = {
               ["<C-j>"] = "move_selection_previous",

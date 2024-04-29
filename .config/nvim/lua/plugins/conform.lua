@@ -1,65 +1,259 @@
--- vim.api.nvim_create_user_command("FormatDisable", function(args)
---   if args.bang then
---     -- FormatDisable! will disable formatting just for this buffer
---     vim.b.disable_autoformat = true
---   else
---     vim.g.disable_autoformat = true
---   end
--- end, {
---   desc = "Disable autoformat-on-save",
---   bang = true,
--- })
--- vim.api.nvim_create_user_command("FormatEnable", function()
---   vim.b.disable_autoformat = false
---   vim.g.disable_autoformat = false
--- end, {
---   desc = "Re-enable autoformat-on-save",
--- })
+-- Source: https://github.com/stevearc/conform.nvim/issues/299
 
+---@param _formatters table<string, string[]>
+---@return string[] | nil
+local get_closest_formatter = function(_formatters)
+	---@type string
+	local current_buffer_path = vim.api.nvim_buf_get_name(0)
+	local available_formatters = require("conform").list_formatters(0)
+	local keys_to_include = {}
+	for _, value in ipairs(available_formatters) do
+		table.insert(keys_to_include, value.name)
+	end
+	_formatters = filter_table(_formatters, keys_to_include)
+
+	---@type table<string, number>
+	local distance = {}
+
+	--- NOTE: iterate over formatters, and collect their config paths.
+	--- We are assuming that there will not be multiple formatters in one directory,
+	--- and that there will not be multiple formatter configurations in on directory.
+	for formatter_name, formatter_configs in pairs(_formatters) do
+		---@type table<string, string>
+		local formatter_config_path = vim.fs.find(formatter_configs, {
+			path = current_buffer_path,
+			stop = vim.loop.os_homedir(),
+			upward = true,
+		})
+
+		if formatter_config_path[1] ~= nil then
+			distance[formatter_name] = get_distance_to(formatter_config_path[1], current_buffer_path)
+		end
+	end
+
+	---@type string
+	local shortest_path_key = nil
+	---@type number
+	local shortest_path_val = math.huge
+
+	for formatter_name, formatter_distance in pairs(distance) do
+		if formatter_distance < shortest_path_val then
+			shortest_path_key = formatter_name
+			shortest_path_val = formatter_distance
+		end
+	end
+
+	if shortest_path_key == nil then
+		return nil
+	end
+
+	return { shortest_path_key }
+end ---@param originalTable table<string, string[]>
+---@param keysToInclude string[]
+local filter_table = function(originalTable, keysToInclude)
+	local resultTable = {}
+
+	for _, key in ipairs(keysToInclude) do
+		local value = originalTable[key]
+		if value then
+			resultTable[key] = value
+		end
+	end
+
+	return resultTable
+end
+
+---@param path_one string
+---@param current_buffer string
+local get_distance_to = function(path_one, current_buffer)
+	if path_one == nil then
+		return math.huge
+	end
+
+	local common_prefix = ""
+	local current_remaining = ""
+	local other_remaining = ""
+
+	for i = 1, math.min(#current_buffer, #path_one) do
+		if current_buffer:sub(i, i) == path_one:sub(i, i) then
+			common_prefix = common_prefix .. current_buffer:sub(i, i)
+		else
+			current_remaining = current_buffer:sub(i)
+			other_remaining = path_one:sub(i)
+			break
+		end
+	end
+
+	-- Calculate the distance by counting directory separators
+	local distance = 0
+
+	for _ in current_remaining:gmatch("/") do
+		distance = distance + 1
+	end
+
+	for _ in other_remaining:gmatch("/") do
+		distance = distance + 1
+	end
+
+	return distance
+end
+
+local get_active_lsp = function()
+	local clients = vim.lsp.get_active_clients()
+	local clients_list = {}
+	for _, client in pairs(clients) do
+		table.insert(clients_list, client.name)
+	end
+
+	return clients_list
+end
+
+---@param _formatters table<string, string[]>
+---@return string[] | nil
+local get_closest_formatter = function(_formatters)
+	---@type string
+	local current_buffer_path = vim.api.nvim_buf_get_name(0)
+	local available_formatters = require("conform").list_formatters(0)
+	local keys_to_include = {}
+	for _, value in ipairs(available_formatters) do
+		table.insert(keys_to_include, value.name)
+	end
+	_formatters = filter_table(_formatters, keys_to_include)
+
+	---@type table<string, number>
+	local distance = {}
+
+	--- NOTE: iterate over formatters, and collect their config paths.
+	--- We are assuming that there will not be multiple formatters in one directory,
+	--- and that there will not be multiple formatter configurations in on directory.
+	for formatter_name, formatter_configs in pairs(_formatters) do
+		---@type table<string, string>
+		local formatter_config_path = vim.fs.find(formatter_configs, {
+			path = current_buffer_path,
+			stop = vim.loop.os_homedir(),
+			upward = true,
+		})
+
+		if formatter_config_path[1] ~= nil then
+			distance[formatter_name] = get_distance_to(formatter_config_path[1], current_buffer_path)
+		end
+	end
+
+	---@type string
+	local shortest_path_key = nil
+	---@type number
+	local shortest_path_val = math.huge
+
+	for formatter_name, formatter_distance in pairs(distance) do
+		if formatter_distance < shortest_path_val then
+			shortest_path_key = formatter_name
+			shortest_path_val = formatter_distance
+		end
+	end
+
+	if shortest_path_key == nil then
+		return nil
+	end
+
+	return { shortest_path_key }
+end
 
 return {
-  "stevearc/conform.nvim",
-  event = { "BufWritePre" },
-  cmd = { "ConformInfo" },
+	"stevearc/conform.nvim",
+	event = { "BufWritePre" },
+	cmd = { "Format", "ConformInfo" },
+	-- cmd = { "Format" },
+	keys = {
+		{
+			"<leader>m",
+			function()
+				vim.cmd("Format")
+			end,
+			mode = "n",
+		},
+	},
+	-- keys = {
+	-- 	{
+	-- 		"<leader>tf",
+	-- 		function()
+	-- 			require("utils").toggle("disable_autoformat", false, nil, "global")
+	-- 		end,
+	-- 		desc = "Switch/Toggle format on Save",
+	-- 	},
+	-- },
+	config = function()
+		require("conform").setup({
+			format_on_save = {
+				timeout_ms = 500,
+				lsp_fallback = true,
+			},
+			formatters_by_ft = {
+				css = { "prettier", "stylelint" },
+				html = { "prettier" },
+				javascript = { "prettier" },
+				javascriptreact = { "prettier" },
+				json = { "prettier" },
+				jsonc = { "prettier" },
+				lua = { "stylua" },
+				sh = { "shellcheck", "shfmt" },
+				svelte = { "prettier" },
+				typescript = { "prettier" },
+				typescriptreact = { "prettier" },
+			},
+		})
 
-  keys = {
-    {
-      "<leader>tf",
-      function()
-        require("utils").toggle("disable_autoformat", false, nil, "global")
-      end,
-      desc = "Switch/Toggle format on Save"
-    },
-  },
+		vim.api.nvim_create_user_command("Format", function()
+			local formatters = get_closest_formatter({
+				prettier = { ".prettierrc", "prettier.config.js", ".prettierrc.json" },
+				stylua = { "stylua.toml" },
+			})
 
-  opts = {
-    format_on_save = function(bufnr)
-      -- Disable with a global or buffer-local variable
-      if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
-        return
-      end
-      return { timeout_ms = 500, lsp_fallback = true }
-    end,
-    formatters_by_ft = {
-      ["javascript"] = { "prettierd" },
-      ["javascriptreact"] = { "prettierd" },
-      ["typescript"] = { "prettierd" },
-      ["typescriptreact"] = { "prettierd" },
-      ["vue"] = { "prettierd" },
-      ["css"] = { "prettierd" },
-      ["scss"] = { "prettierd" },
-      ["less"] = { "prettierd" },
-      ["html"] = { "prettierd" },
-      ["json"] = { "prettierd" },
-      ["jsonc"] = { "prettierd" },
-      ["yaml"] = { "yamlfmt, prettierd" },
-      ["markdown"] = { "markdownlint, prettierd" },
-      ["markdown.mdx"] = { "prettierd" },
-      ["graphql"] = { "prettierd" },
-      ["handlebars"] = { "prettierd" },
-      ["lua"] = { "stylua" },
-      ["*"] = { "codespell" },
-      ["sh"] = { "shfmt", "shellcheck" },
-    },
-  },
+			if not formatters then
+				print("formatter not found, using lsp")
+				require("conform").format({ async = true, lsp_fallback = true })
+			else
+				print("formatted with " .. formatters[1])
+				require("conform").format({ async = true, formatters, lsp_fallback = false })
+			end
+		end, {})
+
+		vim.api.nvim_create_user_command("FormatWithPrettier", function()
+			require("conform").format({
+				async = true,
+				formatters = { "prettier" },
+				lsp_fallback = false,
+			})
+		end, {})
+	end,
+
+	-- opts = {
+	--   format_on_save = function(bufnr)
+	--     -- Disable with a global or buffer-local variable
+	--     if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+	--       return
+	--     end
+	--     return { timeout_ms = 500, lsp_fallback = true }
+	--   end,
+	--   formatters_by_ft = {
+	--     ["javascript"] = { "prettierd" },
+	--     ["javascriptreact"] = { "prettierd" },
+	--     ["typescript"] = { "prettierd" },
+	--     ["typescriptreact"] = { "prettierd" },
+	--     ["vue"] = { "prettierd" },
+	--     ["css"] = { "prettierd" },
+	--     ["scss"] = { "prettierd" },
+	--     ["less"] = { "prettierd" },
+	--     ["html"] = { "prettierd" },
+	--     ["json"] = { "prettierd" },
+	--     ["jsonc"] = { "prettierd" },
+	--     ["yaml"] = { "yamlfmt, prettierd" },
+	--     ["markdown"] = { "markdownlint, prettierd" },
+	--     ["markdown.mdx"] = { "prettierd" },
+	--     ["graphql"] = { "prettierd" },
+	--     ["handlebars"] = { "prettierd" },
+	--     ["lua"] = { "stylua" },
+	--     ["*"] = { "codespell" },
+	--     ["sh"] = { "shfmt", "shellcheck" },
+	--   },
+	-- },
 }

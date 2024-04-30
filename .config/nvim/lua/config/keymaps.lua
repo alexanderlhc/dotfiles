@@ -1,5 +1,8 @@
 local map = require("utils").map
 
+-- file navigation
+map("n", "<leader>fe", "<cmd>:Explore<cr>", { desc = "File Explore" })
+
 -- Windows
 map("n", "<C-h>", "<C-w>h", { desc = "Go to left window" })
 map("n", "<C-j>", "<C-w>j", { desc = "Go to lower window" })

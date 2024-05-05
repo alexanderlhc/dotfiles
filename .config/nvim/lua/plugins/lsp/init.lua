@@ -61,6 +61,7 @@ return {
 							-- confirm
 							["<C-y>"] = cmp.mapping.confirm({ select = true }),
 							["<C-Space>"] = cmp.mapping.complete(),
+							--
 						}),
 						experimental = {
 							ghost_text = true,
@@ -70,22 +71,6 @@ return {
 								require("luasnip").lsp_expand(args.body)
 							end,
 						},
-					})
-
-					cmp.setup.cmdline({ "/", "?" }, {
-						mapping = cmp.mapping.preset.cmdline(),
-						sources = {
-							{ name = "buffer" },
-						},
-					})
-
-					cmp.setup.cmdline(":", {
-						mapping = cmp.mapping.preset.cmdline(),
-						sources = cmp.config.sources({
-							{ name = "path" },
-						}, {
-							{ name = "cmdline" },
-						}),
 					})
 				end,
 			},
@@ -102,7 +87,29 @@ return {
 					history = true,
 					delete_check_events = "TextChanged",
 				},
-				keys = {},
+				keys = {
+					{
+						"<C-l>",
+						function()
+							local luasnip = require("luasnip")
+							if luasnip.jumpable(1) then
+								luasnip.jump(1)
+							end
+						end,
+						mode = { "i", "s" },
+					},
+
+					{
+						"<C-h>",
+						function()
+							local luasnip = require("luasnip")
+							if luasnip.jumpable(-1) then
+								luasnip.jump(-1)
+							end
+						end,
+						mode = { "i", "s" },
+					},
+				},
 			},
 			{
 				"zbirenbaum/copilot.lua",

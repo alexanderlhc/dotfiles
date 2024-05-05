@@ -31,13 +31,6 @@ return {
 				desc = "Files",
 			},
 			{
-				"<leader>fb",
-				function()
-					require("telescope.builtin").buffers()
-				end,
-				desc = "Buffers",
-			},
-			{
 				"<leader>fj",
 				function()
 					require("telescope.builtin").jumplist()

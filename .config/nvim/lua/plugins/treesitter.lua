@@ -3,13 +3,6 @@ local textobjects = {
 		enable = true,
 		-- Automatically jump forward to textobj, similar to targets.vim
 		lookahead = true,
-		keymaps = {
-			-- You can use the capture groups defined in textobjects.scm
-			-- ["am"] = { query = "@function.outer", desc = "Select Around method" },
-			-- ["im"] = { query = "@function.inner", desc = "Select Inside method" },
-			-- ["ac"] = { query = "@class.outer", desc = "Select Around class" },
-			-- ["ic"] = { query = "@class.inner", desc = "Select Inner class" },
-		},
 		selection_modes = {
 			["@parameter.outer"] = "v", -- charwise
 			["@function.outer"] = "V", -- linewise

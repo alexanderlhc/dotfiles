@@ -5,6 +5,8 @@ SETUVAR _fisher_jorgebucaran_2F_hydro_files:\x7e/\x2econfig/fish/functions/fish_
 SETUVAR _fisher_jorgebucaran_2F_nvm_2E_fish_files:\x7e/\x2econfig/fish/functions/_nvm_index_update\x2efish\x1e\x7e/\x2econfig/fish/functions/_nvm_list\x2efish\x1e\x7e/\x2econfig/fish/functions/_nvm_version_activate\x2efish\x1e\x7e/\x2econfig/fish/functions/_nvm_version_deactivate\x2efish\x1e\x7e/\x2econfig/fish/functions/nvm\x2efish\x1e\x7e/\x2econfig/fish/conf\x2ed/nvm\x2efish\x1e\x7e/\x2econfig/fish/completions/nvm\x2efish
 SETUVAR _fisher_plugins:jorgebucaran/nvm\x2efish\x1ejorgebucaran/hydro
 SETUVAR _fisher_upgraded_to_4_4:\x1d
+SETUVAR _hydro_git_11245:wip\x20
+SETUVAR _hydro_git_11787:wip\x20
 SETUVAR _hydro_git_125367:master\u2022\x20
 SETUVAR _hydro_git_22972:wip\x20
 SETUVAR _hydro_git_23117:wip\x20

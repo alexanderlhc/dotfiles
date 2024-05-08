@@ -1,0 +1,68 @@
+#!/bin/env bash
+
+# Check if the script is running in a terminal
+if [ -t 1 ]; then
+	env_is_term="true"
+else
+	env_is_term="false"
+fi
+
+notify() {
+	if [[ $env_is_term == 'true' ]]; then
+		notify-send "$1"
+	else
+		echo "$1"
+	fi
+}
+
+run_cmd() {
+	if [[ $env_is_term == 'true' ]]; then
+		tmuxinator "$1"
+	else
+		foot tmuxinator "$1" >/dev/null 2>&1
+	fi
+}
+
+# Define fuzzy function
+fuzzy() {
+	if [[ $env_is_term == 'true' ]]; then
+		fzf --reverse --height 50% --prompt "Select tmux project" --header "Select tmux project" --inline-info
+	else
+		~/.config/wofi/wofi_launch.sh --dmenu --insensitive --width 300 --height 500 --prompt "Select tmux project" --column 1
+	fi
+}
+
+# Define tmuxinator_projects function
+tmuxinator_projects() {
+	tmuxinator list 2>/dev/null | awk 'NR>1 {print $1}' | sort | uniq
+}
+
+# Define tmux_projects function
+tmux_projects() {
+	tmux list-sessions -F "#{session_name}" 2>/dev/null | sort | uniq
+}
+
+# Gather all projects
+all_projects=$(
+	tmuxinator_projects
+	tmux_projects
+)
+
+# Check if there are any projects
+if [[ -z "$all_projects" ]]; then
+	notify "No tmuxinator projects or tmux sessions found."
+	exit 1
+fi
+
+# Select a project using fuzzy search
+selected_project=$(echo "$all_projects" | fuzzy)
+
+# Check if a project was selected
+if [[ -z "$selected_project" ]]; then
+	notify "No project selected."
+	exit 1
+fi
+
+run_cmd "$selected_project"
+
+# vim: set ft=sh:

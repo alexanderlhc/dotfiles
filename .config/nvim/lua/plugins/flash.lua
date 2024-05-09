@@ -1,8 +1,10 @@
 return {
   "folke/flash.nvim",
   event = "VeryLazy",
-  opts = {},
-  -- stylua: ignore
+  config = function()
+    require("flash").setup()
+    vim.api.nvim_set_hl(0, "FlashCursor", { fg = "red", bg = "yellow" })
+  end,
   keys = {
     { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
     { "S", mode = { "n", "o", "x" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },

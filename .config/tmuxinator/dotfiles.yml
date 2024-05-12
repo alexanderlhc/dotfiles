@@ -23,6 +23,6 @@ windows:
   - ags:
       root: ~/.config/ags
       panes: nvim
-  - zsh:
-      root: ~/.config/zsh
+  - fish:
+      root: ~/.config/fish
       panes: nvim

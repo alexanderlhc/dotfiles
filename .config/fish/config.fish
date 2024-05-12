@@ -15,3 +15,5 @@ bind \cy accept-autosuggestion
 mcfly init fish | source
 
 zoxide init fish | source
+
+fish_add_path ~/.local/bin

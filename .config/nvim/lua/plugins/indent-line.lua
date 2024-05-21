@@ -1,4 +1,7 @@
+vim.cmd.highlight('IndentLine guifg=#ccd0da')        -- not inside region
+vim.cmd.highlight('IndentLineCurrent guifg=#5c5f77') -- active region
+
 return {
-	"echasnovski/mini.indentscope",
-	version = false,
+  "nvimdev/indentmini.nvim",
+  opts = true,
 }

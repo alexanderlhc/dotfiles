@@ -1,93 +1,95 @@
--- Delete item from Trouble
--- https://github.com/folke/trouble.nvim/issues/149#issuecomment-1537652758
-vim.api.nvim_create_autocmd({ "FileType" }, {
-  pattern = "Trouble",
-  callback = function(event)
-    if require("trouble.config").options.mode ~= "telescope" then
-      return
-    end
-
-    local function delete()
-      local folds = require("trouble.folds")
-      local telescope = require("trouble.providers.telescope")
-
-      local ord = { "" }                   -- { filename, ... }
-      local files = { [""] = { 1, 1, 0 } } -- { [filename] = { start, end, start_index } }
-      for i, result in ipairs(telescope.results) do
-        if files[result.filename] == nil then
-          local next = files[ord[#ord]][2] + 1
-          files[result.filename] = { next, next, i }
-          table.insert(ord, result.filename)
-        end
-        if not folds.is_folded(result.filename) then
-          files[result.filename][2] = files[result.filename][2] + 1
-        end
-      end
-
-      local line = unpack(vim.api.nvim_win_get_cursor(0))
-      for i, id in ipairs(ord) do
-        if line == files[id][1] then -- Group
-          local next = ord[i + 1]
-          for _ = files[id][3], next and files[next][3] - 1 or #telescope.results do
-            table.remove(telescope.results, files[id][3])
-          end
-          break
-        elseif line <= files[id][2] then -- Item
-          table.remove(telescope.results, files[id][3] + (line - files[id][1]) - 1)
-          break
-        end
-      end
-
-      if #telescope.results == 0 then
-        require("trouble").close()
-      else
-        require("trouble").refresh { provider = "telescope", auto = false }
-      end
-    end
-
-    vim.keymap.set("n", "x", delete, { buffer = event.buf })
-  end,
-})
-
 return {
-  "folke/trouble.nvim",
-  dependencies = { "nvim-tree/nvim-web-devicons" },
-  opts = {},
-  keys = {
-    {
-      "<leader>xt",
-      function()
-        require("trouble").toggle()
-      end,
-      desc = "Toggle Trouble",
-    },
-    {
-      "<leader>xq",
-      function()
-        require("trouble").toggle("quickfix")
-      end,
-      desc = "Toggle Trouble Quickfix",
-    },
-    {
-      "<leader>xl",
-      function()
-        require("trouble").toggle("loclist")
-      end,
-      desc = "Toggle Trouble Loclist",
-    },
-    {
-      "<leader>xw",
-      function()
-        require("trouble").toggle("workspace_diagnostics")
-      end,
-      desc = "Toggle Trouble Workspace diagnostics",
-    },
-    {
-      "<leader>xd",
-      function()
-        require("trouble").toggle("document_diagnostics")
-      end,
-      desc = "Toggle Trouble Document diagnostics",
-    },
-  }
 }
+-- -- Delete item from Trouble
+-- -- https://github.com/folke/trouble.nvim/issues/149#issuecomment-1537652758
+-- vim.api.nvim_create_autocmd({ "FileType" }, {
+--   pattern = "Trouble",
+--   callback = function(event)
+--     if require("trouble.config").options.mode ~= "telescope" then
+--       return
+--     end
+--
+--     local function delete()
+--       local folds = require("trouble.folds")
+--       local telescope = require("trouble.providers.telescope")
+--
+--       local ord = { "" }                   -- { filename, ... }
+--       local files = { [""] = { 1, 1, 0 } } -- { [filename] = { start, end, start_index } }
+--       for i, result in ipairs(telescope.results) do
+--         if files[result.filename] == nil then
+--           local next = files[ord[#ord]][2] + 1
+--           files[result.filename] = { next, next, i }
+--           table.insert(ord, result.filename)
+--         end
+--         if not folds.is_folded(result.filename) then
+--           files[result.filename][2] = files[result.filename][2] + 1
+--         end
+--       end
+--
+--       local line = unpack(vim.api.nvim_win_get_cursor(0))
+--       for i, id in ipairs(ord) do
+--         if line == files[id][1] then -- Group
+--           local next = ord[i + 1]
+--           for _ = files[id][3], next and files[next][3] - 1 or #telescope.results do
+--             table.remove(telescope.results, files[id][3])
+--           end
+--           break
+--         elseif line <= files[id][2] then -- Item
+--           table.remove(telescope.results, files[id][3] + (line - files[id][1]) - 1)
+--           break
+--         end
+--       end
+--
+--       if #telescope.results == 0 then
+--         require("trouble").close()
+--       else
+--         require("trouble").refresh { provider = "telescope", auto = false }
+--       end
+--     end
+--
+--     vim.keymap.set("n", "x", delete, { buffer = event.buf })
+--   end,
+-- })
+--
+-- return {
+--   "folke/trouble.nvim",
+--   dependencies = { "nvim-tree/nvim-web-devicons" },
+--   opts = {},
+--   keys = {
+--     {
+--       "<leader>xt",
+--       function()
+--         require("trouble").toggle()
+--       end,
+--       desc = "Toggle Trouble",
+--     },
+--     {
+--       "<leader>xq",
+--       function()
+--         require("trouble").toggle("quickfix")
+--       end,
+--       desc = "Toggle Trouble Quickfix",
+--     },
+--     {
+--       "<leader>xl",
+--       function()
+--         require("trouble").toggle("loclist")
+--       end,
+--       desc = "Toggle Trouble Loclist",
+--     },
+--     {
+--       "<leader>xw",
+--       function()
+--         require("trouble").toggle("workspace_diagnostics")
+--       end,
+--       desc = "Toggle Trouble Workspace diagnostics",
+--     },
+--     {
+--       "<leader>xd",
+--       function()
+--         require("trouble").toggle("document_diagnostics")
+--       end,
+--       desc = "Toggle Trouble Document diagnostics",
+--     },
+--   }
+-- }

@@ -1,0 +1,11 @@
+[user]
+	email = alexanderlhc@disroot.org
+	name = Alexander Christensen
+[init]
+	defaultBranch = main
+[alias]
+	clone-for-worktrees = "!sh $HOME/.local/bin/git-clone-bare-for-worktrees"
+[core]
+	editor = nvim
+[push]
+	autoSetupRemote = true

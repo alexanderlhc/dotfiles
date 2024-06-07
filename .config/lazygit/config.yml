@@ -1,0 +1,4 @@
+# git --git-dir=/home/alexander/.local/share/dotfiles/ --work-tree=/home/alexander/ remote remove origin
+# git --git-dir=/home/alexander/.local/share/dotfiles/ --work-tree=/home/alexander/ remote add origin [your-repository-url]
+# git --git-dir=/home/alexander/.local/share/dotfiles/ --work-tree=/home/alexander/ fetch
+# git --git-dir=/home/alexander/.local/share/dotfiles/ --work-tree=/home/alexander/ branch --set-upstream-to=origin/master master

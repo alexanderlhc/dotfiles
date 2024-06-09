@@ -3,5 +3,9 @@ vim.cmd.highlight('IndentLineCurrent guifg=#5c5f77') -- active region
 
 return {
   "nvimdev/indentmini.nvim",
-  opts = true,
+  lazy = true,
+  event = { 'BufRead', 'BufNewFile' },
+  opts = {
+    char = '┊' --  ⁞, ⋮, ┆, ┊, ┋, ┇
+  }
 }

@@ -1,0 +1,120 @@
+#!/bin/env sh
+
+# dev environment
+
+# List of applications to install
+desktop=(
+  "fish"
+  "mcfly" # used by fish
+  "cliphist"
+  "wl-clipboard"
+  "zoxide"
+  "ripgrep-all"
+)
+
+documents=(
+  "firefox"
+  "thunderbird"
+  "libreoffice-fresh"
+  "libreoffice-fresh-da"
+  "nextcloud-client"
+)
+
+dev=(
+  "rustup"
+  "neovim-git"
+  "git"
+  "fnm"
+  "lazygit"
+)
+
+apps=(
+  "${dev[@]}"
+  "${documents[@]}"
+  "${desktop[@]}"
+)
+
+# Function to check if a package is installed
+is_installed() {
+  pacman -Q "$1" &>/dev/null
+}
+
+setup_system() {
+  echo "Installing missing system applications"
+  # Iterate over each application in the list
+  for app in "${apps[@]}"; do
+    if is_installed "$app"; then
+      echo "$app is already installed, skipping."
+    else
+      echo "Installing $app..."
+      paru -S --noconfirm "$app"
+    fi
+  done
+}
+
+# Function to setup Node.js using fnm
+setup_node() {
+  echo "Installing missing node version with fnm"
+  if is_installed "fnm"; then
+    # Check if fnm list returns more than just 'system'
+    node_versions=$(fnm list | grep -v 'system')
+    if [ -z "$node_versions" ]; then
+      echo "No Node.js versions installed with fnm. Installing the latest version..."
+      fnm install --lts
+      fnm use --lts
+    else
+      echo "Node.js versions already installed with fnm:"
+      fnm list
+    fi
+  else
+    echo "fnm is not installed, skipping Node.js setup."
+    fi
+  }
+
+  setup_rustup() {
+    echo "Installing missing rust version with rustup"
+    if is_installed "rustup"; then
+      # Check if rustup is initialized and has the stable toolchain installed
+      if rustup toolchain list | grep -q 'stable'; then
+        echo "Rust stable toolchain is already installed."
+      else
+        echo "Installing Rust stable toolchain..."
+        rustup install stable
+        rustup default stable
+      fi
+    else
+      echo "rustup is not installed, skipping Rust setup."
+      fi
+    }
+
+# Function to check and set the default shell to fish
+set_default_shell_to_fish() {
+    # Get the current default shell
+    current_shell=$(getent passwd "$USER" | cut -d: -f7)
+    
+    # Check if the current shell is not fish
+    if [ "$current_shell" != "/usr/bin/fish" ]; then
+        echo "Current default shell is $current_shell. Changing it to fish..."
+        
+        # Change the default shell to fish
+        chsh -s /usr/bin/fish
+        
+        if [ $? -eq 0 ]; then
+            echo "Default shell successfully changed to fish."
+        else
+            echo "Failed to change the default shell to fish."
+        fi
+    else
+        echo "Default shell is already set to fish."
+    fi
+}
+
+
+setup_system
+
+
+setup_node
+setup_rustup
+set_default_shell_to_fish
+
+echo "All applications installed and setup."

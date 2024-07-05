@@ -4,6 +4,23 @@ import SystemTray, {
 import Widget from "resource:///com/github/Aylur/ags/widget.js";
 import Gdk from "gi://Gdk?version=3.0";
 
+const toShowTray = Variable(false);
+
+const Tray = () => Widget.Box({
+  children: [
+    TrayContainerIcon(),
+    TrayContainer()
+  ]
+})
+
+const TrayContainerIcon = () =>
+  Widget.Button({
+    on_clicked: () => (toShowTray.value = !toShowTray.value),
+    child: Widget.Icon({
+      icon: "view-app-grid-symbolic"
+    })
+  })
+
 /**
  * @typedef {TrayItem} NewType
  */
@@ -35,10 +52,10 @@ const SysTrayItem = (item) =>
       ),
   });
 
-const Tray = () =>
+const TrayContainer = () =>
   Widget.Box({
     class_name: "tray-container",
-    spacing: 8,
+    visible: toShowTray.bind(),
     attribute: {
       items: new Map(),
       /**

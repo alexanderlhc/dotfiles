@@ -9,13 +9,16 @@ const toShowTray = Variable(false);
 const Tray = () => Widget.Box({
   children: [
     TrayContainerIcon(),
-    TrayContainer()
+    TrayContainer(),
   ]
 })
 
 const TrayContainerIcon = () =>
   Widget.Button({
-    on_clicked: () => (toShowTray.value = !toShowTray.value),
+    on_clicked: () => {
+      console.log("Clicked");
+      toShowTray.value = !toShowTray.value
+    },
     child: Widget.Icon({
       icon: "view-app-grid-symbolic"
     })
@@ -63,6 +66,7 @@ const TrayContainer = () =>
        * @param {string} id
        */
       onAdded: (box, id) => {
+        if (!toShowTray.value) return;
         const item = SystemTray.getItem(id);
         if (!item) return;
         // @ts-ignore

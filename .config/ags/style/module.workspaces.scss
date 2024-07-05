@@ -1,13 +1,19 @@
-.workspaces button {
-  background-color: transparent;
+.workspaces {
 
-  &:hover,
-  &:active,
-  &.occupied {
-    background-color: darken($background_pane, 10%);
+  button {
+    padding: 0px 5px;
+
+    &.active {
+      font-weight: bold;
+
+      // label {
+      //   text-decoration: underline;
+      // }
+    }
+
+    // &:hover,
+    // &:active,
+    // &.occupied {}
   }
 
-  &.active {
-    background-color: darken($background_pane, 40%);
-  }
 }

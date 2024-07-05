@@ -7,9 +7,13 @@ desktop=(
   "fish"
   "mcfly" # used by fish
   "cliphist"
+  "aylurs-gtk-shell"
+  "tmux"
+  "tmuxinator"
   "wl-clipboard"
   "zoxide"
   "ripgrep-all"
+  "foot"
 )
 
 documents=(

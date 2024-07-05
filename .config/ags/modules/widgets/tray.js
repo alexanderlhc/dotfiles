@@ -15,10 +15,7 @@ const Tray = () => Widget.Box({
 
 const TrayContainerIcon = () =>
   Widget.Button({
-    on_clicked: () => {
-      console.log("Clicked");
-      toShowTray.value = !toShowTray.value
-    },
+    on_clicked: () => toShowTray.value = !toShowTray.value,
     child: Widget.Icon({
       icon: "view-app-grid-symbolic"
     })

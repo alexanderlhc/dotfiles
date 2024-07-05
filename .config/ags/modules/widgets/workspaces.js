@@ -14,7 +14,7 @@ const Workspaces = () =>
       children: Array.from({ length: 10 }, (_, i) => i + 1).map((i) =>
         Widget.Button({
           attribute: i,
-          label: `WS ${i}`,
+          label: `${i}`,
           onClicked: () => dispatch(i),
         }),
       ),

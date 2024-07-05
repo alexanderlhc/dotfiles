@@ -4,22 +4,16 @@
 config=$HOME/.config/hypr
 scripts=$config/scripts
 
-# wallpaper
-hostname=$(cat /etc/hostname) # gets hostname
-setwallpaper() {
-	"$scripts"/wallpaper "$1" &
-}
-if [ "$hostname" = "home" ]; then
-	setwallpaper "/home/alexander/Pictures/wallpaper.png"
-elif [ "$hostname" = "lighthouse" ]; then
-	setwallpaper "/home/alexander/Pictures/wallpaper.png"
-elif [ "$hostname" = "fatfrogironscrap" ]; then
-	setwallpaper "/home/alexander/Nextcloud/wallpapers/midjourney/architecture_sketch_of_running_computer_full2.png"
-elif [ "$hostname" = "veronica" ]; then
-	setwallpaper "/home/alexander/Billeder/wallpaper.jpg"
-else
-	setwallpaper "/home/alexander/Downloads/20231115_131833.jpg"
+output=$(swww query 2>&1)
+if [[ $output == *"Socket file not found"* ]]; then
+  swww-daemon &
 fi
+
+# wallpaper
+setwallpaper() {
+  "$scripts"/wallpaper "$1" &
+}
+setwallpaper "$HOME/.local/share/wallpapers/left.png"
 
 # Execute your favorite apps at launch
 #pgrep -x "waybar" >/dev/null && pkill -x "waybar"

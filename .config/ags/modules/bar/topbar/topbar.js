@@ -19,7 +19,7 @@ const Topbar = ({ monitor = 0 }) =>
 
 const Left = () => {
   return Widget.Box({
-    children: [HeightControlled(37.5), LeftBar()],
+    children: [HeightControlled(16), LeftBar()],
   });
 };
 

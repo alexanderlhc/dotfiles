@@ -1,4 +1,4 @@
-import { Workspaces } from "../../widgets/workspaces.js";
+import { Workspaces } from "../../../modules/widgets/workspaces.js";
 
 const Left = () =>
   Widget.Box({

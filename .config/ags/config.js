@@ -1,11 +1,11 @@
 #!/usr/bin/ags -c
 
-import { Topbar } from "./modules/bar/topbar/topbar.js";
 
 import { exec, monitorFile } from "resource:///com/github/Aylur/ags/utils.js";
 import Gio from "gi://Gio";
 import Gdk from "gi://Gdk";
 import Gtk from 'gi://Gtk?version=3.0';
+import { Topbar } from "./apps/bar/topbar/topbar.js";
 
 const scss = `${App.configDir}/style/style.scss`;
 const css = `/tmp/my-style.css`;
@@ -48,6 +48,5 @@ App.config({
   style: css,
   windows: [
     ...addToAllMonitors(Topbar)
-    // Topbar({ monitor: 0 })
   ],
 });

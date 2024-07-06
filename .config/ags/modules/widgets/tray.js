@@ -63,7 +63,6 @@ const TrayContainer = () =>
        * @param {string} id
        */
       onAdded: (box, id) => {
-        if (!toShowTray.value) return;
         const item = SystemTray.getItem(id);
         if (!item) return;
         // @ts-ignore
@@ -72,6 +71,7 @@ const TrayContainer = () =>
         const widget = SysTrayItem(item);
         box.attribute.items.set(id, widget);
         box.pack_start(widget, false, false, 0);
+        // if (!toShowTray.value) return;
         box.show_all();
       },
       /**

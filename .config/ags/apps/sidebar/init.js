@@ -2,6 +2,7 @@ import { VolumePixel } from "../../modules/widgets/volume-dashed-slider.js";
 import { HeightControlled } from "../../modules/widgets/height-controlled.js";
 
 const SIDEBAR_ID = "sidebar"
+export const toggleSidebar = () => App.ToggleWindow(SIDEBAR_ID)
 
 /**
   * @param {number} length
@@ -29,16 +30,6 @@ const HeadlineText = (/** @type {string} */ headline, /** @type {number} */ widt
 
 const DashedHeadline = (/** @type {string} */ headline, /** @type {number} */ width) => Widget.Label({
   label: HeadlineText(headline, width),
-})
-
-
-export const ToggleSideBar = () => Widget.Button({
-  child: Widget.Label({
-    label: "Toggle Sidebar",
-  }),
-  onClicked: () => {
-    App.ToggleWindow(SIDEBAR_ID)
-  }
 })
 
 const SideBar = Widget.Box({

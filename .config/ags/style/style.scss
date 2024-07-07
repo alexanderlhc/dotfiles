@@ -9,6 +9,8 @@
   // font-family: "cozettehidpi";
   // font-family: "cozette";
   font-size: 19px;
+
+  color: $text;
 }
 
 @import "./module.topbar.scss";
@@ -16,3 +18,5 @@
 @import "./module.tray.scss";
 @import "./module.volume.scss";
 @import "./module.workspaces.scss";
+
+@import "./app.sidebar.scss";

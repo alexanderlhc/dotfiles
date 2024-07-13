@@ -8,12 +8,23 @@ desktop=(
   "mcfly" # used by fish
   "cliphist"
   "aylurs-gtk-shell"
+  "sassc" # used by aylur
   "tmux"
   "tmuxinator"
   "wl-clipboard"
   "zoxide"
   "ripgrep-all"
   "foot"
+  "topgrade"
+  "rate-mirrors"
+  "otf-monaspace"
+  "wlogout"
+  "yazi"
+  "jq" 
+  "unarchiver" 
+  "fd" 
+  "ffmpegthumbnailer" 
+  "fzf"
 )
 
 documents=(

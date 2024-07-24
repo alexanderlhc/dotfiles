@@ -26,7 +26,7 @@ map("n", "<leader>qq", "<cmd>q<cr>", { desc = "Quit" })
 map("n", "<leader>qb", "<cmd>bdelete<cr>", { desc = "Quit buffer" })
 map("n", "<leader>qbo", '<cmd>%bdelete|edit #|normal ` "<cr>', { desc = "Quit other buffers" })
 map("n", "<leader>n", "<cmd>enew<cr>", { desc = "New File" })
-map({ "v", "n", "s" }, "<leader>w", "<cmd>update!<CR>", { desc = "Save" })
+map({ "v", "n", "s" }, "<leader>w<leader>", "<cmd>update!<CR>", { desc = "Save" })
 
 -- yank
 map({ "v", "n" }, "<Leader>y", '"+y<CR>', { desc = "Copy {motion} to system clipboard" })
@@ -44,15 +44,15 @@ map("i", "<A-k>", "<Esc>:m .-2<cr>==gi", { desc = "Move up" })
 -- map("n", "<leader>tf", require("plugins.lsp.format").toggle, { desc = "Switch/Toggle format on Save" })
 map("n", "<leader>td", require("utils").toggle_diagnostics, { desc = "Switch/Toggle Diagnostics" })
 map("n", "<leader>ts", function()
-  require("utils").toggle("spell")
+	require("utils").toggle("spell")
 end, { desc = "Toggle Spelling" })
 map("n", "<leader>tw", function()
-  require("utils").toggle("wrap")
+	require("utils").toggle("wrap")
 end, { desc = "Toggle Word Wrap" })
 if vim.lsp.inlay_hint then
-  map("n", "<leader>th", function()
-    vim.lsp.inlay_hint(0, nil)
-  end, { desc = "Toggle Inlay Hints" })
+	map("n", "<leader>th", function()
+		vim.lsp.inlay_hint(0, nil)
+	end, { desc = "Toggle Inlay Hints" })
 end
 
 -- tabs

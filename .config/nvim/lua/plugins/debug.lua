@@ -1,150 +1,141 @@
 local dap_keys = {
-  {
-    "<leader>dut",
-    "<Cmd>lua require('dapui').toggle()<CR>",
-    desc = "DAP UI Toggle State all",
-  },
-  {
-    "<leader>dul",
-    "<Cmd>lua require('dapui').toggle(1)<CR>",
-    desc = "DAP UI Toggle State 1",
-  },
-  {
-    "<leader>dub",
-    "<Cmd>lua require('dapui').toggle(2)<CR>",
-    desc = "DAP UI Toggle State 2",
-  },
-  {
-    "<leader>du",
-    "<Cmd>lua require('dapui').toggle()<CR>",
-    desc = "DAP UI Toggle",
-  },
-  {
-    "<leader>dc",
-    "<Cmd>lua require('dap').continue()<CR>",
-    desc = "DAP Continue",
-  },
-  {
-    "<leader>dov",
-    "<Cmd>lua require('dap').step_over()<CR>",
-    desc = "DAP Step Over",
-  },
-  {
-    "<leader>di",
-    "<Cmd>lua require('dap').step_into()<CR>",
-    desc = "DAP Step Into",
-  },
-  {
-    "<leader>dot",
-    "<Cmd>lua require('dap').step_out()<CR>",
-    desc = "DAP Step Out",
-  },
-  {
-    "<leader>db",
-    "<Cmd>lua require('dap').toggle_breakpoint()<CR>",
-    desc = "DAP Toggle Breakpoint",
-  },
-  {
-    "<leader>dB",
-    "<Cmd>lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>",
-    desc = "DAP Set Breakpoint",
-  },
-  {
-    "<leader>dr",
-    "<Cmd>lua require('dap').run_to_cursor()<CR>",
-    desc = "DAP Run To Cursor",
-  }
+	{
+		"<leader>dut",
+		"<Cmd>lua require('dapui').toggle()<CR>",
+		desc = "DAP UI Toggle State all",
+	},
+	{
+		"<leader>dul",
+		"<Cmd>lua require('dapui').toggle(1)<CR>",
+		desc = "DAP UI Toggle State 1",
+	},
+	{
+		"<leader>dub",
+		"<Cmd>lua require('dapui').toggle(2)<CR>",
+		desc = "DAP UI Toggle State 2",
+	},
+	{
+		"<leader>du",
+		"<Cmd>lua require('dapui').toggle()<CR>",
+		desc = "DAP UI Toggle",
+	},
+	{
+		"<leader>dc",
+		"<Cmd>lua require('dap').continue()<CR>",
+		desc = "DAP Continue",
+	},
+	{
+		"<leader>dov",
+		"<Cmd>lua require('dap').step_over()<CR>",
+		desc = "DAP Step Over",
+	},
+	{
+		"<leader>di",
+		"<Cmd>lua require('dap').step_into()<CR>",
+		desc = "DAP Step Into",
+	},
+	{
+		"<leader>dot",
+		"<Cmd>lua require('dap').step_out()<CR>",
+		desc = "DAP Step Out",
+	},
+	{
+		"<leader>db",
+		"<Cmd>lua require('dap').toggle_breakpoint()<CR>",
+		desc = "DAP Toggle Breakpoint",
+	},
+	{
+		"<leader>dB",
+		"<Cmd>lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>",
+		desc = "DAP Set Breakpoint",
+	},
+	{
+		"<leader>dr",
+		"<Cmd>lua require('dap').run_to_cursor()<CR>",
+		desc = "DAP Run To Cursor",
+	},
 }
 
 -- Define a function to setup Node/JS debugging
 local function setup_nodejs_debug(dap)
-  if not dap.adapters["pwa-node"] then
-    print(require("mason-registry").get_package("js-debug-adapter"):get_install_path())
+	if not dap.adapters["pwa-node"] then
+		print(require("mason-registry").get_package("js-debug-adapter"):get_install_path())
 
-    dap.adapters["pwa-node"] = {
-      type = "server",
-      host = "localhost",
-      port = "${port}",
-      executable = {
-        command = "node",
-        args = {
-          require("mason-registry").get_package("js-debug-adapter"):get_install_path()
-          .. "/js-debug/src/dapDebugServer.js",
-          "${port}",
-        },
-      },
-    }
-  end
+		dap.adapters["pwa-node"] = {
+			type = "server",
+			host = "localhost",
+			port = "${port}",
+			executable = {
+				command = "node",
+				args = {
+					require("mason-registry").get_package("js-debug-adapter"):get_install_path()
+						.. "/js-debug/src/dapDebugServer.js",
+					"${port}",
+				},
+			},
+		}
+	end
 
-  local configurations = {
-    {
-      type = "pwa-node",
-      request = "launch",
-      name = "Launch file",
-      program = "${file}",
-      cwd = "${workspaceFolder}",
-    },
-    {
-      type = "pwa-node",
-      request = "attach",
-      name = "Attach",
-      processId = require("dap.utils").pick_process,
-      cwd = "${workspaceFolder}",
-    },
-  }
+	local configurations = {
+		{
+			type = "pwa-node",
+			request = "launch",
+			name = "Launch file",
+			program = "${file}",
+			cwd = "${workspaceFolder}",
+		},
+		{
+			type = "pwa-node",
+			request = "attach",
+			name = "Attach",
+			processId = require("dap.utils").pick_process,
+			cwd = "${workspaceFolder}",
+		},
+	}
 
-  for _, language in ipairs({ "typescript", "javascript", "typescriptreact", "javascriptreact" }) do
-    if not dap.configurations[language] then
-      dap.configurations[language] = configurations
-    end
-  end
+	for _, language in ipairs({ "typescript", "javascript", "typescriptreact", "javascriptreact" }) do
+		if not dap.configurations[language] then
+			dap.configurations[language] = configurations
+		end
+	end
 end
 
 return {
-  'mfussenegger/nvim-dap',
-  dependencies = {
-    'rcarriga/nvim-dap-ui',
-    -- Required dependency for nvim-dap-ui
-    'nvim-neotest/nvim-nio',
+	"mfussenegger/nvim-dap",
+	dependencies = {
+		"rcarriga/nvim-dap-ui",
+		-- Required dependency for nvim-dap-ui
+		"nvim-neotest/nvim-nio",
+		{ "williamboman/mason.nvim" },
+	},
+	keys = dap_keys,
+	config = function()
+		local dap = require("dap")
+		local dapui = require("dapui")
 
-    {
-      "williamboman/mason.nvim",
-      opts = function(_, opts)
-        opts.ensure_installed = opts.ensure_installed or {}
-        table.insert(opts.ensure_installed, "js-debug-adapter")
-      end,
-    },
-  },
-  keys = dap_keys,
-  config = function()
-    local dap = require('dap')
-    local dapui = require('dapui')
+		setup_nodejs_debug(dap)
 
-    setup_nodejs_debug(dap)
+		dapui.setup({
+			icons = { expanded = "▾", collapsed = "▸", current_frame = "*" },
+			controls = {
+				icons = {
+					pause = "⏸",
+					play = "▶",
+					step_into = "⏎",
+					step_over = "⏭",
+					step_out = "⏮",
+					step_back = "b",
+					run_last = "▶▶",
+					terminate = "⏹",
+					disconnect = "⏏",
+				},
+			},
+		})
 
-
-    dapui.setup({
-      icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
-      controls = {
-        icons = {
-          pause = '⏸',
-          play = '▶',
-          step_into = '⏎',
-          step_over = '⏭',
-          step_out = '⏮',
-          step_back = 'b',
-          run_last = '▶▶',
-          terminate = '⏹',
-          disconnect = '⏏',
-        },
-      },
-    })
-
-
-    dap.listeners.after.event_initialized['dapui_config'] = dapui.open
-    dap.listeners.before.event_terminated['dapui_config'] = dapui.close
-    dap.listeners.before.event_exited['dapui_config'] = dapui.close
-  end
+		dap.listeners.after.event_initialized["dapui_config"] = dapui.open
+		dap.listeners.before.event_terminated["dapui_config"] = dapui.close
+		dap.listeners.before.event_exited["dapui_config"] = dapui.close
+	end,
 }
 
 -- -- debug.lua

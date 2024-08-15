@@ -29,6 +29,15 @@ return {
 					"hrsh7th/cmp-cmdline",
 					"L3MON4D3/LuaSnip",
 					"saadparwaiz1/cmp_luasnip",
+					{
+						"Saecki/crates.nvim",
+						event = { "BufRead Cargo.toml" },
+						opts = {
+							completion = {
+								cmp = { enabled = true },
+							},
+						},
+					},
 				},
 				config = function()
 					local cmp = require("cmp")
@@ -37,6 +46,7 @@ return {
 					cmp.setup({
 						sources = {
 							{ name = "copilot" },
+							{ name = "crates" },
 							{ name = "path" },
 							{ name = "nvim_lsp" },
 							{ name = "luasnip" },
@@ -138,6 +148,8 @@ return {
 					"dockerls",
 					"cssls",
 					"bashls",
+					"rust_analyzer",
+					"taplo",
 				},
 				automatic_installation = true,
 				handlers = {
@@ -189,12 +201,59 @@ return {
 	},
 	{
 		"mrcjkb/rustaceanvim",
-		version = "^4",
+		version = "^5",
 		ft = { "rust" },
-		config = function()
-			on_attach(function(client, buffer)
-				-- require("lsp-inlayhints").on_attach(client, buffer)
-			end)
+		opts = {
+			server = {
+				default_settings = {
+					["rust-analyzer"] = {
+						cargo = {
+							allFeatures = true,
+							loadOutDirsFromCheck = true,
+							buildScripts = {
+								enable = true,
+							},
+						},
+						checkOnSave = true,
+					},
+				},
+			},
+		},
+		config = function(_, opts)
+			vim.g.rustaceanvim = vim.tbl_deep_extend("keep", vim.g.rustaceanvim or {}, opts or {})
+			if vim.fn.executable("rust-analyzer") == 0 then
+				-- notify an error
+				vim.notify("rust-analyzer is not installed", vim.log)
+			end
 		end,
+		dependencies = {
+			{
+				"Saecki/crates.nvim",
+				event = { "BufRead Cargo.toml" },
+				opts = {
+					completion = {
+						cmp = { enabled = true },
+					},
+				},
+				keys = {
+					{
+						"K",
+						function()
+							if vim.fn.expand("%:t") == "Cargo.toml" and require("crates").popup_available() then
+								require("crates").show_popup()
+							else
+								vim.lsp.buf.hover()
+							end
+						end,
+						desc = "Show Crate Documentation",
+					},
+				},
+				{
+					"williamboman/mason.nvim",
+					optional = true,
+					opts = { ensure_installed = { "codelldb" } },
+				},
+			},
+		},
 	},
 }

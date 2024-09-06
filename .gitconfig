@@ -5,6 +5,7 @@
 	defaultBranch = main
 [alias]
 	clone-for-worktrees = "!sh $HOME/.local/bin/git-clone-bare-for-worktrees"
+  auto-small= "!sh $HOME/.local/bin/git-auto-small"
 [core]
 	editor = nvim
 [push]

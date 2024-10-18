@@ -11,6 +11,7 @@ set -gx EDITOR nvim
 abbr -a 'v' 'nvim'
 abbr -a 'vf' 'nvim $(fzf)'
 abbr -a 'rate-upate-mirror' 'rate-mirrors --allow-root --disable-comments --protocol https arch  | sudo tee /etc/pacman.d/mirrorlist'
+abbr -a cargo_copy 'cargo c 2>&1 | tee /tmp/cargo_output.log | cat; cat /tmp/cargo_output.log | wl-copy'
 
 # vi like
 # complete suggestion

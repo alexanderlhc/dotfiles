@@ -50,6 +50,16 @@ return {
 				function()
 					require("fzf-lua").buffers()
 				end, desc = "[F]ind [B]uffers"
+			},
+			{
+				"<leader>fd",
+				function()
+					require("fzf-lua").files({
+						cmd = "rg --files",
+						winopts = { preview = { hidden = "nohidden" } },
+						cwd="~/.config/"
+					})
+				end, desc = "[F]ind [B]uffers"
 			}
 		},
 		opts = {}

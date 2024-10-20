@@ -3,12 +3,16 @@ local opt = vim.opt
 
 g.mapleader = " "
 
-opt.clipboard = "unnamedplus"                -- allow neovim to access the system clipboard
+-- opt.clipboard = "unnamedplus"                -- allow neovim to access the system clipboard
 
 -- search
 opt.hlsearch = true   -- highlight all matches on previous search pattern
 opt.ignorecase = true -- ignore case in search patterns
 opt.smartcase = true  -- smart case
+
+--  tabs
+opt.shiftwidth = 0 -- used by ><. 0 means use tabstop
+opt.tabstop = 2 -- spaces tab counts for
 
 -- ui
 opt.lazyredraw = true -- don"t update the display while executing macros

@@ -13,7 +13,6 @@ return {
 				},
 			},
 		},
-		---@param opts cmp.ConfigSchema
 		opts = function(_, opts)
 			opts.sources = opts.sources or {}
 			table.insert(opts.sources, { name = "crates" })
@@ -33,7 +32,7 @@ return {
 
 	{
 		"mrcjkb/rustaceanvim",
-		version = vim.fn.has("nvim-0.10.0") == 0 and "^4" or false,
+		version = "^5",
 		ft = { "rust" },
 		opts = {
 			server = {

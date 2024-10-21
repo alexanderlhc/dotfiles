@@ -76,7 +76,7 @@ local function set_lsp_keymaps(buffer)
 	end
 	map("n", "K", vim.lsp.buf.hover, { desc = "Hover", buffer = buffer })
 	if has(buffer, "signatureHelp") then
-		map("n", "gK", vim.lsvim.lsp.buf.hoverp.buf.signature_help, { desc = "Signature Help", buffer = buffer })
+		map("n", "gK", vim.lsp.buf.signature_help, { desc = "Signature Help", buffer = buffer })
 		map("i", "<c-k>", vim.lsp.buf.signature_help, { desc = "Signature Help", buffer = buffer })
 	end
 	if has(buffer, "codeAction") then

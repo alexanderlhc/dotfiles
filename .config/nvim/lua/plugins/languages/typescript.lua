@@ -7,6 +7,6 @@ return {
 		require("lspconfig.configs").vtsls = require("vtsls")
 				.lspconfig
 
-		require("lspconfig").vtsls.setup({})
+		-- require("lspconfig").vtsls.setup({})
 	end
 }

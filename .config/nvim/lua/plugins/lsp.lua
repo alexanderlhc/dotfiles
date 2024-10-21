@@ -1,6 +1,7 @@
 local mlsp_opts = {
 	ensure_installed = { "lua_ls", "vtsls", "cssls", "html" },
 }
+
 return {
 	"neovim/nvim-lspconfig",
 	event = "VeryLazy",

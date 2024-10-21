@@ -11,8 +11,8 @@ local sources = {
 				for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
 					-- Don't index giant files
 					if
-						vim.api.nvim_buf_is_loaded(bufnr)
-						and vim.api.nvim_buf_line_count(bufnr) < MAX_INDEX_FILE_SIZE
+							vim.api.nvim_buf_is_loaded(bufnr)
+							and vim.api.nvim_buf_line_count(bufnr) < MAX_INDEX_FILE_SIZE
 					then
 						table.insert(bufs, bufnr)
 					end
@@ -21,6 +21,7 @@ local sources = {
 			end,
 		},
 	},
+
 }
 
 return {
@@ -56,7 +57,69 @@ return {
 			}),
 		})
 
-		local formatting = {}
+		local formatting = {
+			format = function(entry, item)
+				local icons = {
+					Array         = " ",
+					Boolean       = "󰨙 ",
+					Class         = " ",
+					Codeium       = "󰘦 ",
+					Color         = " ",
+					Control       = " ",
+					Collapsed     = " ",
+					Constant      = "󰏿 ",
+					Constructor   = " ",
+					Copilot       = " ",
+					Enum          = " ",
+					EnumMember    = " ",
+					Event         = " ",
+					Field         = " ",
+					File          = " ",
+					Folder        = " ",
+					Function      = "󰊕 ",
+					Interface     = " ",
+					Key           = " ",
+					Keyword       = " ",
+					Method        = "󰊕 ",
+					Module        = " ",
+					Namespace     = "󰦮 ",
+					Null          = " ",
+					Number        = "󰎠 ",
+					Object        = " ",
+					Operator      = " ",
+					Package       = " ",
+					Property      = " ",
+					Reference     = " ",
+					Snippet       = " ",
+					String        = " ",
+					Struct        = "󰆼 ",
+					TabNine       = "󰏚 ",
+					Text          = " ",
+					TypeParameter = " ",
+					Unit          = " ",
+					Value         = " ",
+					Variable      = "󰀫 ",
+				}
+				if icons[item.kind] then
+					item.kind = icons[item.kind] .. item.kind
+				end
+
+				local widths = {
+					abbr = vim.g.cmp_widths and vim.g.cmp_widths.abbr or 40,
+					menu = vim.g.cmp_widths and vim.g.cmp_widths.menu or 30,
+				}
+
+				for key, width in pairs(widths) do
+					if item[key] and vim.fn.strdisplaywidth(item[key]) > width then
+						item[key] = vim.fn.strcharpart(item[key], 0, width - 1) .. "…"
+					end
+				end
+
+				return item
+			end,
+		}
+
+		-- local formatting = {}
 
 		return {
 			mapping = mapping,

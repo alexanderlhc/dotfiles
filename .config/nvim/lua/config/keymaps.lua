@@ -60,23 +60,23 @@ end
 -- Add the following LSP key mappings
 local function set_lsp_keymaps(buffer)
 	if has(buffer, "definition") then
-		map("n", "gd", vim.lsp.buf.definition, { desc = "Goto Definition", buffer = buffer })
+		map("n", "gd", vim.lsp.buf.definition, { desc = "Goto [D]efinition", buffer = buffer })
 	end
 	if has(buffer, "references") then
-		map("n", "gr", vim.lsp.buf.references, { desc = "References", nowait = true, buffer = buffer })
+		map("n", "gr", vim.lsp.buf.references, { desc = "[R]eferences", nowait = true, buffer = buffer })
 	end
 	if has(buffer, "implementation") then
-		map("n", "gI", vim.lsp.buf.implementation, { desc = "Goto Implementation", buffer = buffer })
+		map("n", "gI", vim.lsp.buf.implementation, { desc = "Goto [I]mplementation", buffer = buffer })
 	end
 	if has(buffer, "typeDefinition") then
 		map("n", "gy", vim.lsp.buf.type_definition, { desc = "Goto T[y]pe Definition", buffer = buffer })
 	end
 	if has(buffer, "declaration") then
-		map("n", "gD", vim.lsp.buf.declaration, { desc = "Goto Declaration", buffer = buffer })
+		map("n", "gD", vim.lsp.buf.declaration, { desc = "Goto [D]eclaration", buffer = buffer })
 	end
 	map("n", "K", vim.lsp.buf.hover, { desc = "Hover", buffer = buffer })
 	if has(buffer, "signatureHelp") then
-		map("n", "gK", vim.lsp.buf.signature_help, { desc = "Signature Help", buffer = buffer })
+		map("n", "gK", vim.lsvim.lsp.buf.hoverp.buf.signature_help, { desc = "Signature Help", buffer = buffer })
 		map("i", "<c-k>", vim.lsp.buf.signature_help, { desc = "Signature Help", buffer = buffer })
 	end
 	if has(buffer, "codeAction") then

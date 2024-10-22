@@ -33,7 +33,6 @@ map("n", "[e", diagnostic_goto(false, "ERROR"), { desc = "Prev Error" })
 map("n", "]w", diagnostic_goto(true, "WARN"), { desc = "Next Warning" })
 map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" })
 
-
 --
 -- LSP
 --
@@ -48,7 +47,7 @@ local function has(buffer, method)
 		return false
 	end
 	method = method:find("/") and method or "textDocument/" .. method
-	local clients = vim.lsp.get_active_clients({ bufnr = buffer })
+	local clients = vim.lsp.get_clients({ bufnr = buffer })
 	for _, client in ipairs(clients) do
 		if client.supports_method(method) then
 			return true

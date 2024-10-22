@@ -21,6 +21,7 @@ return {
 					capabilities = capabilities,
 				})
 			end,
+			["rust_analyzer"] = function() end,
 		})
-	end
+	end,
 }

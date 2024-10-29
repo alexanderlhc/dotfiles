@@ -1,7 +1,7 @@
 return {
 	{
 		"nvim-telescope/telescope.nvim",
-		keys = { },
+		keys = {},
 	},
 	{
 		"ibhagwan/fzf-lua",
@@ -12,44 +12,49 @@ return {
 				function()
 					require("fzf-lua").files({
 						cmd = "rg --files",
-						winopts = { preview = { hidden = "nohidden" } }
+						winopts = { preview = { hidden = "nohidden" } },
 					})
-				end, desc = "[F]ind [F]ile"
+				end,
+				desc = "[F]ind [F]ile",
 			},
 			{
 				"<leader>fg",
 				function()
 					require("fzf-lua").live_grep_native({
 						cmd = "rg",
-						winopts = { preview = { hidden = "nohidden" } }
+						winopts = { preview = { hidden = "nohidden" } },
 					})
-				end, desc = "[F]ind [G]rep"
+				end,
+				desc = "[F]ind [G]rep",
 			},
 			{
 				"<leader>fv",
 				function()
-					require("fzf-lua").grep_visual({ })
-				end, 
+					require("fzf-lua").grep_visual({})
+				end,
 				mode = { "v" },
-				desc = "[F]ind [V]isual"
+				desc = "[F]ind [V]isual",
 			},
 			{
 				"<leader>fr",
 				function()
 					require("fzf-lua").resume()
-				end, desc = "[F]ind [R]esume"
+				end,
+				desc = "[F]ind [R]esume",
 			},
 			{
 				"<leader>fs",
 				function()
 					require("fzf-lua").treesitter()
-				end, desc = "[F]ind [S]ymbols"
+				end,
+				desc = "[F]ind [S]ymbols",
 			},
 			{
 				"<leader>fb",
 				function()
 					require("fzf-lua").buffers()
-				end, desc = "[F]ind [B]uffers"
+				end,
+				desc = "[F]ind [B]uffers",
 			},
 			{
 				"<leader>fd",
@@ -57,11 +62,12 @@ return {
 					require("fzf-lua").files({
 						cmd = "rg --files",
 						winopts = { preview = { hidden = "nohidden" } },
-						cwd="~/.config/"
+						cwd = "~/.config/",
 					})
-				end, desc = "[F]ind [B]uffers"
-			}
+				end,
+				desc = "[F]ind [B]uffers",
+			},
 		},
-		opts = {}
-	}
+		opts = {},
+	},
 }

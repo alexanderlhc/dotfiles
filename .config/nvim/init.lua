@@ -21,6 +21,7 @@ opt.cmdheight = 0 -- Hide cmd line
 
 opt.mouse = "a" -- allow the mouse to be used in neovim
 opt.number = true -- set numbered lines
+opt.relativenumber = true
 opt.scrolloff = 18 -- minimal number of screen lines to keep above and below the cursor
 opt.signcolumn = "yes" -- always show the sign column, otherwise it would shift the text each time
 

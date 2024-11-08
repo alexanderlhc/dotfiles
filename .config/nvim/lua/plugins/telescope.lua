@@ -21,7 +21,6 @@ return {
 				"<leader>fg",
 				function()
 					require("fzf-lua").live_grep_native({
-						cmd = "rg",
 						winopts = { preview = { hidden = "nohidden" } },
 					})
 				end,

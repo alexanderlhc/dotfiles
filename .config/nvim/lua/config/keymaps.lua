@@ -142,7 +142,20 @@ local function bufremove(buf)
 	end
 end
 
+-- Move to window using the <ctrl> hjkl keys
+map("n", "<C-h>", "<C-w>h", { desc = "Go to Left Window", remap = true })
+map("n", "<C-j>", "<C-w>j", { desc = "Go to Lower Window", remap = true })
+map("n", "<C-k>", "<C-w>k", { desc = "Go to Upper Window", remap = true })
+map("n", "<C-l>", "<C-w>l", { desc = "Go to Right Window", remap = true })
+
+-- Buffers
 map("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
 map("n", "]b", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 map("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
 map("n", "<leader>bd", bufremove, { desc = "Delete Buffer" })
+map(
+	"n",
+	"<leader>bo",
+	"<cmd>bufdo if bufwinnr(bufnr()) != winnr() | bwipeout! | endif<cr>",
+	{ desc = "[B]uff [O]ther: Close all buffers except current" }
+)

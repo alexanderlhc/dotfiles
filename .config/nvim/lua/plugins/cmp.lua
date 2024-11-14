@@ -11,8 +11,8 @@ local sources = {
 				for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
 					-- Don't index giant files
 					if
-							vim.api.nvim_buf_is_loaded(bufnr)
-							and vim.api.nvim_buf_line_count(bufnr) < MAX_INDEX_FILE_SIZE
+						vim.api.nvim_buf_is_loaded(bufnr)
+						and vim.api.nvim_buf_line_count(bufnr) < MAX_INDEX_FILE_SIZE
 					then
 						table.insert(bufs, bufnr)
 					end
@@ -21,15 +21,16 @@ local sources = {
 			end,
 		},
 	},
-
 }
 
 return {
 	"hrsh7th/nvim-cmp",
+	enabled = false,
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
 		"hrsh7th/cmp-buffer",
 		"hrsh7th/cmp-path",
+		"kristijanhusak/vim-dadbod-completion",
 	},
 	cmd = { "CmpInfo" },
 	event = "InsertEnter *",
@@ -60,45 +61,45 @@ return {
 		local formatting = {
 			format = function(entry, item)
 				local icons = {
-					Array         = " ",
-					Boolean       = "󰨙 ",
-					Class         = " ",
-					Codeium       = "󰘦 ",
-					Color         = " ",
-					Control       = " ",
-					Collapsed     = " ",
-					Constant      = "󰏿 ",
-					Constructor   = " ",
-					Copilot       = " ",
-					Enum          = " ",
-					EnumMember    = " ",
-					Event         = " ",
-					Field         = " ",
-					File          = " ",
-					Folder        = " ",
-					Function      = "󰊕 ",
-					Interface     = " ",
-					Key           = " ",
-					Keyword       = " ",
-					Method        = "󰊕 ",
-					Module        = " ",
-					Namespace     = "󰦮 ",
-					Null          = " ",
-					Number        = "󰎠 ",
-					Object        = " ",
-					Operator      = " ",
-					Package       = " ",
-					Property      = " ",
-					Reference     = " ",
-					Snippet       = " ",
-					String        = " ",
-					Struct        = "󰆼 ",
-					TabNine       = "󰏚 ",
-					Text          = " ",
+					Array = " ",
+					Boolean = "󰨙 ",
+					Class = " ",
+					Codeium = "󰘦 ",
+					Color = " ",
+					Control = " ",
+					Collapsed = " ",
+					Constant = "󰏿 ",
+					Constructor = " ",
+					Copilot = " ",
+					Enum = " ",
+					EnumMember = " ",
+					Event = " ",
+					Field = " ",
+					File = " ",
+					Folder = " ",
+					Function = "󰊕 ",
+					Interface = " ",
+					Key = " ",
+					Keyword = " ",
+					Method = "󰊕 ",
+					Module = " ",
+					Namespace = "󰦮 ",
+					Null = " ",
+					Number = "󰎠 ",
+					Object = " ",
+					Operator = " ",
+					Package = " ",
+					Property = " ",
+					Reference = " ",
+					Snippet = " ",
+					String = " ",
+					Struct = "󰆼 ",
+					TabNine = "󰏚 ",
+					Text = " ",
 					TypeParameter = " ",
-					Unit          = " ",
-					Value         = " ",
-					Variable      = "󰀫 ",
+					Unit = " ",
+					Value = " ",
+					Variable = "󰀫 ",
 				}
 				if icons[item.kind] then
 					item.kind = icons[item.kind] .. item.kind

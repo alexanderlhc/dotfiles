@@ -12,6 +12,13 @@ return {
 		"yioneko/nvim-vtsls",
 	},
 	config = function()
+		-- Call this function when the LSP attaches to a buffer
+		vim.api.nvim_create_autocmd("LspAttach", {
+			callback = function(args)
+				require("config.keymap_on_attach").set_lsp_keymaps(args.buf)
+			end,
+		})
+
 		require("mason").setup()
 		require("mason-lspconfig").setup(mlsp_opts)
 

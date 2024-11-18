@@ -4,8 +4,6 @@ local has = keymap_utils.has
 
 -- Define the LSP keymap setting function
 local function set_lsp_keymaps(buffer)
-	print("LSP KEYMAPS SET")
-
 	if has(buffer, "definition") then
 		map("n", "gd", vim.lsp.buf.definition, { desc = "Goto [D]efinition", buffer = buffer })
 	end

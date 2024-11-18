@@ -6,21 +6,21 @@ scripts=$config/scripts
 
 output=$(swww query 2>&1)
 if [[ $output == *"Socket file not found"* ]]; then
-  swww-daemon &
+	swww-daemon &
 fi
 
 # wallpaper
 setwallpaper() {
-  "$scripts"/wallpaper "$1" &
+	"$scripts"/wallpaper "$1" &
 }
 setwallpaper "$HOME/.local/share/wallpapers/left.png"
 
 # Execute your favorite apps at launch
-#pgrep -x "waybar" >/dev/null && pkill -x "waybar"
-#waybar &
+pgrep -x "waybar" >/dev/null && pkill -x "waybar"
+waybar &
 
-pgrep -x "ags" >/dev/null && pkill -x "ags"
-ags &
+# pgrep -x "ags" >/dev/null && pkill -x "ags"
+# ags &
 
 #exec-once = wl-paste --watch cliphist store
 pgrep -x "wl-paste" >/dev/null && pkill -x "wl-paste"

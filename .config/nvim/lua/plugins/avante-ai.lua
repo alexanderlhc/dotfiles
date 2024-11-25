@@ -1,13 +1,14 @@
 return {
 	"yetone/avante.nvim",
 	event = "VeryLazy",
+	enabled = false,
 	lazy = false,
 	version = false, -- set this if you want to always pull the latest change
 	opts = {
 		provider = "openai",
 		openai = {
 			model = "gpt-4o-mini",
-		}
+		},
 	},
 	-- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
 	build = "make",
@@ -19,7 +20,7 @@ return {
 		"MunifTanjim/nui.nvim",
 		--- The below dependencies are optional,
 		"nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-		"zbirenbaum/copilot.lua",    -- for providers='copilot'
+		"zbirenbaum/copilot.lua", -- for providers='copilot'
 		{
 			-- support for image pasting
 			"HakonHarnes/img-clip.nvim",
@@ -36,13 +37,14 @@ return {
 				},
 			},
 		},
-		{
-			-- Make sure to set this up properly if you have lazy=true
-			'MeanderingProgrammer/render-markdown.nvim',
-			opts = {
-				file_types = { "markdown", "Avante" },
-			},
-			ft = { "markdown", "Avante" },
-		},
+		-- {
+		-- 	-- Make sure to set this up properly if you have lazy=true
+		-- 	"MeanderingProgrammer/render-markdown.nvim",
+		-- 	dependencies = { "nvim-treesitter/nvim-treesitter" },
+		-- 	opts = {
+		-- 		file_types = { "markdown", "Avante" },
+		-- 	},
+		-- 	ft = { "markdown", "Avante" },
+		-- },
 	},
 }

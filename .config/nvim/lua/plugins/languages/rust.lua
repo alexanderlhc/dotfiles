@@ -34,6 +34,9 @@ return {
 		"mrcjkb/rustaceanvim",
 		version = "^5",
 		ft = { "rust" },
+		dependencies = {
+			"stevearc/dressing.nvim",
+		},
 		opts = {
 			server = {
 				on_attach = function(_, bufnr)

@@ -2,7 +2,7 @@ return {
 	{
 		"kristijanhusak/vim-dadbod-ui",
 		dependencies = {
-			{ "tpope/vim-dadbod", lazy = true },
+			{ "tpope/vim-dadbod",                     lazy = true },
 			{ "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true }, -- Optional
 		},
 		cmd = {
@@ -10,6 +10,16 @@ return {
 			"DBUIToggle",
 			"DBUIAddConnection",
 			"DBUIFindBuffer",
+		},
+		keys = {
+			{
+				'<leader>dt',
+				function()
+					vim.cmd('tabnew')
+					vim.cmd('DBUI')
+				end,
+				desc = 'Open new tab with DBUI'
+			},
 		},
 		init = function()
 			-- Your DBUI configuration

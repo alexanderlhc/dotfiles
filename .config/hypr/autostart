@@ -16,8 +16,11 @@ setwallpaper() {
 setwallpaper "$HOME/.local/share/wallpapers/left.png"
 
 # Execute your favorite apps at launch
-pgrep -x "waybar" >/dev/null && pkill -x "waybar"
-waybar &
+# pgrep -x "waybar" >/dev/null && pkill -x "waybar"
+# waybar &
+pgrep -x "ags" >/dev/null && pkill -x "ags"
+ags run &
+
 
 # pgrep -x "ags" >/dev/null && pkill -x "ags"
 # ags &

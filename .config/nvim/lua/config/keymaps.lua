@@ -63,9 +63,11 @@ map("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
 map("n", "]b", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 map("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
 map("n", "<leader>bd", bufremove, { desc = "Delete Buffer" })
-map(
-	"n",
-	"<leader>bo",
-	"<cmd>bufdo if bufwinnr(bufnr()) != winnr() | bwipeout! | endif<cr>",
-	{ desc = "[B]uff [O]ther: Close all buffers except current" }
-)
+map("n", "<leader>bo", function()
+	local current_buf = vim.api.nvim_get_current_buf()
+	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+		if buf ~= current_buf then
+			vim.api.nvim_buf_delete(buf, { force = true })
+		end
+	end
+end, { desc = "[B]uff [O]ther: Close all buffers except current" })

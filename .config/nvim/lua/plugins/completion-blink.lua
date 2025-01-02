@@ -30,7 +30,7 @@ return {
 			-- 	},
 		},
 		sources = {
-			default = { "lsp", "path", "snippets", "buffer", },
+			default = { "lsp", "path", "snippets", "buffer" },
 		},
 
 		keymap = {
@@ -38,7 +38,7 @@ return {
 			["<C-y>"] = { "select_and_accept" },
 		},
 	},
-	opts_extend = { "sources.default" }
+	opts_extend = { "sources.default" },
 }
 
 -- Text = '󰉿',

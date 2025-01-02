@@ -1,138 +1,139 @@
-local MAX_INDEX_FILE_SIZE = 4000
-local sources = {
-	{ name = "nvim_lsp" },
-	{ name = "path" },
-	{
-		name = "buffer",
-		keyword_length = 4,
-		options = {
-			get_bufnrs = function()
-				local bufs = {}
-				for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
-					-- Don't index giant files
-					if
-						vim.api.nvim_buf_is_loaded(bufnr)
-						and vim.api.nvim_buf_line_count(bufnr) < MAX_INDEX_FILE_SIZE
-					then
-						table.insert(bufs, bufnr)
-					end
-				end
-				return bufs
-			end,
-		},
-	},
-}
-
-return {
-	"hrsh7th/nvim-cmp",
-	enabled = false,
-	dependencies = {
-		"hrsh7th/cmp-nvim-lsp",
-		"hrsh7th/cmp-buffer",
-		"hrsh7th/cmp-path",
-		"kristijanhusak/vim-dadbod-completion",
-	},
-	cmd = { "CmpInfo" },
-	event = "InsertEnter *",
-	opts = function()
-		local cmp = require("cmp")
-
-		vim.api.nvim_create_user_command("CmpInfo", function()
-			cmp.status()
-		end, {})
-
-		local defaults = require("cmp.config.default")()
-		local auto_select = true
-
-		vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
-
-		local mapping = cmp.mapping.preset.insert({
-			["<C-d>"] = cmp.mapping.scroll_docs(-4),
-			["<C-f>"] = cmp.mapping.scroll_docs(4),
-			["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-			["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-			["<C-e>"] = cmp.mapping.close(),
-			["<C-y>"] = cmp.mapping.confirm({
-				behavior = cmp.ConfirmBehavior.Replace,
-				select = true,
-			}),
-		})
-
-		local formatting = {
-			format = function(entry, item)
-				local icons = {
-					Array = " ",
-					Boolean = "󰨙 ",
-					Class = " ",
-					Codeium = "󰘦 ",
-					Color = " ",
-					Control = " ",
-					Collapsed = " ",
-					Constant = "󰏿 ",
-					Constructor = " ",
-					Copilot = " ",
-					Enum = " ",
-					EnumMember = " ",
-					Event = " ",
-					Field = " ",
-					File = " ",
-					Folder = " ",
-					Function = "󰊕 ",
-					Interface = " ",
-					Key = " ",
-					Keyword = " ",
-					Method = "󰊕 ",
-					Module = " ",
-					Namespace = "󰦮 ",
-					Null = " ",
-					Number = "󰎠 ",
-					Object = " ",
-					Operator = " ",
-					Package = " ",
-					Property = " ",
-					Reference = " ",
-					Snippet = " ",
-					String = " ",
-					Struct = "󰆼 ",
-					TabNine = "󰏚 ",
-					Text = " ",
-					TypeParameter = " ",
-					Unit = " ",
-					Value = " ",
-					Variable = "󰀫 ",
-				}
-				if icons[item.kind] then
-					item.kind = icons[item.kind] .. item.kind
-				end
-
-				local widths = {
-					abbr = vim.g.cmp_widths and vim.g.cmp_widths.abbr or 40,
-					menu = vim.g.cmp_widths and vim.g.cmp_widths.menu or 30,
-				}
-
-				for key, width in pairs(widths) do
-					if item[key] and vim.fn.strdisplaywidth(item[key]) > width then
-						item[key] = vim.fn.strcharpart(item[key], 0, width - 1) .. "…"
-					end
-				end
-
-				return item
-			end,
-		}
-
-		-- local formatting = {}
-
-		return {
-			mapping = mapping,
-			formatting = formatting,
-			preselect = auto_select and cmp.PreselectMode.Item or cmp.PreselectMode.None,
-			sources = sources,
-			experimental = {
-				ghost_text = {
-					hl_group = "CmpGhostText",
-				},
-			},
-			-- sorting = defaults.sorting,
-		}
-	end,
-}
+return {}
+-- local MAX_INDEX_FILE_SIZE = 4000
+-- local sources = {
+-- 	{ name = "nvim_lsp" },
+-- 	{ name = "path" },
+-- 	{
+-- 		name = "buffer",
+-- 		keyword_length = 4,
+-- 		options = {
+-- 			get_bufnrs = function()
+-- 				local bufs = {}
+-- 				for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+-- 					-- Don't index giant files
+-- 					if
+-- 						vim.api.nvim_buf_is_loaded(bufnr)
+-- 						and vim.api.nvim_buf_line_count(bufnr) < MAX_INDEX_FILE_SIZE
+-- 					then
+-- 						table.insert(bufs, bufnr)
+-- 					end
+-- 				end
+-- 				return bufs
+-- 			end,
+-- 		},
+-- 	},
+-- }
+--
+-- return {
+-- 	"hrsh7th/nvim-cmp",
+-- 	enabled = false,
+-- 	dependencies = {
+-- 		"hrsh7th/cmp-nvim-lsp",
+-- 		"hrsh7th/cmp-buffer",
+-- 		"hrsh7th/cmp-path",
+-- 		"kristijanhusak/vim-dadbod-completion",
+-- 	},
+-- 	cmd = { "CmpInfo" },
+-- 	event = "InsertEnter *",
+-- 	opts = function()
+-- 		local cmp = require("cmp")
+--
+-- 		vim.api.nvim_create_user_command("CmpInfo", function()
+-- 			cmp.status()
+-- 		end, {})
+--
+-- 		local defaults = require("cmp.config.default")()
+-- 		local auto_select = true
+--
+-- 		vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
+--
+-- 		local mapping = cmp.mapping.preset.insert({
+-- 			["<C-d>"] = cmp.mapping.scroll_docs(-4),
+-- 			["<C-f>"] = cmp.mapping.scroll_docs(4),
+-- 			["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+-- 			["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+-- 			["<C-e>"] = cmp.mapping.close(),
+-- 			["<C-y>"] = cmp.mapping.confirm({
+-- 				behavior = cmp.ConfirmBehavior.Replace,
+-- 				select = true,
+-- 			}),
+-- 		})
+--
+-- 		local formatting = {
+-- 			format = function(entry, item)
+-- 				local icons = {
+-- 					Array = " ",
+-- 					Boolean = "󰨙 ",
+-- 					Class = " ",
+-- 					Codeium = "󰘦 ",
+-- 					Color = " ",
+-- 					Control = " ",
+-- 					Collapsed = " ",
+-- 					Constant = "󰏿 ",
+-- 					Constructor = " ",
+-- 					Copilot = " ",
+-- 					Enum = " ",
+-- 					EnumMember = " ",
+-- 					Event = " ",
+-- 					Field = " ",
+-- 					File = " ",
+-- 					Folder = " ",
+-- 					Function = "󰊕 ",
+-- 					Interface = " ",
+-- 					Key = " ",
+-- 					Keyword = " ",
+-- 					Method = "󰊕 ",
+-- 					Module = " ",
+-- 					Namespace = "󰦮 ",
+-- 					Null = " ",
+-- 					Number = "󰎠 ",
+-- 					Object = " ",
+-- 					Operator = " ",
+-- 					Package = " ",
+-- 					Property = " ",
+-- 					Reference = " ",
+-- 					Snippet = " ",
+-- 					String = " ",
+-- 					Struct = "󰆼 ",
+-- 					TabNine = "󰏚 ",
+-- 					Text = " ",
+-- 					TypeParameter = " ",
+-- 					Unit = " ",
+-- 					Value = " ",
+-- 					Variable = "󰀫 ",
+-- 				}
+-- 				if icons[item.kind] then
+-- 					item.kind = icons[item.kind] .. item.kind
+-- 				end
+--
+-- 				local widths = {
+-- 					abbr = vim.g.cmp_widths and vim.g.cmp_widths.abbr or 40,
+-- 					menu = vim.g.cmp_widths and vim.g.cmp_widths.menu or 30,
+-- 				}
+--
+-- 				for key, width in pairs(widths) do
+-- 					if item[key] and vim.fn.strdisplaywidth(item[key]) > width then
+-- 						item[key] = vim.fn.strcharpart(item[key], 0, width - 1) .. "…"
+-- 					end
+-- 				end
+--
+-- 				return item
+-- 			end,
+-- 		}
+--
+-- 		-- local formatting = {}
+--
+-- 		return {
+-- 			mapping = mapping,
+-- 			formatting = formatting,
+-- 			preselect = auto_select and cmp.PreselectMode.Item or cmp.PreselectMode.None,
+-- 			sources = sources,
+-- 			experimental = {
+-- 				ghost_text = {
+-- 					hl_group = "CmpGhostText",
+-- 				},
+-- 			},
+-- 			-- sorting = defaults.sorting,
+-- 		}
+-- 	end,
+-- }

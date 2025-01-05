@@ -1,7 +1,0 @@
-# map <key> <action> [<argument>]
-map ctrl+c  copy_to_clipboard
-map ctrl+v  paste_from_clipboard
-map ctrl+shift+c send_text all \x03
-
-# theme
-kitty +kitten themes --reload-in=all Catppuccin-Latte

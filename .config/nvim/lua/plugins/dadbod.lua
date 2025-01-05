@@ -1,9 +1,10 @@
+local sql_ft = { "sql", "mysql", "plsql" }
 return {
 	{
 		"kristijanhusak/vim-dadbod-ui",
 		dependencies = {
 			{ "tpope/vim-dadbod",                     lazy = true },
-			{ "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true }, -- Optional
+			{ "kristijanhusak/vim-dadbod-completion", ft = sql_ft, lazy = true }, -- Optional
 		},
 		cmd = {
 			"DBUI",
@@ -13,7 +14,7 @@ return {
 		},
 		keys = {
 			{
-				'<leader>dt',
+				'<leader>Dt',
 				function()
 					vim.cmd('tabnew')
 					vim.cmd('DBUI')
@@ -23,7 +24,20 @@ return {
 		},
 		init = function()
 			-- Your DBUI configuration
+
+			-- Table helper is a predefined query that is available for each table in the list.  Default = 0
+			vim.g.db_ui_auto_execute_table_helpers = 1
+			-- save destinations
+			local data_path = vim.fn.stdpath("data")
+			vim.g.db_ui_save_location = data_path .. "/dadbod_ui"
+			vim.g.db_ui_tmp_query_location = data_path .. "/dadbod_ui/tmp"
+			-- run on save
+			vim.g.db_ui_execute_on_save = false
+			-- nerd font
 			vim.g.db_ui_use_nerd_fonts = 1
+
+			-- not using notify atm
+			-- vim.g.db_ui_use_nvim_notify = true
 
 			-- Disable folds in output
 			vim.api.nvim_create_autocmd("FileType", {
@@ -39,9 +53,7 @@ return {
 		optional = true,
 		opts = {
 			sources = {
-				completion = {
-					enabled_providers = { "dadbod" },
-				},
+				default = { "dadbod" },
 				providers = {
 					dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
 				},
@@ -51,4 +63,17 @@ return {
 			"kristijanhusak/vim-dadbod-completion",
 		},
 	},
+	{
+		"stevearc/conform.nvim",
+		optional = true,
+		opts = function(_, opts)
+			opts.formatters.sqlfluff = {
+				args = { "format", "--dialect=ansi", "-" },
+			}
+			for _, ft in ipairs(sql_ft) do
+				opts.formatters_by_ft[ft] = opts.formatters_by_ft[ft] or {}
+				table.insert(opts.formatters_by_ft[ft], "sqlfluff")
+			end
+		end,
+	}
 }

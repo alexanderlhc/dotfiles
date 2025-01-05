@@ -1,5 +1,7 @@
 local mlsp_opts = {
-	ensure_installed = { "lua_ls", "vtsls", "cssls", "html" },
+	ensure_installed = { "lua_ls", "vtsls", "cssls", "html",
+		-- "sqlfluff"
+	},
 }
 
 return {

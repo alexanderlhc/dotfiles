@@ -40,10 +40,6 @@ local function set_lsp_keymaps(buffer)
 		map("n", "<leader>cC", vim.lsp.codelens.refresh, { desc = "Refresh & Display Codelens", buffer = buffer })
 	end
 
-	if has(buffer, { "workspace/didRenameFiles", "workspace/willRenameFiles" }) then
-		map("n", "<leader>cR", vim.lsp.buf.rename, { desc = "Rename File", buffer = buffer })
-	end
-
 	if has(buffer, "rename") then
 		map("n", "<leader>cr", vim.lsp.buf.rename, { desc = "Rename", buffer = buffer })
 	end

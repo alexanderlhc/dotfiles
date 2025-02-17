@@ -1,55 +1,56 @@
 #!/bin/bash
-
 # Function to display usage information
 usage() {
-  echo "Usage: $0 -d targetdir -t filetype1,filetype2,... -o outputfile"
+  echo "Usage: $0 -d targetdir1,targetdir2,... -t filetype1,filetype2,... -o outputfile"
   exit 1
 }
 
 # Parse command line arguments
 while getopts ":d:t:o:" opt; do
   case $opt in
-  d) targetdir="$OPTARG" ;;
+  d) IFS=',' read -r -a targetdirs <<<"$OPTARG" ;;
   t) IFS=',' read -r -a filetypes <<<"$OPTARG" ;;
   o) outputfile="$OPTARG" ;;
   *) usage ;;
   esac
 done
 
-# Check if target directory, filetypes, and output file are provided
-if [ -z "$targetdir" ] || [ ${#filetypes[@]} -eq 0 ] || [ -z "$outputfile" ]; then
+# Check if target directories, filetypes, and output file are provided
+if [ ${#targetdirs[@]} -eq 0 ] || [ ${#filetypes[@]} -eq 0 ] || [ -z "$outputfile" ]; then
   usage
-fi
-
-# Check if the target directory exists
-if [ ! -d "$targetdir" ]; then
-  echo "Error: Target directory '$targetdir' does not exist."
-  exit 1
 fi
 
 # Clear the output file
 : >"$outputfile"
 
-# Function to process files of a specific type
+# Function to process files of a specific type in a specific directory
 process_files() {
-  local filetype=$1
-  echo "Processing files of type: $filetype" # Debug statement
-  find "$targetdir" -type f -name "*.${filetype}" | while read -r file; do
-    # Compute the relative path
-    relative_path=$(realpath --relative-to="$targetdir" "$file")
-    {
-      echo "// $relative_path"
-      cat "$file"
-      echo "" # Add a newline for separation
-    } >>"$outputfile"
-  done
+  local targetdir=$1
+  local filetype=$2
+  echo "Processing files of type: $filetype in directory: $targetdir" # Debug statement
+
+  # Check if the target directory exists
+  if [ -d "$targetdir" ]; then
+    find "$targetdir" -type f -name "*.${filetype}" | while read -r file; do
+      # Compute the relative path
+      relative_path=$(realpath --relative-to="$targetdir" "$file")
+      {
+        echo "// $relative_path"
+        cat "$file"
+        echo "" # Add a newline for separation
+      } >>"$outputfile"
+    done
+  else
+    echo "Error: Target directory '$targetdir' does not exist."
+  fi
 }
 
-# Process each filetype
-for filetype in "${filetypes[@]}"; do
-  process_files "$filetype"
+# Iterate over each target directory and process each filetype
+for targetdir in "${targetdirs[@]}"; do
+  for filetype in "${filetypes[@]}"; do
+    process_files "$targetdir" "$filetype"
+  done
 done
 
 echo "Concatenation complete. Output written to $outputfile"
-
 # vim: set ft=bash:

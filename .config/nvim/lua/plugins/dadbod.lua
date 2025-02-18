@@ -3,7 +3,7 @@ return {
 	{
 		"kristijanhusak/vim-dadbod-ui",
 		dependencies = {
-			{ "tpope/vim-dadbod",                     lazy = true },
+			{ "tpope/vim-dadbod", lazy = true },
 			{ "kristijanhusak/vim-dadbod-completion", ft = sql_ft, lazy = true }, -- Optional
 		},
 		cmd = {
@@ -14,12 +14,12 @@ return {
 		},
 		keys = {
 			{
-				'<leader>Dt',
+				"<leader>Dt",
 				function()
-					vim.cmd('tabnew')
-					vim.cmd('DBUI')
+					vim.cmd("tabnew")
+					vim.cmd("DBUI")
 				end,
-				desc = 'Open new tab with DBUI'
+				desc = "Open new tab with DBUI",
 			},
 		},
 		init = function()
@@ -48,32 +48,19 @@ return {
 			})
 		end,
 	},
-	{
-		"saghen/blink.cmp",
-		optional = true,
-		opts = {
-			sources = {
-				default = { "dadbod" },
-				providers = {
-					dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
-				},
-			},
-		},
-		dependencies = {
-			"kristijanhusak/vim-dadbod-completion",
-		},
-	},
 	-- {
-	-- 	"stevearc/conform.nvim",
+	-- 	"saghen/blink.cmp",
 	-- 	optional = true,
-	-- 	opts = function(_, opts)
-	-- 		opts.formatters.sqlfluff = {
-	-- 			args = { "format", "--dialect=ansi", "-" },
-	-- 		}
-	-- 		for _, ft in ipairs(sql_ft) do
-	-- 			opts.formatters_by_ft[ft] = opts.formatters_by_ft[ft] or {}
-	-- 			table.insert(opts.formatters_by_ft[ft], "sqlfluff")
-	-- 		end
-	-- 	end,
-	-- }
+	-- 	opts = {
+	-- 		sources = {
+	-- 			default = { "dadbod" },
+	-- 			providers = {
+	-- 				dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
+	-- 			},
+	-- 		},
+	-- 	},
+	-- 	dependencies = {
+	-- 		"kristijanhusak/vim-dadbod-completion",
+	-- 	},
+	-- },
 }

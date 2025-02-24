@@ -2,7 +2,10 @@ return {
 	"saghen/blink.cmp",
 	version = "*",
 	event = "InsertEnter",
-	dependencies = { "rafamadriz/friendly-snippets" },
+	dependencies = {
+		"rafamadriz/friendly-snippets",
+		"giuxtaposition/blink-cmp-copilot",
+	},
 	---@module 'blink.cmp'
 	---@type blink.cmp.Config
 	opts = {
@@ -30,7 +33,16 @@ return {
 			-- 	},
 		},
 		sources = {
-			default = { "lsp", "path", "snippets", "buffer" },
+			default = { "lsp", "copilot", "path", "snippets", "buffer" },
+			providers = {
+				copilot = {
+					name = "copilot",
+					module = "blink-cmp-copilot",
+					-- kind = "Copilot",
+					score_offset = 100,
+					async = true,
+				},
+			},
 		},
 
 		keymap = {

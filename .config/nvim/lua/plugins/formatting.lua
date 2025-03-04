@@ -109,8 +109,8 @@ return {
 			lua = { "stylua" },
 			fish = { "fish_indent" },
 			sh = { "shfmt" },
-			javascript = { "prettierd", "prettier", stop_after_first = true },
-			typescript = { "prettierd", "prettier", stop_after_first = true },
+			javascript = { "biome", "prettierd", "prettier", stop_after_first = true },
+			typescript = { "biome", "prettierd", "prettier", stop_after_first = true },
 			html = { "prettierd", "prettier", stop_after_first = true },
 		},
 		format_on_save = {

@@ -67,6 +67,11 @@ return {
 				desc = "[F]ind [B]uffers",
 			},
 		},
-		opts = {},
+		opts = {
+			defaults = {
+				formatter = "path.filename_first",
+				-- formatter = "path.dirname_first",
+			},
+		},
 	},
 }

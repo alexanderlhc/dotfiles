@@ -44,7 +44,6 @@ return {
 				},
 			},
 		},
-
 		keymap = {
 			preset = "default",
 			["<C-y>"] = { "select_and_accept" },

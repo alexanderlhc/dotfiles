@@ -1,16 +1,20 @@
-import = [
-  "~/.config/alacritty/catppuccin-latte.toml"
-]
 
 [font]
 normal = { family = "Monaspace Krypton", style = "Regular" }
 bold = { family = "Monaspace Krypton", style = "Bold" }
 italic = { family = "Monaspace Krypton", style = "Italic" }
 bold_italic = { family = "Monaspace Krypton", style = "Bold Italic" }
+
+[general]
+import = [
+  "~/.config/alacritty/catppuccin-latte.toml"
+]
+
+[terminal]
 # size = 15.0
 # offset = { x = 0, y = 28 }
 # glyph_offset = { x = 0, y = 14 }
 
 
-[shell]
+[terminal.shell]
 program = "/usr/bin/fish"

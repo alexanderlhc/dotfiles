@@ -43,6 +43,42 @@ opt.undodir = undodir
 opt.undolevels = 1000
 opt.undoreload = 10000
 
+local augroup = vim.api.nvim_create_augroup("NotifyMacroRecord", { clear = true })
+-- Define the autocommand to detect macro record start
+vim.api.nvim_create_autocmd("RecordingEnter", {
+	group = augroup,
+	callback = function(ctx)
+		local msg = "Recording macro started\n"
+			.. "id ["
+			.. vim.fn.reg_recording()
+			.. "]\n"
+			.. "buffer ["
+			.. ctx.buf
+			.. "]\n"
+			.. "file ["
+			.. vim.api.nvim_buf_get_name(ctx.buf)
+			.. "]"
+		vim.notify(msg)
+	end,
+})
+
+vim.api.nvim_create_autocmd("RecordingLeave", {
+	group = augroup,
+	callback = function(ctx)
+		local msg = "Recording macro stopped\n"
+			.. "Last recorded id ["
+			.. vim.fn.getreg('"')
+			.. "]\n"
+			.. "buffer ["
+			.. ctx.buf
+			.. "]\n"
+			.. "file ["
+			.. vim.api.nvim_buf_get_name(ctx.buf)
+			.. "]"
+		vim.notify(msg)
+	end,
+})
+
 -- Disable builtin plugins
 local disabled_built_ins = {
 	"2html_plugin",

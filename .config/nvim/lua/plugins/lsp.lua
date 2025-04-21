@@ -4,6 +4,7 @@ return {
 		dependencies = {
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
+			"b0o/schemastore.nvim",
 		},
 		config = function()
 			local icons = require("config.icons").diagnostics
@@ -19,14 +20,23 @@ return {
 			mason_lspconfig.setup({
 				ensure_installed = {
 					"biome",
+					"jsonls",
+					"vtsls",
 				},
-				-- This function gets called for each server defined AFTER setup handlers
-				-- Use it for general server setup, supplemented by language-specific setups
 				handlers = {
-					-- Default handler: Sets up LSP using capabilities and on_attach from lsp_config
 					function(server_name)
 						require("lspconfig")[server_name].setup({
 							on_attach = lsp_config.on_attach,
+						})
+					end,
+					["jsonls"] = function()
+						require("lspconfig")["jsonls"].setup({
+							settings = {
+								json = {
+									schemas = require("schemastore").json.schemas(),
+									validate = { enable = true },
+								},
+							},
 						})
 					end,
 				},

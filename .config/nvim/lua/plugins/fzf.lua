@@ -41,7 +41,7 @@ return {
 		{ "<leader>fb", "<cmd>FzfLua buffers sort_mru=true sort_lastused=true<cr>", desc = "Buffers" },
 		{ "<leader>fg", "<cmd>FzfLua git_files<cr>", desc = "Find Files (git-files)" },
 		{ "<leader>ff", "<cmd>FzfLua files<cr>", desc = "Find Files (all)" },
-		{ "<leader>fF", "<cmd>FzfLua grep<cr>", desc = "Find Files Grep (all)" },
+		{ "<leader>fF", "<cmd>FzfLua live_grep<cr>", desc = "Find Files Grep (all)" },
 		{ "<leader>fr", "<cmd>FzfLua oldfiles<cr>", desc = "Recent" },
 		-- git
 		{ "<leader>gc", "<cmd>FzfLua git_commits<CR>", desc = "Commits" },

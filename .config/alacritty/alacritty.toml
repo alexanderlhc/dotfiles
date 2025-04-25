@@ -1,9 +1,12 @@
-
 [font]
-normal = { family = "Monaspace Krypton", style = "Regular" }
-bold = { family = "Monaspace Krypton", style = "Bold" }
-italic = { family = "Monaspace Krypton", style = "Italic" }
-bold_italic = { family = "Monaspace Krypton", style = "Bold Italic" }
+normal = { family = "Maple Mono NF", style = "Regular" }
+bold = { family = "Maple Mono NF", style = "Bold" }
+italic = { family = "Maple Mono NF", style = "Italic" }
+bold_italic = { family = "Maple Mono NF", style = "Bold Italic" }
+# normal = { family = "Monaspace Krypton", style = "Regular" }
+# bold = { family = "Monaspace Krypton", style = "Bold" }
+# italic = { family = "Monaspace Krypton", style = "Italic" }
+# bold_italic = { family = "Monaspace Krypton", style = "Bold Italic" }
 
 [general]
 import = [

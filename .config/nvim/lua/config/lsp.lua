@@ -45,7 +45,7 @@ M.on_attach = function(client, bufnr)
 	vim.keymap.set(
 		"n",
 		"<leader>ws",
-		require("telescope.builtin").lsp_workspace_symbols,
+		require("fzf-lua").lsp_workspace_symbols,
 		get_opts("[W]orkspace [S]ymbols")
 	)
 end

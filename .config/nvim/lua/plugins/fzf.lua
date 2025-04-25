@@ -6,14 +6,9 @@ return {
 		-- local config = fzf.config
 		local actions = fzf.actions
 
-		-- config.defaults.keymap.fzf["ctrl-q"] = "select-all+accept"
-		-- config.defaults.keymap.fzf["ctrl-u"] = "half-page-up"
-		-- config.defaults.keymap.fzf["ctrl-d"] = "half-page-down"
-		-- config.defaults.keymap.fzf["ctrl-x"] = "jump"
-		-- config.defaults.keymap.fzf["ctrl-f"] = "preview-page-down"
-		-- config.defaults.keymap.fzf["ctrl-b"] = "preview-page-up"
-		-- config.defaults.keymap.builtin["<c-f>"] = "preview-page-down"
-		-- config.defaults.keymap.builtin["<c-b>"] = "preview-page-up"
+		-- open with Trouble
+		local actions_trouble = require("trouble.sources.fzf").actions
+		fzf.config.defaults.actions.files["ctrl-t"] = actions_trouble.open
 
 		return {
 			defaults = {

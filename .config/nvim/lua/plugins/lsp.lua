@@ -47,14 +47,13 @@ return {
 		"williamboman/mason.nvim",
 		build = ":MasonUpdate",
 		config = function()
-			local icons = require("config.icons")
+			local icons = require("config.icons").lazy
 			require("mason").setup({
 				ui = {
-					border = "rounded",
 					icons = {
-						icons.lazy.package_installed,
-						icons.lazy.package_pending,
-						icons.lazy.package_uninstalled,
+						package_installed = icons.package_installed,
+						package_pending = icons.package_pending,
+						package_uninstalled = icons.package_uninstalled,
 					},
 				},
 			})

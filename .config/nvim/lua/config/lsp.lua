@@ -37,17 +37,12 @@ M.on_attach = function(client, bufnr)
 		Snacks.words.jump(-vim.v.count1)
 	end, get_opts("Previous Reference"))
 
-	vim.keymap.set("n", "gd", require("fzf-lua").lsp_definitions, get_opts("[G]oto [D]efinition"))
-	vim.keymap.set("n", "gD", require("fzf-lua").lsp_declarations, get_opts("[G]oto [D]efinition"))
+	vim.keymap.set("n", "gd", require("fzf-lua").lsp_definitions, get_opts("[G]oto [D]definition"))
+	vim.keymap.set("n", "gD", require("fzf-lua").lsp_declarations, get_opts("[G]oto [D]definition"))
 	vim.keymap.set("n", "grr", require("fzf-lua").lsp_references, get_opts("[G]oto [R]eference"))
 	vim.keymap.set("n", "gri", require("fzf-lua").lsp_implementations, get_opts("[G]oto [I]mplementation"))
-	vim.keymap.set("n", "gs", require("fzf-lua").lsp_document_symbols, get_opts("[D]ocument [S]ymbols"))
-	vim.keymap.set(
-		"n",
-		"<leader>ws",
-		require("fzf-lua").lsp_workspace_symbols,
-		get_opts("[W]orkspace [S]ymbols")
-	)
+	vim.keymap.set("n", "gs", require("fzf-lua").lsp_document_symbols, get_opts("[D]ocument [S]symbols"))
+	vim.keymap.set("n", "<leader>ws", require("fzf-lua").lsp_workspace_symbols, get_opts("[W]orkspace [S]symbols"))
 end
 
 return M

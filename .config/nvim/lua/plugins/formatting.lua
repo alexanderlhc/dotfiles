@@ -1,13 +1,18 @@
 return {
 	"stevearc/conform.nvim",
 	dependencies = { "mason.nvim" },
+	event = "BufWritePre",
 	opts = {
 		formatters_by_ft = {
-			lua = { "stylua" },
-			sh = { "shfmt" },
+			["*"] = { "codespell" },
 			javascript = { "biome" },
-			typescript = { "biome" },
+			javascriptreact = { "biome" },
+			json = { "jq" },
+			lua = { "stylua" },
 			rust = { "rustfmt", lsp_format = "fallback" },
+			sh = { "shfmt" },
+			typescript = { "biome" },
+			typescriptreact = { "biome" },
 		},
 		format_on_save = {
 			lsp_format = "fallback",

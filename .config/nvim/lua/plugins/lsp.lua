@@ -23,23 +23,6 @@ return {
 					"jsonls",
 					"vtsls",
 				},
-				handlers = {
-					function(server_name)
-						require("lspconfig")[server_name].setup({
-							on_attach = lsp_config.on_attach,
-						})
-					end,
-					["jsonls"] = function()
-						require("lspconfig")["jsonls"].setup({
-							settings = {
-								json = {
-									schemas = require("schemastore").json.schemas(),
-									validate = { enable = true },
-								},
-							},
-						})
-					end,
-				},
 			})
 		end,
 	},

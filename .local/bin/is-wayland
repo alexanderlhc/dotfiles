@@ -1,3 +1,0 @@
-#!/bin/env sh
-
-printf 'Session is: %s\n' "${DISPLAY:+X11}${WAYLAND_DISPLAY:+WAYLAND}"

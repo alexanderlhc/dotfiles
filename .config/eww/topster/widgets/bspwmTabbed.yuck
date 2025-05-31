@@ -1,3 +1,0 @@
-(defpoll workspaces_tabbed :interval "500ms" "./scripts/bspc_tabbed.sh")
-(defwidget tabbed []
-  (literal :content workspaces_tabbed))

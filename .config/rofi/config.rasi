@@ -1,9 +1,0 @@
-configuration {
-    modi: 			"drun,run,filebrowser";
-    font: 			"Monaco 10";
-    show-icons: 		true;   
-    display-drun: 		"";
-    display-run: 		"";
-}
-
-@theme "~/.config/rofi/themes/catppuccin-latte.rasi"

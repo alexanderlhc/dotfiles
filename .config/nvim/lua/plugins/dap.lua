@@ -188,9 +188,17 @@ return {
 			end
 
 			require("mason-nvim-dap").setup({
-				ensure_installed = { "js-debug-adapter" },
+				ensure_installed = { "js-debug-adapter", "codelldb" },
 				automatic_installation = true,
 			})
+
+			dap.adapters = {
+				lldb = {
+					name = "codelldb",
+					type = "executable",
+					command = "codelldb",
+				},
+			}
 
 			dap.adapters["pwa-node"] = {
 				type = "server",

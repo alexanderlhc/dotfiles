@@ -1,7 +1,20 @@
 return {
 	"saghen/blink.cmp",
 	event = "InsertEnter",
-	dependencies = { "rafamadriz/friendly-snippets" },
+	dependencies = {
+		"rafamadriz/friendly-snippets",
+		{ "giuxtaposition/blink-cmp-copilot" },
+		{
+			"zbirenbaum/copilot.lua",
+			cmd = "Copilot",
+			event = "InsertEnter",
+			build = ":Copilot auth",
+			opts = {
+				suggestion = { enabled = false, auto_trigger = true, keymap = { accept = "<M-CR>" } },
+				panel = { enabled = false },
+			},
+		},
+	},
 
 	version = "1.*",
 	---@module 'blink.cmp'
@@ -37,7 +50,15 @@ return {
 		-- Default list of enabled providers defined so that you can extend it
 		-- elsewhere in your config, without redefining it, due to `opts_extend`
 		sources = {
-			default = { "lsp", "path", "snippets", "buffer" },
+			default = { "lsp", "copilot", "path", "snippets", "buffer" },
+			providers = {
+				copilot = {
+					name = "copilot",
+					module = "blink-cmp-copilot",
+					score_offset = 100,
+					async = true,
+				},
+			},
 		},
 
 		-- (Default) Rust fuzzy matcher for typo resistance and significantly better performance

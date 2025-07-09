@@ -63,4 +63,26 @@ function M.toggle_background()
 	toggle_option("background", "light", "dark")
 end
 
+function M.lsp_toggle_inlay_hints(client, bufnr)
+	if not client then
+		return
+	end
+
+	local has_hint =
+		require("config.client_supports_method").client_supports_method(client, "textDocument/inlayHint", bufnr)
+
+	if not has_hint then
+		return
+	end
+
+	M.map("n", "<leader>th", function()
+		local enabled = vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr })
+		vim.lsp.inlay_hint.enable(not enabled, { bufnr = bufnr })
+	end, {
+		buffer = bufnr,
+		desc = "[T]oggle Inlay [H]ints",
+		silent = true,
+	})
+end
+
 return M

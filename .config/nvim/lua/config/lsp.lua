@@ -40,3 +40,10 @@ vim.keymap.set("n", "grr", require("fzf-lua").lsp_references, get_opts("[G]oto [
 vim.keymap.set("n", "gri", require("fzf-lua").lsp_implementations, get_opts("[G]oto [I]mplementation"))
 vim.keymap.set("n", "gs", require("fzf-lua").lsp_document_symbols, get_opts("[D]ocument [S]symbols"))
 vim.keymap.set("n", "<leader>ws", require("fzf-lua").lsp_workspace_symbols, get_opts("[W]orkspace [S]symbols"))
+
+-- Toggle inlay hints
+-- map("n", "<leader>Th", function()
+-- 	local bufnr = vim.api.nvim_get_current_buf()
+-- 	local client = vim.lsp.get_client_by_id(vim.lsp.get_active_clients()[1].id)
+-- 	require("config.keymap_toggle_helpers").lsp_toggle_inlay_hints(client, bufnr)
+-- end, get_opts("[T]oggle Inlay [H]ints"))

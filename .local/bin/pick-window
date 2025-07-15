@@ -3,7 +3,6 @@
 DMENU="wofi -dmenu --show-icons -i -p Windows"
 SEP=$'\x1f'    # ASCII unit separator, unlikely to collide with titles
 
-# build a list of entries: Title (WS <n> on <monitor>)<SEP><ws><SEP><mon><SEP><address>
 mapfile -t entries < <(
   hyprctl clients -j \
     | jq -r --arg SEP "$SEP" '
@@ -15,18 +14,13 @@ mapfile -t entries < <(
     '
 )
 
-# pick one
 selected=$(printf '%s\n' "${entries[@]}" | $DMENU)
 [ -z "$selected" ] && exit
 
-# split out our fields
 IFS="$SEP" read -r label ws mon address <<<"$selected"
 
-# 1) switch to workspace $ws on monitor $mon
 hyprctl dispatch workspace "$ws" "monitor:$mon"
 
-# tiny delay for Hyprland to settle
 sleep 0.05
 
-# 2) focus the window by its address
 hyprctl dispatch focuswindow address:"$address"

@@ -13,6 +13,8 @@ return {
 			sh = { "shfmt" },
 			typescript = { "biome" },
 			typescriptreact = { "biome" },
+			sql = { "sqlfluff" },
+			mysql = { "sqlfluff" },
 		},
 		format_on_save = {
 			lsp_format = "fallback",

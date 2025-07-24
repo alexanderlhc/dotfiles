@@ -1,6 +1,7 @@
 import Quickshell
 import "Widgets/Clock"
 import "Widgets/Workspaces"
+import "Widgets/SysTray"
 import Quickshell.Hyprland
 
 Scope {
@@ -29,6 +30,12 @@ Scope {
 
       ClockWidget {
         anchors.centerIn: parent
+      }
+
+      SysTrayWidget {
+        anchors.right: parent.right
+        anchors.rightMargin: 10
+        anchors.verticalCenter: parent.verticalCenter
       }
     }
   }

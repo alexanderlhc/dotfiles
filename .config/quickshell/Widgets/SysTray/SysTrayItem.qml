@@ -17,8 +17,14 @@ MouseArea {
     implicitHeight: 13
 
     onClicked: event => {
+        // For nm-applet and similar items without an Activate method,
+        // open the menu on left-click.
         if (event.button === Qt.LeftButton) {
-            modelData.activate();
+            if (modelData.hasMenu) {
+                menu.open();
+            } else {
+                modelData.activate(); // Fallback for items that do have activate
+            }
         } else if (modelData.hasMenu) {
             menu.open();
         }

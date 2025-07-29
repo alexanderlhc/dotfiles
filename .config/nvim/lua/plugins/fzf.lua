@@ -5,6 +5,8 @@ return {
 	},
 	opts = function(_, opts)
 		local fzf = require("fzf-lua")
+		-- register as selector
+		fzf.register_ui_select()
 		-- local config = fzf.config
 		local actions = fzf.actions
 

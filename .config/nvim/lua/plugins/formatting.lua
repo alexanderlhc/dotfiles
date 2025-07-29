@@ -9,12 +9,22 @@ return {
 			javascriptreact = { "biome" },
 			json = { "jq" },
 			lua = { "stylua" },
-			rust = { "rustfmt", lsp_format = "fallback" },
+			-- rust = { "rustfmt", lsp_format = "fallback" },
 			sh = { "shfmt" },
 			typescript = { "biome" },
 			typescriptreact = { "biome" },
 			sql = { "sqlfluff" },
 			mysql = { "sqlfluff" },
+		},
+		formatters = {
+			sqlfluff = {
+				command = "sqlfluff",
+				args = { "format", "--dialect=mariadb", "-" },
+				stdin = true,
+				cwd = function()
+					return vim.fn.getcwd()
+				end,
+			},
 		},
 		format_on_save = {
 			lsp_format = "fallback",

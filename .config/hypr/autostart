@@ -6,12 +6,12 @@ scripts=$config/scripts
 
 output=$(swww query 2>&1)
 if [[ $output == *"Socket file not found"* ]]; then
-	swww-daemon &
+        swww-daemon &
 fi
 
 # wallpaper
 setwallpaper() {
-	"$scripts"/wallpaper "$1" &
+        "$scripts"/wallpaper "$1" &
 }
 setwallpaper "$HOME/.local/share/wallpapers/left.png"
 
@@ -21,7 +21,7 @@ setwallpaper "$HOME/.local/share/wallpapers/left.png"
 # pgrep -x "ags" >/dev/null && pkill -x "ags"
 # ags run &
 pgrep -x "quickshell" >/dev/null && pkill -x "quickshell"
-quickshell run &
+quickshell &
 
 # pgrep -x "ags" >/dev/null && pkill -x "ags"
 # ags &

@@ -1,0 +1,33 @@
+#!/bin/env bash
+
+read -p "Proceed with pruning local branches not on remote? [y/N] " proceed_response
+if [[ ! "$proceed_response" =~ ^[Yy]$ ]]; then
+        echo "Aborting branch pruning."
+        exit 0
+fi
+
+git fetch --prune
+
+current_branch=$(git symbolic-ref --short HEAD)
+protected_branches=("master" "main" "$current_branch")
+remote_branches=$(git branch -r | sed 's|^[^/]\+/||' | sort -u)
+
+for branch in $(git branch --format="%(refname:short)"); do
+        if [[ " ${protected_branches[@]} " =~ " ${branch} " ]]; then
+                echo "Skipping protected branch: $branch"
+                continue
+        fi
+
+        if ! echo "$remote_branches" | grep -qx "$branch"; then
+                echo "Local branch '$branch' not found on remote."
+                read -p "Do you want to delete it? [y/N] " response
+                if [[ "$response" =~ ^[Yy]$ ]]; then
+                        git branch -D "$branch"
+                        echo "Deleted branch: $branch"
+                else
+                        echo "Skipping deletion of branch: $branch"
+                fi
+        fi
+done
+
+# vim: set ft=sh:

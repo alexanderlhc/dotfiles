@@ -1,4 +1,4 @@
-set DOTFILES $HOME/.local/share/dotfiles/
+set DOTFILES $HOME/.local/share/dotconfig/
 
 function dotconfig
   if test $argv[1] = "lazy"

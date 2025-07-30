@@ -1,7 +1,0 @@
-(defwidget powermenu []
-    (box 
-      :class "volume"
-      :orientation "v" 
-      :spacing "3" 
-      (button   :onclick "scripts/powermenu.sh"   :class "power_icon" "")
-      ))

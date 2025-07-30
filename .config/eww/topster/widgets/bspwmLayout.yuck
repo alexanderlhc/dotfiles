@@ -1,3 +1,0 @@
-(defpoll workspaces_layout :interval "500ms" "./scripts/bspc_layout.sh")
-(defwidget layout []
-  (literal :content workspaces_layout))

@@ -1,5 +1,0 @@
-(deflisten workspaces_listen "./scripts/workspaces.sh")
-(defwidget workspaces []
-  (literal 
-    :space-evenly false
-    :content workspaces_listen))

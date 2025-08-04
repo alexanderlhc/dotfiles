@@ -25,6 +25,7 @@ return {
 					enable = true,
 					goto_next_start = {
 						["]f"] = "@function.outer",
+						["]i"] = "@call", -- Jumps between function calls
 						["]c"] = "@class.outer",
 						["]cc"] = "@comment.outer",
 						["]a"] = "@parameter.inner",
@@ -32,6 +33,7 @@ return {
 					goto_next_end = { ["]F"] = "@function.outer", ["]C"] = "@class.outer", ["]A"] = "@parameter.inner" },
 					goto_previous_start = {
 						["[f"] = "@function.outer",
+						["[i"] = "@call", -- Jumps between function calls
 						["[cc"] = "@comment.outer",
 						["[c"] = "@class.outer",
 						["[a"] = "@parameter.inner",

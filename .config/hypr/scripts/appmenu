@@ -1,3 +1,4 @@
 #!/bin/env bash
 
-~/.config/wofi/wofi_launch.sh
+rofi -show drun
+# ~/.config/wofi/wofi_launch.sh

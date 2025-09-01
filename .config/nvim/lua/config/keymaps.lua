@@ -87,3 +87,6 @@ map({ "i", "n", "s" }, "<esc>", function()
 	-- .actions.snippet_stop()
 	return "<esc>"
 end, { expr = true, desc = "Escape and Clear hlsearch" })
+
+-- tmux sessionizer
+map("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>", { desc = "Tmux Sessionizer" })

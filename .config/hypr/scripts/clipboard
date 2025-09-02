@@ -1,4 +1,5 @@
 #!/bin/env bash
 
-cliphist list | ~/.config/wofi/wofi_launch.sh --dmenu | cliphist decode | wl-copy
+cliphist list | rofi -dmenu | cliphist decode | wl-copy
+# cliphist list | ~/.config/wofi/wofi_launch.sh --dmenu | cliphist decode | wl-copy
 # | wl-paste

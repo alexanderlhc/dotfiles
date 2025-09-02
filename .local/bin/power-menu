@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+#
+# rofi-power-menu.sh
+# A simple Rofi-based power menu for Hyprland.
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Configuration
+# ──────────────────────────────────────────────────────────────────────────────
+
+# Your locker command
+LOCKER="swaylock -f -c 000000"
+
+# The rofi command as an array (no -sep here!)
+# -lines 5 will show up to 5 entries without scrolling
+ROFI_CMD=(
+        rofi
+        -dmenu
+        -i
+        -p "Power"
+        -lines 5
+        -theme-str "window {width: 20em;} listview {lines: 5;} entry {text-padding: 0 1;}"
+)
+
+# Menu entries
+OPTIONS=(
+        "  Lock"
+        "  Logout"
+        "  Shutdown"
+        "  Reboot"
+        "  Suspend"
+)
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Helpers
+# ──────────────────────────────────────────────────────────────────────────────
+
+confirm() {
+        echo -e "No\nYes" | rofi \
+                -dmenu \
+                -i \
+                -p "Are you sure?" \
+                -theme-str "window {width: 18em;}"
+}
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Main
+# ──────────────────────────────────────────────────────────────────────────────
+
+# Show the main menu
+chosen="$(printf '%s\n' "${OPTIONS[@]}" | "${ROFI_CMD[@]}")" || exit 0
+
+case "$chosen" in
+*Lock)
+        $LOCKER
+        ;;
+
+*Logout)
+        confirm | grep -iq yes && pkill Hyprland
+        ;;
+
+*Shutdown)
+        confirm | grep -iq yes && systemctl poweroff
+        ;;
+
+*Reboot)
+        confirm | grep -iq yes && systemctl reboot
+        ;;
+
+*Suspend)
+        # lock first, then suspend
+        $LOCKER &
+        sleep 1
+        machinectl suspend || systemctl suspend
+        ;;
+
+*)
+        exit 0
+        ;;
+esac
+
+exit 0

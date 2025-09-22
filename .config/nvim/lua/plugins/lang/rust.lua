@@ -5,7 +5,6 @@ return {
 		lazy = false,
 		config = function()
 			require("config.lsp")
-			print("Loading RustaceanVim...")
 			vim.g.rustaceanvim = {}
 		end,
 	},

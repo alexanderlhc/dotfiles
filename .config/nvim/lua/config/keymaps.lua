@@ -3,9 +3,10 @@ local opts = { noremap = true, silent = true }
 local toggles = require("config.keymap_toggle_helpers")
 
 ------- Files/Basic ---------
-map("n", "<leader>w", "<cmd>write<CR>", { desc = "Save File" })
-map("n", "<leader>q", "<cmd>quit<CR>", { desc = "Quit Neovim" })
+-- map("n", "<leader>w", "<cmd>write<CR>", { desc = "Save File" })
+-- map("n", "<leader>q", "<cmd>quit<CR>", { desc = "Quit Neovim" })
 map("n", "<leader>Q", "<cmd>qa!<CR>", { desc = "Quit All Force" })
+map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
 
 ------- Window ---------
 -- size
@@ -90,3 +91,7 @@ end, { expr = true, desc = "Escape and Clear hlsearch" })
 
 -- tmux sessionizer
 map("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>", { desc = "Tmux Sessionizer" })
+
+-- better indenting
+map("v", "<", "<gv")
+map("v", ">", ">gv")

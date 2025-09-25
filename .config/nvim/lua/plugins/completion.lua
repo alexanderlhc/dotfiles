@@ -1,71 +1,114 @@
 return {
 	"saghen/blink.cmp",
-	event = "InsertEnter",
 	dependencies = {
 		"rafamadriz/friendly-snippets",
-		{ "giuxtaposition/blink-cmp-copilot" },
+		{
+			"saghen/blink.pairs",
+			build = "cargo build --release",
+			--- @module 'blink.pairs'
+			--- @type blink.pairs.Config
+			opts = {},
+		},
+		{ "phanen/blink-cmp-register", lazy = true },
+		{ "moyiz/blink-emoji.nvim", lazy = true },
+		{ "MahanRahmati/blink-nerdfont.nvim", lazy = true },
+		-- copilot
+		{ "fang2hou/blink-copilot", lazy = true },
 		{
 			"zbirenbaum/copilot.lua",
+			enabled = false,
+		},
+		{
+			"github/copilot.vim",
 			cmd = "Copilot",
-			event = "InsertEnter",
-			build = ":Copilot auth",
-			opts = {
-				suggestion = { enabled = false, auto_trigger = true, keymap = { accept = "<M-CR>" } },
-				panel = { enabled = false },
-			},
+			event = "BufWinEnter",
+			init = function()
+				vim.g.copilot_no_maps = true
+			end,
+			config = function()
+				-- Block the normal Copilot suggestions
+				vim.api.nvim_create_autocmd({ "FileType", "BufUnload" }, {
+					group = "github_copilot",
+					callback = function(args)
+						vim.fn["copilot#On" .. args.event]()
+					end,
+				})
+				vim.fn["copilot#OnFileType"]()
+			end,
 		},
 	},
 
-	version = "1.*",
+	-- version = '1.*',
+	build = "cargo build --release",
+
 	---@module 'blink.cmp'
 	---@type blink.cmp.Config
 	opts = {
-		-- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
-		-- 'super-tab' for mappings similar to vscode (tab to accept)
-		-- 'enter' for enter to accept
-		-- 'none' for no mappings
-		--
-		-- All presets have the following mappings:
-		-- C-space: Open menu or open docs if already open
-		-- C-n/C-p or Up/Down: Select next/previous item
-		-- C-e: Hide menu
-		-- C-k: Toggle signature help (if signature.enabled = true)
-		--
-		-- See :h blink-cmp-config-keymap for defining your own keymap
-		keymap = { preset = "default" },
+		keymap = {
+			preset = "default",
+		},
 
 		appearance = {
-			-- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-			-- Adjusts spacing to ensure icons are aligned
 			nerd_font_variant = "mono",
 		},
 
-		completion = {
-			documentation = {
-				auto_show = true,
-				auto_show_delay_ms = 200,
-			},
-		},
+		signature = { enabled = true },
+		completion = { documentation = { auto_show = true } },
 
-		-- Default list of enabled providers defined so that you can extend it
-		-- elsewhere in your config, without redefining it, due to `opts_extend`
 		sources = {
-			default = { "lsp", "copilot", "path", "snippets", "buffer" },
+			default = { "lazydev", "lsp", "path", "copilot", "emoji", "nerdfont", "snippets", "buffer", "register" },
 			providers = {
 				copilot = {
 					name = "copilot",
-					module = "blink-cmp-copilot",
+					module = "blink-copilot",
 					score_offset = 100,
 					async = true,
+					opts = {
+						show_multiline = true,
+					},
+				},
+				lazydev = {
+					name = "LazyDev",
+					module = "lazydev.integrations.blink",
+					score_offset = 100, -- show at a higher priority than lsp
+				},
+				register = {
+					name = "Register",
+					module = "blink-cmp-register",
+					score_offset = -7,
+				},
+				snippets = {
+					max_items = 2,
+				},
+				emoji = {
+					module = "blink-emoji",
+					name = "Emoji",
+					score_offset = 15, -- Tune by preference
+					opts = {
+						insert = true, -- Insert emoji (default) or complete its name
+						---@type string|table|fun():table
+						trigger = function()
+							return { ":" }
+						end,
+					},
+					should_show_items = function()
+						return vim.tbl_contains(
+							-- Enable emoji completion only for git commits and markdown.
+							-- By default, enabled for all file-types.
+							{ "gitcommit", "markdown" },
+							vim.o.filetype
+						)
+					end,
+				},
+				nerdfont = {
+					module = "blink-nerdfont",
+					name = "Nerd Fonts",
+					score_offset = 15, -- Tune by preference
+					opts = { insert = true }, -- Insert nerdfont icon (default) or complete its name
 				},
 			},
 		},
 
-		-- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
-		-- You may use a lua implementation instead by using `implementation = "lua"` or fallback to the lua implementation,
-		-- when the Rust fuzzy matcher is not available, by using `implementation = "prefer_rust"`
-		--
-		-- See the fuzzy documentation for more information
 		fuzzy = { implementation = "prefer_rust_with_warning" },
 	},
 	opts_extend = { "sources.default" },

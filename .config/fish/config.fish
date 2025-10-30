@@ -14,8 +14,9 @@ abbr -a rate-upate-mirror 'rate-mirrors --allow-root --disable-comments --protoc
 abbr -a cargo_copy 'cargo c 2>&1 | tee /tmp/cargo_output.log | cat; cat /tmp/cargo_output.log | wl-copy'
 
 # vi like
+fish_vi_key_bindings
 # complete suggestion
-bind \cy accept-autosuggestion
+bind --mode insert \cY accept-autosuggestion
 
 mcfly init fish | source
 

@@ -11,7 +11,6 @@ return {
 		},
 		{ "phanen/blink-cmp-register", lazy = true },
 		{ "moyiz/blink-emoji.nvim", lazy = true },
-		{ "MahanRahmati/blink-nerdfont.nvim", lazy = true },
 		-- copilot
 		{ "fang2hou/blink-copilot", lazy = true },
 		{
@@ -56,7 +55,7 @@ return {
 		completion = { documentation = { auto_show = true } },
 
 		sources = {
-			default = { "lazydev", "lsp", "path", "copilot", "emoji", "nerdfont", "snippets", "buffer", "register" },
+			default = { "lazydev", "lsp", "path", "copilot", "emoji", "snippets", "buffer", "register" },
 			providers = {
 				copilot = {
 					name = "copilot",
@@ -99,12 +98,6 @@ return {
 							vim.o.filetype
 						)
 					end,
-				},
-				nerdfont = {
-					module = "blink-nerdfont",
-					name = "Nerd Fonts",
-					score_offset = 15, -- Tune by preference
-					opts = { insert = true }, -- Insert nerdfont icon (default) or complete its name
 				},
 			},
 		},

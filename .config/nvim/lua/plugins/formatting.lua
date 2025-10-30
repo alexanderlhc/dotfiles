@@ -15,6 +15,7 @@ return {
 			typescriptreact = { "biome" },
 			sql = { "sqlfluff" },
 			mysql = { "sqlfluff" },
+			yaml = { "yamlfmt" },
 		},
 		formatters = {
 			sqlfluff = {

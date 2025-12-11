@@ -11,4 +11,13 @@ return {
 	{
 		"saecki/crates.nvim",
 	},
+	{
+		"nvim-neotest/neotest",
+		dependencies = { "mrcjkb/rustaceanvim" },
+		opts = function(_, opts)
+			opts.adapters = {
+				require("rustaceanvim.neotest"),
+			}
+		end,
+	},
 }

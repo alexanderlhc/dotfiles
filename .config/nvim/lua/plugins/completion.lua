@@ -57,6 +57,12 @@ return {
 		sources = {
 			default = { "lazydev", "lsp", "path", "copilot", "emoji", "snippets", "buffer", "register" },
 			providers = {
+				-- EXPLICIT FIX: Define buffer to override any hidden/merged 'get_registers' field
+				buffer = {
+					name = "Buffer",
+					module = "blink.cmp.sources.buffer",
+					opts = {}, -- Ensure this is empty or valid
+				},
 				copilot = {
 					name = "copilot",
 					module = "blink-copilot",

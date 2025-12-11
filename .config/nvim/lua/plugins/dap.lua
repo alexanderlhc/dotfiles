@@ -203,12 +203,12 @@ return {
 			dap.adapters["pwa-node"] = {
 				type = "server",
 				host = "localhost",
-				port = 9229,
+				port = 4000,
 				executable = {
 					command = "node",
 					args = {
 						vim.fn.stdpath("data") .. "/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js",
-						"9229",
+						"4000",
 					},
 				},
 			}

@@ -42,6 +42,7 @@ return {
 		{ "<leader>ff", "<cmd>FzfLua files<cr>", desc = "Find Files (all)" },
 		{ "<leader>fF", "<cmd>FzfLua live_grep<cr>", desc = "Find Files Grep (all)" },
 		{ "<leader>fr", "<cmd>FzfLua oldfiles<cr>", desc = "Recent" },
+		{ "<leader>fs", "<cmd>FzfLua lsp_document_symbols<cr>", desc = "Find [s]ymbols" },
 		-- git
 		{ "<leader>gc", "<cmd>FzfLua git_commits<CR>", desc = "Commits" },
 		{ "<leader>gs", "<cmd>FzfLua git_status<CR>", desc = "Status" },

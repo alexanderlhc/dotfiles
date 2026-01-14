@@ -28,3 +28,13 @@ opt.splitbelow = true
 opt.inccommand = "split" -- view substitutions live
 
 opt.scrolloff = 10 -- number of screen lines to keep above and below the cursor
+
+-- Disable some rtp plugins for perf improvement
+vim.g.did_install_default_menus = 1
+vim.g.loaded_gzip = 1
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_tar = 1
+vim.g.loaded_tarPlugin = 1
+vim.g.loaded_zip = 1
+vim.g.loaded_zipPlugin = 1

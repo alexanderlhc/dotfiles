@@ -17,6 +17,9 @@ vim.api.nvim_create_autocmd("CursorHold", {
 
 -- LSP
 vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover" })
+vim.keymap.set("i", "<C-k>", function()
+	vim.lsp.buf.signature_help()
+end, { desc = "LSP Signature Help" })
 vim.keymap.set("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
 
 require("languages.typescript")

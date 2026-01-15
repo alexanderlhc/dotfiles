@@ -9,11 +9,18 @@ opt.mouse = "a"
 -- opt.showmode = false
 
 opt.cursorline = true -- Enable highlighting of the current line
-opt.list = true -- Show some invisible characters
+-- opt.list = false -- Show some invisible characters
+opt.list = true
+opt.listchars = {
+	tab = "│ ", -- Shows a thin vertical line instead of >
+	trail = "·", -- Shows dots for trailing spaces
+	nbsp = "␣",
+}
 opt.expandtab = true -- Use spaces instead of tabs
 opt.tabstop = 2 -- Number of spaces tabs count for
 opt.shiftwidth = 2 -- Number of spaces or tabs used for indentation levels using comands
 opt.softtabstop = 2 -- Tab key moves 2 columns (inserts spaces)
+opt.updatetime = 250 -- Delay for background tasks (syntax highlighting, completion etc)
 
 opt.undofile = true -- Save undo history
 

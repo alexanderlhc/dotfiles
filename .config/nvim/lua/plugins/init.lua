@@ -7,3 +7,5 @@ require("plugins.lsp")
 require("plugins.formatting")
 require("plugins.filebrowser_yazi")
 require("plugins.hilight_patterns") -- part of mini.library
+require("plugins.opencode")
+require("plugins.tmux_navigator")

@@ -3,24 +3,34 @@ vim.pack.add({
 	{ src = "https://github.com/williamboman/mason.nvim" },
 	{ src = "https://github.com/williamboman/mason-lspconfig.nvim" },
 })
---
-require("mason").setup()
-require("mason-lspconfig").setup({})
 
--- Diagnostic auto show
--- Show diagnostics under the cursor when holding the cursor
-vim.api.nvim_create_autocmd("CursorHold", {
-	callback = function()
-		vim.diagnostic.open_float(nil, { focusable = false })
-	end,
+-- 1. Define all your standard servers here.
+--    Keys are the server names (as recognized by Mason/lspconfig).
+--    Values are the configuration tables (empty {} for default).
+local servers = {
+	lua_ls = {
+		settings = {
+			Lua = { diagnostics = { globals = { "vim" } } },
+		},
+	},
+	ts_ls = {},
+	bashls = {},
+	["fish_lsp"] = {},
+	["docker_language_server"] = {},
+}
+
+require("mason").setup()
+require("mason-lspconfig").setup({
+	ensure_installed = vim.tbl_keys(servers),
 })
 
--- LSP
-vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover" })
-vim.keymap.set("i", "<C-k>", function()
-	vim.lsp.buf.signature_help()
-end, { desc = "LSP Signature Help" })
-vim.keymap.set("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
+local capabilities = require("blink.cmp").get_lsp_capabilities()
 
-require("languages.typescript")
-require("languages.lua")
+for server_name, server_config in pairs(servers) do
+	server_config.capabilities = capabilities
+	vim.lsp.config[server_name] = server_config
+	vim.lsp.enable(server_name)
+end
+
+-- Rust
+vim.pack.add({ "https://github.com/mrcjkb/rustaceanvim" })

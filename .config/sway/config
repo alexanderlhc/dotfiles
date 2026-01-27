@@ -1,0 +1,29 @@
+# Global variables, modifier, terminal, menu, colors, fonts, common paths.
+include ~/.config/sway/00-vars.conf
+# Input devices, keyboard layout, touchpad, mouse accel, libinput options.
+include ~/.config/sway/10-inputs.conf
+# Output definitions, scale, rotation, workspace output assignments.
+include ~/.config/sway/20-outputs.conf
+# Named workspace vars and default assignments.
+include ~/.config/sway/25-workspaces.conf
+# Gaps, borders, smart gaps, default layout, focus behavior.
+include ~/.config/sway/30-layout.conf
+# All bindings, grouped by domain.
+include ~/.config/sway/40-keybinds.conf
+# App launchers, floating rules for common apps, assigns.
+include ~/.config/sway/50-apps.conf
+# Criteria rules, window behaviors, workspace assignment rules.
+include ~/.config/sway/60-rules.conf
+# exec and exec_always lines.
+include ~/.config/sway/70-startup.conf
+# Bar config or include for waybar if you use it.
+include ~/.config/sway/80-bar.conf
+# Idle/lock/suspend chain.
+include ~/.config/sway/85-swayidle.conf
+# Lock screen styling.
+include ~/.config/sway/86-swaylock.conf
+# Colors, font, client decorations, optional gtk settings
+include ~/.config/sway/90-theme.conf
+
+# System specific settings, only for this machine
+include ~/.config/sway/99-system-specific.conf

@@ -9,3 +9,5 @@ require("plugins.filebrowser_yazi")
 require("plugins.hilight_patterns") -- part of mini.library
 require("plugins.opencode")
 require("plugins.tmux_navigator")
+require("plugins.surround")
+require("plugins.gitsigns")

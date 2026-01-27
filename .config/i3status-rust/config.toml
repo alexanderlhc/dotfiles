@@ -1,0 +1,16 @@
+[icons]
+icons = "none"
+[theme]
+theme = "plain"
+[[block]]
+block = "sound"
+driver = "pulseaudio"
+step_width = 5
+format = " { $volume|muted }"
+[[block.click]]
+button = "left"
+cmd = "pkill pavucontrol || pavucontrol"
+[[block]]
+block = "time"
+interval = 5
+format = " $timestamp.datetime(f:'%Y-%m-%d %H:%M') "

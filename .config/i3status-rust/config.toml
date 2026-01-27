@@ -14,3 +14,10 @@ cmd = "pkill pavucontrol || pavucontrol"
 block = "time"
 interval = 5
 format = " $timestamp.datetime(f:'%Y-%m-%d %H:%M') "
+[[block]]
+block = "custom"
+command = "echo ⏻"
+interval = "once"
+[[block.click]]
+button = "left"
+cmd = "~/.config/sway/power-menu.sh"

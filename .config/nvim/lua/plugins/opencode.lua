@@ -1,13 +1,10 @@
-vim.pack.add({ "https://github.com/cousine/opencode-context.nvim" })
+vim.pack.add({
+	{ src = "https://github.com/sudo-tee/opencode.nvim" },
+	{ src = "https://github.com/nvim-lua/plenary.nvim" },
+	{ src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },
+	{ src = "https://github.com/saghen/blink.cmp" },
+}, { load = true })
 
-require("opencode-context").setup({
-	tmux_target = "opencode:1",
-	auto_detect_pane = false,
-	-- tmux_target = nil,
-	-- auto_detect_pane = true,
+require("opencode").setup({
+	preferred_completion = "blink",
 })
-
-vim.keymap.set("n", "<leader>oc", "<cmd>OpencodeSend<cr>", { desc = "Send prompt to opencode" })
-vim.keymap.set("v", "<leader>oc", "<cmd>OpencodeSend<cr>", { desc = "Send prompt to opencode" })
-vim.keymap.set("n", "<leader>ot", "<cmd>OpencodeSwitchMode<cr>", { desc = "Toggle opencode mode" })
-vim.keymap.set("n", "<leader>op", "<cmd>OpencodePrompt<cr>", { desc = "Open opencode persistent prompt" })

@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+set -euo pipefail
+dir="$HOME/Pictures/Screenshots"
+mkdir -p "$dir"
+ts="$(date +'%Y-%m-%d_%H-%M-%S')"
+file="$dir/screenshot_${ts}.png"
+mode="${1:-full}"
+notify_done() {
+  notify-send "Screenshot saved" "$file"
+}
+copy_clipboard() {
+  wl-copy < "$file"
+}
+case "$mode" in
+  full)
+    grim "$file"
+    copy_clipboard
+    notify_done
+    ;;
+  area)
+    grim -g "$(slurp)" "$file"
+    copy_clipboard
+    notify_done
+    ;;
+  window)
+    rect="$(swaymsg -t get_tree | jq -r '.. | select(.focused?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"')"
+    grim -g "$rect" "$file"
+    copy_clipboard
+    notify_done
+    ;;
+  annotate)
+    tmp="$file"
+    grim -g "$(slurp)" "$tmp"
+    swappy -f "$tmp" -o "$file"
+    copy_clipboard
+    notify_done
+    ;;
+  *)
+    echo "Usage: sway-shot {full|area|window|annotate}" >&2
+    exit 1
+    ;;
+esac

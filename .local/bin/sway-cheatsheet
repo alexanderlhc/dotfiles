@@ -1,0 +1,180 @@
+#!/usr/bin/env python3
+import argparse
+import glob
+import os
+import re
+import shlex
+import shutil
+import subprocess
+from typing import Dict, List, Tuple
+
+
+VAR_RE = re.compile(r"\$[A-Za-z_][A-Za-z0-9_]*")
+
+
+def expand_vars(text: str, var_map: Dict[str, str]) -> str:
+    def repl(match: re.Match) -> str:
+        key = match.group(0)
+        return var_map.get(key, key)
+
+    return VAR_RE.sub(repl, text)
+
+
+def expand_include_path(path: str) -> List[str]:
+    expanded = os.path.expanduser(os.path.expandvars(path))
+    matches = glob.glob(expanded)
+    return sorted(matches)
+
+
+def load_config_lines(path: str, visited: set) -> List[Tuple[str, str]]:
+    abs_path = os.path.abspath(os.path.expanduser(path))
+    if abs_path in visited or not os.path.exists(abs_path):
+        return []
+    visited.add(abs_path)
+
+    lines: List[Tuple[str, str]] = []
+    with open(abs_path, "r", encoding="utf-8") as f:
+        for raw in f:
+            line = raw.rstrip("\n")
+            stripped = line.strip()
+            if stripped.startswith("include "):
+                _, include_path = stripped.split(None, 1)
+                for inc in expand_include_path(include_path):
+                    lines.extend(load_config_lines(inc, visited))
+            else:
+                lines.append((abs_path, line))
+    return lines
+
+
+def parse_binds(lines: List[Tuple[str, str]]) -> List[Dict[str, str]]:
+    var_map: Dict[str, str] = {}
+    entries: List[Dict[str, str]] = []
+    current_section = "Misc"
+    current_mode = "default"
+
+    for _path, line in lines:
+        stripped = line.strip()
+        if not stripped:
+            continue
+
+        if stripped.startswith("#"):
+            heading = stripped.lstrip("#").strip()
+            if heading:
+                current_section = heading
+            continue
+
+        if stripped.startswith("set "):
+            try:
+                tokens = shlex.split(stripped, posix=True)
+            except ValueError:
+                continue
+            if len(tokens) >= 3 and tokens[1].startswith("$"):
+                var_map[tokens[1]] = " ".join(tokens[2:])
+            continue
+
+        if stripped.startswith("mode "):
+            try:
+                tokens = shlex.split(stripped, posix=True)
+            except ValueError:
+                continue
+            if tokens[-1] == "{":
+                current_mode = tokens[1]
+                current_section = "Misc"
+            continue
+
+        if stripped == "}":
+            current_mode = "default"
+            current_section = "Misc"
+            continue
+
+        if stripped.startswith("bindsym ") or stripped.startswith("bindcode "):
+            try:
+                tokens = shlex.split(stripped, posix=True)
+            except ValueError:
+                continue
+            cmd = tokens[0]
+            i = 1
+            while i < len(tokens) and tokens[i].startswith("-"):
+                i += 1
+            if i >= len(tokens):
+                continue
+            keys = tokens[i]
+            action = " ".join(tokens[i + 1 :]) if i + 1 < len(tokens) else ""
+
+            keys = expand_vars(keys, var_map)
+            action = expand_vars(action, var_map)
+            display = f"{keys} -> {action}" if action else keys
+
+            entries.append(
+                {
+                    "mode": current_mode,
+                    "section": current_section,
+                    "keys": keys,
+                    "action": action,
+                    "display": display,
+                    "type": cmd,
+                }
+            )
+
+    return entries
+
+
+def build_lines(entries: List[Dict[str, str]]) -> List[str]:
+    lines: List[str] = []
+    for item in entries:
+        mode = item["mode"]
+        section = item["section"]
+        display = item["display"]
+        lines.append(f"mode:{mode} | {section} | {display}")
+    return lines
+
+
+def run_wofi(lines: List[str], prompt: str, copy: bool) -> int:
+    if not shutil.which("wofi"):
+        print("\n".join(lines))
+        return 0
+
+    proc = subprocess.run(
+        ["wofi", "--dmenu", "--prompt", prompt, "--lines", "20"],
+        input="\n".join(lines),
+        text=True,
+        check=False,
+    )
+    selection = proc.stdout.strip() if proc.stdout else ""
+    if copy and selection and shutil.which("wl-copy"):
+        subprocess.run(["wl-copy"], input=selection, text=True, check=False)
+    return proc.returncode
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Sway keybind cheatsheet")
+    parser.add_argument(
+        "--config",
+        default="~/.config/sway/config",
+        help="Path to sway config",
+    )
+    parser.add_argument(
+        "--print",
+        action="store_true",
+        help="Print to stdout instead of opening wofi",
+    )
+    parser.add_argument(
+        "--copy",
+        action="store_true",
+        help="Copy selected line to clipboard",
+    )
+    args = parser.parse_args()
+
+    lines = load_config_lines(args.config, visited=set())
+    entries = parse_binds(lines)
+    display_lines = build_lines(entries)
+
+    if args.print or not display_lines:
+        print("\n".join(display_lines))
+        return 0
+
+    return run_wofi(display_lines, "Sway keybinds", args.copy)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -1,6 +1,13 @@
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
+------- File management ---------
+map("n", "<leader>w", "<cmd>write<CR>", { desc = "Save File" })
+map("n", "<leader>q", "<cmd>quit<CR>", { desc = "Quit Neovim" })
+map("n", "<leader>Q", "<cmd>qa!<CR>", { desc = "Quit All Force" })
+map("n", "<leader>x", "<cmd>wq<CR>", { desc = "Save File and Quit" })
+
+------- Searching ---------
 map({ "i", "n", "s" }, "<esc>", function()
 	vim.cmd("noh")
 	-- .actions.snippet_stop()

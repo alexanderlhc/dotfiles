@@ -1,9 +1,13 @@
 vim.pack.add({
-	{ src = "https://github.com/saghen/blink.cmp" },
+	{ src = "https://github.com/saghen/blink.cmp", version = vim.version.range("*") },
 	"https://github.com/rafamadriz/friendly-snippets",
+	{ src = "https://github.com/windwp/nvim-autopairs" },
+	{ src = "https://github.com/windwp/nvim-ts-autotag" },
 })
 
 vim.opt.runtimepath:append(vim.fn.expand("~/.config/nvim/pack/plugins/start/friendly-snippets"))
+require("nvim-autopairs").setup()
+require("nvim-ts-autotag").setup()
 
 require("blink.cmp").setup({
 	appearance = {

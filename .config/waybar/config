@@ -1,0 +1,27 @@
+{
+  "layer": "top",
+  "position": "top",
+  "modules-left": ["sway/workspaces"],
+  "modules-center": [],
+  "modules-right": ["pulseaudio", "clock", "custom/power"],
+
+  "pulseaudio": {
+    "format": " {volume}%",
+    "format-muted": " muted",
+    "on-click": "pkill pavucontrol || pavucontrol"
+  },
+
+  "clock": {
+    "format": "{:%Y-%m-%d %H:%M}"
+  },
+
+  "sway/workspaces": {
+    "disable-scroll": true,
+    "all-outputs": true
+  },
+
+  "custom/power": {
+    "format": "⏻",
+    "on-click": "~/.config/sway/power-menu.sh"
+  }
+}

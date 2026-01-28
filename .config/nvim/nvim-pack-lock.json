@@ -98,6 +98,10 @@
       "rev": "f920b7171e339e2dc263bacf083e934612c22959",
       "src": "https://github.com/mrcjkb/rustaceanvim"
     },
+    "treesitter-modules.nvim": {
+      "rev": "7efc486c933a361568855b10e0829aa2cda4b6b0",
+      "src": "https://github.com/MeanderingProgrammer/treesitter-modules.nvim"
+    },
     "vim-tmux-navigator": {
       "rev": "e41c431a0c7b7388ae7ba341f01a0d217eb3a432",
       "src": "https://github.com/christoomey/vim-tmux-navigator"

@@ -1,0 +1,225 @@
+#!/bin/sh
+set -eu
+
+DIRS_FILE="${TMX_DIRS_FILE:-$HOME/.local/share/tmx/dirs}"
+CODE_DIR="$HOME/code"
+
+die() {
+  printf '%s\n' "$*" >&2
+  exit 1
+}
+
+usage() {
+  cat <<'EOF'
+tmx - tmux + fzf session/dir launcher
+
+Usage:
+  tmx
+  tmx --add-dir <path>
+  tmx --edit-dirs
+  tmx --dirs-only
+  tmx --sessions-only
+  tmx --help
+
+Environment:
+  TMX_DIRS_FILE  Override extra dirs file path
+EOF
+}
+
+resolve_path() {
+  case "$1" in
+    ~) printf '%s\n' "$HOME" ;;
+    ~/*) printf '%s\n' "$HOME/${1#~/}" ;;
+    /*) printf '%s\n' "$1" ;;
+    *) printf '%s\n' "$PWD/$1" ;;
+  esac
+}
+
+ensure_deps() {
+  command -v tmux >/dev/null 2>&1 || die "tmux not found"
+  command -v fzf >/dev/null 2>&1 || die "fzf not found"
+}
+
+ensure_dirs_file() {
+  mkdir -p "$(dirname "$DIRS_FILE")"
+  if [ ! -f "$DIRS_FILE" ]; then
+    : > "$DIRS_FILE"
+  fi
+}
+
+add_dir_entry() {
+  path="$(resolve_path "$1")"
+  [ -d "$path" ] || die "Not a directory: $path"
+  ensure_dirs_file
+  if ! grep -Fxq "$path" "$DIRS_FILE"; then
+    printf '%s\n' "$path" >> "$DIRS_FILE"
+  fi
+}
+
+edit_dirs() {
+  ensure_dirs_file
+  editor="${EDITOR:-vi}"
+  "$editor" "$DIRS_FILE"
+}
+
+session_name_from_dir() {
+  dir="$1"
+  dir="${dir%/}"
+  if [ -z "$dir" ]; then
+    dir="/"
+  fi
+  base="${dir##*/}"
+  name=$(printf '%s' "$base" | tr ' ' '_' | tr -cd 'A-Za-z0-9_-')
+  if [ -z "$name" ]; then
+    name="session"
+  fi
+  name=$(printf '%s' "$name" | cut -c1-40)
+  if tmux has-session -t "$name" 2>/dev/null; then
+    set -- $(printf '%s' "$dir" | cksum)
+    hash=$(printf '%s' "$1" | cut -c1-5)
+    name="${name}__${hash}"
+  fi
+  printf '%s\n' "$name"
+}
+
+attach_or_switch() {
+  target="$1"
+  if [ -n "${TMUX:-}" ]; then
+    tmux switch-client -t "$target"
+  else
+    tmux attach -t "$target"
+  fi
+}
+
+create_or_attach_dir() {
+  dir="$1"
+  name="$(session_name_from_dir "$dir")"
+  if tmux has-session -t "$name" 2>/dev/null; then
+    attach_or_switch "$name"
+    return
+  fi
+  if [ -n "${TMUX:-}" ]; then
+    tmux new-session -d -s "$name" -c "$dir"
+    tmux switch-client -t "$name"
+  else
+    tmux new-session -s "$name" -c "$dir"
+  fi
+}
+
+MODE="both"
+ADD_DIR=""
+EDIT=0
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --add-dir)
+      shift
+      [ $# -gt 0 ] || die "--add-dir requires a path"
+      ADD_DIR="$1"
+      ;;
+    --edit-dirs)
+      EDIT=1
+      ;;
+    --dirs-only)
+      MODE="dirs"
+      ;;
+    --sessions-only)
+      MODE="sessions"
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      die "Unknown option: $1"
+      ;;
+  esac
+  shift
+done
+
+if [ -n "$ADD_DIR" ]; then
+  add_dir_entry "$ADD_DIR"
+  exit 0
+fi
+
+if [ "$EDIT" -eq 1 ]; then
+  edit_dirs
+  exit 0
+fi
+
+ensure_deps
+
+tmp_dirs="$(mktemp)"
+tmp_list="$(mktemp)"
+cleanup() {
+  rm -f "$tmp_dirs" "$tmp_list"
+}
+trap cleanup EXIT
+
+add_dir_candidate() {
+  d="$1"
+  [ -d "$d" ] || return 0
+  if ! grep -Fxq "$d" "$tmp_dirs" 2>/dev/null; then
+    printf '%s\n' "$d" >> "$tmp_dirs"
+  fi
+}
+
+if [ -d "$CODE_DIR" ]; then
+  add_dir_candidate "$CODE_DIR"
+  for d in "$CODE_DIR"/*; do
+    [ -d "$d" ] && add_dir_candidate "$d"
+  done
+fi
+
+add_dir_candidate "$PWD"
+
+if [ -f "$DIRS_FILE" ]; then
+  while IFS= read -r line; do
+    case "$line" in
+      ''|\#*) continue ;;
+    esac
+    add_dir_candidate "$line"
+  done < "$DIRS_FILE"
+fi
+
+if [ "$MODE" != "dirs" ]; then
+  tmux list-sessions -F '#S' 2>/dev/null | while IFS= read -r s; do
+    [ -n "$s" ] && printf 'session\t%s\n' "$s" >> "$tmp_list"
+  done
+fi
+
+if [ "$MODE" != "sessions" ]; then
+  while IFS= read -r d; do
+    [ -n "$d" ] && printf 'dir\t%s\n' "$d" >> "$tmp_list"
+  done < "$tmp_dirs"
+fi
+
+if [ ! -s "$tmp_list" ]; then
+  die "No sessions or directories found"
+fi
+
+selection=$(cat "$tmp_list" | fzf \
+  --delimiter='\t' \
+  --with-nth=2 \
+  --prompt='tmx> ' \
+  --height=80% \
+  --border \
+  --preview='[ "{1}" = "session" ] && tmux list-windows -t "{2}" 2>/dev/null || ls -la "{2}" 2>/dev/null' \
+)
+
+[ -n "$selection" ] || exit 0
+
+kind="${selection%%	*}"
+value="${selection#*	}"
+
+case "$kind" in
+  session)
+    attach_or_switch "$value"
+    ;;
+  dir)
+    create_or_attach_dir "$value"
+    ;;
+  *)
+    die "Unknown selection type: $kind"
+    ;;
+esac

@@ -18,3 +18,34 @@ window#waybar {
   margin: 0;
   background: rgba(0, 0, 0, 0.0);
 }
+
+#workspaces {
+  padding: 0 6px;
+}
+
+#workspaces button {
+  padding: 0 8px;
+  margin: 0 2px;
+  color: #d9d9d9;
+  background: rgba(20, 20, 20, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
+}
+
+#workspaces button:hover {
+  color: #ffffff;
+  background: rgba(30, 30, 30, 0.55);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+#workspaces button.focused {
+  color: #111111;
+  background: #f3c76a;
+  border-color: #f3c76a;
+}
+
+#workspaces button.urgent {
+  color: #ffffff;
+  background: #d05757;
+  border-color: #d05757;
+}

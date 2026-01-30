@@ -3,7 +3,7 @@
   "position": "top",
   "modules-left": ["sway/workspaces"],
   "modules-center": [],
-  "modules-right": ["pulseaudio", "clock", "custom/power"],
+  "modules-right": ["pulseaudio", "tray", "clock", "custom/power"],
 
   "pulseaudio": {
     "format": " {volume}%",
@@ -13,6 +13,11 @@
 
   "clock": {
     "format": "{:%Y-%m-%d %H:%M}"
+  },
+
+  "tray": {
+    "icon-size": 18,
+    "spacing": 8
   },
 
   "sway/workspaces": {

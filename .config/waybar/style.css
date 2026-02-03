@@ -12,6 +12,7 @@ window#waybar {
 }
 
 #pulseaudio,
+#battery,
 #clock,
 #custom-power {
   padding: 0 8px;
@@ -48,4 +49,12 @@ window#waybar {
   color: #ffffff;
   background: #d05757;
   border-color: #d05757;
+}
+
+#battery.warning {
+  color: #f3c76a;
+}
+
+#battery.critical {
+  color: #d05757;
 }

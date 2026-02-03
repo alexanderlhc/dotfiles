@@ -3,7 +3,7 @@
   "position": "top",
   "modules-left": ["hyprland/workspaces", "sway/workspaces"],
   "modules-center": [],
-  "modules-right": ["pulseaudio", "tray", "clock", "custom/power"],
+  "modules-right": ["pulseaudio", "tray", "battery", "clock", "custom/power"],
 
   "pulseaudio": {
     "format": " {volume}%",
@@ -18,6 +18,19 @@
   "tray": {
     "icon-size": 18,
     "spacing": 8
+  },
+
+  "battery": {
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{icon} {capacity}%",
+    "format-charging": " {capacity}%",
+    "format-plugged": " {capacity}%",
+    "format-alt": "{time} {icon}",
+    "format-icons": ["", "", "", "", ""],
+    "tooltip-format": "{timeTo}"
   },
 
   "sway/workspaces": {

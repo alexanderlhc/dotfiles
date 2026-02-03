@@ -11,7 +11,21 @@ require("conform").setup({
 		timeout_ms = 500,
 		lsp_format = "fallback",
 	},
+	formatters = {
+		biome = {
+			prefer_local = "node_modules/.bin",
+		},
+	},
 	formatters_by_ft = {
+		javascript = { "biome" },
+		javascriptreact = { "biome" },
+		typescript = { "biome" },
+		typescriptreact = { "biome" },
+		json = { "biome" },
+		jsonc = { "biome" },
+		css = { "biome" },
+		scss = { "biome" },
+		less = { "biome" },
 		lua = { "stylua" },
 	},
 })

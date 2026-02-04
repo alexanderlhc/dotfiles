@@ -6,5 +6,6 @@ vim.pack.add({
 }, { load = true })
 
 require("opencode").setup({
+	preferred_picker = "fzf",
 	preferred_completion = "blink",
 })

@@ -25,6 +25,9 @@ require("blink.cmp").setup({
 				components = {
 					kind_icon = {
 						text = function(ctx)
+							if ctx.kind == "Snippet" then
+								return ""
+							end
 							local kind_icon, _, _ = require("mini.icons").get("lsp", ctx.kind)
 							return kind_icon
 						end,
@@ -48,6 +51,9 @@ require("blink.cmp").setup({
 
 	sources = {
 		default = { "snippets", "lsp", "path", "buffer" },
+		providers = {
+			snippets = { score_offset = 1000 },
+		},
 	},
 
 	signature = { enabled = true }, -- lsp signature while in insert

@@ -1,0 +1,7 @@
+customCommands:
+  services:
+    - name: Up & Watch
+      attach: false
+      shell: false
+      command: docker compose up --watch
+      serviceNames: []

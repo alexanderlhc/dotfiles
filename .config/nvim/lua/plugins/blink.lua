@@ -1,6 +1,7 @@
 vim.pack.add({
 	{ src = "https://github.com/saghen/blink.cmp", version = vim.version.range("*") },
 	{ src = "https://github.com/zbirenbaum/copilot.lua" },
+	{ src = "https://github.com/giuxtaposition/blink-cmp-copilot" },
 	"https://github.com/rafamadriz/friendly-snippets",
 	{ src = "https://github.com/windwp/nvim-autopairs" },
 	{ src = "https://github.com/windwp/nvim-ts-autotag" },
@@ -12,14 +13,7 @@ require("nvim-ts-autotag").setup()
 
 require("copilot").setup({
 	suggestion = {
-		enabled = true,
-		auto_trigger = true,
-		keymap = {
-			accept = false,
-			next = false,
-			prev = false,
-			dismiss = false,
-		},
+		enabled = false,
 	},
 	panel = { enabled = false },
 })
@@ -30,6 +24,10 @@ require("blink.cmp").setup({
 		nerd_font_variant = "mono",
 	},
 	completion = {
+		ghost_text = {
+			enabled = true,
+			show_with_menu = false,
+		},
 		documentation = {
 			auto_show = true,
 			auto_show_delay_ms = 200,
@@ -65,8 +63,14 @@ require("blink.cmp").setup({
 	},
 
 	sources = {
-		default = { "lsp", "path", "buffer", "snippets" },
+		default = { "lsp", "path", "buffer", "snippets", "copilot" },
 		providers = {
+			copilot = {
+				name = "Copilot",
+				module = "blink-cmp-copilot",
+				score_offset = 100,
+				async = true,
+			},
 			snippets = {
 				-- hide snippet after trigger character
 				should_show_items = function(ctx)

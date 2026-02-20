@@ -1,0 +1,17 @@
+{
+	"type alias": {
+		"prefix": "type",
+		"body": ["type ${1:Name} = ${2:Type};"],
+		"description": "Type alias"
+	},
+	"interface": {
+		"prefix": "iface",
+		"body": ["interface ${1:Name} {", "\t${2:// TODO}", "}"],
+		"description": "Interface"
+	},
+	"type guard": {
+		"prefix": "is",
+		"body": ["const ${1:isValue} = (${2:value}: ${3:unknown}): ${4:value} is ${5:Type} => {", "\treturn ${6:condition};", "};"],
+		"description": "Type guard function"
+	}
+}

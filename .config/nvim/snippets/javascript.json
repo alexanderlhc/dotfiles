@@ -1,0 +1,67 @@
+{
+	"const": {
+		"prefix": "c",
+		"body": ["const ${1:} = ${2:}"],
+		"description": "Create a const"
+	},
+	"console log": {
+		"prefix": "cl",
+		"body": ["console.log(${1:});"],
+		"description": "Log to console"
+	},
+	"if guard": {
+		"prefix": "if",
+		"body": ["if (${1:condition}) {", "\t${2:// TODO}", "}"],
+		"description": "If statement"
+	},
+	"ternary": {
+		"prefix": "tern",
+		"body": ["const ${1:result} = ${2:condition} ? ${3:whenTrue} : ${4:whenFalse};"],
+		"description": "Ternary assignment"
+	},
+	"try/catch": {
+		"prefix": "try",
+		"body": ["try {", "\t${1:// TODO}", "} catch (${2:error}) {", "\tconsole.error(${2:error});", "}"],
+		"description": "Try/catch"
+	},
+	"function": {
+		"prefix": "fn",
+		"body": ["function ${1:name}(${2:args}) {", "\t${3:// TODO}", "}"],
+		"description": "Function declaration"
+	},
+	"async function": {
+		"prefix": "afn",
+		"body": ["async function ${1:name}(${2:args}) {", "\t${3:// TODO}", "}"],
+		"description": "Async function declaration"
+	},
+	"arrow function (expr)": {
+		"prefix": "ar",
+		"body": ["(${1:args}) => ${2:expr}"],
+		"description": "Arrow function expression"
+	},
+	"async arrow function (expr)": {
+		"prefix": "aar",
+		"body": ["async (${1:args}) => ${2:expr}"],
+		"description": "Async arrow function expression"
+	},
+	"arrow function (block)": {
+		"prefix": "arb",
+		"body": ["(${1:args}) => {", "\t${2:// TODO}", "}"],
+		"description": "Arrow function block"
+	},
+	"async arrow function (block)": {
+		"prefix": "aarb",
+		"body": ["async (${1:args}) => {", "\t${2:// TODO}", "}"],
+		"description": "Async arrow function block"
+	},
+	"const arrow function (expr)": {
+		"prefix": "car",
+		"body": ["const ${1:name} = (${2:args}) => ${3:expr}"],
+		"description": "Const arrow function expression"
+	},
+	"const async arrow function (expr)": {
+		"prefix": "caar",
+		"body": ["const ${1:name} = async (${2:args}) => ${3:expr}"],
+		"description": "Const async arrow function expression"
+	}
+}

@@ -120,6 +120,10 @@
     "yazi.nvim": {
       "rev": "9bbe1b18a6ee24d791ae9937e64c8526b80e8ffa",
       "src": "https://github.com/mikavilpas/yazi.nvim"
+    },
+    "zk-nvim": {
+      "rev": "51c8f858420112dda495a6f4ddbd3943ae433e39",
+      "src": "https://github.com/zk-org/zk-nvim"
     }
   }
 }

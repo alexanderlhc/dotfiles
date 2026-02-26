@@ -7,17 +7,18 @@ vim.pack.add({
 -- 1. Define all your standard servers here.
 --    Keys are the server names (as recognized by Mason/lspconfig).
 --    Values are the configuration tables (empty {} for default).
-local servers = {
-	lua_ls = {
-		settings = {
-			Lua = { diagnostics = { globals = { "vim" } } },
+	local servers = {
+		lua_ls = {
+			settings = {
+				Lua = { diagnostics = { globals = { "vim" } } },
+			},
 		},
-	},
-	ts_ls = {},
-	bashls = {},
-	["fish_lsp"] = {},
-	["docker_language_server"] = {},
-}
+		ts_ls = {},
+		bashls = {},
+		["fish_lsp"] = {},
+		["docker_language_server"] = {},
+		marksman = {},
+	}
 
 require("mason").setup()
 require("mason-lspconfig").setup({

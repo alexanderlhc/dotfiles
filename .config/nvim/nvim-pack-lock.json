@@ -14,7 +14,7 @@
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "copilot.lua": {
-      "rev": "ef4bfc579b404c531c1738bacca82ed61501d877",
+      "rev": "1eecd6c47e2b1c1a7affaa23a3ab61d344be56d1",
       "src": "https://github.com/zbirenbaum/copilot.lua"
     },
     "friendly-snippets": {
@@ -22,7 +22,7 @@
       "src": "https://github.com/rafamadriz/friendly-snippets"
     },
     "fzf-lua": {
-      "rev": "cfc085749d9232373fc6d8cf3a964c5601a7816e",
+      "rev": "1653c4c599dba538fbebf9de81a96380dc2998ff",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
@@ -74,11 +74,11 @@
       "src": "https://github.com/windwp/nvim-autopairs"
     },
     "nvim-lspconfig": {
-      "rev": "78596b61676d361a74ea3f3abbbf83d5fe6f5519",
+      "rev": "f386df19b145607a33885b6110ef5c04faae42cb",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-treesitter": {
-      "rev": "957f86ae3f049ab6681ed64c05b05768fcaed0d2",
+      "rev": "b9171ede5de41b3f2dfa33fe33ebd585d795f928",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "nvim-treesitter-context": {
@@ -123,7 +123,7 @@
       "src": "https://github.com/christoomey/vim-tmux-navigator"
     },
     "yazi.nvim": {
-      "rev": "09cac0050d8aeb33ed9a8a5f465407044a60f35a",
+      "rev": "04b2ef4bc5f54f904cde8e5a632753df7e394333",
       "src": "https://github.com/mikavilpas/yazi.nvim"
     },
     "zk-nvim": {

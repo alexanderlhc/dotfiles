@@ -134,6 +134,7 @@ require("markdown").setup({
 		map("x", "<leader>mc", function()
 			toggle_wrapper(bufnr, "`", "`")
 		end, opts)
+		map("x", "zn", ":'<,'>ZkNewFromTitleSelection<CR>", opts)
 		map("n", "<leader>fh", function()
 			open_markdown_headers_with_fzf(bufnr)
 		end, vim.tbl_extend("force", opts, { desc = "Open Markdown headers with fzf" }))
@@ -142,5 +143,3 @@ require("markdown").setup({
 		end, opts)
 	end,
 })
-
-

@@ -29,7 +29,7 @@ local function find_zettel()
 	commands.get("ZkNotes")(opts)
 end
 
-vim.keymap.set("n", "<leader>fz", find_zettel, { desc = "Find zettel via zk" })
+vim.keymap.set("n", "<leader>fz", "<Cmd>ZkNotes<CR>", { desc = "Open zk notes" })
 vim.keymap.set("n", "zo", vim.lsp.buf.definition, { desc = "Jump to note under cursor" })
 vim.api.nvim_create_user_command("ZkFzf", find_zettel, {
 	desc = "Find zettel through zk's FZF picker",

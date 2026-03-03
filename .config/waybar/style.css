@@ -57,6 +57,8 @@ window#waybar {
 
 #battery.critical {
   color: #d05757;
+}
+
 #custom-aerc {
   padding: 0 8px;
 }

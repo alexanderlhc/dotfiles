@@ -3,7 +3,7 @@
   "position": "top",
   "modules-left": ["hyprland/workspaces", "sway/workspaces"],
   "modules-center": [],
-  "modules-right": ["pulseaudio", "tray", "battery", "clock", "custom/power"],
+  "modules-right": ["pulseaudio", "tray", "custom/aerc", "battery", "clock", "custom/power"],
 
   "pulseaudio": {
     "format": " {volume}%",
@@ -41,5 +41,11 @@
   "custom/power": {
     "format": "⏻",
     "on-click": "~/.config/sway/power-menu.sh"
+  },
+
+  "custom/aerc": {
+    "exec": "~/.config/waybar/scripts/aerc-unread.sh",
+    "interval": 60,
+    "return-type": "json"
   }
 }

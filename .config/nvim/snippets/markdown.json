@@ -1,0 +1,7 @@
+{
+  "td": {
+    "prefix": "td",
+    "body": "- [ ] ${1:Task}",
+    "description": "Insert markdown task checkbox"
+  }
+}

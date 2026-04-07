@@ -7,6 +7,7 @@
 	clone-for-worktrees = "!sh $HOME/.local/bin/git-clone-bare-for-worktrees"
   auto-small= "!sh $HOME/.local/bin/git-auto-small"
   prune-branches= "!sh $HOME/.local/bin/git-prune-branches"
+	reset-to-main = !git fetch origin && git reset --hard origin/main
 [core]
 	editor = nvim
 [push]

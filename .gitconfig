@@ -3,11 +3,7 @@
 	name = Alexander Christensen
 [init]
 	defaultBranch = main
-[alias]
-	clone-for-worktrees = "!sh $HOME/.local/bin/git-clone-bare-for-worktrees"
-  auto-small= "!sh $HOME/.local/bin/git-auto-small"
-  prune-branches= "!sh $HOME/.local/bin/git-prune-branches"
-	reset-to-main = !git fetch origin && git reset --hard origin/main
+# Custom subcommands: ~/.local/bin/git-*  (auto-discovered via PATH)
 [core]
 	editor = nvim
 [push]

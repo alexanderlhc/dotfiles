@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -e
+
+if ! git rev-parse --git-dir >/dev/null 2>&1; then
+    echo "💩 not a git repository" >&2
+    exit 1
+fi
+
+if [ -z "$(git stash list)" ]; then
+    echo "💩 no stashes to poop"
+    exit 0
+fi
+
+sel=$(git stash list --color=always \
+    | fzf --ansi \
+          --prompt='💩 poop which stash? ' \
+          --header='enter to pop · esc to cancel' \
+          --preview 'git stash show -p --color=always $(printf "%s" {} | cut -d: -f1)' \
+          --preview-window=right:60%)
+
+[ -z "$sel" ] && { echo "💩 cancelled"; exit 0; }
+
+ref=$(printf "%s" "$sel" | cut -d: -f1)
+git stash pop "$ref"
+printf '💩💩💩  pooped %s  💩💩💩\n' "$ref"

@@ -1,1 +1,1 @@
-fnm env --use-on-cd | source
+fnm env --log-level=error | source

@@ -55,6 +55,59 @@ local function toggle_wrapper(bufnr, prefix, suffix)
 	vim.api.nvim_buf_set_lines(bufnr, start_line - 1, end_line, false, lines)
 end
 
+local function archive_task_lines(bufnr, start_line, end_line)
+	local lines = vim.api.nvim_buf_get_lines(bufnr, start_line - 1, end_line, false)
+
+	local to_archive = {}
+	local to_keep = {}
+	for _, line in ipairs(lines) do
+		local marked, count = line:gsub("^(%s*[%-*]%s*)%[[ %-xX]%]", "%1[x]", 1)
+		if count > 0 then
+			table.insert(to_archive, marked)
+		else
+			table.insert(to_keep, line)
+		end
+	end
+
+	if #to_archive == 0 then
+		vim.notify("No task lines in range", vim.log.levels.INFO)
+		return
+	end
+
+	vim.api.nvim_buf_set_lines(bufnr, start_line - 1, end_line, false, to_keep)
+
+	local all_lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+	local archived_idx = nil
+	for i, l in ipairs(all_lines) do
+		if l:match("^#+%s*[Aa]rchived%s*$") then
+			archived_idx = i
+			break
+		end
+	end
+
+	if not archived_idx then
+		local total = #all_lines
+		local to_insert = {}
+		if total > 0 and all_lines[total] ~= "" then
+			table.insert(to_insert, "")
+		end
+		table.insert(to_insert, "## Archived")
+		table.insert(to_insert, "")
+		for _, l in ipairs(to_archive) do
+			table.insert(to_insert, l)
+		end
+		vim.api.nvim_buf_set_lines(bufnr, total, total, false, to_insert)
+	else
+		local insert_at = archived_idx
+		if all_lines[archived_idx + 1] == "" then
+			insert_at = archived_idx + 1
+		end
+		vim.api.nvim_buf_set_lines(bufnr, insert_at, insert_at, false, to_archive)
+	end
+
+	vim.notify(string.format("Archived %d task(s)", #to_archive), vim.log.levels.INFO)
+end
+
 local function collect_markdown_headers(bufnr)
 	local headers = {}
 	local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
@@ -122,6 +175,16 @@ require("markdown").setup({
 		local opts = { buffer = bufnr }
 		map("n", "<M-c>", "<Cmd>MDTaskToggle<CR>", opts)
 		map("x", "<M-c>", ":MDTaskToggle<CR>", opts)
+		map("n", "<M-x>", function()
+			local line = vim.api.nvim_win_get_cursor(0)[1]
+			archive_task_lines(bufnr, line, line)
+		end, vim.tbl_extend("force", opts, { desc = "Mark task done and move to ## Archived" }))
+		map("x", "<M-x>", function()
+			vim.cmd('normal! \27') -- exit visual to populate '< '>
+			local s = vim.api.nvim_buf_get_mark(bufnr, "<")[1]
+			local e = vim.api.nvim_buf_get_mark(bufnr, ">")[1]
+			archive_task_lines(bufnr, s, e)
+		end, vim.tbl_extend("force", opts, { desc = "Archive selected tasks" }))
 		map("x", "<leader>mb", function()
 			toggle_wrapper(bufnr, "**", "**")
 		end, opts)

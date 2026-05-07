@@ -14,6 +14,14 @@ map({ "i", "n", "s" }, "<esc>", function()
 	return "<esc>"
 end, { expr = true, desc = "Escape and Clear hlsearch" })
 
+------- Move lines ---------
+map("n", "<M-j>", "<cmd>execute 'move .+' . v:count1<cr>==", { desc = "Move line down" })
+map("n", "<M-k>", "<cmd>execute 'move .-' . (v:count1 + 1)<cr>==", { desc = "Move line up" })
+map("i", "<M-j>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move line down" })
+map("i", "<M-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move line up" })
+map("v", "<M-j>", ":<C-u>execute \"'<,'>move '>+\" . v:count1<cr>gv=gv", { desc = "Move selection down" })
+map("v", "<M-k>", ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv", { desc = "Move selection up" })
+
 ------- Buffers ---------
 map("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
 map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next Buffer" })

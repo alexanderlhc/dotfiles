@@ -1,0 +1,28 @@
+/* Melange (light) — savq/melange-nvim palette
+ * https://github.com/savq/melange-nvim
+ *
+ * Palette exposed as GTK named colors so style.css can reference @mel-*
+ * without touching literal hex values. Swap this @import to change theme.
+ */
+
+/* Base */
+@define-color mel-bg     #F1F1F1;  /* a.bg     — cream background          */
+@define-color mel-float  #E9E1DB;  /* a.float  — soft cream chip bg        */
+@define-color mel-sel    #D9D3CE;  /* a.sel    — selection / hover bg      */
+@define-color mel-ui     #A98A78;  /* a.ui     — subtle UI lines           */
+@define-color mel-com    #7D6658;  /* a.com    — comments / muted fg       */
+@define-color mel-fg     #54433A;  /* a.fg     — primary foreground        */
+
+/* Accents — bright/saturated (b.*) for contrast against the light bg */
+@define-color mel-red     #BF0021;
+@define-color mel-yellow  #A06D00;
+@define-color mel-green   #3A684A;
+@define-color mel-cyan    #3D6568;
+@define-color mel-blue    #465AA4;
+@define-color mel-magenta #904180;
+
+/* Accents — muted (c.*) for secondary highlights */
+@define-color mel-red-mute     #C77B8B;
+@define-color mel-yellow-mute  #BC5C00;
+@define-color mel-green-mute   #6E9B72;
+@define-color mel-blue-mute    #7892BD;

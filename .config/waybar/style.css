@@ -1,3 +1,5 @@
+@import url("themes/melange-light.css");
+
 * {
   border: none;
   border-radius: 0;
@@ -7,17 +9,22 @@
 }
 
 window#waybar {
-  background: transparent;
-  color: #e6e6e6;
+  background: @mel-bg;
+  color: @mel-fg;
+  border-bottom: 1px solid @mel-ui;
 }
 
 #pulseaudio,
+#tray,
+#custom-aerc,
 #battery,
 #clock,
 #custom-power {
   padding: 0 8px;
-  margin: 0;
-  background: rgba(0, 0, 0, 0.0);
+  margin: 2px 2px;
+  color: @mel-fg;
+  background: @mel-float;
+  border: 1px solid alpha(@mel-ui, 0.5);
 }
 
 #workspaces {
@@ -26,39 +33,35 @@ window#waybar {
 
 #workspaces button {
   padding: 0 8px;
-  margin: 0 2px;
-  color: #d9d9d9;
-  background: rgba(20, 20, 20, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  margin: 2px 2px;
+  color: @mel-com;
+  background: @mel-float;
+  border: 1px solid alpha(@mel-ui, 0.5);
   transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
 }
 
 #workspaces button:hover {
-  color: #ffffff;
-  background: rgba(30, 30, 30, 0.55);
-  border-color: rgba(255, 255, 255, 0.3);
+  color: @mel-fg;
+  background: @mel-sel;
+  border-color: @mel-ui;
 }
 
 #workspaces button.focused {
-  color: #111111;
-  background: #f3c76a;
-  border-color: #f3c76a;
+  color: @mel-bg;
+  background: @mel-blue;
+  border-color: @mel-blue;
 }
 
 #workspaces button.urgent {
-  color: #ffffff;
-  background: #d05757;
-  border-color: #d05757;
+  color: @mel-bg;
+  background: @mel-red;
+  border-color: @mel-red;
 }
 
 #battery.warning {
-  color: #f3c76a;
+  color: @mel-yellow;
 }
 
 #battery.critical {
-  color: #d05757;
-}
-
-#custom-aerc {
-  padding: 0 8px;
+  color: @mel-red;
 }

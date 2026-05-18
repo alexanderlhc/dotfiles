@@ -5,3 +5,4 @@ opt.spelllang = "en_us,da"
 opt.spellfile = vim.fn.stdpath("config") .. "/spell/en.utf-8.add"
 
 opt.wrap = true
+opt.conceallevel = 2

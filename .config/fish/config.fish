@@ -33,3 +33,10 @@ if not string match -q -- $PNPM_HOME $PATH
     set -gx PATH "$PNPM_HOME" $PATH
 end
 # pnpm end
+
+# Android SDK
+set -gx ANDROID_HOME "$HOME/Android/Sdk"
+fish_add_path $ANDROID_HOME/emulator
+fish_add_path $ANDROID_HOME/platform-tools
+fish_add_path $ANDROID_HOME/cmdline-tools/latest/bin
+direnv hook fish | source

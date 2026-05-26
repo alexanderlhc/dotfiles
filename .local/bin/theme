@@ -1,0 +1,82 @@
+#!/bin/sh
+set -e
+
+usage() {
+  echo "Usage: theme <command> [args]"
+  echo ""
+  echo "Commands:"
+  echo "  list              List available schemes"
+  echo "  apply <name>      Apply a theme (e.g. 'base24-melange-light')"
+  echo "  current           Show the active theme"
+  echo "  create <name>     Scaffold a new base24 scheme YAML"
+  echo ""
+  echo "Examples:"
+  echo "  theme apply base24-melange-light"
+  echo "  theme apply base24-melange-dark"
+  echo "  theme create my-cool-theme"
+}
+
+cmd_list() {
+  tinty list
+}
+
+cmd_apply() {
+  [ -z "$1" ] && echo "Error: scheme name required" && exit 1
+  tinty apply "$1"
+  echo "Applied: $1"
+  echo "Note: some apps need restart/reload to pick up changes."
+}
+
+cmd_current() {
+  tinty current
+}
+
+cmd_create() {
+  [ -z "$1" ] && echo "Error: scheme name required" && exit 1
+  dir="$HOME/.local/share/tinted-theming/tinty/custom-schemes/base24"
+  file="$dir/$1.yaml"
+  [ -f "$file" ] && echo "Error: $file already exists" && exit 1
+  mkdir -p "$dir"
+  cat > "$file" << 'YAML'
+system: "base24"
+name: "SCHEME_NAME"
+author: "YOUR_NAME"
+variant: "light"
+palette:
+  base00: "#000000"  # Default Background
+  base01: "#111111"  # Lighter Background (status bars)
+  base02: "#222222"  # Selection Background
+  base03: "#555555"  # Comments, Invisibles
+  base04: "#999999"  # Dark Foreground (secondary)
+  base05: "#cccccc"  # Default Foreground
+  base06: "#dddddd"  # Light Foreground
+  base07: "#ffffff"  # Lightest Foreground
+  base08: "#ff0000"  # Red
+  base09: "#ff8800"  # Orange
+  base0A: "#ffcc00"  # Yellow
+  base0B: "#00cc00"  # Green
+  base0C: "#00cccc"  # Cyan
+  base0D: "#0066ff"  # Blue
+  base0E: "#cc00cc"  # Magenta
+  base0F: "#885500"  # Brown (deprecated/embedded)
+  base10: "#0a0a0a"  # Darker Background
+  base11: "#050505"  # Darkest Background
+  base12: "#ff5555"  # Bright Red
+  base13: "#ffaa55"  # Bright Orange
+  base14: "#55cc55"  # Bright Green
+  base15: "#55cccc"  # Bright Cyan
+  base16: "#5588ff"  # Bright Blue
+  base17: "#cc55cc"  # Bright Magenta
+YAML
+  sed -i "s/SCHEME_NAME/$1/" "$file"
+  echo "Created: $file"
+  echo "Edit the hex values, then run: theme apply base24-$1"
+}
+
+case "${1:-}" in
+  list)    cmd_list ;;
+  apply)   cmd_apply "$2" ;;
+  current) cmd_current ;;
+  create)  cmd_create "$2" ;;
+  *)       usage ;;
+esac

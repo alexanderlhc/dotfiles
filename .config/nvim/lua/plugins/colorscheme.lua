@@ -1,4 +1,4 @@
-vim.pack.add({"https://github.com/savq/melange-nvim"})
+vim.pack.add({"https://github.com/tinted-theming/tinted-nvim"})
 
-vim.opt.background = "light"
-vim.cmd([[colorscheme melange]])
+local ok, tinted = pcall(require, "tinted")
+if ok then tinted.setup() end

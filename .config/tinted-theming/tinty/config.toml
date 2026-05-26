@@ -1,0 +1,36 @@
+shell = "sh -c '{}'"
+default-scheme = "base24-melange-light"
+
+[[items]]
+path = "https://github.com/tinted-theming/tinted-shell"
+name = "tinted-shell"
+themes-dir = "scripts"
+hook = ". %f"
+supported-systems = ["base24", "base16"]
+
+[[items]]
+path = "https://github.com/tinted-theming/tinted-foot"
+name = "tinted-foot"
+themes-dir = "colors"
+supported-systems = ["base24", "base16"]
+hook = "cp %f ~/.config/foot/themes/tinted.ini"
+
+[[items]]
+path = "https://github.com/tinted-theming/tinted-kitty"
+name = "tinted-kitty"
+themes-dir = "colors"
+supported-systems = ["base24", "base16"]
+hook = "cp %f ~/.config/kitty/current-theme.conf"
+
+[[items]]
+path = "https://github.com/tinted-theming/tinted-tmux"
+name = "tinted-tmux"
+themes-dir = "colors"
+supported-systems = ["base24", "base16"]
+hook = "sh ~/.config/tinted-theming/hooks/apply-all.sh"
+
+[[items]]
+path = "https://github.com/tinted-theming/tinted-nvim"
+name = "tinted-nvim"
+themes-dir = "colors"
+supported-systems = ["base24", "base16"]

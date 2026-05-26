@@ -9,13 +9,6 @@ hook = ". %f"
 supported-systems = ["base24", "base16"]
 
 [[items]]
-path = "https://github.com/tinted-theming/tinted-foot"
-name = "tinted-foot"
-themes-dir = "colors"
-supported-systems = ["base24", "base16"]
-hook = "cp %f ~/.config/foot/themes/tinted.ini"
-
-[[items]]
 path = "https://github.com/tinted-theming/tinted-kitty"
 name = "tinted-kitty"
 themes-dir = "colors"

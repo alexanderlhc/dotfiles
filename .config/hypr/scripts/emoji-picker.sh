@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Pop a Walker dmenu of emojis, copy the picked one to the clipboard.
+# Pop a fuzzel dmenu of emojis, copy the picked one to the clipboard.
 # Recently used emojis are shown first.
 
 set -euo pipefail
@@ -20,7 +20,7 @@ fi
 
 selection=$( { cat "$RECENT" 2>/dev/null; cat "$DATA"; } \
     | awk '!seen[$1]++' \
-    | walker -d -p "Emoji" )
+    | fuzzel --dmenu --prompt "Emoji❯ " )
 
 [[ -z "$selection" ]] && exit 0
 

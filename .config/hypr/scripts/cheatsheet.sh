@@ -21,4 +21,4 @@ hyprctl binds -j | jq -r '
   | (if .submap != "" then "[" + .submap + "] " else "" end) as $ctx
   | "\($ctx)\($prefix)\(.key)\t\($action)"
 ' | column -t -s $'\t' \
-  | wofi --dmenu --prompt "Hyprland keys" --insensitive --width 700 --height 600
+  | fuzzel --dmenu --prompt "Keys❯ "

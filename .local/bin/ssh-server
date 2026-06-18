@@ -1,0 +1,6 @@
+#!/bin/env sh
+
+USER="admin"
+HOST="10.12.131.114"
+PASSWORD="fQCKR0Tc581El7d6"
+sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no "$USER@$HOST"

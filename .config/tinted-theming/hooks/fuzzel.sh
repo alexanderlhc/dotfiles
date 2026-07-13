@@ -17,7 +17,7 @@ OUT="$HOME/.config/fuzzel/fuzzel.ini"
 
 cat > "$OUT" << FUZZEL
 [main]
-font=MonoLisa:size=12
+font=MonoLisa:pixelsize=12,Symbols Nerd Font:pixelsize=12
 prompt="❯ "
 layer=overlay
 lines=12

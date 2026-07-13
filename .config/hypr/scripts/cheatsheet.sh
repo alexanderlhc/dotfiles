@@ -2,6 +2,9 @@
 # Hyprland keybind cheatsheet, generated from `hyprctl binds`.
 # To change bindings, edit ~/.config/hypr/conf.d/keybindings.conf and reload.
 
+# Toggle behavior: if another wofi menu is open, close it instead of stacking.
+pkill wofi && exit 0
+
 hyprctl binds -j | jq -r '
   def modname:
     [

@@ -4,6 +4,10 @@
 
 set -euo pipefail
 
+# Toggle behavior: if another wofi menu is open, close it instead of stacking.
+# (if-form: a failed pkill must not trip set -e)
+if pkill wofi; then exit 0; fi
+
 DATA="$HOME/.local/share/emoji-picker/emojis.txt"
 CACHE_DIR="$HOME/.cache/emoji-picker"
 RECENT="$CACHE_DIR/recent"

@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Toggle behavior: if another wofi menu is open, close it instead of stacking.
+pkill wofi && exit 0
+
 options="󰌾  Lock
 󰍃  Logout
 󰤄  Suspend

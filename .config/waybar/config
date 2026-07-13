@@ -1,25 +1,38 @@
 {
   "layer": "top",
   "position": "top",
-  "modules-left": ["hyprland/workspaces", "sway/workspaces"],
+  "height": 32,
+  "spacing": 6,
+  "modules-left": [
+    "hyprland/workspaces"
+  ],
   "modules-center": [],
-  "modules-right": ["pulseaudio", "tray", "custom/aerc", "battery", "clock", "custom/power"],
-
+  "modules-right": [
+    "group/status",
+    "clock",
+    "custom/power"
+  ],
+  "group/status": {
+    "orientation": "inherit",
+    "modules": [
+      "pulseaudio",
+      "tray",
+      "custom/aerc",
+      "battery"
+    ]
+  },
   "pulseaudio": {
     "format": " {volume}%",
     "format-muted": " muted",
     "on-click": "pkill pavucontrol || pavucontrol"
   },
-
   "clock": {
     "format": "{:%Y-%m-%d %H:%M}"
   },
-
   "tray": {
     "icon-size": 18,
     "spacing": 8
   },
-
   "battery": {
     "states": {
       "warning": 30,
@@ -29,20 +42,20 @@
     "format-charging": " {capacity}%",
     "format-plugged": " {capacity}%",
     "format-alt": "{time} {icon}",
-    "format-icons": ["", "", "", "", ""],
+    "format-icons": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
     "tooltip-format": "{timeTo}"
   },
-
-  "sway/workspaces": {
-    "disable-scroll": true,
-    "all-outputs": true
-  },
-
   "custom/power": {
     "format": "⏻",
-    "on-click": "~/.config/sway/power-menu.sh"
+    "tooltip": false,
+    "on-click": "~/.config/waybar/scripts/power-menu.sh"
   },
-
   "custom/aerc": {
     "exec": "~/.config/waybar/scripts/aerc-unread.sh",
     "interval": 60,

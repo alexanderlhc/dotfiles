@@ -1,18 +1,15 @@
 #!/bin/sh
 
-options="Lock
-Logout
+options="Logout
 Suspend
 Reboot
 Power off"
-choice=$(printf '%b' "$options" | wofi --dmenu --prompt "Power" --width 240 --lines 5 --matching fuzzy --insensitive)
+
+choice=$(printf '%s' "$options" | wofi --dmenu --prompt "Power" --width 240 --lines 4 --matching fuzzy --insensitive)
 
 case "$choice" in
-  Lock)
-    swaylock
-    ;;
   Logout)
-    swaymsg exit
+    hyprctl dispatch exit
     ;;
   Suspend)
     systemctl suspend

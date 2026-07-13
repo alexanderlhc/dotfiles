@@ -2,7 +2,7 @@
 
 window {
   font-family: "MonoLisa", "Symbols Nerd Font", monospace;
-  font-size: 12px;
+  font-size: 14px;
   background: @mel-bg;
   color: @mel-fg;
   border: 1px solid @mel-ui;

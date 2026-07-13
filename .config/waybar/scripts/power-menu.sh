@@ -1,27 +1,27 @@
 #!/bin/sh
 
-options="Lock
-Logout
-Suspend
-Reboot
-Power off"
+options="󰌾  Lock
+󰍃  Logout
+󰤄  Suspend
+󰜉  Reboot
+󰐥  Power off"
 
 choice=$(printf '%s' "$options" | wofi --dmenu --prompt "Power" --width 240 --lines 5 --matching fuzzy --insensitive)
 
 case "$choice" in
-  Lock)
+  *"Lock")
     hyprlock
     ;;
-  Logout)
+  *"Logout")
     hyprctl dispatch exit
     ;;
-  Suspend)
+  *"Suspend")
     systemctl suspend
     ;;
-  Reboot)
+  *"Reboot")
     systemctl reboot
     ;;
-  "Power off")
+  *"Power off")
     systemctl poweroff
     ;;
 esac

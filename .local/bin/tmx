@@ -3,6 +3,7 @@ set -eu
 
 DIRS_FILE="${TMX_DIRS_FILE:-$HOME/.local/share/tmx/dirs}"
 CODE_DIR="$HOME/code"
+MONO_DIR="$HOME/code/rr-monorepo"
 
 die() {
   printf '%s\n' "$*" >&2
@@ -167,6 +168,9 @@ add_dir_candidate() {
 if [ -d "$CODE_DIR" ]; then
   add_dir_candidate "$CODE_DIR"
   for d in "$CODE_DIR"/*; do
+    [ -d "$d" ] && add_dir_candidate "$d"
+  done
+  for d in "$MONO_DIR"/*; do
     [ -d "$d" ] && add_dir_candidate "$d"
   done
 fi

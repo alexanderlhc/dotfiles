@@ -21,4 +21,4 @@ hyprctl binds -j | jq -r '
   | (if .submap != "" then "[" + .submap + "] " else "" end) as $ctx
   | "\($ctx)\($prefix)\(.key)\t\($action)"
 ' | column -t -s $'\t' \
-  | fuzzel --dmenu --prompt "Keys❯ "
+  | wofi --dmenu --prompt Keys --width 700 --lines 15 --matching fuzzy --insensitive

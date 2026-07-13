@@ -1,0 +1,57 @@
+@import url("/home/alexander/.config/wofi/themes/tinted.css");
+
+window {
+  font-family: "MonoLisa", "Symbols Nerd Font", monospace;
+  font-size: 12px;
+  background: @mel-bg;
+  color: @mel-fg;
+  border: 1px solid @mel-ui;
+  border-radius: 9px;
+}
+
+#input {
+  margin: 8px 8px 6px;
+  padding: 4px 10px;
+  background: @mel-float;
+  color: @mel-fg;
+  border: 1px solid alpha(@mel-ui, 0.4);
+  border-radius: 9px;
+}
+
+#input:focus {
+  border-color: @mel-ui;
+  box-shadow: none;
+}
+
+#outer-box,
+#scroll {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+
+#inner-box {
+  margin: 0 8px 8px;
+  border: none;
+  background: transparent;
+}
+
+#entry {
+  padding: 5px 10px;
+  border-radius: 6px;
+  color: @mel-fg;
+}
+
+#entry:hover {
+  background: @mel-sel;
+}
+
+#entry:selected {
+  background: @mel-blue;
+  color: @mel-bg;
+}
+
+#text:selected {
+  color: @mel-bg;
+}

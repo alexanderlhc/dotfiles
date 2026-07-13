@@ -6,6 +6,7 @@ hex() {
 }
 
 BG=$(hex 00)
+FLOAT=$(hex 01)
 FG=$(hex 05)
 BLUE=$(hex 0D)
 SEL=$(hex 02)
@@ -16,7 +17,7 @@ OUT="$HOME/.config/fuzzel/fuzzel.ini"
 
 cat > "$OUT" << FUZZEL
 [main]
-font=MonoLisa:size=13
+font=MonoLisa:size=12
 prompt="❯ "
 layer=overlay
 lines=12
@@ -27,15 +28,17 @@ inner-pad=4
 
 [colors]
 background=${BG}ff
+input=${FG}ff
+prompt=${COM}ff
 text=${FG}ff
 match=${BLUE}ff
-selection=${SEL}ff
-selection-text=${FG}ff
-selection-match=${BLUE}ff
+selection=${BLUE}ff
+selection-text=${BG}ff
+selection-match=${BG}ff
 border=${UI}ff
 counter=${COM}ff
 
 [border]
-width=2
-radius=8
+width=1
+radius=9
 FUZZEL

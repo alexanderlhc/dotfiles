@@ -50,9 +50,19 @@ window#waybar {
 #pulseaudio,
 #tray,
 #custom-aerc,
+#custom-bluetooth,
 #battery {
   padding: 0 9px;
   background: transparent;
+}
+
+#custom-bluetooth.off,
+#custom-bluetooth.disconnected {
+  color: @mel-com;
+}
+
+#custom-bluetooth.low {
+  color: @mel-yellow;
 }
 
 /* ---- workspaces ---- */

@@ -15,6 +15,7 @@
   "group/status": {
     "orientation": "inherit",
     "modules": [
+      "custom/bluetooth",
       "pulseaudio",
       "tray",
       "custom/aerc",
@@ -55,6 +56,13 @@
     "format": "⏻",
     "tooltip": false,
     "on-click": "~/.config/waybar/scripts/power-menu.sh"
+  },
+  "custom/bluetooth": {
+    "exec": "~/.config/waybar/scripts/bluetooth-status.sh",
+    "interval": 10,
+    "return-type": "json",
+    "signal": 8,
+    "on-click": "~/.config/waybar/scripts/bluetooth-menu.sh"
   },
   "custom/aerc": {
     "exec": "~/.config/waybar/scripts/aerc-unread.sh",

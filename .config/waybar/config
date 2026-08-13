@@ -6,7 +6,10 @@
   "modules-left": [
     "hyprland/workspaces"
   ],
-  "modules-center": [],
+  "modules-center": [
+    "custom/pomodoro",
+    "custom/stand"
+  ],
   "modules-right": [
     "group/status",
     "clock",
@@ -63,6 +66,20 @@
     "return-type": "json",
     "signal": 8,
     "on-click": "~/.config/waybar/scripts/bluetooth-menu.sh"
+  },
+  "custom/pomodoro": {
+    "exec": "~/.config/waybar/scripts/timer.sh pomodoro 25 󰔟 manual",
+    "interval": 1,
+    "return-type": "json",
+    "on-click": "~/.config/waybar/scripts/timer.sh pomodoro 25 󰔟 manual click",
+    "on-click-right": "~/.config/waybar/scripts/timer.sh pomodoro 25 󰔟 manual reset"
+  },
+  "custom/stand": {
+    "exec": "~/.config/waybar/scripts/timer.sh stand 50 󰖃 auto",
+    "interval": 1,
+    "return-type": "json",
+    "on-click": "~/.config/waybar/scripts/timer.sh stand 50 󰖃 auto click",
+    "on-click-right": "~/.config/waybar/scripts/timer.sh stand 50 󰖃 auto reset"
   },
   "custom/aerc": {
     "exec": "~/.config/waybar/scripts/aerc-unread.sh",

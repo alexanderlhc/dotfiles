@@ -19,6 +19,8 @@ window#waybar {
 #workspaces,
 #status,
 #clock,
+#custom-pomodoro,
+#custom-stand,
 #custom-power {
   background: @mel-float;
   border: 1px solid alpha(@mel-ui, 0.4);
@@ -88,6 +90,34 @@ window#waybar {
 }
 
 #workspaces button.urgent {
+  color: @mel-bg;
+  background: @mel-red;
+}
+
+/* ---- timers ---- */
+
+#custom-pomodoro,
+#custom-stand {
+  padding: 0 12px;
+}
+
+#custom-pomodoro.idle,
+#custom-stand.idle {
+  color: @mel-com;
+}
+
+#custom-pomodoro.running,
+#custom-stand.running {
+  color: @mel-green;
+}
+
+#custom-pomodoro.paused,
+#custom-stand.paused {
+  color: @mel-yellow;
+}
+
+#custom-pomodoro.expired,
+#custom-stand.expired {
   color: @mel-bg;
   background: @mel-red;
 }

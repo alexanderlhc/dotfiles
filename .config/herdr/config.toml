@@ -14,13 +14,52 @@ agent_panel_sort = "priority"
 enabled = false
 
 [keys]
-# prefix+p taken over by the plan command below; previous_tab moved to
-# prefix+shift+tab, which frees up cycle_pane_previous (prefix+h/j/k/l
-# still moves between panes directionally).
-previous_tab = "prefix+shift+tab"
-cycle_pane_previous = ""
+# Tabs are the "one level up" version of pane nav: ctrl+hjkl moves panes,
+# ctrl+shift+h/l moves tabs, matching <S-h>/<S-l> in nvim. This frees
+# prefix+p (see the plan command below) and prefix+n, and hands
+# prefix+shift+tab back to cycle_pane_previous.
+previous_tab = "ctrl+shift+h"
+next_tab = "ctrl+shift+l"
+cycle_pane_previous = "prefix+shift+tab"
+
+# nvim's :tabmove
+move_tab_previous = "ctrl+shift+alt+h"
+move_tab_next = "ctrl+shift+alt+l"
+
+# Third level: workspaces
+switch_workspace = "prefix+shift+1..9"
 
 [[keys.command]]
 key = "prefix+p"
 type = "shell"
 command = "/home/alexander/.config/herdr/bin/open-plan.sh"
+
+# --- vim-tmux-navigator, for herdr -------------------------------------
+# ctrl+h/j/k/l moves between panes; herdr-nav.sh passes the key through
+# instead when the focused pane runs vim/nvim/fzf.
+[[keys.command]]
+key = "ctrl+h"
+type = "shell"
+command = "/home/alexander/.config/herdr/bin/herdr-nav.sh left"
+
+[[keys.command]]
+key = "ctrl+j"
+type = "shell"
+command = "/home/alexander/.config/herdr/bin/herdr-nav.sh down"
+
+[[keys.command]]
+key = "ctrl+k"
+type = "shell"
+command = "/home/alexander/.config/herdr/bin/herdr-nav.sh up"
+
+[[keys.command]]
+key = "ctrl+l"
+type = "shell"
+command = "/home/alexander/.config/herdr/bin/herdr-nav.sh right"
+
+# ctrl+l is taken globally now, so keep clear-screen reachable
+# (mirrors `bind C-l send-keys 'C-l'` in ~/.config/tmux/tmux.conf).
+[[keys.command]]
+key = "prefix+ctrl+l"
+type = "shell"
+command = "/home/alexander/.config/herdr/bin/herdr-send-key.sh ctrl+l"

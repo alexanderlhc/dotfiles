@@ -1,0 +1,26 @@
+onboarding = false
+
+[experimental]
+pane_history = false
+
+[theme]
+name = "catppuccin-latte"
+auto_switch = false
+
+[ui]
+agent_panel_sort = "priority"
+
+[ui.sound]
+enabled = false
+
+[keys]
+# prefix+p taken over by the plan command below; previous_tab moved to
+# prefix+shift+tab, which frees up cycle_pane_previous (prefix+h/j/k/l
+# still moves between panes directionally).
+previous_tab = "prefix+shift+tab"
+cycle_pane_previous = ""
+
+[[keys.command]]
+key = "prefix+p"
+type = "shell"
+command = "/home/alexander/.config/herdr/bin/open-plan.sh"

@@ -24,7 +24,7 @@ fi
 
 selection=$( { cat "$RECENT" 2>/dev/null; cat "$DATA"; } \
     | awk '!seen[$1]++' \
-    | wofi --dmenu --prompt Emoji --width 420 --lines 12 --matching fuzzy --insensitive )
+    | wofi --dmenu --prompt Emoji --width 420 --lines 12 --matching multi-contains --insensitive )
 
 [[ -z "$selection" ]] && exit 0
 

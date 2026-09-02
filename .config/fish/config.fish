@@ -40,3 +40,6 @@ fish_add_path $ANDROID_HOME/emulator
 fish_add_path $ANDROID_HOME/platform-tools
 fish_add_path $ANDROID_HOME/cmdline-tools/latest/bin
 direnv hook fish | source
+
+# World of Warcraft (Bottles: Bnet-GE-Proton) — used by KeyBinds' `npm run addon:install`
+set -gx WOW_ADDONS_DIR "$HOME/.var/app/com.usebottles.bottles/data/bottles/bottles/Bnet-GE-Proton/drive_c/Program Files (x86)/World of Warcraft/_retail_/Interface/AddOns"

@@ -12,12 +12,29 @@
 #     idle ──press──► speaking ──press──► idle
 #                         └──── ends on its own ────┘
 #
-# Synthesis is streamed: the text is split into one sentence per line, and
-# piper-tts emits each line's audio as it is produced while pw-cat consumes
-# it. Speech starts after the first sentence rather than after the whole
-# clipboard, which matters when you paste a page of text at it.
+# Synthesis is streamed: the text is split into one sentence per line, and the
+# engine emits each line's audio as it is produced while pw-cat consumes it.
+# Speech starts after the first sentence rather than after the whole clipboard,
+# which matters when you paste a page of text at it.
+#
+# Two engines, chosen with SPEAK_CLIP_ENGINE — see `speak-clip help`:
+#   kokoro  (default) Kokoro-82M via onnxruntime in a venv. Clearly the more
+#           natural voice, and faster too (~4x realtime vs ~3x on CPU).
+#   piper   piper-tts with a .onnx voice. No venv and much smaller models, so
+#           it stays as the fallback on a machine without the kokoro setup.
 
 set -uo pipefail
+
+# Two engines. kokoro is markedly more natural than piper's best and is also
+# faster (~4x realtime vs ~3x on CPU); piper stays as the dependency-light
+# fallback, since kokoro needs a venv and a 311MB model.
+ENGINE="${SPEAK_CLIP_ENGINE:-kokoro}"            # kokoro | piper
+
+KOKORO_DIR="${SPEAK_CLIP_KOKORO_DIR:-$HOME/.local/share/kokoro-tts}"
+KOKORO_PY="$KOKORO_DIR/venv/bin/python"
+KOKORO_VOICE="${SPEAK_CLIP_KOKORO_VOICE:-bf_emma}"
+KOKORO_SPEED="${SPEAK_CLIP_SPEED:-0.95}"         # <1 slower, unlike piper's scale
+KOKORO_RATE=24000
 
 VOICEDIR="${SPEAK_CLIP_VOICEDIR:-$HOME/.local/share/piper-voices}"
 VOICE="${SPEAK_CLIP_VOICE:-en_GB-cori-high}"
@@ -62,9 +79,14 @@ voice_rate() {
 do_start() {
     [[ $(state) == idle ]] || return 0
 
-    command -v piper-tts >/dev/null || fail "piper-tts not found"
-    command -v pw-cat    >/dev/null || fail "pw-cat not found"
-    [[ -f $VOICE ]] || fail "Voice missing: $VOICE"
+    command -v pw-cat >/dev/null || fail "pw-cat not found"
+    if [[ $ENGINE == kokoro ]]; then
+        [[ -x $KOKORO_PY ]] || fail "Kokoro venv missing: $KOKORO_PY"
+        [[ -f $KOKORO_DIR/kokoro-v1.0.onnx ]] || fail "Kokoro model missing in $KOKORO_DIR"
+    else
+        command -v piper-tts >/dev/null || fail "piper-tts not found"
+        [[ -f $VOICE ]] || fail "Voice missing: $VOICE"
+    fi
 
     local text
     if [[ ${1:-} == "--stdin" ]]; then
@@ -90,8 +112,12 @@ do_start() {
     printf '%s\n' "$text" > "$TXT"
 
     local rate cuda_flag=""
-    rate=$(voice_rate)
-    [[ $CUDA == 1 ]] && cuda_flag="--cuda"
+    if [[ $ENGINE == kokoro ]]; then
+        rate=$KOKORO_RATE
+    else
+        rate=$(voice_rate)
+        [[ $CUDA == 1 ]] && cuda_flag="--cuda"
+    fi
 
     # pw-play goes through libsndfile and rejects a headerless stream, so raw
     # PCM from piper has to be handed to pw-cat in --raw mode instead.
@@ -105,12 +131,20 @@ do_start() {
     # the wrong process.
     setsid bash -c '
         echo $$ > "$1"
-        sed -E "s/([.!?])[[:space:]]+/\1\n/g" "$2" \
-            | piper-tts -m "$3" --output-raw --length-scale "$4" --volume "$5" $6 \
-            | pw-cat "${@:7}" -
+        # Bound to names first: inside synth(), $3..$11 would resolve to the
+        # function\x27s own (empty) positional parameters, not the script\x27s.
+        pvoice=$3; plen=$4; pvol=$5; pcuda=$6
+        kpy=$8; kscript=$9; kvoice=${10}; kspeed=${11}
+        if [ "$7" = kokoro ]; then
+            synth() { "$kpy" "$kscript" --voice "$kvoice" --speed "$kspeed"; }
+        else
+            synth() { piper-tts -m "$pvoice" --output-raw --length-scale "$plen" --volume "$pvol" $pcuda; }
+        fi
+        sed -E "s/([.!?])[[:space:]]+/\1\n/g" "$2" | synth | pw-cat "${@:12}" -
         rm -f "$1"
         notify-send -a "Read aloud" -r '"$NOTIFY_ID"' -t 1500 "✅ Done" ""
     ' _ "$PGIDFILE" "$TXT" "$VOICE" "$LENGTH_SCALE" "$VOLUME" "$cuda_flag" \
+      "$ENGINE" "$KOKORO_PY" "$HOME/.local/bin/kokoro-stream" "$KOKORO_VOICE" "$KOKORO_SPEED" \
       "${play_args[@]}" >/dev/null 2>>"$LOG" &
 
     # The child owns the pgidfile; wait briefly so `status` right after `start`
@@ -140,7 +174,7 @@ do_stop() {
 
 usage() {
     cat << EOF
-speak-clip — read the clipboard aloud with piper (local neural TTS).
+speak-clip — read the clipboard aloud with kokoro or piper (local neural TTS).
 The mirror of whisper-ptt: one key toggles it, another stops it.
 
 Usage: speak-clip [command]
@@ -151,7 +185,7 @@ Commands:
   stop          stop speaking
   status        print "speaking" or "idle"
   say TEXT      speak TEXT, or stdin if no TEXT is given
-  voices        list installed voices, marking the current one
+  voices        list available voices for the current engine
   help          this text
 
 Keys (Hyprland):
@@ -159,16 +193,29 @@ Keys (Hyprland):
   SUPER + SHIFT + A   stop
 
 Environment:
-  SPEAK_CLIP_VOICE          voice name or .onnx path   (default: en_GB-cori-high)
-  SPEAK_CLIP_VOICEDIR       where bare voice names resolve
-                            (default: ~/.local/share/piper-voices)
-  SPEAK_CLIP_LENGTH_SCALE   speech rate, >1 slower     (default: 1.15)
-  SPEAK_CLIP_VOLUME         volume multiplier          (default: 1.0)
+  SPEAK_CLIP_ENGINE         kokoro | piper             (default: kokoro)
   SPEAK_CLIP_MAX_CHARS      truncate longer clipboards (default: 20000)
   SPEAK_CLIP_SINK           pipewire output target     (default: system default)
-  SPEAK_CLIP_CUDA           1 = GPU, needs onnxruntime-gpu (default: 0)
 
-Install a new voice:
+  kokoro (default engine — more natural, ~4x realtime on CPU):
+    SPEAK_CLIP_KOKORO_VOICE bf_* / bm_* British, af_* / am_* American
+                                                       (default: bf_emma)
+    SPEAK_CLIP_SPEED        speech rate, <1 slower     (default: 0.95)
+    SPEAK_CLIP_KOKORO_DIR   model + venv location
+                            (default: ~/.local/share/kokoro-tts)
+
+  piper (fallback — no venv, smaller models, ~3x realtime):
+    SPEAK_CLIP_VOICE        voice name or .onnx path   (default: en_GB-cori-high)
+    SPEAK_CLIP_VOICEDIR     where bare voice names resolve
+                            (default: ~/.local/share/piper-voices)
+    SPEAK_CLIP_LENGTH_SCALE speech rate, >1 slower     (default: 1.15)
+    SPEAK_CLIP_VOLUME       volume multiplier          (default: 1.0)
+    SPEAK_CLIP_CUDA         1 = GPU, needs onnxruntime-gpu (default: 0)
+
+Try another voice for one run:
+  SPEAK_CLIP_KOKORO_VOICE=bm_george speak-clip say "testing this voice"
+
+Install a new piper voice:
   cd \$SPEAK_CLIP_VOICEDIR && python -m piper.download_voices en_US-ryan-high
 EOF
 }
@@ -192,11 +239,18 @@ case "${1:-toggle}" in
         ;;
     help|-h|--help) usage ;;
     voices)
-        for f in "$VOICEDIR"/*.onnx; do
-            [[ -e $f ]] || { echo "no voices in $VOICEDIR" >&2; exit 1; }
-            b=$(basename "$f" .onnx)
-            [[ $VOICE == "$f" ]] && printf '* %s (current)\n' "$b" || printf '  %s\n' "$b"
-        done
+        if [[ $ENGINE == kokoro ]]; then
+            [[ -x $KOKORO_PY ]] || { echo "kokoro venv missing: $KOKORO_PY" >&2; exit 1; }
+            "$KOKORO_PY" "$HOME/.local/bin/kokoro-stream" --list 2>/dev/null | while read -r v; do
+                [[ $v == "$KOKORO_VOICE" ]] && printf '* %s (current)\n' "$v" || printf '  %s\n' "$v"
+            done
+        else
+            for f in "$VOICEDIR"/*.onnx; do
+                [[ -e $f ]] || { echo "no voices in $VOICEDIR" >&2; exit 1; }
+                b=$(basename "$f" .onnx)
+                [[ $VOICE == "$f" ]] && printf '* %s (current)\n' "$b" || printf '  %s\n' "$b"
+            done
+        fi
         ;;
     *) usage >&2; exit 2 ;;
 esac

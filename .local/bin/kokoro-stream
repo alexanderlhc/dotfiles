@@ -1,0 +1,73 @@
+#!/usr/bin/env python3
+"""Stream Kokoro TTS as raw s16 mono PCM on stdout, one input line at a time.
+
+speak-clip pipes sentence-per-line text in and pw-cat out, so this has to emit
+audio incrementally rather than synthesising the whole input first: the point
+is that speech starts on sentence one. Each line is written and flushed as
+soon as it is ready.
+
+Run with the venv interpreter at ~/.local/share/kokoro-tts/venv/bin/python —
+kokoro-onnx is not a system package.
+"""
+import argparse
+import os
+import sys
+
+DEFAULT_DIR = os.path.expanduser("~/.local/share/kokoro-tts")
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--voice", default="bf_emma")
+    ap.add_argument("--speed", type=float, default=1.0, help="<1 slower")
+    ap.add_argument("--lang", default="", help="default: from the voice prefix")
+    ap.add_argument("--dir", default=DEFAULT_DIR)
+    ap.add_argument("--list", action="store_true", help="print voices and exit")
+    args = ap.parse_args()
+
+    # Imported late so --list/--help stay fast and do not need the model files.
+    from kokoro_onnx import Kokoro
+
+    model = os.path.join(args.dir, "kokoro-v1.0.onnx")
+    voices = os.path.join(args.dir, "voices-v1.0.bin")
+    for path in (model, voices):
+        if not os.path.exists(path):
+            print(f"kokoro-stream: missing {path}", file=sys.stderr)
+            return 1
+
+    kokoro = Kokoro(model, voices)
+
+    if args.list:
+        for voice in sorted(kokoro.get_voices()):
+            print(voice)
+        return 0
+
+    # Kokoro voice names are prefixed by accent: a* American, b* British.
+    lang = args.lang or ("en-gb" if args.voice.startswith(("bf_", "bm_")) else "en-us")
+
+    out = sys.stdout.buffer
+    for line in sys.stdin:
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            samples, _rate = kokoro.create(line, voice=args.voice, speed=args.speed, lang=lang)
+        except Exception as exc:  # a bad line should not kill the whole read
+            print(f"kokoro-stream: {exc}", file=sys.stderr)
+            continue
+        # float32 -1..1 -> little-endian s16, which is what pw-cat --raw expects.
+        import numpy as np
+
+        out.write((np.clip(samples, -1.0, 1.0) * 32767).astype("<i2").tobytes())
+        out.flush()
+    return 0
+
+
+if __name__ == "__main__":
+    try:
+        sys.exit(main())
+    except BrokenPipeError:
+        # Normal on `speak-clip stop`: pw-cat is killed first.
+        sys.exit(0)
+    except KeyboardInterrupt:
+        sys.exit(130)

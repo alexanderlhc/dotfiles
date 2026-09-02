@@ -20,7 +20,7 @@
 set -uo pipefail
 
 VOICEDIR="${SPEAK_CLIP_VOICEDIR:-$HOME/.local/share/piper-voices}"
-VOICE="${SPEAK_CLIP_VOICE:-en_US-lessac-high}"
+VOICE="${SPEAK_CLIP_VOICE:-en_GB-cori-high}"
 # A bare name like "en_US-ryan-high" resolves inside VOICEDIR; an absolute or
 # relative path with a slash is taken as-is.
 [[ $VOICE == */* ]] || VOICE="$VOICEDIR/$VOICE"
@@ -159,7 +159,7 @@ Keys (Hyprland):
   SUPER + SHIFT + A   stop
 
 Environment:
-  SPEAK_CLIP_VOICE          voice name or .onnx path   (default: en_US-lessac-high)
+  SPEAK_CLIP_VOICE          voice name or .onnx path   (default: en_GB-cori-high)
   SPEAK_CLIP_VOICEDIR       where bare voice names resolve
                             (default: ~/.local/share/piper-voices)
   SPEAK_CLIP_LENGTH_SCALE   speech rate, >1 slower     (default: 1.15)

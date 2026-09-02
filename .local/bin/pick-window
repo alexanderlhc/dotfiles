@@ -19,8 +19,13 @@ selected=$(printf '%s\n' "${entries[@]}" | $DMENU)
 
 IFS="$SEP" read -r label ws mon address <<<"$selected"
 
-hyprctl dispatch workspace "$ws" "monitor:$mon"
+# Lua-config dispatch syntax (Hyprland >= 0.55). The old
+# `hyprctl dispatch workspace ...` string is evaluated as Lua now and fails.
+# The former trailing "monitor:$mon" arg was never valid for the workspace
+# dispatcher and did nothing; focusing the workspace already activates its
+# monitor, so it is dropped rather than translated.
+hyprctl dispatch "hl.dsp.focus({workspace=\"$ws\"})"
 
 sleep 0.05
 
-hyprctl dispatch focuswindow address:"$address"
+hyprctl dispatch "hl.dsp.focus({window=\"address:$address\"})"

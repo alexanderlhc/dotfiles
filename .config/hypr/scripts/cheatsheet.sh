@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Hyprland keybind cheatsheet, generated from `hyprctl binds`.
-# To change bindings, edit ~/.config/hypr/conf.d/keybindings.conf and reload.
+# To change bindings, edit ~/.config/hypr/conf.d/keybindings.lua and reload.
+# (The .conf next to it is a legacy export -- Hyprland does not read it.)
 
 # Toggle behavior: if another wofi menu is open, close it instead of stacking.
 pkill wofi && exit 0

@@ -4,7 +4,7 @@
   "height": 32,
   "spacing": 6,
   "modules-left": [
-    "hyprland/workspaces"
+    "ext/workspaces"
   ],
   "modules-center": [],
   "modules-right": [
@@ -21,6 +21,15 @@
       "custom/aerc",
       "battery"
     ]
+  },
+  // Was "hyprland/workspaces". That module clicks via Hyprland's legacy
+  // `dispatch workspace N` IPC string, which a Lua hyprland config rejects
+  // (Alexays/Waybar#5008, fixed in master by PR #5013, unreleased as of 0.15.0).
+  // "ext/workspaces" uses the ext-workspace-v1 protocol instead, so it doesn't
+  // go through Hyprland's dispatcher at all. Trade-off: no special-workspace
+  // (scratchpad) indicator. Revert once waybar > 0.15.0 ships #5013.
+  "ext/workspaces": {
+    "on-click": "activate"
   },
   "pulseaudio": {
     "format": " {volume}%",

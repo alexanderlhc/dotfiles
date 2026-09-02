@@ -1,0 +1,150 @@
+#!/usr/bin/env python3
+"""Turn spoken punctuation words in a transcript into real punctuation.
+
+Reads text on stdin, writes the rewritten text on stdout.
+
+    "question two colon and then a sentence"  ->  "Question 2: and then a sentence"
+
+Whisper already handles a lot on its own: it ends sentences with periods, turns
+"question mark" into "?", and writes spoken numbers as digits. The commands
+below are for the marks it cannot infer from prose -- colons, line breaks,
+brackets and the like -- plus the few people expect to be able to say outright.
+
+Commands are deliberately limited to phrases you would not say by accident.
+"period", "comma", "dash", "quote" and "full stop" are NOT commands: they are
+words people actually use, and whisper already punctuates sentences by itself.
+Opt into them in the config file below if you want them.
+
+Say "literal colon" to get the word instead of the mark.
+
+Add or disable commands in ~/.config/whisper-ptt/punctuation, one per line:
+
+    smiley = :)          # add a command
+    period =             # empty value disables a default
+"""
+import os
+import re
+import sys
+
+# phrase -> replacement. Whisper may glue its own punctuation onto a command
+# word ("..., period."), which the matcher strips, so write these bare.
+DEFAULTS = {
+    "new paragraph": "\n\n",
+    "new line": "\n",
+    "newline": "\n",
+    "colon": ":",
+    "semicolon": ";",
+    "semi colon": ";",
+    "question mark": "?",
+    "exclamation mark": "!",
+    "exclamation point": "!",
+    "ellipsis": "…",
+    "open parenthesis": "(",
+    "open paren": "(",
+    "close parenthesis": ")",
+    "close paren": ")",
+    "open quote": '"',
+    "close quote": '"',
+    "hyphen": "-",
+    "em dash": "—",
+    "underscore": "_",
+    "forward slash": "/",
+    "backslash": "\\",
+    "at sign": "@",
+    "hashtag": "#",
+    "asterisk": "*",
+    "ampersand": "&",
+    "percent sign": "%",
+    "plus sign": "+",
+    "equals sign": "=",
+}
+
+# How each mark wants to sit against the words around it.
+CLOSERS = set(",;:.!?…)\"'")   # no space before, one space after
+OPENERS = set("(")             # space before, none after
+TIGHT = set("-_/\\@#")         # no space on either side
+
+OPEN, CLOSE = "\x01", "\x02"   # mark inserted text so only it gets respaced
+
+
+def load_overrides():
+    path = os.path.expanduser("~/.config/whisper-ptt/punctuation")
+    table = dict(DEFAULTS)
+    try:
+        with open(path, encoding="utf-8") as fh:
+            for line in fh:
+                line = line.split("#", 1)[0].strip()
+                if not line or "=" not in line:
+                    continue
+                phrase, _, value = line.partition("=")
+                phrase, value = phrase.strip().lower(), value.strip()
+                value = value.replace("\\n", "\n").replace("\\t", "\t")
+                if value:
+                    table[phrase] = value
+                else:
+                    table.pop(phrase, None)   # empty value disables a default
+    except FileNotFoundError:
+        pass
+    return table
+
+
+def punctuate(text, table):
+    if not text.strip():
+        return text
+
+    # Protect "literal colon" so it survives as the word.
+    literals = []
+
+    def stash(m):
+        literals.append(m.group(1))
+        return f"\x03{len(literals) - 1}\x03"
+
+    text = re.sub(r"\bliteral(?:ly)?\s+(\w+)", stash, text, flags=re.I)
+
+    # Longest phrases first so "new paragraph" wins over "new line"/"paragraph".
+    for phrase in sorted(table, key=lambda p: (-len(p.split()), -len(p))):
+        mark = table[phrase]
+        # Absorb any punctuation whisper attached to the spoken word itself.
+        pattern = r"[,;:.!?]?\s*\b" + r"\s+".join(map(re.escape, phrase.split())) + r"\b[,.!?]?"
+        text = re.sub(pattern, OPEN + mark + CLOSE, text, flags=re.I)
+
+    for i, word in enumerate(literals):
+        text = text.replace(f"\x03{i}\x03", word)
+
+    # Respace only what was inserted, so whisper's own spacing is left alone
+    # (and "10:30" or "3.5" never get pulled apart).
+    quote_opens = [True]   # a bare "quote" alternates open, close, open...
+
+    def respace(m):
+        mark = m.group(1)
+        if mark.startswith("\n"):
+            return mark
+        if mark == '"':
+            opening = quote_opens[0]
+            quote_opens[0] = not opening
+            return ' "' if opening else '" '
+        if mark in CLOSERS:
+            return mark + " "
+        if mark in OPENERS:
+            return " " + mark
+        if mark in TIGHT:
+            return mark
+        return " " + mark + " "
+
+    text = re.sub(rf"\s*{OPEN}(.+?){CLOSE}\s*", respace, text, flags=re.S)
+
+    text = re.sub(r"[ \t]{2,}", " ", text)
+    text = re.sub(r"[ \t]*\n[ \t]*", "\n", text)
+
+    # Capitalise sentence starts and line starts.
+    text = re.sub(r"(^|[.!?]\s+|\n)([a-z])", lambda m: m.group(1) + m.group(2).upper(), text)
+    return text.strip(" \t")
+
+
+def main():
+    table = load_overrides()
+    sys.stdout.write(punctuate(sys.stdin.read(), table))
+
+
+if __name__ == "__main__":
+    main()

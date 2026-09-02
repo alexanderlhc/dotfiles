@@ -1,0 +1,189 @@
+#!/usr/bin/env bash
+# whisper-ptt — local speech-to-text dictation for Hyprland.
+#
+#   whisper-ptt toggle   advance the state machine (bind this to one key)
+#   whisper-ptt start    begin recording
+#   whisper-ptt stop     transcribe what was recorded and type it
+#   whisper-ptt status   print the current state
+#   whisper-ptt cancel   abort a recording, transcribing nothing
+#
+# Three states, cycled by `toggle`:
+#
+#     idle ──press──► recording ──press──► transcribing ──┐
+#      ▲                                                  │
+#      └──────────────── types the text ◄─────────────────┘
+#
+# A press while transcribing is ignored rather than starting a second
+# recording on top of the one still being processed.
+#
+# Transcription goes to a resident whisper-server (model already on the GPU,
+# ~0.3s); a cold whisper-cli run (~1.8s) is the fallback if it is not up.
+
+set -uo pipefail
+
+MODEL="${WHISPER_PTT_MODEL:-$HOME/.local/share/whisper-models/ggml-small.en.bin}"
+LANGUAGE="${WHISPER_PTT_LANG:-en}"
+THREADS="${WHISPER_PTT_THREADS:-8}"
+SOURCE="${WHISPER_PTT_SOURCE:-}"          # empty = default input device
+MAX_SECONDS="${WHISPER_PTT_MAX_SECONDS:-300}"
+SERVER="${WHISPER_PTT_SERVER:-http://127.0.0.1:8910}"
+TRAILING_SPACE="${WHISPER_PTT_TRAILING_SPACE:-1}"
+NO_TYPE="${WHISPER_PTT_NO_TYPE:-0}"       # 1 = clipboard only, no keystrokes
+PUNCTUATE="${WHISPER_PTT_PUNCTUATE:-1}"   # 1 = spoken "colon" etc. become real marks
+
+RUNDIR="${XDG_RUNTIME_DIR:-/tmp}/whisper-ptt"
+WAV="$RUNDIR/rec.wav"
+PIDFILE="$RUNDIR/rec.pid"                 # alive => recording
+BUSYFILE="$RUNDIR/busy.pid"               # alive => transcribing
+LOG="$RUNDIR/last.log"
+EVENTS="$RUNDIR/events.log"
+NOTIFY_ID=9911
+MIN_BYTES=$((44 + 16000 * 2 * 4 / 10))    # ~0.4s of 16kHz mono s16
+
+mkdir -p "$RUNDIR"
+
+[[ ${WHISPER_PTT_DEBUG:-0} == 1 ]] && \
+    printf '%s  %-8s pid=%s state=%s\n' \
+        "$(date +%H:%M:%S.%3N)" "${1:-?}" "$$" "$(cat "$RUNDIR/.last" 2>/dev/null)" >> "$EVENTS"
+
+note() { notify-send -a "Dictation" -r "$NOTIFY_ID" -t "${2:-2500}" "$1" "${3:-}"; }
+fail() { note "🚫 Dictation" 4000 "$1"; exit 1; }
+
+# A pidfile counts only while the process it names is still alive, so a crash
+# can never wedge the state machine.
+alive() { local p; p=$(cat "$1" 2>/dev/null) && [[ -n $p ]] && kill -0 "$p" 2>/dev/null; }
+
+state() {
+    if alive "$PIDFILE";  then echo recording;     return; fi
+    if alive "$BUSYFILE"; then echo transcribing;  return; fi
+    echo idle
+}
+
+transcribe() {
+    local wav="$1" out
+    if out=$(curl -sf -m 120 -X POST "$SERVER/inference" \
+                  -F "file=@$wav" \
+                  -F "language=$LANGUAGE" \
+                  -F "temperature=0.0" \
+                  -F "response_format=text" 2>>"$LOG"); then
+        printf '%s' "$out"
+        return 0
+    fi
+    echo "server unreachable at $SERVER, falling back to whisper-cli" >> "$LOG"
+    whisper-cli -m "$MODEL" -f "$wav" -l "$LANGUAGE" -t "$THREADS" -nt -np 2>>"$LOG"
+}
+
+# wtype takes literal text, but a newline has to be sent as a Return keypress.
+# Each line goes through its own `--` so text starting with "-" is safe.
+type_text() {
+    local first=1 line
+    while IFS= read -r line; do
+        [[ $first == 1 ]] || wtype -k Return
+        first=0
+        [[ -n $line ]] && wtype -- "$line"
+    done <<< "$1"
+}
+
+do_start() {
+    [[ $(state) == idle ]] || return 0
+    command -v pw-record >/dev/null || fail "pw-record not found"
+    [[ -f $MODEL ]] || fail "Model missing: $MODEL"
+
+    rm -f "$WAV"
+    local args=(--rate 16000 --channels 1 --format s16)
+    [[ -n $SOURCE ]] && args+=(--target "$SOURCE")
+
+    # No setsid: it forks when the child is already a process-group leader,
+    # which would make $! the wrong pid and leave the recorder unstoppable.
+    timeout -s INT "$MAX_SECONDS" pw-record "${args[@]}" "$WAV" \
+        >/dev/null 2>"$LOG" &
+    echo $! > "$PIDFILE"
+    note "🎙️ Recording…" 0 "Press again to transcribe"
+}
+
+do_stop() {
+    local pid
+    pid=$(cat "$PIDFILE" 2>/dev/null)
+    rm -f "$PIDFILE"
+    if [[ -n ${pid:-} ]] && kill -0 "$pid" 2>/dev/null; then
+        kill -INT "$pid" 2>/dev/null          # SIGINT lets pw-record finalise the header
+        for _ in $(seq 1 60); do
+            kill -0 "$pid" 2>/dev/null || break
+            sleep 0.05
+        done
+        kill -0 "$pid" 2>/dev/null && kill -TERM "$pid" 2>/dev/null
+    fi
+
+    local bytes
+    bytes=$(stat -c%s "$WAV" 2>/dev/null || echo 0)
+    if (( bytes < MIN_BYTES )); then
+        note "🎙️ Too short" 1500 "Nothing recorded"
+        return 0
+    fi
+
+    # Claim the transcribing state for as long as this process lives.
+    echo $$ > "$BUSYFILE"
+    trap 'rm -f "$BUSYFILE"' EXIT
+
+    note "✍️ Transcribing…" 0 ""
+    local text
+    text=$(transcribe "$WAV")
+
+    # whisper emits non-speech markers like [BLANK_AUDIO]; drop them and
+    # flatten segments onto one line.
+    text=$(printf '%s' "$text" \
+        | sed -E 's/\[[^]]*\]//g' \
+        | tr '\n' ' ' \
+        | sed -E 's/[[:space:]]+/ /g; s/^ +//; s/ +$//')
+    # A wholly parenthesised result is a sound cue, not speech.
+    [[ $text =~ ^\(.*\)$ ]] && text=""
+
+    # Spoken punctuation ("colon" -> ":") after flattening, since it may
+    # legitimately reintroduce line breaks.
+    if [[ -n $text && $PUNCTUATE == 1 ]] && command -v whisper-punctuate >/dev/null; then
+        text=$(printf '%s' "$text" | whisper-punctuate)
+    fi
+
+    if [[ -z $text ]]; then
+        note "🤔 No speech detected" 2000 ""
+        return 0
+    fi
+
+    [[ $TRAILING_SPACE == 1 ]] && text="$text "
+
+    printf '%s' "$text" | wl-copy
+    if [[ $NO_TYPE == 1 ]]; then
+        printf '%s\n' "$text"
+    elif command -v wtype >/dev/null; then
+        type_text "$text"
+    else
+        YDOTOOL_SOCKET="${YDOTOOL_SOCKET:-${XDG_RUNTIME_DIR:-/run/user/$UID}/.ydotool_socket}" \
+            ydotool type --key-delay 4 -- "$text"
+    fi
+
+    note "✅ ${text}" 2500 ""
+}
+
+do_cancel() {
+    local pid
+    pid=$(cat "$PIDFILE" 2>/dev/null)
+    rm -f "$PIDFILE"
+    [[ -n ${pid:-} ]] && kill -INT "$pid" 2>/dev/null
+    rm -f "$WAV"
+    note "✋ Cancelled" 1500 ""
+}
+
+case "${1:-toggle}" in
+    toggle)
+        case $(state) in
+            recording)    do_stop ;;
+            transcribing) note "⏳ Still transcribing…" 1500 "Hang on" ;;
+            idle)         do_start ;;
+        esac
+        ;;
+    start)  do_start ;;
+    stop)   do_stop ;;
+    cancel) do_cancel ;;
+    status) state ;;
+    *) echo "usage: whisper-ptt {toggle|start|stop|cancel|status}" >&2; exit 2 ;;
+esac

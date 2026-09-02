@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Record N seconds (default 12) from the EasyEffects-processed mic
+# and print level stats. Usage: mic-test [seconds] [label]
+
+SECS="${1:-12}"
+LABEL="${2:-test}"
+DIR="${XDG_RUNTIME_DIR:-/tmp}/mic-tests"
+mkdir -p "$DIR"
+FILE="$DIR/$(date +%H%M%S)-$LABEL.wav"
+
+echo "recording ${SECS}s -> $FILE"
+timeout "$SECS" pw-record --target easyeffects_source "$FILE"
+
+ffmpeg -hide_banner -i "$FILE" -af astats=measure_perchannel=none -f null - 2>&1 |
+    grep -E "RMS level|Peak level|RMS trough|Noise floor dB" | sed 's/^\[.*\] //'
+echo "$FILE"

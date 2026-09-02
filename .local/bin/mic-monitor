@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# Toggle self-monitoring of the EasyEffects-processed mic.
+# Routes easyeffects_source -> default output so you hear yourself
+# with whatever effects are currently active.
+
+PIDFILE="${XDG_RUNTIME_DIR:-/tmp}/mic-monitor.pid"
+
+if [ -f "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
+    kill "$(cat "$PIDFILE")"
+    rm -f "$PIDFILE"
+    echo "mic monitor: OFF"
+else
+    pw-loopback \
+        --capture-props='target.object=easyeffects_source node.name=mic-monitor-in' \
+        --playback-props='node.name=mic-monitor-out media.class=Stream/Output/Audio' \
+        >/dev/null 2>&1 &
+    echo $! > "$PIDFILE"
+    disown
+    echo "mic monitor: ON (run mic-monitor again to stop)"
+fi

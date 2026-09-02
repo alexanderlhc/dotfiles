@@ -1,0 +1,152 @@
+#!/usr/bin/env bash
+# speak-clip — local text-to-speech for Hyprland. The mirror of whisper-ptt.
+#
+#   speak-clip toggle    advance the state machine (bind this to one key)
+#   speak-clip start     speak the clipboard
+#   speak-clip stop      stop speaking
+#   speak-clip status    print the current state
+#   speak-clip say TEXT  speak TEXT (or stdin) instead of the clipboard
+#
+# Two states, cycled by `toggle`:
+#
+#     idle ──press──► speaking ──press──► idle
+#                         └──── ends on its own ────┘
+#
+# Synthesis is streamed: the text is split into one sentence per line, and
+# piper-tts emits each line's audio as it is produced while pw-cat consumes
+# it. Speech starts after the first sentence rather than after the whole
+# clipboard, which matters when you paste a page of text at it.
+
+set -uo pipefail
+
+VOICE="${SPEAK_CLIP_VOICE:-$HOME/.local/share/piper-voices/en_US-lessac-medium.onnx}"
+LENGTH_SCALE="${SPEAK_CLIP_LENGTH_SCALE:-1.0}"   # >1 slower, <1 faster
+VOLUME="${SPEAK_CLIP_VOLUME:-1.0}"
+MAX_CHARS="${SPEAK_CLIP_MAX_CHARS:-20000}"       # refuse to read a whole novel
+CUDA="${SPEAK_CLIP_CUDA:-0}"                     # 1 = --cuda (needs onnxruntime-gpu)
+SINK="${SPEAK_CLIP_SINK:-}"                      # empty = default output device
+
+RUNDIR="${XDG_RUNTIME_DIR:-/tmp}/speak-clip"
+PGIDFILE="$RUNDIR/play.pgid"                     # alive => speaking
+TXT="$RUNDIR/say.txt"
+LOG="$RUNDIR/last.log"
+NOTIFY_ID=9912                                   # whisper-ptt owns 9911
+
+mkdir -p "$RUNDIR"
+
+note() { notify-send -a "Read aloud" -r "$NOTIFY_ID" -t "${2:-2500}" "$1" "${3:-}"; }
+fail() { note "🚫 Read aloud" 4000 "$1"; exit 1; }
+
+# A pidfile counts only while the process it names is still alive, so a crash
+# can never wedge the state machine.
+alive() { local p; p=$(cat "$PGIDFILE" 2>/dev/null) && [[ -n $p ]] && kill -0 "$p" 2>/dev/null; }
+
+state() { alive && echo speaking || echo idle; }
+
+# Piper writes raw s16 mono at whatever rate the voice was trained for; the
+# rate lives in the sidecar json next to the model.
+voice_rate() {
+    local r
+    r=$(grep -oE '"sample_rate"[[:space:]]*:[[:space:]]*[0-9]+' "$VOICE.json" 2>/dev/null \
+        | grep -oE '[0-9]+$')
+    echo "${r:-22050}"
+}
+
+do_start() {
+    [[ $(state) == idle ]] || return 0
+
+    command -v piper-tts >/dev/null || fail "piper-tts not found"
+    command -v pw-cat    >/dev/null || fail "pw-cat not found"
+    [[ -f $VOICE ]] || fail "Voice missing: $VOICE"
+
+    local text
+    if [[ ${1:-} == "--stdin" ]]; then
+        text=$(cat)
+    else
+        text=$(wl-paste --no-newline 2>/dev/null)
+    fi
+
+    # Collapse runs of blank lines, drop leading/trailing whitespace.
+    text=$(printf '%s' "$text" | sed -E 's/[[:space:]]+$//' | cat -s)
+    text="${text#"${text%%[![:space:]]*}"}"
+
+    if [[ -z $text ]]; then
+        note "📋 Nothing to read" 1500 "Clipboard is empty"
+        return 0
+    fi
+
+    if (( ${#text} > MAX_CHARS )); then
+        text="${text:0:MAX_CHARS}"
+        note "✂️ Truncated" 2000 "Reading the first $MAX_CHARS characters"
+    fi
+
+    printf '%s\n' "$text" > "$TXT"
+
+    local rate cuda_flag=""
+    rate=$(voice_rate)
+    [[ $CUDA == 1 ]] && cuda_flag="--cuda"
+
+    # pw-play goes through libsndfile and rejects a headerless stream, so raw
+    # PCM from piper has to be handed to pw-cat in --raw mode instead.
+    local play_args=(-p --raw --format s16 --rate "$rate" --channels 1)
+    [[ -n $SINK ]] && play_args+=(--target "$SINK")
+
+    # setsid puts the whole pipeline in its own process group, so `stop` can
+    # take down piper and pw-cat together with one kill on the negated pgid.
+    # The child writes its own pgid rather than the parent recording $!, since
+    # setsid forks when it is already a group leader and $! would then name
+    # the wrong process.
+    setsid bash -c '
+        echo $$ > "$1"
+        sed -E "s/([.!?])[[:space:]]+/\1\n/g" "$2" \
+            | piper-tts -m "$3" --output-raw --length-scale "$4" --volume "$5" $6 \
+            | pw-cat "${@:7}" -
+        rm -f "$1"
+        notify-send -a "Read aloud" -r '"$NOTIFY_ID"' -t 1500 "✅ Done" ""
+    ' _ "$PGIDFILE" "$TXT" "$VOICE" "$LENGTH_SCALE" "$VOLUME" "$cuda_flag" \
+      "${play_args[@]}" >/dev/null 2>>"$LOG" &
+
+    # The child owns the pgidfile; wait briefly so `status` right after `start`
+    # is not a lie.
+    for _ in $(seq 1 40); do alive && break; sleep 0.025; done
+
+    local words preview
+    words=$(wc -w <<< "$text")
+    preview=$(head -c 90 <<< "$text" | tr '\n' ' ')
+    note "🔊 Reading aloud…" 0 "$words words — $preview…"
+}
+
+do_stop() {
+    local pgid
+    pgid=$(cat "$PGIDFILE" 2>/dev/null)
+    rm -f "$PGIDFILE"
+    if [[ -n ${pgid:-} ]] && kill -0 "$pgid" 2>/dev/null; then
+        kill -TERM -"$pgid" 2>/dev/null
+        for _ in $(seq 1 40); do
+            kill -0 "$pgid" 2>/dev/null || break
+            sleep 0.025
+        done
+        kill -0 "$pgid" 2>/dev/null && kill -KILL -"$pgid" 2>/dev/null
+    fi
+    note "✋ Stopped" 1200 ""
+}
+
+case "${1:-toggle}" in
+    toggle)
+        case $(state) in
+            speaking) do_stop ;;
+            idle)     do_start ;;
+        esac
+        ;;
+    start)  do_start ;;
+    stop)   do_stop ;;
+    status) state ;;
+    say)
+        shift
+        [[ $(state) == speaking ]] && do_stop >/dev/null 2>&1
+        if (( $# )); then printf '%s\n' "$*" | do_start --stdin
+        else do_start --stdin
+        fi
+        ;;
+    *) echo "usage: speak-clip {toggle|start|stop|status|say TEXT}" >&2; exit 2 ;;
+esac

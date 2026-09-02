@@ -32,7 +32,7 @@ ENGINE="${SPEAK_CLIP_ENGINE:-kokoro}"            # kokoro | piper
 
 KOKORO_DIR="${SPEAK_CLIP_KOKORO_DIR:-$HOME/.local/share/kokoro-tts}"
 KOKORO_PY="$KOKORO_DIR/venv/bin/python"
-KOKORO_VOICE="${SPEAK_CLIP_KOKORO_VOICE:-bf_emma}"
+KOKORO_VOICE="${SPEAK_CLIP_KOKORO_VOICE:-bm_george}"
 KOKORO_SPEED="${SPEAK_CLIP_SPEED:-0.95}"         # <1 slower, unlike piper's scale
 KOKORO_RATE=24000
 
@@ -199,7 +199,7 @@ Environment:
 
   kokoro (default engine — more natural, ~4x realtime on CPU):
     SPEAK_CLIP_KOKORO_VOICE bf_* / bm_* British, af_* / am_* American
-                                                       (default: bf_emma)
+                                                       (default: bm_george)
     SPEAK_CLIP_SPEED        speech rate, <1 slower     (default: 0.95)
     SPEAK_CLIP_KOKORO_DIR   model + venv location
                             (default: ~/.local/share/kokoro-tts)

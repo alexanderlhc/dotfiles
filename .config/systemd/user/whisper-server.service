@@ -1,0 +1,22 @@
+[Unit]
+Description=whisper.cpp server — keeps the dictation model resident on the GPU
+Documentation=https://github.com/ggml-org/whisper.cpp
+After=graphical-session.target
+
+[Service]
+Type=simple
+Environment=GGML_VK_DISABLE_F16=0
+ExecStart=/usr/bin/whisper-server \
+    --model %h/.local/share/whisper-models/ggml-small.en.bin \
+    --language en \
+    --threads 8 \
+    --no-timestamps \
+    --host 127.0.0.1 \
+    --port 8910
+Restart=on-failure
+RestartSec=2
+# Dictation is latency-sensitive; don't let it get starved.
+Nice=-5
+
+[Install]
+WantedBy=default.target

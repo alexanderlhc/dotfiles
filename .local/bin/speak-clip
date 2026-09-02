@@ -19,8 +19,15 @@
 
 set -uo pipefail
 
-VOICE="${SPEAK_CLIP_VOICE:-$HOME/.local/share/piper-voices/en_US-lessac-medium.onnx}"
-LENGTH_SCALE="${SPEAK_CLIP_LENGTH_SCALE:-1.0}"   # >1 slower, <1 faster
+VOICEDIR="${SPEAK_CLIP_VOICEDIR:-$HOME/.local/share/piper-voices}"
+VOICE="${SPEAK_CLIP_VOICE:-en_US-lessac-high}"
+# A bare name like "en_US-ryan-high" resolves inside VOICEDIR; an absolute or
+# relative path with a slash is taken as-is.
+[[ $VOICE == */* ]] || VOICE="$VOICEDIR/$VOICE"
+[[ $VOICE == *.onnx ]] || VOICE="$VOICE.onnx"
+# The "high" voices are noticeably better than "medium" and still synthesise
+# at ~3x realtime on CPU, so streaming keeps up comfortably.
+LENGTH_SCALE="${SPEAK_CLIP_LENGTH_SCALE:-1.15}"  # >1 slower, <1 faster
 VOLUME="${SPEAK_CLIP_VOLUME:-1.0}"
 MAX_CHARS="${SPEAK_CLIP_MAX_CHARS:-20000}"       # refuse to read a whole novel
 CUDA="${SPEAK_CLIP_CUDA:-0}"                     # 1 = --cuda (needs onnxruntime-gpu)
@@ -131,6 +138,41 @@ do_stop() {
     note "✋ Stopped" 1200 ""
 }
 
+usage() {
+    cat << EOF
+speak-clip — read the clipboard aloud with piper (local neural TTS).
+The mirror of whisper-ptt: one key toggles it, another stops it.
+
+Usage: speak-clip [command]
+
+Commands:
+  toggle        speak the clipboard, or stop if already speaking (default)
+  start         speak the clipboard
+  stop          stop speaking
+  status        print "speaking" or "idle"
+  say TEXT      speak TEXT, or stdin if no TEXT is given
+  voices        list installed voices, marking the current one
+  help          this text
+
+Keys (Hyprland):
+  SUPER + A           toggle
+  SUPER + SHIFT + A   stop
+
+Environment:
+  SPEAK_CLIP_VOICE          voice name or .onnx path   (default: en_US-lessac-high)
+  SPEAK_CLIP_VOICEDIR       where bare voice names resolve
+                            (default: ~/.local/share/piper-voices)
+  SPEAK_CLIP_LENGTH_SCALE   speech rate, >1 slower     (default: 1.15)
+  SPEAK_CLIP_VOLUME         volume multiplier          (default: 1.0)
+  SPEAK_CLIP_MAX_CHARS      truncate longer clipboards (default: 20000)
+  SPEAK_CLIP_SINK           pipewire output target     (default: system default)
+  SPEAK_CLIP_CUDA           1 = GPU, needs onnxruntime-gpu (default: 0)
+
+Install a new voice:
+  cd \$SPEAK_CLIP_VOICEDIR && python -m piper.download_voices en_US-ryan-high
+EOF
+}
+
 case "${1:-toggle}" in
     toggle)
         case $(state) in
@@ -148,5 +190,13 @@ case "${1:-toggle}" in
         else do_start --stdin
         fi
         ;;
-    *) echo "usage: speak-clip {toggle|start|stop|status|say TEXT}" >&2; exit 2 ;;
+    help|-h|--help) usage ;;
+    voices)
+        for f in "$VOICEDIR"/*.onnx; do
+            [[ -e $f ]] || { echo "no voices in $VOICEDIR" >&2; exit 1; }
+            b=$(basename "$f" .onnx)
+            [[ $VOICE == "$f" ]] && printf '* %s (current)\n' "$b" || printf '  %s\n' "$b"
+        done
+        ;;
+    *) usage >&2; exit 2 ;;
 esac

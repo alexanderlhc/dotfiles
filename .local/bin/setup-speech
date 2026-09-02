@@ -1,0 +1,157 @@
+#!/usr/bin/env bash
+# setup-speech — bring dictation (whisper-ptt) and read-aloud (speak-clip)
+# up on a fresh machine.
+#
+#   setup-speech          do everything that is missing
+#   setup-speech check    report what is missing, change nothing
+#   setup-speech <step>   run one step: packages whisper kokoro piper service
+#
+# The dotfiles repo carries the scripts, the keybinds and the systemd unit,
+# but not the ~1.2GB of models behind them, so a fresh checkout has working
+# keys bound to tools that cannot run. This closes that gap.
+#
+# Every step is idempotent: it checks first and skips what is already there,
+# so re-running after a partial failure is safe.
+
+set -uo pipefail
+
+WHISPER_MODEL_DIR="$HOME/.local/share/whisper-models"
+WHISPER_MODEL="ggml-small.en.bin"
+WHISPER_MODEL_URL="https://huggingface.co/ggerganov/whisper.cpp/resolve/main/$WHISPER_MODEL"
+
+KOKORO_DIR="$HOME/.local/share/kokoro-tts"
+KOKORO_REL="https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0"
+KOKORO_PYTHON_VERSION="3.12"   # kokoro-onnx has no wheels for the newest CPython
+
+PIPER_VOICE_DIR="$HOME/.local/share/piper-voices"
+PIPER_VOICES=("en_GB-cori-high")   # the piper fallback only needs the one
+
+# Repo packages first, then the AUR ones — piper-tts is AUR-only.
+PACKAGES_REPO=(whisper-cpp wl-clipboard wtype libnotify pipewire-audio uv espeak-ng)
+PACKAGES_AUR=(piper-tts)
+
+ok()   { printf '  \033[32m✓\033[0m %s\n' "$1"; }
+miss() { printf '  \033[33m•\033[0m %s\n' "$1"; }
+err()  { printf '  \033[31m✗\033[0m %s\n' "$1" >&2; }
+head_() { printf '\n\033[1m%s\033[0m\n' "$1"; }
+
+have()    { command -v "$1" >/dev/null 2>&1; }
+pkg_have() { pacman -Q "$1" >/dev/null 2>&1; }
+
+# --- steps ----------------------------------------------------------------
+
+step_packages() {
+    head_ "Packages"
+    local repo_missing=() aur_missing=()
+    for p in "${PACKAGES_REPO[@]}"; do pkg_have "$p" && ok "$p" || { miss "$p"; repo_missing+=("$p"); }; done
+    for p in "${PACKAGES_AUR[@]}";  do pkg_have "$p" && ok "$p" || { miss "$p (AUR)"; aur_missing+=("$p"); }; done
+    (( CHECK_ONLY )) && return 0
+    (( ${#repo_missing[@]} )) && { echo "  installing: ${repo_missing[*]}"; sudo pacman -S --needed --noconfirm "${repo_missing[@]}" || return 1; }
+    if (( ${#aur_missing[@]} )); then
+        have paru || { err "paru not found — install ${aur_missing[*]} from the AUR by hand"; return 1; }
+        echo "  installing from AUR: ${aur_missing[*]}"
+        paru -S --needed --noconfirm "${aur_missing[@]}" || return 1
+    fi
+}
+
+step_whisper() {
+    head_ "Dictation model (whisper.cpp)"
+    if [[ -s $WHISPER_MODEL_DIR/$WHISPER_MODEL ]]; then
+        ok "$WHISPER_MODEL ($(du -h "$WHISPER_MODEL_DIR/$WHISPER_MODEL" | cut -f1))"
+        return 0
+    fi
+    miss "$WHISPER_MODEL (~466MB)"
+    (( CHECK_ONLY )) && return 0
+    mkdir -p "$WHISPER_MODEL_DIR"
+    # .part so an interrupted download is never mistaken for a finished one.
+    curl -fL --progress-bar -o "$WHISPER_MODEL_DIR/$WHISPER_MODEL.part" "$WHISPER_MODEL_URL" \
+        && mv "$WHISPER_MODEL_DIR/$WHISPER_MODEL.part" "$WHISPER_MODEL_DIR/$WHISPER_MODEL" \
+        && ok "downloaded" || { err "download failed"; return 1; }
+}
+
+step_service() {
+    head_ "whisper-server (systemd user unit)"
+    if ! [[ -f $HOME/.config/systemd/user/whisper-server.service ]]; then
+        err "unit missing — it lives in the dotfiles repo, is the checkout complete?"
+        return 1
+    fi
+    ok "unit present"
+    if systemctl --user is-active --quiet whisper-server.service; then
+        ok "running"
+        return 0
+    fi
+    miss "not running"
+    (( CHECK_ONLY )) && return 0
+    systemctl --user daemon-reload
+    systemctl --user enable --now whisper-server.service \
+        && ok "enabled and started" || { err "failed to start — see: journalctl --user -u whisper-server"; return 1; }
+}
+
+step_kokoro() {
+    head_ "Read-aloud engine (kokoro)"
+    local py="$KOKORO_DIR/venv/bin/python" need_venv=0
+    [[ -x $py ]] && ok "venv" || { miss "venv"; need_venv=1; }
+    local need_files=()
+    for f in kokoro-v1.0.onnx voices-v1.0.bin; do
+        [[ -s $KOKORO_DIR/$f ]] && ok "$f" || { miss "$f"; need_files+=("$f"); }
+    done
+    (( CHECK_ONLY )) && return 0
+
+    if (( need_venv )); then
+        have uv || { err "uv not found — run the packages step first"; return 1; }
+        mkdir -p "$KOKORO_DIR"
+        uv venv --python "$KOKORO_PYTHON_VERSION" "$KOKORO_DIR/venv" || return 1
+        VIRTUAL_ENV="$KOKORO_DIR/venv" uv pip install kokoro-onnx soundfile || return 1
+        ok "venv built"
+    fi
+    for f in "${need_files[@]}"; do
+        echo "  downloading $f"
+        curl -fL --progress-bar -o "$KOKORO_DIR/$f.part" "$KOKORO_REL/$f" \
+            && mv "$KOKORO_DIR/$f.part" "$KOKORO_DIR/$f" \
+            && ok "$f" || { err "download failed: $f"; return 1; }
+    done
+}
+
+step_piper() {
+    head_ "Read-aloud fallback voices (piper)"
+    local need=()
+    for v in "${PIPER_VOICES[@]}"; do
+        [[ -s $PIPER_VOICE_DIR/$v.onnx ]] && ok "$v" || { miss "$v"; need+=("$v"); }
+    done
+    (( CHECK_ONLY )) && return 0
+    (( ${#need[@]} )) || return 0
+    have piper-tts || { err "piper-tts not installed — run the packages step first"; return 1; }
+    mkdir -p "$PIPER_VOICE_DIR"
+    ( cd "$PIPER_VOICE_DIR" && python -m piper.download_voices "${need[@]}" ) \
+        && ok "downloaded" || { err "voice download failed"; return 1; }
+}
+
+verify() {
+    head_ "Verify"
+    have whisper-ptt && ok "whisper-ptt on PATH" || err "whisper-ptt not on PATH"
+    have speak-clip  && ok "speak-clip on PATH"  || err "speak-clip not on PATH"
+    if curl -sf -m 3 http://127.0.0.1:8910/ >/dev/null 2>&1; then
+        ok "whisper-server responding on :8910"
+    else
+        err "whisper-server not responding on :8910"
+    fi
+    printf '\nTry it:  SUPER+D dictate   SUPER+A read clipboard aloud\n'
+}
+
+# --- main -----------------------------------------------------------------
+
+CHECK_ONLY=0
+case "${1:-all}" in
+    check)    CHECK_ONLY=1; step_packages; step_whisper; step_service; step_kokoro; step_piper ;;
+    packages) step_packages ;;
+    whisper)  step_whisper ;;
+    service)  step_service ;;
+    kokoro)   step_kokoro ;;
+    piper)    step_piper ;;
+    all)      step_packages && step_whisper && step_service && step_kokoro && step_piper; verify ;;
+    -h|--help|help)
+        # Print the header comment block, however long it grows.
+        awk 'NR>1 && /^#/ { sub(/^# ?/, ""); print; next } NR>1 { exit }' "$0"
+        ;;
+    *) echo "usage: setup-speech [all|check|packages|whisper|service|kokoro|piper]" >&2; exit 2 ;;
+esac

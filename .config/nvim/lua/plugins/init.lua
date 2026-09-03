@@ -9,7 +9,6 @@ require("languages.rust")
 require("plugins.formatting")
 require("plugins.filebrowser_yazi")
 require("plugins.hilight_patterns") -- part of mini.library
-require("plugins.window_navigation")
 require("plugins.surround")
 require("plugins.gitsigns")
 require("plugins.ai_textobjects")

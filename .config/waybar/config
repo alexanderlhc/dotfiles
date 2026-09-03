@@ -7,6 +7,7 @@
     "ext/workspaces"
   ],
   "modules-center": [
+    "hyprland/submap",
     "custom/pomodoro",
     "custom/stand"
   ],
@@ -33,6 +34,12 @@
   // (scratchpad) indicator. Revert once waybar > 0.15.0 ships #5013.
   "ext/workspaces": {
     "on-click": "activate"
+  },
+  // Modal keybinding modes (submaps): shows e.g. "screenshot" while Print
+  // mode is active, hidden entirely when no submap is active.
+  "hyprland/submap": {
+    "format": "󰌌 {}",
+    "tooltip": false
   },
   "pulseaudio": {
     "format": " {volume}%",

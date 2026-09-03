@@ -110,10 +110,6 @@
       "rev": "290eec96bfc43ed28264661dd30e894a60c4b99c",
       "src": "https://github.com/MeanderingProgrammer/treesitter-modules.nvim"
     },
-    "vim-tmux-navigator": {
-      "rev": "e41c431a0c7b7388ae7ba341f01a0d217eb3a432",
-      "src": "https://github.com/christoomey/vim-tmux-navigator"
-    },
     "yazi.nvim": {
       "rev": "3f91132889f4b76deae45191db76665bae247176",
       "src": "https://github.com/mikavilpas/yazi.nvim"

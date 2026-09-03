@@ -11,6 +11,39 @@ vim.g.no_plugin_maps = true
 
 require("nvim-treesitter").setup({})
 require("treesitter-modules").setup({
+	-- This build of Nvim ships no bundled parsers, so every language used here
+	-- has to be installed explicitly; auto_install covers anything else opened.
+	ensure_installed = {
+		"bash",
+		"c",
+		"css",
+		"diff",
+		"dockerfile",
+		"fish",
+		"git_config",
+		"git_rebase",
+		"gitcommit",
+		"gitignore",
+		"html",
+		"javascript",
+		"json",
+		"lua",
+		"luadoc",
+		"markdown",
+		"markdown_inline",
+		"python",
+		"query",
+		"regex",
+		"rust",
+		"scss",
+		"toml",
+		"tsx",
+		"typescript",
+		"vim",
+		"vimdoc",
+		"yaml",
+	},
+	auto_install = true,
 	highlight = {
 		enable = true,
 	},

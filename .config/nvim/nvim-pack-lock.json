@@ -42,16 +42,12 @@
       "src": "https://github.com/tadmccorkle/markdown.nvim"
     },
     "mason-lspconfig.nvim": {
-      "rev": "1b621470c01bd8190bb32a290d21575d3e6470c5",
+      "rev": "40276c4df7e6bdce6801d6c035c6227f9115a855",
       "src": "https://github.com/williamboman/mason-lspconfig.nvim"
     },
     "mason.nvim": {
       "rev": "2a6940af80375532e5e9e7c1f2fc6319a1b7a69d",
       "src": "https://github.com/williamboman/mason.nvim"
-    },
-    "melange-nvim": {
-      "rev": "ce42f6b629beeaa00591ba73a77d3eeac4cf28ce",
-      "src": "https://github.com/savq/melange-nvim"
     },
     "mini.ai": {
       "rev": "25248c6aa002391936a6200f12d1466015987133",
@@ -74,11 +70,11 @@
       "src": "https://github.com/windwp/nvim-autopairs"
     },
     "nvim-lspconfig": {
-      "rev": "3928e638fdedf195b23ae5a18f024afa487982bc",
+      "rev": "ee1e369181a9e64904cdd7b739e98c70778cfc71",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-treesitter": {
-      "rev": "8b98b4470eb326f1c7b50dae79f8c963568e5720",
+      "rev": "427e9222363d07c32d6db6169e4049c28d58d141",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "nvim-treesitter-context": {
@@ -86,21 +82,13 @@
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-context"
     },
     "nvim-treesitter-textobjects": {
-      "rev": "898ee307df58f854d11cd7edd06472574d48014e",
+      "rev": "5c7b0263797dfd1bd6202f2b219f3b53a80b2187",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
       "version": "'main'"
     },
     "nvim-ts-autotag": {
       "rev": "88c1453db4ba7dd24131086fe51fdf74e587d275",
       "src": "https://github.com/windwp/nvim-ts-autotag"
-    },
-    "opencode-context.nvim": {
-      "rev": "20cf24297cd663f7076ac50a40b3106a8d407cd1",
-      "src": "https://github.com/cousine/opencode-context.nvim"
-    },
-    "opencode.nvim": {
-      "rev": "e708ba355effd4b7e75eb1441c30dd47c1671c32",
-      "src": "https://github.com/sudo-tee/opencode.nvim"
     },
     "plenary.nvim": {
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
@@ -127,11 +115,11 @@
       "src": "https://github.com/christoomey/vim-tmux-navigator"
     },
     "yazi.nvim": {
-      "rev": "955a96ed05b4ac542e61b3968f62d536413cd06f",
+      "rev": "3f91132889f4b76deae45191db76665bae247176",
       "src": "https://github.com/mikavilpas/yazi.nvim"
     },
     "zk-nvim": {
-      "rev": "4f72b73fc92c57ab2ddffd0188f3bf72cf1ef559",
+      "rev": "38e18a6941627f998a5ddbcf2030d0486c99e3c6",
       "src": "https://github.com/zk-org/zk-nvim"
     }
   }

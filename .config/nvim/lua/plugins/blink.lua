@@ -7,7 +7,6 @@ vim.pack.add({
 	{ src = "https://github.com/windwp/nvim-ts-autotag" },
 })
 
-vim.opt.runtimepath:append(vim.fn.expand("~/.config/nvim/pack/plugins/start/friendly-snippets"))
 require("nvim-autopairs").setup()
 require("nvim-ts-autotag").setup()
 
@@ -20,7 +19,6 @@ require("copilot").setup({
 
 require("blink.cmp").setup({
 	appearance = {
-		use_nvim_cmp_as_default = true,
 		nerd_font_variant = "mono",
 	},
 	completion = {
@@ -63,8 +61,13 @@ require("blink.cmp").setup({
 	},
 
 	sources = {
-		default = { "lsp", "path", "buffer", "snippets", "copilot" },
+		default = { "lsp", "path", "buffer", "snippets", "copilot", "lazydev" },
 		providers = {
+			lazydev = {
+				name = "LazyDev",
+				module = "lazydev.integrations.blink",
+				score_offset = 100,
+			},
 			copilot = {
 				name = "Copilot",
 				module = "blink-cmp-copilot",

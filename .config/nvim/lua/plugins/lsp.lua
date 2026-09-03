@@ -32,6 +32,3 @@ for server_name, server_config in pairs(servers) do
 	vim.lsp.config[server_name] = server_config
 	vim.lsp.enable(server_name)
 end
-
--- Rust
-vim.pack.add({ "https://github.com/mrcjkb/rustaceanvim" })

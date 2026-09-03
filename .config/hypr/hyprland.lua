@@ -1,8 +1,11 @@
 -- Hyprland config — split into conf.d/, see https://wiki.hypr.land/Configuring/
 --
 -- Migrated from the legacy hyprlang (.conf) format, which Hyprland is dropping.
--- The old .conf files are kept alongside these; Hyprland only reads hyprland.lua
--- if it exists, so renaming this file away falls straight back to hyprland.conf.
+-- The old .conf files are kept alongside these as a frozen escape hatch, not a
+-- maintained mirror: Hyprland only reads hyprland.lua if it exists, so renaming
+-- this file away falls straight back to the snapshot in hyprland.conf.
+-- Edit the .lua files; the .conf ones deliberately drift and can be deleted
+-- once this config has proven itself (see the header in hyprland.conf).
 --
 -- Fragments are pulled in with loadfile() rather than require() on purpose:
 --   * require() would choke on the dot in the "conf.d" directory name

@@ -45,3 +45,12 @@ vim.g.loaded_tar = 1
 vim.g.loaded_tarPlugin = 1
 vim.g.loaded_zip = 1
 vim.g.loaded_zipPlugin = 1
+
+-- Statusline: the stock one plus a diagnostic count. 0.13's
+-- vim.diagnostic.status() renders "E:2 W:3 I:4 H:5" (severities with zero
+-- diagnostics are omitted, so it is empty on a clean buffer) and reads the
+-- current buffer, which during statusline redraw is the window being drawn.
+-- See `:help vim.diagnostic.Opts.Status` to restyle it.
+-- Note the %{%...%} form, not %{...}: status() embeds highlight escapes
+-- (%#DiagnosticSignError#), which only %{%...%} evaluates as statusline items.
+opt.statusline = "%<%f %h%w%m%r%=%{%v:lua.vim.diagnostic.status()%} %-14.(%l,%c%V%) %P"

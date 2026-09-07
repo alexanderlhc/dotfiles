@@ -44,9 +44,9 @@ local function update_mason()
 end
 
 vim.api.nvim_create_user_command("PackUpdate", function()
-	-- Opens the confirmation buffer; writing it applies the updates.
-	vim.pack.update()
-	vim.cmd.write()
+	-- 0.13 ships :packupdate; the bang skips the confirmation buffer, which is
+	-- what the old vim.pack.update() + :write dance amounted to.
+	vim.cmd.packupdate({ bang = true })
 	update_parsers()
 	update_mason()
 end, { desc = "Update plugins, tree-sitter parsers and Mason packages" })

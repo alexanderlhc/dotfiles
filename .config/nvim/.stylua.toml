@@ -1,0 +1,7 @@
+# Pins what this config already mostly used implicitly (stylua's own defaults),
+# so a stylua version bump cannot silently reformat the whole tree.
+column_width = 120
+indent_type = "Tabs"
+indent_width = 4
+quote_style = "AutoPreferDouble"
+call_parentheses = "Always"

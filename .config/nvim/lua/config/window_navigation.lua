@@ -1,12 +1,4 @@
-if vim.env.TMUX ~= nil and vim.env.TMUX ~= "" then
-	vim.pack.add({
-		"https://github.com/christoomey/vim-tmux-navigator",
-	})
-	vim.keymap.set("n", "<C-h>", "<cmd><C-U>TmuxNavigateLeft<cr>")
-	vim.keymap.set("n", "<C-j>", "<cmd><C-U>TmuxNavigateDown<cr>")
-	vim.keymap.set("n", "<C-k>", "<cmd><C-U>TmuxNavigateUp<cr>")
-	vim.keymap.set("n", "<C-l>", "<cmd><C-U>TmuxNavigateRight<cr>")
-elseif vim.env.HERDR_ENV ~= nil and vim.env.HERDR_ENV ~= "" then
+if vim.env.HERDR_ENV ~= nil and vim.env.HERDR_ENV ~= "" then
 	-- Herdr's ctrl+hjkl passes through to this pane (see
 	-- ~/.config/herdr/bin/herdr-nav.sh). Move between splits, and when the
 	-- move hits the edge, hand focus back to the neighbouring herdr pane.

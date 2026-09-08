@@ -180,7 +180,7 @@ require("markdown").setup({
 			archive_task_lines(bufnr, line, line)
 		end, vim.tbl_extend("force", opts, { desc = "Mark task done and move to ## Archived" }))
 		map("x", "<M-x>", function()
-			vim.cmd('normal! \27') -- exit visual to populate '< '>
+			vim.cmd("normal! \27") -- exit visual to populate '< '>
 			local s = vim.api.nvim_buf_get_mark(bufnr, "<")[1]
 			local e = vim.api.nvim_buf_get_mark(bufnr, ">")[1]
 			archive_task_lines(bufnr, s, e)

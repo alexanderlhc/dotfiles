@@ -17,7 +17,8 @@ require("render-markdown").setup({
 				})
 
 				for _, diagnostic in ipairs(diagnostics) do
-					if diagnostic.source == "zk"
+					if
+						diagnostic.source == "zk"
 						and diagnostic.col <= ctx.start_col
 						and diagnostic.end_col >= ctx.end_col
 					then

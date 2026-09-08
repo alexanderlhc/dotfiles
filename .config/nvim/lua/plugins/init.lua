@@ -2,12 +2,13 @@ require("plugins.colorscheme")
 require("plugins.fzf")
 require("plugins.icons") -- part of mini.library
 require("plugins.treesitter")
+require("plugins.lazydev") -- lua_ls types for this config, blink source
 require("plugins.blink") -- used by lsp
 require("plugins.lsp")
+require("languages.rust")
 require("plugins.formatting")
 require("plugins.filebrowser_yazi")
 require("plugins.hilight_patterns") -- part of mini.library
-require("plugins.tmux_navigator")
 require("plugins.surround")
 require("plugins.gitsigns")
 require("plugins.ai_textobjects")

@@ -30,6 +30,7 @@ SERVER="${WHISPER_PTT_SERVER:-http://127.0.0.1:8910}"
 TRAILING_SPACE="${WHISPER_PTT_TRAILING_SPACE:-1}"
 NO_TYPE="${WHISPER_PTT_NO_TYPE:-0}"       # 1 = clipboard only, no keystrokes
 PUNCTUATE="${WHISPER_PTT_PUNCTUATE:-1}"   # 1 = spoken "colon" etc. become real marks
+DONE_MS="${WHISPER_PTT_DONE_MS:-1200}"    # how long the finished result lingers
 
 RUNDIR="${XDG_RUNTIME_DIR:-/tmp}/whisper-ptt"
 WAV="$RUNDIR/rec.wav"
@@ -37,7 +38,7 @@ PIDFILE="$RUNDIR/rec.pid"                 # alive => recording
 BUSYFILE="$RUNDIR/busy.pid"               # alive => transcribing
 LOG="$RUNDIR/last.log"
 EVENTS="$RUNDIR/events.log"
-NOTIFY_ID=9911
+NOTIFY_IDFILE="$RUNDIR/notify.id"
 MIN_BYTES=$((44 + 16000 * 2 * 4 / 10))    # ~0.4s of 16kHz mono s16
 
 mkdir -p "$RUNDIR"
@@ -46,8 +47,24 @@ mkdir -p "$RUNDIR"
     printf '%s  %-8s pid=%s state=%s\n' \
         "$(date +%H:%M:%S.%3N)" "${1:-?}" "$$" "$(cat "$RUNDIR/.last" 2>/dev/null)" >> "$EVENTS"
 
-note() { notify-send -a "Dictation" -r "$NOTIFY_ID" -t "${2:-2500}" "$1" "${3:-}"; }
-fail() { note "🚫 Dictation" 4000 "$1"; exit 1; }
+# The popup is meant to be one notification that updates in place: pinned while
+# recording, pinned while transcribing, gone shortly after. mako mints its own
+# ids and silently ignores a replace-id it never issued, so a hardcoded one
+# matches nothing and every call stacks a fresh popup -- with the pinned ones
+# (-t 0) then sitting there until dismissed by hand. `-p` prints the id mako
+# actually assigned; feeding that back is what makes the replace land.
+note() {
+    local args=(-a "Dictation" -p -t "${2:-2500}") last id
+    last=$(cat "$NOTIFY_IDFILE" 2>/dev/null)
+    [[ -n $last ]] && args+=(-r "$last")
+    id=$(notify-send "${args[@]}" "$1" "${3:-}") && printf '%s\n' "$id" > "$NOTIFY_IDFILE"
+}
+
+# A terminal note ends the cycle, so forget the id once it is sent: the next
+# press opens a fresh popup, and an id we no longer own cannot later replace
+# some other application's notification.
+last_note() { note "$@"; rm -f "$NOTIFY_IDFILE"; }
+fail() { last_note "🚫 Dictation" 4000 "$1"; exit 1; }
 
 # A pidfile counts only while the process it names is still alive, so a crash
 # can never wedge the state machine.
@@ -117,7 +134,7 @@ do_stop() {
     local bytes
     bytes=$(stat -c%s "$WAV" 2>/dev/null || echo 0)
     if (( bytes < MIN_BYTES )); then
-        note "🎙️ Too short" 1500 "Nothing recorded"
+        last_note "🎙️ Too short" 1500 "Nothing recorded"
         return 0
     fi
 
@@ -145,7 +162,7 @@ do_stop() {
     fi
 
     if [[ -z $text ]]; then
-        note "🤔 No speech detected" 2000 ""
+        last_note "🤔 No speech detected" 2000 ""
         return 0
     fi
 
@@ -161,7 +178,7 @@ do_stop() {
             ydotool type --key-delay 4 -- "$text"
     fi
 
-    note "✅ ${text}" 2500 ""
+    last_note "✅ ${text}" "$DONE_MS" ""
 }
 
 do_cancel() {
@@ -170,14 +187,14 @@ do_cancel() {
     rm -f "$PIDFILE"
     [[ -n ${pid:-} ]] && kill -INT "$pid" 2>/dev/null
     rm -f "$WAV"
-    note "✋ Cancelled" 1500 ""
+    last_note "✋ Cancelled" 1500 ""
 }
 
 case "${1:-toggle}" in
     toggle)
         case $(state) in
             recording)    do_stop ;;
-            transcribing) note "⏳ Still transcribing…" 1500 "Hang on" ;;
+            transcribing) note "⏳ Still transcribing…" 0 "Hang on" ;;
             idle)         do_start ;;
         esac
         ;;

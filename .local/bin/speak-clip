@@ -54,12 +54,28 @@ RUNDIR="${XDG_RUNTIME_DIR:-/tmp}/speak-clip"
 PGIDFILE="$RUNDIR/play.pgid"                     # alive => speaking
 TXT="$RUNDIR/say.txt"
 LOG="$RUNDIR/last.log"
-NOTIFY_ID=9912                                   # whisper-ptt owns 9911
+NOTIFY_IDFILE="$RUNDIR/notify.id"                 # the id mako gave our popup
+DONE_MS="${SPEAK_CLIP_DONE_MS:-1200}"            # how long the closing note lingers
 
 mkdir -p "$RUNDIR"
 
-note() { notify-send -a "Read aloud" -r "$NOTIFY_ID" -t "${2:-2500}" "$1" "${3:-}"; }
-fail() { note "🚫 Read aloud" 4000 "$1"; exit 1; }
+# One notification that updates in place: pinned while speaking, gone shortly
+# after. mako mints its own ids and silently ignores a replace-id it never
+# issued, so a hardcoded one matches nothing and every call stacks a fresh
+# popup -- with the pinned one (-t 0) then sitting there until dismissed by
+# hand. `-p` prints the id mako actually assigned; feeding that back replaces.
+note() {
+    local args=(-a "Read aloud" -p -t "${2:-2500}") last id
+    last=$(cat "$NOTIFY_IDFILE" 2>/dev/null)
+    [[ -n $last ]] && args+=(-r "$last")
+    id=$(notify-send "${args[@]}" "$1" "${3:-}") && printf '%s\n' "$id" > "$NOTIFY_IDFILE"
+}
+
+# A terminal note ends the cycle, so forget the id once it is sent: the next
+# press opens a fresh popup, and an id we no longer own cannot later replace
+# some other application's notification.
+last_note() { note "$@"; rm -f "$NOTIFY_IDFILE"; }
+fail() { last_note "🚫 Read aloud" 4000 "$1"; exit 1; }
 
 # A pidfile counts only while the process it names is still alive, so a crash
 # can never wedge the state machine.
@@ -100,7 +116,7 @@ do_start() {
     text="${text#"${text%%[![:space:]]*}"}"
 
     if [[ -z $text ]]; then
-        note "📋 Nothing to read" 1500 "Clipboard is empty"
+        last_note "📋 Nothing to read" 1500 "Clipboard is empty"
         return 0
     fi
 
@@ -124,6 +140,12 @@ do_start() {
     local play_args=(-p --raw --format s16 --rate "$rate" --channels 1)
     [[ -n $SINK ]] && play_args+=(--target "$SINK")
 
+    local words preview
+    words=$(wc -w <<< "$text")
+    preview=$(head -c 90 <<< "$text" | tr '\n' ' ')
+    note "🔊 Reading aloud…" 0 "$words words — $preview…"
+    local nid; nid=$(cat "$NOTIFY_IDFILE" 2>/dev/null)
+
     # setsid puts the whole pipeline in its own process group, so `stop` can
     # take down piper and pw-cat together with one kill on the negated pgid.
     # The child writes its own pgid rather than the parent recording $!, since
@@ -135,26 +157,24 @@ do_start() {
         # function\x27s own (empty) positional parameters, not the script\x27s.
         pvoice=$3; plen=$4; pvol=$5; pcuda=$6
         kpy=$8; kscript=$9; kvoice=${10}; kspeed=${11}
+        nid=${12}; nidfile=${13}
         if [ "$7" = kokoro ]; then
             synth() { "$kpy" "$kscript" --voice "$kvoice" --speed "$kspeed"; }
         else
             synth() { piper-tts -m "$pvoice" --output-raw --length-scale "$plen" --volume "$pvol" $pcuda; }
         fi
-        sed -E "s/([.!?])[[:space:]]+/\1\n/g" "$2" | synth | pw-cat "${@:12}" -
-        rm -f "$1"
-        notify-send -a "Read aloud" -r '"$NOTIFY_ID"' -t 1500 "✅ Done" ""
+        sed -E "s/([.!?])[[:space:]]+/\1\n/g" "$2" | synth | pw-cat "${@:14}" -
+        rm -f "$1" "$nidfile"
+        notify-send -a "Read aloud" ${nid:+-r "$nid"} -t '"$DONE_MS"' "✅ Done" ""
     ' _ "$PGIDFILE" "$TXT" "$VOICE" "$LENGTH_SCALE" "$VOLUME" "$cuda_flag" \
       "$ENGINE" "$KOKORO_PY" "$HOME/.local/bin/kokoro-stream" "$KOKORO_VOICE" "$KOKORO_SPEED" \
+      "$nid" "$NOTIFY_IDFILE" \
       "${play_args[@]}" >/dev/null 2>>"$LOG" &
 
     # The child owns the pgidfile; wait briefly so `status` right after `start`
     # is not a lie.
     for _ in $(seq 1 40); do alive && break; sleep 0.025; done
 
-    local words preview
-    words=$(wc -w <<< "$text")
-    preview=$(head -c 90 <<< "$text" | tr '\n' ' ')
-    note "🔊 Reading aloud…" 0 "$words words — $preview…"
 }
 
 do_stop() {
@@ -169,7 +189,7 @@ do_stop() {
         done
         kill -0 "$pgid" 2>/dev/null && kill -KILL -"$pgid" 2>/dev/null
     fi
-    note "✋ Stopped" 1200 ""
+    last_note "✋ Stopped" "$DONE_MS" ""
 }
 
 usage() {

@@ -47,6 +47,16 @@ for _, d in ipairs(directions) do
         { description = "Move window " .. d.label })
 end
 
+-- Scrolling layout (general.layout = "scrolling" in look-and-feel.lua)
+hl.bind(mainMod .. " + CTRL + h",     hl.dsp.layout("swapcol l"),             { description = "Swap column left" })
+hl.bind(mainMod .. " + CTRL + l",     hl.dsp.layout("swapcol r"),             { description = "Swap column right" })
+hl.bind(mainMod .. " + bracketleft",  hl.dsp.layout("consume_or_expel prev"), { description = "Stack window into left column / pop it out" })
+hl.bind(mainMod .. " + bracketright", hl.dsp.layout("consume_or_expel next"), { description = "Stack window into right column / pop it out" })
+hl.bind(mainMod .. " + minus",        hl.dsp.layout("colresize -conf"),       { description = "Narrower column (preset widths)" })
+hl.bind(mainMod .. " + equal",        hl.dsp.layout("colresize +conf"),       { description = "Wider column (preset widths)" })
+hl.bind(mainMod .. " + W",            hl.dsp.layout("fit visible"),           { description = "Share screen evenly between visible columns" })
+hl.bind(mainMod .. " + SHIFT + W",    hl.dsp.layout("center"),                { description = "Center focused column" })
+
 -- Switch workspaces with mainMod + [0-9]
 -- Move active window to a workspace with mainMod + SHIFT + [0-9]
 for i = 1, 10 do

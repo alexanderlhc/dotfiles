@@ -19,7 +19,7 @@ hl.config({
         -- Please see https://wiki.hypr.land/Configuring/Advanced-and-Cool/Tearing/ before you turn this on
         allow_tearing = false,
 
-        layout = "dwindle",
+        layout = "scrolling",
     },
 
     decoration = {
@@ -83,6 +83,18 @@ hl.animation({ leaf = "zoomFactor",    enabled = true, speed = 7,    bezier = "q
 hl.config({
     dwindle = {
         preserve_split = true, -- You probably want this
+    },
+})
+
+-- See https://wiki.hypr.land/Configuring/Layouts/Scrolling-Layout/ for more
+-- Windows sit in columns on an endless horizontal tape; the screen is a viewport.
+hl.config({
+    scrolling = {
+        column_width             = 0.5,  -- new columns take half the screen
+        explicit_column_widths   = "0.333, 0.5, 0.667, 1.0", -- steps for colresize +conf/-conf
+        fullscreen_on_one_column = true, -- a lone column fills the screen
+        focus_fit_method         = 1,    -- 0 = center focused column, 1 = scroll just enough to fit it
+        follow_focus             = true,
     },
 })
 

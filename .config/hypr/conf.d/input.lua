@@ -5,8 +5,8 @@
 
 hl.config({
     input = {
-        kb_layout  = "dk",
-        kb_variant = "",
+        kb_layout  = "dklocal",
+        kb_variant = "tildegrave",
         kb_model   = "",
         kb_options = "",
         kb_rules   = "",

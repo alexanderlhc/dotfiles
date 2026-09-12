@@ -128,6 +128,8 @@ hl.bind(mainMod .. " + D",         hl.dsp.exec_cmd("~/.local/bin/whisper-ptt tog
                                                  { description = "Dictate / whisper speech-to-text (tap to start, tap to stop)" })
 hl.bind(mainMod .. " + SHIFT + D", hl.dsp.exec_cmd("~/.local/bin/whisper-ptt cancel"),
                                                  { description = "Cancel dictation / whisper speech-to-text" })
+hl.bind(mainMod .. " + CTRL + D",  hl.dsp.exec_cmd("~/.local/bin/whisper-ptt lang"),
+                                                 { description = "Switch dictation language (English / Danish)" })
 
 -- Read aloud — the mirror of dictation: speaks the clipboard, tap again to stop.
 hl.bind(mainMod .. " + A",         hl.dsp.exec_cmd("~/.local/bin/speak-clip toggle"),

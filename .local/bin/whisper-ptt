@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 # whisper-ptt — local speech-to-text dictation for Hyprland.
 #
-#   whisper-ptt toggle   advance the state machine (bind this to one key)
-#   whisper-ptt start    begin recording
-#   whisper-ptt stop     transcribe what was recorded and type it
-#   whisper-ptt status   print the current state
-#   whisper-ptt cancel   abort a recording, transcribing nothing
+#   whisper-ptt toggle      advance the state machine (bind this to one key)
+#   whisper-ptt start       begin recording
+#   whisper-ptt stop        transcribe what was recorded and type it
+#   whisper-ptt status      print the current state
+#   whisper-ptt cancel      abort a recording, transcribing nothing
+#   whisper-ptt lang [xx]   flip the language between en and da, or set one
 #
 # Three states, cycled by `toggle`:
 #
@@ -16,17 +17,29 @@
 # A press while transcribing is ignored rather than starting a second
 # recording on top of the one still being processed.
 #
-# Transcription goes to a resident whisper-server (model already on the GPU,
-# ~0.3s); a cold whisper-cli run (~1.8s) is the fallback if it is not up.
+# Transcription goes to a resident whisper-server (model already on the GPU);
+# a cold whisper-cli run is the fallback if it is not up. English goes to the
+# small English-only model (~0.5s for a 15s clip); every other language needs a
+# multilingual model, ~3x slower, so it has its own server (whisper-server-da)
+# rather than slowing English down.
 
 set -uo pipefail
 
-MODEL="${WHISPER_PTT_MODEL:-$HOME/.local/share/whisper-models/ggml-small.en.bin}"
-LANGUAGE="${WHISPER_PTT_LANG:-en}"
+STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/whisper-ptt"
+LANGFILE="$STATE_DIR/lang"                # the `lang` choice, kept across reboots
+saved_lang=$(cat "$LANGFILE" 2>/dev/null)
+LANGUAGE="${WHISPER_PTT_LANG:-${saved_lang:-en}}"   # the env var overrides `lang`
+
+case $LANGUAGE in
+    en) default_model=ggml-small.en.bin;       default_server=http://127.0.0.1:8910 ;;
+    *)  default_model=ggml-large-v3-turbo.bin; default_server=http://127.0.0.1:8911 ;;
+esac
+MODEL="${WHISPER_PTT_MODEL:-$HOME/.local/share/whisper-models/$default_model}"
+SERVER="${WHISPER_PTT_SERVER:-$default_server}"
+
 THREADS="${WHISPER_PTT_THREADS:-8}"
 SOURCE="${WHISPER_PTT_SOURCE:-}"          # empty = default input device
 MAX_SECONDS="${WHISPER_PTT_MAX_SECONDS:-300}"
-SERVER="${WHISPER_PTT_SERVER:-http://127.0.0.1:8910}"
 TRAILING_SPACE="${WHISPER_PTT_TRAILING_SPACE:-1}"
 NO_TYPE="${WHISPER_PTT_NO_TYPE:-0}"       # 1 = clipboard only, no keystrokes
 PUNCTUATE="${WHISPER_PTT_PUNCTUATE:-1}"   # 1 = spoken "colon" etc. become real marks
@@ -65,6 +78,14 @@ note() {
 # some other application's notification.
 last_note() { note "$@"; rm -f "$NOTIFY_IDFILE"; }
 fail() { last_note "🚫 Dictation" 4000 "$1"; exit 1; }
+
+lang_label() {
+    case $1 in
+        en) echo "🇬🇧 English" ;;
+        da) echo "🇩🇰 Dansk" ;;
+        *)  echo "$1" ;;
+    esac
+}
 
 # A pidfile counts only while the process it names is still alive, so a crash
 # can never wedge the state machine.
@@ -115,7 +136,7 @@ do_start() {
     timeout -s INT "$MAX_SECONDS" pw-record "${args[@]}" "$WAV" \
         >/dev/null 2>"$LOG" &
     echo $! > "$PIDFILE"
-    note "🎙️ Recording…" 0 "Press again to transcribe"
+    note "🎙️ Recording… $(lang_label "$LANGUAGE")" 0 "Press again to transcribe"
 }
 
 do_stop() {
@@ -156,8 +177,9 @@ do_stop() {
     [[ $text =~ ^\(.*\)$ ]] && text=""
 
     # Spoken punctuation ("colon" -> ":") after flattening, since it may
-    # legitimately reintroduce line breaks.
-    if [[ -n $text && $PUNCTUATE == 1 ]] && command -v whisper-punctuate >/dev/null; then
+    # legitimately reintroduce line breaks. The commands are English phrases,
+    # so other languages are left as whisper punctuated them.
+    if [[ -n $text && $PUNCTUATE == 1 && $LANGUAGE == en ]] && command -v whisper-punctuate >/dev/null; then
         text=$(printf '%s' "$text" | whisper-punctuate)
     fi
 
@@ -190,6 +212,26 @@ do_cancel() {
     last_note "✋ Cancelled" 1500 ""
 }
 
+# The language is read when a recording is stopped, so switching mid-recording
+# applies to that take.
+do_lang() {
+    local new=${1:-}
+    if [[ -z $new ]]; then
+        [[ $LANGUAGE == en ]] && new=da || new=en
+    fi
+    [[ $new =~ ^[a-z]{2}$ ]] || { echo "whisper-ptt lang: expected a language code like en or da" >&2; exit 2; }
+
+    mkdir -p "$STATE_DIR"
+    printf '%s\n' "$new" > "$LANGFILE"
+
+    if [[ $(state) == recording ]]; then
+        note "🎙️ Recording… $(lang_label "$new")" 0 "Press again to transcribe"
+    else
+        # Not through note(): that would take over a pinned "Transcribing…" popup.
+        notify-send -a "Dictation" -t 1500 "Dictation language" "$(lang_label "$new")"
+    fi
+}
+
 case "${1:-toggle}" in
     toggle)
         case $(state) in
@@ -202,5 +244,6 @@ case "${1:-toggle}" in
     stop)   do_stop ;;
     cancel) do_cancel ;;
     status) state ;;
-    *) echo "usage: whisper-ptt {toggle|start|stop|cancel|status}" >&2; exit 2 ;;
+    lang)   do_lang "${2:-}" ;;
+    *) echo "usage: whisper-ptt {toggle|start|stop|cancel|status|lang [en|da]}" >&2; exit 2 ;;
 esac

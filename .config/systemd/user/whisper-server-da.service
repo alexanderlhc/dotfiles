@@ -1,0 +1,24 @@
+[Unit]
+Description=whisper.cpp server — keeps the multilingual (Danish) dictation model resident on the GPU
+Documentation=https://github.com/ggml-org/whisper.cpp
+After=graphical-session.target
+
+[Service]
+Type=simple
+Environment=GGML_VK_DISABLE_F16=0
+# whisper-ptt sends the language with every request; --language is only the
+# default. whisper-server.service keeps English on the faster small.en model.
+ExecStart=/usr/bin/whisper-server \
+    --model %h/.local/share/whisper-models/ggml-large-v3-turbo.bin \
+    --language da \
+    --threads 8 \
+    --no-timestamps \
+    --host 127.0.0.1 \
+    --port 8911
+Restart=on-failure
+RestartSec=2
+# Dictation is latency-sensitive; don't let it get starved.
+Nice=-5
+
+[Install]
+WantedBy=default.target

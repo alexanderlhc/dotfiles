@@ -1,0 +1,159 @@
+#!/usr/bin/env bash
+# whisper-transcribe — transcribe audio/video files with local whisper.cpp.
+#
+#   whisper-transcribe recording.m4a                 # auto-detect language
+#   whisper-transcribe -l da "Stemme 260910.m4a"     # Danish
+#   whisper-transcribe -l da -f srt,txt talk.mp4     # subtitles too
+#   whisper-transcribe -l da -m medium notes.ogg     # smaller/faster model
+#
+# Companion to whisper-ptt, which does live dictation. That one talks to the
+# resident whisper-servers, whose models are loaded once at boot (small.en for
+# English, large-v3-turbo for Danish); this one runs whisper-cli per file so
+# each run can pick its own model and language. Missing models are fetched on
+# first use.
+#
+# Any format ffmpeg can read works -- it is resampled to the 16 kHz mono WAV
+# whisper wants before transcribing.
+
+set -uo pipefail
+
+MODELS_DIR="${WHISPER_MODELS_DIR:-$HOME/.local/share/whisper-models}"
+MODEL="${WHISPER_TRANSCRIBE_MODEL:-large-v3-turbo}"   # multilingual by default
+LANGUAGE="${WHISPER_TRANSCRIBE_LANG:-auto}"
+THREADS="${WHISPER_TRANSCRIBE_THREADS:-8}"
+FORMATS="txt"
+OUTDIR=""
+PROMPT="${WHISPER_TRANSCRIBE_PROMPT:-}"
+TO_STDOUT=0
+BASE_URL="https://huggingface.co/ggerganov/whisper.cpp/resolve/main"
+
+die() { printf 'whisper-transcribe: %s\n' "$1" >&2; exit 1; }
+
+usage() {
+    sed -n '2,/^$/{/^#/!q; s/^# \?//p}' "$0"
+    cat <<'EOF'
+Options:
+  -l LANG      language code (da, en, de, ...) or "auto"   [auto]
+  -m MODEL     model name or path to a .bin                [large-v3-turbo]
+  -f FORMATS   comma list of txt,srt,vtt,json,csv,lrc      [txt]
+  -o DIR       write outputs to DIR instead of beside input
+  -p TEXT      initial prompt (names, jargon, spelling hints)
+  -t N         threads                                     [8]
+  -c           print the transcript to stdout as well
+  -h           this help
+
+Models live in ~/.local/share/whisper-models and are downloaded on demand.
+Pick by size/accuracy: tiny, base, small, medium, large-v3-turbo, large-v3.
+Append .en (e.g. small.en) for English-only variants -- never for Danish.
+EOF
+}
+
+while getopts ':l:m:f:o:p:t:ch' opt; do
+    case $opt in
+        l) LANGUAGE=$OPTARG ;;
+        m) MODEL=$OPTARG ;;
+        f) FORMATS=$OPTARG ;;
+        o) OUTDIR=$OPTARG ;;
+        p) PROMPT=$OPTARG ;;
+        t) THREADS=$OPTARG ;;
+        c) TO_STDOUT=1 ;;
+        h) usage; exit 0 ;;
+        :) die "option -$OPTARG needs a value" ;;
+        ?) die "unknown option -$OPTARG (try -h)" ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+(( $# )) || { usage; exit 2; }
+command -v whisper-cli >/dev/null || die "whisper-cli not found (pacman -S whisper.cpp)"
+command -v ffmpeg >/dev/null || die "ffmpeg not found"
+
+# An .en model cannot transcribe anything but English, and whisper-cli will
+# happily "translate" into garbage rather than complain. Catch it here.
+if [[ $MODEL == *.en* && $LANGUAGE != en ]]; then
+    die "model '$MODEL' is English-only but language is '$LANGUAGE' -- use e.g. -m large-v3-turbo"
+fi
+
+# MODEL is either a path to a .bin or a bare name we resolve under MODELS_DIR,
+# downloading it the first time it is asked for.
+resolve_model() {
+    local name=$1 path
+    if [[ $name == */* || $name == *.bin ]]; then
+        path=$name
+    else
+        path="$MODELS_DIR/ggml-$name.bin"
+    fi
+    if [[ ! -f $path ]]; then
+        [[ $name == */* || $name == *.bin ]] && die "model file not found: $path"
+        mkdir -p "$MODELS_DIR"
+        printf 'Downloading model ggml-%s.bin (one time)…\n' "$name" >&2
+        # Download to a temp name so an interrupted fetch is never mistaken
+        # for a usable model on the next run.
+        if ! curl -fL --progress-bar -o "$path.part" "$BASE_URL/ggml-$name.bin"; then
+            rm -f "$path.part"
+            die "could not download model '$name' -- check the name"
+        fi
+        mv "$path.part" "$path"
+    fi
+    printf '%s' "$path"
+}
+
+MODEL_PATH=$(resolve_model "$MODEL") || exit 1
+
+# whisper-cli derives output names from the file it was handed, which would
+# leave us with "recording.wav.txt"; -of sets the base name explicitly instead.
+TMPDIR_RUN=$(mktemp -d) || die "mktemp failed"
+trap 'rm -rf "$TMPDIR_RUN"' EXIT
+
+fmt_flags() {
+    local f
+    for f in ${1//,/ }; do
+        case $f in
+            txt)  printf ' --output-txt' ;;
+            srt)  printf ' --output-srt' ;;
+            vtt)  printf ' --output-vtt' ;;
+            json) printf ' --output-json' ;;
+            csv)  printf ' --output-csv' ;;
+            lrc)  printf ' --output-lrc' ;;
+            *)    die "unknown format '$f'" ;;
+        esac
+    done
+}
+read -ra FMT_FLAGS <<< "$(fmt_flags "$FORMATS")" || exit 1
+
+status=0
+for input in "$@"; do
+    [[ -f $input ]] || { printf 'whisper-transcribe: no such file: %s\n' "$input" >&2; status=1; continue; }
+
+    stem=$(basename "$input"); stem=${stem%.*}
+    dest=${OUTDIR:-$(dirname "$input")}
+    mkdir -p "$dest" || { status=1; continue; }
+
+    wav="$TMPDIR_RUN/$stem.wav"
+    printf '▶ %s\n' "$(basename "$input")" >&2
+    if ! ffmpeg -nostdin -v error -y -i "$input" -ar 16000 -ac 1 -c:a pcm_s16le "$wav"; then
+        printf 'whisper-transcribe: ffmpeg could not decode %s\n' "$input" >&2
+        status=1
+        continue
+    fi
+
+    args=(-m "$MODEL_PATH" -f "$wav" -of "$TMPDIR_RUN/$stem" -t "$THREADS" -pp "${FMT_FLAGS[@]}")
+    [[ $LANGUAGE == auto ]] && args+=(-l auto -dl) || args+=(-l "$LANGUAGE")
+    [[ -n $PROMPT ]] && args+=(--prompt "$PROMPT")
+
+    if ! whisper-cli "${args[@]}"; then
+        printf 'whisper-transcribe: whisper-cli failed on %s\n' "$input" >&2
+        status=1
+        continue
+    fi
+
+    # Outputs are siblings of the WAV in the temp dir; move them to dest.
+    for out in "$TMPDIR_RUN/$stem".*; do
+        [[ $out == "$wav" ]] && continue
+        mv -f "$out" "$dest/" && printf '  → %s\n' "$dest/$(basename "$out")" >&2
+    done
+
+    (( TO_STDOUT )) && [[ -f "$dest/$stem.txt" ]] && cat "$dest/$stem.txt"
+done
+
+exit $status

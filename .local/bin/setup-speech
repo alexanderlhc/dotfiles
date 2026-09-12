@@ -6,8 +6,8 @@
 #   setup-speech check    report what is missing, change nothing
 #   setup-speech <step>   run one step: packages whisper kokoro piper service
 #
-# The dotfiles repo carries the scripts, the keybinds and the systemd unit,
-# but not the ~1.2GB of models behind them, so a fresh checkout has working
+# The dotfiles repo carries the scripts, the keybinds and the systemd units,
+# but not the ~2.5GB of models behind them, so a fresh checkout has working
 # keys bound to tools that cannot run. This closes that gap.
 #
 # Every step is idempotent: it checks first and skips what is already there,
@@ -16,8 +16,11 @@
 set -uo pipefail
 
 WHISPER_MODEL_DIR="$HOME/.local/share/whisper-models"
-WHISPER_MODEL="ggml-small.en.bin"
-WHISPER_MODEL_URL="https://huggingface.co/ggerganov/whisper.cpp/resolve/main/$WHISPER_MODEL"
+WHISPER_MODEL_BASE="https://huggingface.co/ggerganov/whisper.cpp/resolve/main"
+# model:size — small.en for English dictation, turbo for Danish (and whisper-transcribe)
+WHISPER_MODELS=("ggml-small.en.bin:~466MB" "ggml-large-v3-turbo.bin:~1.6GB")
+# unit:port — one resident server per model
+WHISPER_UNITS=("whisper-server.service:8910" "whisper-server-da.service:8911")
 
 KOKORO_DIR="$HOME/.local/share/kokoro-tts"
 KOKORO_REL="https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0"
@@ -55,36 +58,43 @@ step_packages() {
 }
 
 step_whisper() {
-    head_ "Dictation model (whisper.cpp)"
-    if [[ -s $WHISPER_MODEL_DIR/$WHISPER_MODEL ]]; then
-        ok "$WHISPER_MODEL ($(du -h "$WHISPER_MODEL_DIR/$WHISPER_MODEL" | cut -f1))"
-        return 0
-    fi
-    miss "$WHISPER_MODEL (~466MB)"
-    (( CHECK_ONLY )) && return 0
-    mkdir -p "$WHISPER_MODEL_DIR"
-    # .part so an interrupted download is never mistaken for a finished one.
-    curl -fL --progress-bar -o "$WHISPER_MODEL_DIR/$WHISPER_MODEL.part" "$WHISPER_MODEL_URL" \
-        && mv "$WHISPER_MODEL_DIR/$WHISPER_MODEL.part" "$WHISPER_MODEL_DIR/$WHISPER_MODEL" \
-        && ok "downloaded" || { err "download failed"; return 1; }
+    head_ "Dictation models (whisper.cpp)"
+    local entry model size
+    for entry in "${WHISPER_MODELS[@]}"; do
+        model=${entry%%:*} size=${entry#*:}
+        if [[ -s $WHISPER_MODEL_DIR/$model ]]; then
+            ok "$model ($(du -h "$WHISPER_MODEL_DIR/$model" | cut -f1))"
+            continue
+        fi
+        miss "$model ($size)"
+        (( CHECK_ONLY )) && continue
+        mkdir -p "$WHISPER_MODEL_DIR"
+        # .part so an interrupted download is never mistaken for a finished one.
+        curl -fL --progress-bar -o "$WHISPER_MODEL_DIR/$model.part" "$WHISPER_MODEL_BASE/$model" \
+            && mv "$WHISPER_MODEL_DIR/$model.part" "$WHISPER_MODEL_DIR/$model" \
+            && ok "downloaded $model" || { err "download failed: $model"; return 1; }
+    done
 }
 
 step_service() {
-    head_ "whisper-server (systemd user unit)"
-    if ! [[ -f $HOME/.config/systemd/user/whisper-server.service ]]; then
-        err "unit missing — it lives in the dotfiles repo, is the checkout complete?"
-        return 1
-    fi
-    ok "unit present"
-    if systemctl --user is-active --quiet whisper-server.service; then
-        ok "running"
-        return 0
-    fi
-    miss "not running"
-    (( CHECK_ONLY )) && return 0
-    systemctl --user daemon-reload
-    systemctl --user enable --now whisper-server.service \
-        && ok "enabled and started" || { err "failed to start — see: journalctl --user -u whisper-server"; return 1; }
+    head_ "whisper-server (systemd user units)"
+    local entry unit
+    for entry in "${WHISPER_UNITS[@]}"; do
+        unit=${entry%%:*}
+        if ! [[ -f $HOME/.config/systemd/user/$unit ]]; then
+            err "$unit missing — it lives in the dotfiles repo, is the checkout complete?"
+            return 1
+        fi
+        if systemctl --user is-active --quiet "$unit"; then
+            ok "$unit running"
+            continue
+        fi
+        miss "$unit not running"
+        (( CHECK_ONLY )) && continue
+        systemctl --user daemon-reload
+        systemctl --user enable --now "$unit" \
+            && ok "$unit enabled and started" || { err "failed to start — see: journalctl --user -u ${unit%.service}"; return 1; }
+    done
 }
 
 step_kokoro() {
@@ -130,12 +140,15 @@ verify() {
     head_ "Verify"
     have whisper-ptt && ok "whisper-ptt on PATH" || err "whisper-ptt not on PATH"
     have speak-clip  && ok "speak-clip on PATH"  || err "speak-clip not on PATH"
-    if curl -sf -m 3 http://127.0.0.1:8910/ >/dev/null 2>&1; then
-        ok "whisper-server responding on :8910"
-    else
-        err "whisper-server not responding on :8910"
-    fi
-    printf '\nTry it:  SUPER+D dictate   SUPER+A read clipboard aloud\n'
+    local entry
+    for entry in "${WHISPER_UNITS[@]}"; do
+        if curl -sf -m 3 "http://127.0.0.1:${entry#*:}/" >/dev/null 2>&1; then
+            ok "${entry%%:*} responding on :${entry#*:}"
+        else
+            err "${entry%%:*} not responding on :${entry#*:}"
+        fi
+    done
+    printf '\nTry it:  SUPER+D dictate   SUPER+CTRL+D switch Danish/English   SUPER+A read clipboard aloud\n'
 }
 
 # --- main -----------------------------------------------------------------

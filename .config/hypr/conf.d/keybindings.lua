@@ -73,9 +73,16 @@ hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:mag
 
 hl.bind(mainMod .. " + Tab", hl.dsp.focus({ workspace = "previous" }), { description = "Toggle previous workspace" })
 
--- Scroll through existing workspaces with mainMod + scroll
-hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }), { description = "Switch to next workspace" })
-hl.bind(mainMod .. " + mouse_up",   hl.dsp.focus({ workspace = "e-1" }), { description = "Switch to previous workspace" })
+-- Scroll sideways along the scrolling-layout tape with mainMod + scroll
+-- (tilt/horizontal wheel does the same)
+hl.bind(mainMod .. " + mouse_down",  hl.dsp.focus({ direction = "r" }), { description = "Focus window right" })
+hl.bind(mainMod .. " + mouse_up",    hl.dsp.focus({ direction = "l" }), { description = "Focus window left" })
+hl.bind(mainMod .. " + mouse_right", hl.dsp.focus({ direction = "r" }), { description = "Focus window right" })
+hl.bind(mainMod .. " + mouse_left",  hl.dsp.focus({ direction = "l" }), { description = "Focus window left" })
+
+-- Scroll through existing workspaces with mainMod + SHIFT + scroll
+hl.bind(mainMod .. " + SHIFT + mouse_down", hl.dsp.focus({ workspace = "e+1" }), { description = "Switch to next workspace" })
+hl.bind(mainMod .. " + SHIFT + mouse_up",   hl.dsp.focus({ workspace = "e-1" }), { description = "Switch to previous workspace" })
 
 -- Move/resize windows with mainMod + LMB/RMB and dragging
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })

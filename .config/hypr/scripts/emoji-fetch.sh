@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Download and parse the Unicode emoji list into a flat <emoji>  <name> file.
+# Extra search words come from emoji-aliases.txt.
 # Skin-tone variants (codepoints U+1F3FB..U+1F3FF) are filtered out.
 # Re-run this script to refresh the cache (e.g. after a new Unicode release).
 
@@ -8,6 +9,7 @@ set -euo pipefail
 OUT_DIR="$HOME/.local/share/emoji-picker"
 OUT="$OUT_DIR/emojis.txt"
 URL="${EMOJI_URL:-https://unicode.org/Public/emoji/16.0/emoji-test.txt}"
+ALIASES="$(dirname "$(readlink -f "$0")")/emoji-aliases.txt"
 
 mkdir -p "$OUT_DIR"
 
@@ -20,6 +22,13 @@ if ! curl -fsSL "$URL" -o "$tmp"; then
 fi
 
 awk '
+FNR == NR {
+    if ($0 ~ /^#/ || NF < 2) next
+    e = $1
+    $1 = ""
+    alias[e] = alias[e] $0
+    next
+}
 /; fully-qualified/ {
     codepoints = $0
     sub(/;.*/, "", codepoints)
@@ -34,9 +43,9 @@ awk '
     name = a[3]
     for (i = 4; a[i] != ""; i++) name = name " " a[i]
 
-    if (emoji != "" && name != "") print emoji "  " name
+    if (emoji != "" && name != "") print emoji "  " name alias[emoji]
 }
-' "$tmp" > "$OUT"
+' "$ALIASES" "$tmp" > "$OUT"
 
 count=$(wc -l < "$OUT")
 echo "Wrote $count emojis to $OUT" >&2

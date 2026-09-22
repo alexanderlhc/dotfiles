@@ -1,0 +1,3 @@
+# Extra search words appended to an emoji's Unicode name: <emoji> <words...>
+# Re-run emoji-fetch.sh after editing.
+🪦 tombstone grave rip

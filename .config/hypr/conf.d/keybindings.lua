@@ -25,6 +25,7 @@ hl.bind(mainMod .. " + M",      hl.dsp.exec_cmd([[command -v hyprshutdown >/dev/
                                                                              { description = "Logout / exit Hyprland" })
 hl.bind(mainMod .. " + E",      hl.dsp.exec_cmd(programs.fileManager),       { description = "Open file manager" })
 hl.bind(mainMod .. " + V",      hl.dsp.window.float({ action = "toggle" }),  { description = "Toggle floating window" })
+hl.bind(mainMod .. " + SHIFT + V", hl.dsp.window.pin({ action = "toggle" }), { description = "Pin floating window (sticky on all workspaces)" })
 hl.bind(mainMod .. " + R",      hl.dsp.exec_cmd(programs.menu),              { description = "Open app launcher" })
 hl.bind(mainMod .. " + P",      hl.dsp.exec_cmd(programs.rbwMenu),           { description = "Open password menu" })
 hl.bind(mainMod .. " + F",      hl.dsp.window.fullscreen(),                  { description = "Toggle fullscreen" })

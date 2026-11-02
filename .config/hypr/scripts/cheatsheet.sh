@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
-# Hyprland keybind cheatsheet, generated from `hyprctl binds`.
+# Hyprland keybind cheatsheet, generated from `hyprctl binds`. Enter runs the selected bind.
 # To change bindings, edit ~/.config/hypr/conf.d/keybindings.lua and reload.
 # (The .conf next to it is a legacy export -- Hyprland does not read it.)
 
 # Toggle behavior: if another wofi menu is open, close it instead of stacking.
 pkill wofi && exit 0
 
-hyprctl binds -j | jq -r '
+# One row per submap+mods+key: a key can hold several binds (run action + leave submap).
+rows=$(hyprctl binds -j | jq -r '
   def modname:
     [
       (if ((. / 64) | floor) % 2 == 1 then "SUPER" else empty end),
@@ -15,14 +16,29 @@ hyprctl binds -j | jq -r '
       (if  (. % 2)            == 1   then "SHIFT" else empty end)
     ] | join("+");
 
-  .[]
-  | select(.mouse == false)
-  | (.modmask | modname) as $mods
+  to_entries
+  | group_by([.value.submap, .value.modmask, .value.key])
+  | map({
+      order: (map(.key) | min),
+      bind: .[0].value,
+      description: (map(.value.description | select(. != "")) | first // "⚠ no description -- add one in keybindings.lua")
+    })
+  | sort_by(.order)
+  | .[]
+  | (.bind.modmask | modname) as $mods
   | (if $mods == "" then "" else $mods + " + " end) as $prefix
-  | (if .description != "" then .description
-       else (.dispatcher + (if .arg != "" then " " + .arg else "" end))
-     end) as $action
-  | (if .submap != "" then "[" + .submap + "] " else "" end) as $ctx
-  | "\($ctx)\($prefix)\(.key)\t\($action)"
-' | column -t -s $'\t' \
-  | wofi --dmenu --prompt Keys --width 700 --lines 15 --matching fuzzy --insensitive
+  | (if .bind.submap != "" then "[" + .bind.submap + "] " else "" end) as $ctx
+  | "\(.bind.submap)|\(.bind.modmask)|\(.bind.key)\t\($ctx)\($prefix)\(.bind.key)\t\(.description)"
+')
+
+mapfile -t ids < <(cut -f1 <<<"$rows")
+menu=$(cut -f2- <<<"$rows" | column -t -s $'\t')
+
+choice=$(wofi --dmenu --prompt Keys --width 700 --lines 15 --matching fuzzy --insensitive <<<"$menu") || exit 0
+line=$(grep -nFx -- "$choice" <<<"$menu" | head -n1 | cut -d: -f1)
+[[ -n $line ]] || exit 0
+
+# Let wofi's surface go and focus return, so the bind acts on the window behind it
+# and a screenshot doesn't catch the menu.
+sleep 0.25
+hyprctl dispatch "cheatsheet_run([==[${ids[line - 1]}]==])"

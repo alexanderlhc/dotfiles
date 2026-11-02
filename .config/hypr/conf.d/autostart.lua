@@ -10,7 +10,6 @@ hl.on("hyprland.start", function()
 
     hl.exec_cmd("systemctl --user start hyprpolkitagent")
     hl.exec_cmd("hypridle")
-    hl.exec_cmd("mako")
     hl.exec_cmd("waybar")
 
     -- Bridge XEmbed tray icons (Wine/Battle.net) to StatusNotifierItem so waybar's

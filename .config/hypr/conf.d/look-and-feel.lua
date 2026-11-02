@@ -121,3 +121,11 @@ hl.layer_rule({
     blur         = true,
     ignore_alpha = 0.2, -- blur the panel, not wofi's clear rounded corners
 })
+
+-- dunst notifications get the same blur as the menus.
+hl.layer_rule({
+    name         = "notifications-blur",
+    match        = { namespace = "notifications" },
+    blur         = true,
+    ignore_alpha = 0.2,
+})

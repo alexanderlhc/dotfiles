@@ -1,7 +1,7 @@
 -----------------
 -- KEYBINDINGS --
 -----------------
--- See https://wiki.hypr.land/Configuring/Basics/Binds/
+-- See https://wiki.hypr.land/configuring/core/binds/
 -- `programs` is the table returned by conf.d/programs.lua, passed in by hyprland.lua.
 local programs = ...
 

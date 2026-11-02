@@ -1,8 +1,8 @@
 ------------------------------
 -- WINDOWS AND WORKSPACES --
 ------------------------------
--- See https://wiki.hypr.land/Configuring/Basics/Window-Rules/
--- and https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/
+-- See https://wiki.hypr.land/configuring/core/rules/window-rules/
+-- and https://wiki.hypr.land/configuring/core/rules/workspace-rules/
 
 hl.window_rule({
     -- Ignore maximize requests from all apps. You'll probably like this.

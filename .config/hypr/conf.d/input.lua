@@ -1,7 +1,7 @@
 -----------
 -- INPUT --
 -----------
--- https://wiki.hypr.land/Configuring/Basics/Variables/#input
+-- https://wiki.hypr.land/configuring/core/config-options/#input
 
 hl.config({
     input = {
@@ -23,5 +23,5 @@ hl.config({
     },
 })
 
--- See https://wiki.hypr.land/Configuring/Basics/Gestures/
+-- See https://wiki.hypr.land/configuring/core/binds/gestures/
 hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })

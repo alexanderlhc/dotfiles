@@ -1,7 +1,7 @@
 ---------------------
 -- LOOK AND FEEL --
 ---------------------
--- Refer to https://wiki.hypr.land/Configuring/Basics/Variables/
+-- Refer to https://wiki.hypr.land/configuring/core/config-options/
 
 hl.config({
     general = {
@@ -16,7 +16,7 @@ hl.config({
         -- Resize windows by clicking and dragging on borders and gaps
         resize_on_border = true,
 
-        -- Please see https://wiki.hypr.land/Configuring/Advanced-and-Cool/Tearing/ before you turn this on
+        -- Please see https://wiki.hypr.land/configuring/extra/tearing/ before you turn this on
         allow_tearing = false,
 
         layout = "scrolling",
@@ -52,7 +52,7 @@ hl.config({
     },
 })
 
--- Default curves, see https://wiki.hypr.land/Configuring/Advanced-and-Cool/Animations/
+-- Default curves, see https://wiki.hypr.land/configuring/core/animations/
 --                         NAME              X0    Y0     X1    Y1
 hl.curve("easeOutQuint",   { type = "bezier", points = { {0.23, 1},    {0.32, 1} } })
 hl.curve("easeInOutCubic", { type = "bezier", points = { {0.65, 0.05}, {0.36, 1} } })
@@ -60,7 +60,7 @@ hl.curve("linear",         { type = "bezier", points = { {0, 0},       {1, 1}   
 hl.curve("almostLinear",   { type = "bezier", points = { {0.5, 0.5},   {0.75, 1} } })
 hl.curve("quick",          { type = "bezier", points = { {0.15, 0},    {0.1, 1}  } })
 
--- Default animations, see https://wiki.hypr.land/Configuring/Advanced-and-Cool/Animations/
+-- Default animations, see https://wiki.hypr.land/configuring/core/animations/
 hl.animation({ leaf = "global",        enabled = true, speed = 10,   bezier = "default" })
 hl.animation({ leaf = "border",        enabled = true, speed = 5.39, bezier = "easeOutQuint" })
 hl.animation({ leaf = "windows",       enabled = true, speed = 4.79, bezier = "easeOutQuint" })
@@ -79,14 +79,7 @@ hl.animation({ leaf = "workspacesIn",  enabled = true, speed = 1.21, bezier = "a
 hl.animation({ leaf = "workspacesOut", enabled = true, speed = 1.94, bezier = "almostLinear", style = "fade" })
 hl.animation({ leaf = "zoomFactor",    enabled = true, speed = 7,    bezier = "quick" })
 
--- See https://wiki.hypr.land/Configuring/Layouts/Dwindle-Layout/ for more
-hl.config({
-    dwindle = {
-        preserve_split = true, -- You probably want this
-    },
-})
-
--- See https://wiki.hypr.land/Configuring/Layouts/Scrolling-Layout/ for more
+-- See https://wiki.hypr.land/configuring/layouts/scrolling-layout/ for more
 -- Windows sit in columns on an endless horizontal tape; the screen is a viewport.
 hl.config({
     scrolling = {
@@ -95,13 +88,6 @@ hl.config({
         fullscreen_on_one_column = true, -- a lone column fills the screen
         focus_fit_method         = 1,    -- 0 = center focused column, 1 = scroll just enough to fit it
         follow_focus             = true,
-    },
-})
-
--- See https://wiki.hypr.land/Configuring/Layouts/Master-Layout/ for more
-hl.config({
-    master = {
-        new_status = "master",
     },
 })
 

@@ -1,0 +1,11 @@
+version = 4
+
+[windows]
+scale = 8.5
+items_per_row = 5
+
+# Alt+Tab across every open window. No overview: launcher stays on wofi (Super+R).
+[windows.switch]
+modifier = "alt"
+key = "Tab"
+filter_by = []

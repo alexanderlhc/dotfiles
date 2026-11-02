@@ -18,6 +18,33 @@ hl.config({
 hl.bind(mainMod .. " + F1",     hl.dsp.exec_cmd("~/.config/hypr/scripts/cheatsheet.sh"),   { description = "Show keybind cheatsheet" })
 hl.bind(mainMod .. " + period", hl.dsp.exec_cmd("~/.config/hypr/scripts/emoji-picker.sh"), { description = "Open emoji picker" })
 
+-- Plain Alt+Tab fallback. hyprshell replaces these binds whenever its service runs.
+-- Cycles every workspace: the built-in cycle_next only covers the current one.
+local function cycle_window(next)
+    return function()
+        local windows = {}
+        for _, w in ipairs(hl.get_windows()) do
+            if w.mapped and not w.workspace.special then table.insert(windows, w) end
+        end
+        if #windows < 2 then return end
+        table.sort(windows, function(a, b)
+            if a.workspace.id ~= b.workspace.id then return a.workspace.id < b.workspace.id end
+            return a.address < b.address
+        end)
+
+        local active, current = hl.get_active_window(), 0
+        for i, w in ipairs(windows) do
+            if active and w.address == active.address then current = i end
+        end
+        local target = next and current % #windows + 1 or (current - 2) % #windows + 1
+        hl.dispatch(hl.dsp.focus({ window = "address:" .. windows[target].address }))
+        hl.dispatch(hl.dsp.window.alter_zorder({ mode = "top" }))
+    end
+end
+hl.bind("ALT + Tab",         cycle_window(true),  { description = "Next window" })
+hl.bind("ALT + SHIFT + Tab", cycle_window(false), { description = "Previous window" })
+
+hl.bind(mainMod .. " + G",      hl.dsp.exec_cmd("~/.config/hypr/scripts/window-picker.sh"), { description = "Find and focus an open window" })
 hl.bind(mainMod .. " + Q",      hl.dsp.window.close(),                       { description = "Kill active window" })
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(programs.terminal),          { description = "Open terminal" })
 hl.bind(mainMod .. " + C",      hl.dsp.exec_cmd(programs.clipboardMenu),     { description = "Open clipboard menu" })

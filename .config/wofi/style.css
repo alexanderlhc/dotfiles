@@ -1,57 +1,75 @@
 @import url("/home/alexander/.config/wofi/themes/tinted.css");
 
+* {
+  font-family: "MonoLisa", monospace, "Symbols Nerd Font", "Noto Color Emoji";
+  font-size: 14px;
+  outline: none;
+}
+
+/* Keep the surface clear so the panel's rounded corners show (and blur shows through). */
 window {
-  font-family: sans-serif, "Symbols Nerd Font";
-  font-size: 16px;
-  background: @mel-bg;
+  background: transparent;
+}
+
+#outer-box {
+  margin: 0;
+  padding: 8px;
+  background: alpha(@mel-bg, 0.94);
   color: @mel-fg;
-  border: 1px solid @mel-ui;
-  border-radius: 9px;
+  border: 1px solid alpha(@mel-ui, 0.45);
+  border-radius: 16px;
 }
 
 #input {
-  margin: 8px 8px 6px;
-  padding: 4px 10px;
-  background: @mel-float;
+  margin: 0 0 8px;
+  padding: 10px 12px;
+  background: transparent;
   color: @mel-fg;
-  border: 1px solid alpha(@mel-ui, 0.4);
-  border-radius: 9px;
-}
-
-#input:focus {
-  border-color: @mel-ui;
+  caret-color: @mel-blue;
+  font-size: 17px;
+  border: none;
+  border-bottom: 1px solid alpha(@mel-ui, 0.3);
+  border-radius: 0;
   box-shadow: none;
 }
 
-#outer-box,
-#scroll {
+#input:focus {
+  border-bottom-color: @mel-blue;
+  box-shadow: none;
+}
+
+#input image {
+  color: @mel-com;
+}
+
+#scroll,
+#inner-box {
   margin: 0;
   padding: 0;
   border: none;
   background: transparent;
 }
 
-#inner-box {
-  margin: 0 8px 8px;
-  border: none;
-  background: transparent;
-}
-
 #entry {
-  padding: 5px 10px;
-  border-radius: 6px;
+  padding: 8px 12px;
+  border-radius: 9px;
   color: @mel-fg;
 }
 
 #entry:hover {
-  background: @mel-sel;
+  background: alpha(@mel-sel, 0.5);
 }
 
+/* Soft tint plus an accent edge, rather than a solid block of colour. */
 #entry:selected {
-  background: @mel-blue;
-  color: @mel-bg;
+  background: alpha(@mel-blue, 0.14);
+  box-shadow: inset 3px 0 0 @mel-blue;
+}
+
+#text {
+  color: @mel-fg;
 }
 
 #text:selected {
-  color: @mel-bg;
+  color: @mel-fg;
 }

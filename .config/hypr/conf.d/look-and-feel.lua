@@ -118,4 +118,6 @@ hl.layer_rule({
     name      = "wofi-popin",
     match     = { namespace = "wofi" },
     animation = "popin",
+    blur         = true,
+    ignore_alpha = 0.2, -- blur the panel, not wofi's clear rounded corners
 })

@@ -8,15 +8,6 @@
 hl.on("hyprland.start", function()
     hl.exec_cmd("nm-applet")
 
-    -- Bring up xdg-desktop-portal (needed by flameshot/screenshare).
-    -- graphical-session.target never activates when Hyprland is launched directly,
-    -- so import the env and start the portal ignoring that dead dependency.
-    hl.exec_cmd("dbus-update-activation-environment --systemd --all")
-    hl.exec_cmd(
-        "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE && " ..
-        "systemctl --user start --job-mode=ignore-dependencies xdg-desktop-portal.service"
-    )
-
     hl.exec_cmd("systemctl --user start hyprpolkitagent")
     hl.exec_cmd("hypridle")
     hl.exec_cmd("mako")

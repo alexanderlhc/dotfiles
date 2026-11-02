@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Toggle behavior: if another wofi menu is open, close it instead of stacking.
-pkill wofi && exit 0
+"$HOME/.config/hypr/scripts/menu" --close && exit 0
 
 options="󰌾  Lock
 󰍃  Logout
@@ -9,7 +9,7 @@ options="󰌾  Lock
 󰜉  Reboot
 󰐥  Power off"
 
-choice=$(printf '%s' "$options" | wofi --dmenu --prompt "Power" --width 240 --lines 5 --matching fuzzy --insensitive)
+choice=$(printf '%s' "$options" | "$HOME/.config/hypr/scripts/menu" --dmenu --prompt "Power" --width 240 --lines 5 --matching fuzzy --insensitive)
 
 case "$choice" in
   *"Lock")

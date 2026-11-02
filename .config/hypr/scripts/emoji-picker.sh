@@ -6,7 +6,7 @@ set -euo pipefail
 
 # Toggle behavior: if another wofi menu is open, close it instead of stacking.
 # (if-form: a failed pkill must not trip set -e)
-if pkill wofi; then exit 0; fi
+if "$HOME/.config/hypr/scripts/menu" --close; then exit 0; fi
 
 DATA="$HOME/.local/share/emoji-picker/emojis.txt"
 CACHE_DIR="$HOME/.cache/emoji-picker"
@@ -24,7 +24,7 @@ fi
 
 selection=$( { cat "$RECENT" 2>/dev/null; cat "$DATA"; } \
     | awk '!seen[$1]++' \
-    | wofi --dmenu --prompt Emoji --width 420 --lines 12 --matching multi-contains --insensitive )
+    | "$HOME/.config/hypr/scripts/menu" --dmenu --prompt Emoji --width 420 --lines 12 --matching multi-contains --insensitive )
 
 [[ -z "$selection" ]] && exit 0
 

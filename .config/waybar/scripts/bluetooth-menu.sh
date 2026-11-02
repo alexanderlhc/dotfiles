@@ -15,7 +15,7 @@ else
   entries+="󰂯  Turn Bluetooth on\n"
 fi
 
-choice=$(printf '%b' "$entries" | wofi --dmenu --prompt "Bluetooth" --lines "$(printf '%b' "$entries" | grep -c .)" --insensitive) || exit 0
+choice=$(printf '%b' "$entries" | "$HOME/.config/hypr/scripts/menu" --dmenu --prompt "Bluetooth" --lines "$(printf '%b' "$entries" | grep -c .)" --insensitive) || exit 0
 mac=$(awk -F'\t' '{print $2}' <<<"$choice")
 
 case "$choice" in

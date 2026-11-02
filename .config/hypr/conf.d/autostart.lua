@@ -6,12 +6,10 @@
 -- once at startup and (unlike plain exec) not again on every config reload.
 
 hl.on("hyprland.start", function()
-    hl.exec_cmd("nm-applet")
-
     -- Password prompts for admin actions. hyprpolkitagent where installed, else the KDE agent.
     hl.exec_cmd("systemctl --user start hyprpolkitagent || /usr/lib/polkit-kde-authentication-agent-1")
     hl.exec_cmd("hypridle")
-    hl.exec_cmd("waybar")
+    hl.exec_cmd("~/.local/bin/rice autostart") -- waybar variant, nm-applet, cursor shake
 
     -- veronica only: the next two need tools other machines don't have, so they check first.
     -- Bridge XEmbed tray icons (Wine/Battle.net) to StatusNotifierItem so waybar's

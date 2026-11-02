@@ -53,3 +53,18 @@ hl.window_rule({
     match     = { class = "com.usebottles.bottles" },
     workspace = "8",
 })
+
+-- foot + fzf menus (hypr/scripts/menu): float, size comes from foot's --window-size-chars.
+hl.window_rule({
+    name   = "rice-menu",
+    match  = { class = "^rice-(menu|tui-.*)$" },
+    float  = true,
+    center = true,
+})
+
+-- Calculator lives on its own scratchpad so Super+X hides it without ending the session.
+hl.window_rule({
+    name      = "rice-calc",
+    match     = { class = "^rice-tui-calc$" },
+    workspace = "special:calc",
+})

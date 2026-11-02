@@ -1,7 +1,7 @@
 @import url("/home/alexander/.config/wofi/themes/tinted.css");
 
 * {
-  font-family: "MonoLisa", monospace, "Symbols Nerd Font", "Noto Color Emoji";
+  font-family: monospace, "Symbols Nerd Font", "Noto Color Emoji";
   font-size: 14px;
   outline: none;
 }

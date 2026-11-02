@@ -102,6 +102,12 @@ hl.bind(mainMod .. " + R",      hl.dsp.exec_cmd(programs.menu),              { d
 hl.bind(mainMod .. " + P",      hl.dsp.exec_cmd(programs.rbwMenu),           { description = "Open password menu" })
 hl.bind(mainMod .. " + F",      hl.dsp.window.fullscreen(),                  { description = "Toggle fullscreen" })
 
+hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("~/.local/bin/rice open net"),   { description = "Network" })
+hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("~/.local/bin/rice open bt"),    { description = "Bluetooth" })
+hl.bind(mainMod .. " + U", hl.dsp.exec_cmd("~/.local/bin/rice open audio"), { description = "Audio" })
+hl.bind(mainMod .. " + X", hl.dsp.exec_cmd("~/.local/bin/rice open calc"),  { description = "Calculator" })
+hl.bind(mainMod .. " + SHIFT + Escape", hl.dsp.exec_cmd("~/.config/waybar/scripts/power-menu.sh"), { description = "Power menu", replay = false })
+
 -- Move focus with mainMod + arrow keys, and with vim keys
 local directions = {
     { key = "left",  vim = "h", dir = "l", label = "left"  },

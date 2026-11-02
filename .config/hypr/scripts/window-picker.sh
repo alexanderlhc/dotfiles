@@ -6,7 +6,7 @@ set -euo pipefail
 
 # Toggle behavior: if another wofi menu is open, close it instead of stacking.
 # (if-form: a failed pkill must not trip set -e)
-if pkill wofi; then exit 0; fi
+if "$HOME/.config/hypr/scripts/menu" --close; then exit 0; fi
 
 # One "address<TAB>pango label" line per window: workspace, class, title in
 # aligned columns. Titles are flattened so one window stays one line, keeping
@@ -26,7 +26,7 @@ windows=$(hyprctl clients -j | jq -r '
 # Not fuzzy: wofi matches against the raw markup, whose letters would hit every row.
 count=$(wc -l <<<"$windows")
 index=$(cut -f2- <<<"$windows" \
-    | wofi --dmenu -D dmenu-print_line_num=true --allow-markup --prompt Window --width 720 \
+    | "$HOME/.config/hypr/scripts/menu" --dmenu -D dmenu-print_line_num=true --allow-markup --prompt Window --width 720 \
         --lines $((count < 10 ? count : 10)) --matching multi-contains --insensitive) || exit 0
 
 [[ "$index" =~ ^[0-9]+$ ]] || exit 0

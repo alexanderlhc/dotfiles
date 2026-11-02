@@ -4,7 +4,7 @@ onboarding = false
 pane_history = false
 
 [theme]
-name = "catppuccin-latte"
+name = "terminal"
 auto_switch = false
 
 [ui]
@@ -63,3 +63,8 @@ command = "/home/alexander/.config/herdr/bin/herdr-nav.sh right"
 key = "prefix+ctrl+l"
 type = "shell"
 command = "/home/alexander/.config/herdr/bin/herdr-send-key.sh ctrl+l"
+# tinty-begin
+[theme.custom]
+red = "#bf0021"
+yellow = "#a06d00"
+# tinty-end

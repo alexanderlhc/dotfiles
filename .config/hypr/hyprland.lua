@@ -22,6 +22,11 @@ load("conf.d/autostart.lua")
 load("conf.d/env.lua")
 load("conf.d/look-and-feel.lua")
 load("themes/current.lua") -- after look-and-feel: tinty's colors win
+local look_flag = io.open(os.getenv("HOME") .. "/.config/rice/flags/look")
+if look_flag then
+    look_flag:close()
+    load("conf.d/rice-look.lua") -- `rice off look` reverts
+end
 load("conf.d/input.lua")
 load("conf.d/keybindings.lua", programs)
 load("conf.d/window-rules.lua")

@@ -93,8 +93,8 @@ hl.bind(mainMod .. " + G",      hl.dsp.exec_cmd("~/.config/hypr/scripts/window-p
 hl.bind(mainMod .. " + Q",      hl.dsp.window.close(),                       { description = "Kill active window" })
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(programs.terminal),          { description = "Open terminal" })
 hl.bind(mainMod .. " + C",      hl.dsp.exec_cmd(programs.clipboardMenu),     { description = "Open clipboard menu" })
-hl.bind(mainMod .. " + M",      hl.dsp.exec_cmd([[command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()']]),
-                                                                             { description = "Logout / exit Hyprland", replay = false })
+hl.bind(mainMod .. " + M",      hl.dsp.exec_cmd("~/.config/waybar/scripts/power-menu.sh"),
+                                                                             { description = "Power menu (logout, reboot, power off)", replay = false })
 hl.bind(mainMod .. " + E",      hl.dsp.exec_cmd(programs.fileManager),       { description = "Open file manager" })
 hl.bind(mainMod .. " + V",      hl.dsp.window.float({ action = "toggle" }),  { description = "Toggle floating window" })
 hl.bind(mainMod .. " + SHIFT + V", hl.dsp.window.pin({ action = "toggle" }), { description = "Pin floating window (sticky on all workspaces)" })

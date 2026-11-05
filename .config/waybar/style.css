@@ -23,7 +23,7 @@ window#waybar { background: @mel-float; color: @mel-fg; }
 #workspaces button.focused { color: @mel-bg; background: @mel-blue; }
 #workspaces button.urgent { color: @mel-bg; background: @mel-red; }
 
-#pulseaudio, #tray, #custom-aerc, #custom-bluetooth, #battery, #clock,
+#pulseaudio, #tray, #custom-aerc, #custom-vpn, #custom-bluetooth, #battery, #clock,
 #custom-pomodoro, #custom-stand { padding: 0 8px; }
 
 #clock { color: @mel-bg; background: @mel-com; }
@@ -33,6 +33,7 @@ window#waybar { background: @mel-float; color: @mel-fg; }
 
 #custom-bluetooth.off, #custom-bluetooth.disconnected { color: @mel-com; }
 #custom-bluetooth.low, #battery.warning { color: @mel-yellow; }
+#custom-vpn.on { color: @mel-green; }
 #battery.critical { color: @mel-red; }
 
 #custom-pomodoro.idle, #custom-stand.idle { color: @mel-com; }

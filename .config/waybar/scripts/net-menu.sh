@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Menu: toggle a VPN, or open nmtui for everything else.
+# Menu: toggle a VPN (NM VPNs, WireGuard, Tailscale), or open nmtui for everything else.
+# Tailscale runs without sudo because this user is its operator (`sudo tailscale set --operator=$USER`).
 # OpenConnect VPNs log in here, headless: username/group from the NM connection,
 # password from the keyring (saved there by the old auth dialog), then the
 # session cookie is handed to NetworkManager so it still owns routes and DNS.
@@ -28,7 +29,9 @@ oc_up() {
 }
 
 vpn_up() {
-  if [ "$(nmcli -g vpn.service-type con show "$name")" = org.freedesktop.NetworkManager.openconnect ]; then
+  if [ "$name" = tailscale ]; then
+    tailscale up >/dev/null 2>&1
+  elif [ "$(nmcli -g vpn.service-type con show "$name")" = org.freedesktop.NetworkManager.openconnect ]; then
     oc_up
   else
     nmcli --wait 60 con up "$name" >/dev/null 2>&1
@@ -37,18 +40,26 @@ vpn_up() {
 
 entries="network settings (nmtui)\n"
 while IFS=: read -r cname type state; do
-  [ "$type" = vpn ] || continue
-  if [ "$state" = activated ]; then entries+="vpn off  $cname\n"
-  else entries+="vpn on   $cname\n"; fi
+  case $type in vpn|wireguard) ;; *) continue ;; esac
+pkill -RTMIN+9 waybar
+  if [ "$state" = activated ]; then entries+="vpn $cname: on\n"
+  else entries+="vpn $cname: off\n"; fi
 done < <(nmcli -t -f NAME,TYPE,STATE con show 2>/dev/null)
+if command -v tailscale >/dev/null; then
+  if [ "$(tailscale status --json 2>/dev/null | jq -r .BackendState)" = Running ]
+  then entries+="vpn tailscale: on\n"; else entries+="vpn tailscale: off\n"; fi
+fi
 
 choice=$(printf '%b' "$entries" | "$HOME/.config/hypr/scripts/menu" --dmenu --prompt "Network" \
   --lines "$(printf '%b' "$entries" | grep -c .)" --insensitive) || exit 0
 
 case "$choice" in
-  "vpn on   "*)  name=${choice#"vpn on   "}
+  # Picking a VPN row toggles it.
+  "vpn "*": off") name=${choice#vpn }; name=${name%: off}
                  if vpn_up; then msg=connected notify; else msg="failed to connect" notify -u critical; fi ;;
-  "vpn off  "*)  name=${choice#"vpn off  "}
-                 nmcli con down "$name" >/dev/null 2>&1 && msg=disconnected notify ;;
+  "vpn "*": on")  name=${choice#vpn }; name=${name%: on}
+                 if [ "$name" = tailscale ]; then tailscale down >/dev/null 2>&1
+                 else nmcli con down "$name" >/dev/null 2>&1; fi && msg=disconnected notify ;;
   "network settings"*) setsid -f foot --app-id=rice-tui-net --window-size-chars=110x32 -- nmtui >/dev/null 2>&1 </dev/null ;;
 esac
+pkill -RTMIN+9 waybar

@@ -19,6 +19,7 @@
   "group/status": {
     "orientation": "inherit",
     "modules": [
+      "custom/vpn",
       "custom/bluetooth",
       "pulseaudio",
       "tray",
@@ -63,6 +64,14 @@
     "format-plugged": "ac {capacity}",
     "format-alt": "bat {time}",
     "tooltip-format": "{timeTo}"
+  },
+  "custom/vpn": {
+    "exec": "~/.config/waybar/scripts/text-status.sh vpn",
+    "interval": 10,
+    "return-type": "json",
+    "signal": 9,
+    "tooltip": false,
+    "on-click": "~/.local/bin/rice open net"
   },
   "custom/bluetooth": {
     "exec": "~/.config/waybar/scripts/text-status.sh bt",

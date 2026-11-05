@@ -21,8 +21,8 @@ bar_start() {
     fi
 }
 tray_apply() {
-    if on tui; then pkill -x nm-applet
-    else pgrep -x nm-applet >/dev/null || bg nm-applet; fi
+    # Kept in TUI mode too: it's the secret agent that logs VPNs in with the saved password.
+    pgrep -x nm-applet >/dev/null || bg nm-applet
 }
 shake_apply() {
     pkill -f hypr/scripts/cursor-shake
@@ -46,7 +46,7 @@ tui() { # toggle a floating TUI
 open() {
     case ${1:-} in
         files) if on tui; then bg foot -- yazi; else bg nautilus; fi ;;
-        net)   if on tui; then tui net nmtui; else bg nm-connection-editor; fi ;;
+        net)   if on tui; then "$HOME/.config/waybar/scripts/net-menu.sh"; else bg nm-connection-editor; fi ;;
         audio) if on tui && command -v wiremix >/dev/null; then tui audio wiremix
                else pkill -x pavucontrol || bg pavucontrol; fi ;;
         bt)    if on tui; then tui bt bluetuith

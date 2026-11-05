@@ -27,6 +27,8 @@ window#waybar { background: @mel-float; color: @mel-fg; }
 #custom-pomodoro, #custom-stand { padding: 0 8px; }
 
 #clock { color: @mel-bg; background: @mel-com; }
+#custom-power { padding: 0 8px; }
+#custom-power:hover { color: @mel-bg; background: @mel-red; }
 #submap { color: @mel-bg; background: @mel-red; padding: 0 8px; }
 
 #custom-bluetooth.off, #custom-bluetooth.disconnected { color: @mel-com; }

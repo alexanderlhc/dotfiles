@@ -1,15 +1,11 @@
 #!/usr/bin/env bash
-# Drop-in for the wofi calls in these scripts. `rice on|off menus` picks the backend.
+# Drop-in for the wofi calls in these scripts: an fzf menu in a foot window.
 #   menu --close   close an open menu; exit 0 only if one was open
 #   menu <wofi args>
 RICE_ID=rice-menu
 if [ "${1:-}" = --close ]; then
-    a=1; b=1
-    pkill -x wofi && a=0
-    pkill -f "foot --app-id=$RICE_ID" && b=0
-    [ $a = 0 ] || [ $b = 0 ]; exit
+    pkill -f "foot --app-id=$RICE_ID"; exit
 fi
-[ -e "$HOME/.config/rice/flags/menus" ] || exec wofi "$@"
 
 prompt=menu width=640 lines=10 mode=dmenu exact=0 markup=0 index=0
 while [ $# -gt 0 ]; do

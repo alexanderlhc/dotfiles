@@ -1,4 +1,4 @@
--- Text-rice look. Loaded only while ~/.config/rice/flags/look exists: `rice off look`.
+-- Text-rice look.
 hl.config({
     general = {
         gaps_in = 1, gaps_out = 2, border_size = 1,

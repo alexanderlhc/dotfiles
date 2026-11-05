@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Toggle behavior: if another wofi menu is open, close it instead of stacking.
+# Toggle behavior: if another menu is open, close it instead of stacking.
 "$HOME/.config/hypr/scripts/menu" --close && exit 0
 
 options="󰌾  Lock

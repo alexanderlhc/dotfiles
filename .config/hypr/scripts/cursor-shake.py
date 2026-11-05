@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Enlarge the cursor while it's shaken. Polls Hyprland's socket; `rice off shake` stops it."""
+"""Enlarge the cursor while it's shaken. Polls Hyprland's socket."""
 import os, socket, time
 
 BASE, BIG = 24, 72

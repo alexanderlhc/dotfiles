@@ -1,144 +1,41 @@
+/* Text bar */
 @import url("themes/tinted.css");
 
 * {
   border: none;
   border-radius: 0;
   min-height: 0;
-  font-family: sans-serif, "Symbols Nerd Font";
+  font-family: monospace, "Symbols Nerd Font";
   font-size: 14px;
+  box-shadow: none;
 }
 
-window#waybar {
-  background: @mel-bg;
-  color: @mel-fg;
-  border-bottom: 1px solid @mel-ui;
-}
-
-/* ---- islands ---- */
-
-#workspaces,
-#status,
-#clock,
-#custom-pomodoro,
-#custom-stand,
-#custom-power {
-  background: @mel-float;
-  border: 1px solid alpha(@mel-ui, 0.4);
-  border-radius: 9px;
-  margin: 4px 0;
-}
-
-#workspaces {
-  margin-left: 8px;
-  padding: 0 3px;
-}
-
-#clock {
-  padding: 0 12px;
-}
-
-#custom-power {
-  padding: 0 12px;
-  margin-right: 8px;
-}
-
-#custom-power:hover {
-  color: @mel-red;
-  background: @mel-sel;
-}
-
-/* ---- status island members: padding only, no boxes ---- */
-
-#pulseaudio,
-#tray,
-#custom-aerc,
-#custom-bluetooth,
-#battery {
-  padding: 0 9px;
-  background: transparent;
-}
-
-#custom-bluetooth.off,
-#custom-bluetooth.disconnected {
-  color: @mel-com;
-}
-
-#custom-bluetooth.low {
-  color: @mel-yellow;
-}
-
-/* ---- workspaces ---- */
+window#waybar { background: @mel-float; color: @mel-fg; }
 
 #workspaces button {
-  padding: 0 7px;
-  margin: 3px 2px;
-  border-radius: 6px;
+  padding: 0 6px;
   color: @mel-com;
   background: transparent;
-  transition: background 120ms ease, color 120ms ease;
+  transition: none;
 }
-
-#workspaces button:hover {
-  color: @mel-fg;
-  background: @mel-sel;
-}
-
+#workspaces button:hover { color: @mel-fg; background: @mel-sel; }
 #workspaces button.active,
-#workspaces button.focused {
-  color: @mel-bg;
-  background: @mel-blue;
-}
+#workspaces button.focused { color: @mel-bg; background: @mel-blue; }
+#workspaces button.urgent { color: @mel-bg; background: @mel-red; }
 
-#workspaces button.urgent {
-  color: @mel-bg;
-  background: @mel-red;
-}
+#pulseaudio, #tray, #custom-aerc, #custom-bluetooth, #battery, #clock,
+#custom-pomodoro, #custom-stand { padding: 0 8px; }
 
-/* ---- submap (modal keybinding mode) ---- */
+#clock { color: @mel-bg; background: @mel-com; }
+#custom-power { padding: 0 8px; }
+#custom-power:hover { color: @mel-bg; background: @mel-red; }
+#submap { color: @mel-bg; background: @mel-red; padding: 0 8px; }
 
-#submap {
-  background: @mel-red;
-  color: @mel-bg;
-  border-radius: 9px;
-  margin: 4px 0;
-  padding: 0 12px;
-  font-weight: bold;
-}
+#custom-bluetooth.off, #custom-bluetooth.disconnected { color: @mel-com; }
+#custom-bluetooth.low, #battery.warning { color: @mel-yellow; }
+#battery.critical { color: @mel-red; }
 
-/* ---- timers ---- */
-
-#custom-pomodoro,
-#custom-stand {
-  padding: 0 12px;
-}
-
-#custom-pomodoro.idle,
-#custom-stand.idle {
-  color: @mel-com;
-}
-
-#custom-pomodoro.running,
-#custom-stand.running {
-  color: @mel-green;
-}
-
-#custom-pomodoro.paused,
-#custom-stand.paused {
-  color: @mel-yellow;
-}
-
-#custom-pomodoro.expired,
-#custom-stand.expired {
-  color: @mel-bg;
-  background: @mel-red;
-}
-
-/* ---- states ---- */
-
-#battery.warning {
-  color: @mel-yellow;
-}
-
-#battery.critical {
-  color: @mel-red;
-}
+#custom-pomodoro.idle, #custom-stand.idle { color: @mel-com; }
+#custom-pomodoro.running, #custom-stand.running { color: @mel-green; }
+#custom-pomodoro.paused, #custom-stand.paused { color: @mel-yellow; }
+#custom-pomodoro.expired, #custom-stand.expired { color: @mel-bg; background: @mel-red; }

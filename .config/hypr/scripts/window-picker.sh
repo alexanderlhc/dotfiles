@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Pop a wofi dmenu of open windows, type to find one, focus the picked window.
+# Pop a menu of open windows, type to find one, focus the picked window.
 # Most recently used first; the window you're already on is left out.
 
 set -euo pipefail
 
-# Toggle behavior: if another wofi menu is open, close it instead of stacking.
+# Toggle behavior: if another menu is open, close it instead of stacking.
 # (if-form: a failed pkill must not trip set -e)
 if "$HOME/.config/hypr/scripts/menu" --close; then exit 0; fi
 

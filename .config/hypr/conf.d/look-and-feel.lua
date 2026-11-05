@@ -98,17 +98,7 @@ hl.config({
     },
 })
 
--- All wofi menus (launcher, clipboard, rbw, power, cheatsheet, emoji)
--- spawn with the same subtle pop — keyed to the "wofi" layer namespace.
-hl.layer_rule({
-    name      = "wofi-popin",
-    match     = { namespace = "wofi" },
-    animation = "popin",
-    blur         = true,
-    ignore_alpha = 0.2, -- blur the panel, not wofi's clear rounded corners
-})
-
--- dunst notifications get the same blur as the menus.
+-- dunst notifications get a blurred backdrop.
 hl.layer_rule({
     name         = "notifications-blur",
     match        = { namespace = "notifications" },

@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Pop a wofi dmenu of emojis, copy the picked one to the clipboard.
+# Pop a menu of emojis, copy the picked one to the clipboard.
 # Recently used emojis are shown first.
 
 set -euo pipefail
 
-# Toggle behavior: if another wofi menu is open, close it instead of stacking.
+# Toggle behavior: if another menu is open, close it instead of stacking.
 # (if-form: a failed pkill must not trip set -e)
 if "$HOME/.config/hypr/scripts/menu" --close; then exit 0; fi
 

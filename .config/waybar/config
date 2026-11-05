@@ -1,8 +1,8 @@
 {
   "layer": "top",
   "position": "top",
-  "height": 32,
-  "spacing": 6,
+  "height": 22,
+  "spacing": 0,
   "modules-left": [
     "ext/workspaces"
   ],
@@ -38,19 +38,19 @@
   // Modal keybinding modes (submaps): shows e.g. "screenshot" while Print
   // mode is active, hidden entirely when no submap is active.
   "hyprland/submap": {
-    "format": "󰌌 {}",
+    "format": "mode {}",
     "tooltip": false
   },
   "pulseaudio": {
-    "format": " {volume}%",
-    "format-muted": " muted",
+    "format": "vol {volume}",
+    "format-muted": "vol mute",
     "on-click": "~/.local/bin/rice open audio"
   },
   "clock": {
     "format": "{:%Y-%m-%d %H:%M}"
   },
   "tray": {
-    "icon-size": 18,
+    "icon-size": 14,
     "spacing": 8
   },
   "battery": {
@@ -58,47 +58,40 @@
       "warning": 30,
       "critical": 15
     },
-    "format": "{icon} {capacity}%",
-    "format-charging": " {capacity}%",
-    "format-plugged": " {capacity}%",
-    "format-alt": "{time} {icon}",
-    "format-icons": [
-      "",
-      "",
-      "",
-      "",
-      ""
-    ],
+    "format": "bat {capacity}",
+    "format-charging": "chg {capacity}",
+    "format-plugged": "ac {capacity}",
+    "format-alt": "bat {time}",
     "tooltip-format": "{timeTo}"
   },
-  "custom/power": {
-    "format": "⏻",
-    "tooltip": false,
-    "on-click": "~/.config/waybar/scripts/power-menu.sh"
-  },
   "custom/bluetooth": {
-    "exec": "~/.config/waybar/scripts/bluetooth-status.sh",
+    "exec": "~/.config/waybar/scripts/text-status.sh bt",
     "interval": 10,
     "return-type": "json",
     "signal": 8,
     "on-click": "~/.local/bin/rice open bt"
   },
   "custom/pomodoro": {
-    "exec": "~/.config/waybar/scripts/timer.sh pomodoro 25 󰔟 manual",
+    "exec": "~/.config/waybar/scripts/timer.sh pomodoro 25 pom manual",
     "interval": 1,
     "return-type": "json",
-    "on-click": "~/.config/waybar/scripts/timer.sh pomodoro 25 󰔟 manual click",
-    "on-click-right": "~/.config/waybar/scripts/timer.sh pomodoro 25 󰔟 manual reset"
+    "on-click": "~/.config/waybar/scripts/timer.sh pomodoro 25 pom manual click",
+    "on-click-right": "~/.config/waybar/scripts/timer.sh pomodoro 25 pom manual reset"
   },
   "custom/stand": {
-    "exec": "~/.config/waybar/scripts/timer.sh stand 50 󰖃 auto",
+    "exec": "~/.config/waybar/scripts/timer.sh stand 50 stand auto",
     "interval": 1,
     "return-type": "json",
-    "on-click": "~/.config/waybar/scripts/timer.sh stand 50 󰖃 auto click",
-    "on-click-right": "~/.config/waybar/scripts/timer.sh stand 50 󰖃 auto reset"
+    "on-click": "~/.config/waybar/scripts/timer.sh stand 50 stand auto click",
+    "on-click-right": "~/.config/waybar/scripts/timer.sh stand 50 stand auto reset"
+  },
+  "custom/power": {
+    "format": "pwr",
+    "tooltip": false,
+    "on-click": "~/.config/waybar/scripts/power-menu.sh"
   },
   "custom/aerc": {
-    "exec": "~/.config/waybar/scripts/aerc-unread.sh",
+    "exec": "~/.config/waybar/scripts/text-status.sh mail",
     "interval": 60,
     "return-type": "json"
   }

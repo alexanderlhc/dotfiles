@@ -2,7 +2,7 @@
 # Hyprland keybind cheatsheet, generated from `hyprctl binds`. Enter runs the selected bind.
 # To change bindings, edit ~/.config/hypr/conf.d/keybindings.lua and reload.
 
-# Toggle behavior: if another wofi menu is open, close it instead of stacking.
+# Toggle behavior: if another menu is open, close it instead of stacking.
 "$HOME/.config/hypr/scripts/menu" --close && exit 0
 
 # One row per submap+mods+key: a key can hold several binds (run action + leave submap).
@@ -37,7 +37,7 @@ choice=$("$HOME/.config/hypr/scripts/menu" --dmenu --prompt Keys --width 700 --l
 line=$(grep -nFx -- "$choice" <<<"$menu" | head -n1 | cut -d: -f1)
 [[ -n $line ]] || exit 0
 
-# Let wofi's surface go and focus return, so the bind acts on the window behind it
+# Let the menu window go and focus return, so the bind acts on the window behind it
 # and a screenshot doesn't catch the menu.
 sleep 0.25
 hyprctl dispatch "cheatsheet_run([==[${ids[line - 1]}]==])"

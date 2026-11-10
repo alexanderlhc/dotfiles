@@ -9,6 +9,11 @@ auto_switch = false
 
 [ui]
 agent_panel_sort = "priority"
+prompt_new_tab_name = false
+status_indicators = "symbols"
+
+[ui.toast]
+delivery = "system"
 
 [ui.sound]
 enabled = false
@@ -28,6 +33,34 @@ move_tab_next = "ctrl+shift+alt+l"
 
 # Third level: workspaces
 switch_workspace = "prefix+shift+1..9"
+previous_workspace = "ctrl+shift+k"
+next_workspace = "ctrl+shift+j"
+
+# Agents: alt+1 = top of the priority queue
+focus_agent = "alt+1..9"
+next_agent = "prefix+a"
+previous_agent = "prefix+shift+a"
+last_pane = "prefix+tab"
+
+# Worktrees — prefix+shift+g goes through new-worktree.sh, which slugifies
+# spaces into the branch name (the built-in prompt rejects them).
+new_worktree = ""
+open_worktree = "prefix+shift+o"
+remove_worktree = "prefix+shift+k"
+
+[[keys.command]]
+key = "prefix+shift+g"
+type = "popup"
+command = "/home/alexander/.config/herdr/bin/new-worktree.sh"
+width = 60
+height = 6
+
+[[keys.command]]
+key = "prefix+alt+g"
+type = "popup"
+command = "lazygit"
+width = "90%"
+height = "90%"
 
 [[keys.command]]
 key = "prefix+p"

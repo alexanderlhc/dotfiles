@@ -22,6 +22,11 @@ hl.config({
         layout = "scrolling",
     },
 
+    -- HDMI content-type changes on fullscreen forced a modeset → monitors went dark
+    render = {
+        send_content_type = false,
+    },
+
     decoration = {
         rounding       = 10,
         rounding_power = 2,

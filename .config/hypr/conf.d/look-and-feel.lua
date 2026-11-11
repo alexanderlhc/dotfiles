@@ -25,6 +25,8 @@ hl.config({
     -- HDMI content-type changes on fullscreen forced a modeset → monitors went dark
     render = {
         send_content_type = false,
+        -- Chrome fullscreen flipped HDR on HDMI → modeset/blackout
+        cm_auto_hdr = 0,
     },
 
     decoration = {

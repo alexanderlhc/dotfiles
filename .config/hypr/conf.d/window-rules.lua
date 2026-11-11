@@ -43,10 +43,29 @@ hl.window_rule({
 })
 
 hl.window_rule({
-    name      = "wow-ws9",
-    match     = { class = "steam_proton", title = "World of Warcraft" },
-    workspace = "9",
+    -- WoW gets workspace 10 on the main monitor, always real fullscreen
+    name       = "wow-ws10",
+    match      = { class = "^wow\\.exe$", title = "^World of Warcraft$" },
+    workspace  = "10",
+    -- fullscreen = true, -- off 2026-10-30: suspected of crashing Hyprland 0.57
 })
+
+hl.workspace_rule({ workspace = "10", monitor = "DP-5", default_name = "gaming" })
+
+-- Keep gaming to WoW: anything else that lands there goes to workspace 1,
+-- without pulling focus off the game. Blank-class windows are XWayland helpers.
+local function evict_from_gaming(window)
+    if not window or not window.workspace or window.workspace.id ~= 10 then return end
+    if window.class == "wow.exe" or window.class == "" then return end
+    -- Menus and TUIs (hypr/scripts/menu, rice open …) are foot windows now, not
+    -- wofi layer surfaces: let them open over the game instead of vanishing to ws 1.
+    if window.class:match("^rice%-") then return end
+    hl.dispatch(hl.dsp.window.move({ workspace = 1, follow = false, window = "address:" .. window.address }))
+end
+
+hl.on("window.open", evict_from_gaming)
+hl.on("window.move_to_workspace", evict_from_gaming)
+hl.on("window.class", evict_from_gaming) -- XWayland apps can set their class after opening
 
 hl.window_rule({
     name      = "bottles-ws8",

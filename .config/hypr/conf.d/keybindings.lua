@@ -217,3 +217,14 @@ hl.bind(mainMod .. " + A",         hl.dsp.exec_cmd("~/.local/bin/speak-clip togg
                                                  { description = "Read clipboard aloud / piper text-to-speech (tap to start, tap to stop)" })
 hl.bind(mainMod .. " + SHIFT + A", hl.dsp.exec_cmd("~/.local/bin/speak-clip stop"),
                                                  { description = "Stop reading aloud" })
+
+-- Discord push-to-talk, registered by Discord through the global shortcuts portal
+-- (`hyprctl globalshortcuts`). Hyprland has no approve dialog, so the key is bound here.
+-- non_consuming: on the Danish layout SHIFT + 0 is "=", which must still type.
+hl.bind("SHIFT + 0", hl.dsp.global("discord:discord-push-to-talk"),
+                     { non_consuming = true, description = "Discord push-to-talk (hold)" })
+-- A release only matches when the mods equal those at press time, so lifting SHIFT
+-- before 0 lost it and left PTT stuck on. Catch the release of 0 under any mods too.
+hl.bind("0", hl.dsp.global("discord:discord-push-to-talk"),
+             { release = true, ignore_mods = true, non_consuming = true,
+               description = "Discord push-to-talk (release, any mods)" })

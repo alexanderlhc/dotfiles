@@ -30,15 +30,20 @@ opts=(--reverse --no-separator --no-scrollbar --info=inline-right --color=16
 
 if [ "$mode" = drun ]; then
     # "Name<TAB>desktop-id", user entries shadow system ones.
-    for d in "$HOME/.local/share/applications" /usr/local/share/applications /usr/share/applications; do
-        [ -d "$d" ] && find -L "$d" -name '*.desktop' 2>/dev/null
-    done | while IFS= read -r f; do
-        awk -v id="$(basename "$f" .desktop)" -F= '
+    # Same search path as the XDG spec (includes the flatpak export dirs).
+    IFS=: read -ra data_dirs <<<"${XDG_DATA_HOME:-$HOME/.local/share}:${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
+    for d in "${data_dirs[@]}"; do
+        d=${d%/}/applications
+        [ -d "$d" ] && find -L "$d" -name '*.desktop' -print0 2>/dev/null
+    done | xargs -0 -r awk -F= '
+            # One awk over every file (one per file cost ~1s in forks).
+            function flush() { if (n && !skip) print n "\t" id }
+            FNR == 1 { if (NR > 1) flush(); id = FILENAME; sub(/.*\//, "", id); sub(/\.desktop$/, "", id)
+                       n = ""; skip = 0; s = 0 }
             /^\[/ { s = ($0 == "[Desktop Entry]"); next }
             s && $1 == "Name" && !n { n = substr($0, 6) }
             s && ($1 == "NoDisplay" || $1 == "Hidden") && $2 == "true" { skip = 1 }
-            END { if (n && !skip) print n "\t" id }' "$f"
-    done | awk -F'\t' '!seen[$2]++' | sort -f >"$dir/in"
+            END { flush() }' | awk -F'\t' '!seen[$2]++' | sort -f >"$dir/in"
     opts+=(--delimiter=$'\t' --with-nth=1)
 else
     cat >"$dir/in"

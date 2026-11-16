@@ -105,7 +105,7 @@ hl.config({
     },
 })
 
--- dunst notifications get a blurred backdrop.
+-- mako notifications get a blurred backdrop.
 hl.layer_rule({
     name         = "notifications-blur",
     match        = { namespace = "notifications" },

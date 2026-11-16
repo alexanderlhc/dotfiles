@@ -107,7 +107,7 @@ hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("~/.local/bin/rice open bt"),    { de
 hl.bind(mainMod .. " + U", hl.dsp.exec_cmd("~/.local/bin/rice open audio"), { description = "Audio" })
 hl.bind(mainMod .. " + X", hl.dsp.exec_cmd("~/.local/bin/rice open calc"),  { description = "Calculator" })
 hl.bind(mainMod .. " + I",         hl.dsp.exec_cmd("~/.config/hypr/scripts/notify-menu.sh"), { description = "Notification menu" })
-hl.bind(mainMod .. " + SHIFT + I", hl.dsp.exec_cmd("dunstctl close-all"),                  { description = "Dismiss all notifications" })
+hl.bind(mainMod .. " + SHIFT + I", hl.dsp.exec_cmd("makoctl dismiss --all"),               { description = "Dismiss all notifications" })
 hl.bind(mainMod .. " + SHIFT + Escape", hl.dsp.exec_cmd("~/.config/waybar/scripts/power-menu.sh"), { description = "Power menu", replay = false })
 
 -- Move focus with mainMod + arrow keys, and with vim keys

@@ -1,0 +1,26 @@
+# mako — notification daemon (replaces dunst). Colours come from tinted.conf,
+# which the tinty hook ~/.config/tinted-theming/hooks/mako.sh regenerates.
+font=monospace 11
+markup=1
+format=<b>%a</b>: %s\n%b
+anchor=top-right
+outer-margin=26,2,0,0
+margin=2
+width=440
+padding=6,10
+border-size=1
+border-radius=0
+icons=0
+max-visible=5
+max-history=20
+default-timeout=8000
+on-button-left=dismiss
+on-button-middle=invoke-default-action
+on-button-right=dismiss-all
+
+include=~/.config/mako/tinted.conf
+
+# Do not disturb (Super+I menu, or: makoctl mode -t do-not-disturb).
+# Must stay last so it overrides everything above.
+[mode=do-not-disturb]
+invisible=1

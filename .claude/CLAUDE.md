@@ -9,7 +9,8 @@
 Goal: user can read the agent tree from herdr's sidebar alone.
 - Workspace label = the human goal ("gavekort refund bug"). Rename if vague: `herdr workspace rename`.
 - Spawned pane label = `<parent>›<slug>` (e.g. `lead›gavekort-fix`): `herdr pane rename`.
-- Children go in the parent's workspace (pane/tab). Never a new workspace for a child.
+- New thread the user owns (handoff, ticket, separate task) → own workspace, labelled by goal.
+- Helpers serving a parent's thread → parent's workspace (pane/tab), never a new workspace.
 - Spawn a session only for code changes (worktree) or a long parallel thread. Else in-process subagent.
 - Max 3 live child sessions per parent. Finish/close one before spawning more.
 - Before ending every turn (in herdr), set pane title to next step:

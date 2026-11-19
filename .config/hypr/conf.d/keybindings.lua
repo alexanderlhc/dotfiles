@@ -111,6 +111,14 @@ hl.bind(mainMod .. " + SHIFT + I", hl.dsp.exec_cmd("makoctl dismiss --all"),    
 hl.bind(mainMod .. " + SHIFT + Escape", hl.dsp.exec_cmd("~/.config/waybar/scripts/power-menu.sh"), { description = "Power menu", replay = false })
 hl.bind(mainMod .. " + O", hl.dsp.exec_cmd("wayvncctl output-cycle"), { description = "VNC: show the other monitor" })
 
+-- wayvnc shows one monitor at a time: keep it on the focused one, or a launcher or
+-- window opened over VNC lands on the monitor the viewer can't see.
+-- Harmless where wayvnc isn't running: wayvncctl just fails.
+hl.on("monitor.focused", function(monitor)
+    if not monitor or not monitor.name then return end
+    hl.dispatch(hl.dsp.exec_cmd("wayvncctl output-set " .. monitor.name))
+end)
+
 -- VNC passthrough: while a VNC viewer has focus, every key (Super+R etc.) goes to it
 -- instead of this Hyprland. It switches on and off by itself as focus changes.
 -- Super+F12 is the escape hatch for a local shortcut while the viewer stays focused.

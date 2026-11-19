@@ -109,6 +109,48 @@ hl.bind(mainMod .. " + X", hl.dsp.exec_cmd("~/.local/bin/rice open calc"),  { de
 hl.bind(mainMod .. " + I",         hl.dsp.exec_cmd("~/.config/hypr/scripts/notify-menu.sh"), { description = "Notification menu" })
 hl.bind(mainMod .. " + SHIFT + I", hl.dsp.exec_cmd("makoctl dismiss --all"),               { description = "Dismiss all notifications" })
 hl.bind(mainMod .. " + SHIFT + Escape", hl.dsp.exec_cmd("~/.config/waybar/scripts/power-menu.sh"), { description = "Power menu", replay = false })
+hl.bind(mainMod .. " + O", hl.dsp.exec_cmd("wayvncctl output-cycle"), { description = "VNC: show the other monitor" })
+
+-- VNC passthrough: while a VNC viewer has focus, every key (Super+R etc.) goes to it
+-- instead of this Hyprland. It switches on and off by itself as focus changes.
+-- Super+F12 is the escape hatch for a local shortcut while the viewer stays focused.
+hl.define_submap("passthru", function()
+    hl.bind(mainMod .. " + F12", hl.dsp.submap("reset"), { description = "Leave VNC key passthrough" })
+end)
+
+-- Hyprland re-announces a closing window as active once after window.close,
+-- so windows that are closing are remembered and never count as the viewer.
+local closing = {}
+
+local function is_vnc(window)
+    if not window or not window.class or closing[window.address] then return false end
+    local c = window.class:lower()
+    return c:find("vncviewer") or c:find("remmina")
+end
+
+-- Asks Hyprland for the current submap rather than remembering it, so Super+F12
+-- (or another submap like screenshot mode) can't put it out of step.
+local function sync_passthru(window)
+    local current = hl.get_current_submap()
+    if is_vnc(window) then
+        if current ~= "passthru" then hl.dispatch(hl.dsp.submap("passthru")) end
+    elseif current == "passthru" then
+        hl.dispatch(hl.dsp.submap("reset"))
+    end
+end
+
+hl.on("window.active", sync_passthru)
+-- Closing the focused viewer can leave nothing focused, and then window.active
+-- never fires: without this the keyboard stayed stuck in passthrough.
+hl.on("window.close", function(window)
+    if not window then return end
+    closing[window.address] = true
+    if window.active then sync_passthru(nil) end
+end)
+hl.on("window.destroy", function(window)
+    if window then closing[window.address] = nil end
+end)
+hl.on("workspace.active", function() sync_passthru(hl.get_active_window()) end)
 
 -- Move focus with mainMod + arrow keys, and with vim keys
 local directions = {

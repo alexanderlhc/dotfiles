@@ -1,0 +1,6 @@
+" Tridactyl find mode instead of Firefox quickfind
+bind / fillcmdline find
+bind ? fillcmdline find -?
+bind n findnext
+bind N findnext -?
+bind ,<Space> nohlsearch
